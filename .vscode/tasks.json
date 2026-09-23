@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Switch Application",
+            "type": "process",
+            "command": "C:\\devkitPro\\msys2\\usr\\bin\\bash.exe",
+            "args": [
+                "-lc",
+                "export PATH=\"$PATH:/opt/devkitpro/portlibs/switch/bin\" && cd \"$(cygpath -u '${workspaceFolder}')\" && make"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean Switch Application",
+            "type": "process",
+            "command": "C:\\devkitPro\\msys2\\usr\\bin\\bash.exe",
+            "args": [
+                "-lc",
+                "export PATH=\"$PATH:/opt/devkitpro/portlibs/switch/bin\" && cd \"$(cygpath -u '${workspaceFolder}')\" && make clean"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Nintendo Switch",
+            "compilerPath": "C:/devkitPro/devkitA64/bin/aarch64-none-elf-g++.exe",
+            "intelliSenseMode": "gcc-arm64",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/include",
+                "C:/devkitPro/libnx/include",
+                "${workspaceFolder}/libs/byml/include",
+                "${workspaceFolder}/libs/range-v3/include",
+                "${workspaceFolder}/libs/Aether/include",
+                "C:/devkitPro/portlibs/switch/include",
+                "${workspaceFolder}/build"
+            ],
+            "defines": [
+                "__SWITCH__"
+            ]
+        }
+    ],
+    "version": 4
+}
