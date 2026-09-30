@@ -1,5 +1,7 @@
 // lib specific
 #include <Utils/Utils.hpp>
+#include <Config.hpp>
+#include <Aether/Aether.hpp>
 
 // system
 #include <switch.h>
@@ -8,6 +10,8 @@
 #include <cstring>
 #include <iomanip>
 #include <sstream>
+#include <functional>
+#include <numbers>
 
 // functions
 void log(const std::string& msg){
@@ -106,4 +110,20 @@ std::string formatUnixTimestamp(int32_t unixTimestamp){
 void clearLine(){
     printf("\x1b[2K\r");
     fflush(stdout);
+}
+
+std::function<Aether::Colour(uint32_t)> highlightFunc() {
+    Aether::Colour h1 = TOP_R;
+    Aether::Colour h2 = BOTTOM_R;
+    return [h1, h2](uint32_t t) {
+        Aether::Colour col;
+        // log("colchange");
+
+        col.setR(h1.r() + ((h2.r() - h1.r()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
+        col.setG(h1.g() + ((h2.g() - h1.g()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
+        col.setB(h1.b() + ((h2.b() - h1.b()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
+        col.setA(h1.a() + ((h2.a() - h1.a()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
+
+        return col;
+    };
 }

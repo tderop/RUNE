@@ -203,6 +203,15 @@ Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
 }
 
 /**
+ * @brief a helper for decoding rune save values. Requires context array. 
+ */
+RuneSaveValue runeSaveDecodeValue(RuneSaveDataType dataType, RuneSaveRawFile& rawFileContext, int* i){
+    // stub
+    // this is where unusedfunction waring is
+    return 1;
+}
+
+/**
  * @brief Decode a raw save file.
  */
 Result runeSaveDecode(RuneSaveFile* out, const RuneSaveRawFile& raw, const RuneSaveMetadata& metadata){

@@ -38,6 +38,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
 APP_TITLE   := RUNE
+# APP_TITLEID := 0001000000000016
 APP_VERSION := 0.0.0
 APP_AUTHOR  := TriTech
 APP_ICON    := $(CURDIR)/RUNE.jpg

@@ -152,10 +152,16 @@ int main(){
         }
     });
 
+    window->setHighlightAnimation(highlightFunc());
+
     log("[MAIN] - Successfully loaded Aether window!");
 
     // prepare the menu
     Aether::Screen* menu = new Menu(window);
+
+    window->setFadeIn(true);
+    window->setFadeOut(true);
+
     window->showScreen(menu);
 
     log("[MAIN] - Successfully loaded menu screen!");

@@ -6,8 +6,8 @@
 #include <Save/Save.hpp>
 #include <Utils/Utils.hpp>
 
-int TEXT_X_OFFSET = 6;
-int TEXT_Y_OFFSET = 12;
+#include <Screens/Editor.hpp>
+
 
 int SAVE_ICON_SIZE = 16; // 16x16 pixels for image icons (star, hard mode)
 
@@ -119,10 +119,18 @@ void Menu::showSaveSelect(){
         // create a new list button
         Aether::ListButton* slotButton = new Aether::ListButton(
             "",
-            [saveSlot](){   
+            [saveSlot, this](){   
                 log("[MENU] - Save slot "+std::to_string(saveSlot.index)+" was selected.");
+
+                // transition to editor
+                // make an application mgr to deal with this, currently if a new 
+                // editor is created, then so is another menu when returning
+                // so this just leads to infinite memory leakage
+                Aether::Screen* editor = new Editor(this->window);
+                this->window->showScreen(editor);
             }
         );
+
 
         if (firstButton == nullptr){
             firstButton = slotButton;
@@ -252,7 +260,7 @@ void Menu::showSaveSelect(){
                 starIcon = new Aether::Image(
                     0,
                     0,
-                    "romfs:/assets/star.png",
+                    ASSET_PATHS.at("star"),
                     Aether::Render::Wait
                 );
 
@@ -285,7 +293,7 @@ void Menu::showSaveSelect(){
             Aether::Image* masterModeIcon = new Aether::Image(
                 0,
                 0,
-                "romfs:/assets/triforce.png",
+                ASSET_PATHS.at("triforce"),
                 Aether::Render::Wait
             );
 
@@ -422,7 +430,7 @@ void Menu::addScreenElements(){
     Aether::Image* titleIcon = new Aether::Image(
         0,
         0,
-        "romfs:/assets/check.png",
+        ASSET_PATHS.at("check"),
         Aether::Render::Wait
     );
 

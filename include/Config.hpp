@@ -1,6 +1,7 @@
 #pragma once
 #include <Aether/Aether.hpp>
 #include <string>
+#include <unordered_map>
 
 #define WINDOW_RESOLUTION_X 1280
 #define WINDOW_RESOLUTION_Y 720
@@ -15,9 +16,23 @@ inline const Aether::Colour BACKGROUND_COLOUR{45, 45, 45, 255};
 inline const Aether::Colour MUTED_BACKGROUND_COLOUR{30, 30, 30, 255};
 inline const Aether::Colour DEBUG_COLOUR{5, 5, 10, 255};
 
+inline const Aether::Colour TOP_R{52, 183, 235, 255};
+inline const Aether::Colour BOTTOM_R{52, 235, 205, 255};
+
+inline const Aether::Colour EDITOR_SIDEBAR_COLOUR{69, 69, 69, 255};
+
 const unsigned int TOP_SEPARATOR_Y = 90;
 const unsigned int BOTTOM_SEPARATOR_Y = 647;
 const unsigned int MAX_SEPARATOR_X = 1250;
 const unsigned int MIN_SEPARATOR_X = 30;
 
+const int TEXT_X_OFFSET = 6;
+const int TEXT_Y_OFFSET = 12;
+
 const long int BOTW_TITLE_ID = 0x01007EF00011E000;
+
+const std::unordered_map<std::string, std::string> ASSET_PATHS = {
+    {"check",    "romfs:/assets/check.png"},
+    {"triforce", "romfs:/assets/triforce.png"},
+    {"star",     "romfs:/assets/star.png"}
+};
