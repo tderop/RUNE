@@ -18,7 +18,7 @@ public:
     Editor(Aether::Window* window);
     ~Editor();
 
-    void buildSidebar();
+    void buildScreen();
     
     void addScreenElements();
     void showSaveSelect();

@@ -466,7 +466,6 @@ void Menu::addScreenElements(){
     this->addElement(topSeparator);
     this->addElement(bottomSeparator);
 
-    // THIS IS THE BUG IF YOU DON'T SEE A SAVE SELECT THE BUG IS RIGHT HERE
     showSaveSelect();
 }
 
