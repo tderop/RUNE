@@ -295,7 +295,7 @@ void InputSystem::unbind(const std::string& bindID){
 }
 
 // connections
-Connection<InputSystem&, InputState>& InputSystem::connect(const std::string& bindID, void (*function)(InputSystem&, InputState)){
+Connection<InputSystem&, InputState>& InputSystem::connect(const std::string& bindID, std::function<void(InputSystem&, InputState)> function){
     // check if the bind exists
     if (bindings.find(bindID) != bindings.end()){ // compiler genuinely please
         // this makes a new signal if one doesn't exist
