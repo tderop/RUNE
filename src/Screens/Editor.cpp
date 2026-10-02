@@ -9,6 +9,7 @@
 #include <Config.hpp>
 #include <Utils/Utils.hpp>
 #include <Input/Input.hpp>
+#include <Save/Save.hpp>
 
 #include <vector>
 #include <string>
@@ -17,7 +18,7 @@ int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
-Editor::Editor(Aether::Window* window) : window(window){
+Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), saveFile(saveFile){
     // data
     this->tabs = {
         "Stats",
@@ -440,7 +441,7 @@ void Editor::showMenu(int menuIdx){
     this->selectedMenu = menuIdx;
 
     if (this->menuLabelSelIndicator == nullptr){
-        this->menuLabelSelIndicator = new Aether::Rectangle(0, 0, 48, 3);
+        this->menuLabelSelIndicator = new Aether::Rectangle(0, 0, 60, 2);
         this->menuLabelSelIndicator->setColour(TOP_R);
 
         this->addElement(menuLabelSelIndicator);
@@ -467,6 +468,19 @@ void Editor::showMenu(int menuIdx){
 
 void Editor::onLoad(){
     this->buildScreen();
+
+    // debug
+    // for (RuneSaveEntry entry : this->saveFile.entries){
+    //     if (entry.dataName.find("MainField") != std::string::npos){ // ignore revivals
+    //         continue;
+    //     }
+
+    //     if (entry.dataType == RuneRevivalBool){ // explicitly ignore revivals
+    //         continue;
+    //     }
+
+    //     log("[ENTRY] - "+entry.dataName+": "+runeSaveValueToString(entry.value, true));
+    // }
 }
 
 void Editor::onUnload(){

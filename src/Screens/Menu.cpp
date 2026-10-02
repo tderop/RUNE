@@ -119,15 +119,49 @@ void Menu::showSaveSelect(){
         // create a new list button
         Aether::ListButton* slotButton = new Aether::ListButton(
             "",
-            [saveSlot, this](){   
+            [saveSlot, this]() mutable{   
                 log("[MENU] - Save slot "+std::to_string(saveSlot.index)+" was selected.");
+                
+                // show loading
+                Aether::MessageBox* loadingMessage = new Aether::MessageBox();
+                Aether::Text* loadingMessageText = new Aether::Text(
+                    0,
+                    0,
+                    "Decoding Save...",
+                    32
+                );
+
+                loadingMessageText->setXY(
+                    loadingMessage->x()+(loadingMessage->w()/2)-(loadingMessageText->textureWidth()/2),
+                    loadingMessage->y()+(loadingMessage->h()/2)-(loadingMessageText->textureHeight()/2)
+                );
+
+                loadingMessage->setRectangleColour(MUTED_BACKGROUND_COLOUR);
+                loadingMessage->setLineColour(Aether::Colour{0, 0, 0, 0});
+                loadingMessageText->setColour(TEXT_COLOUR);
+
+                this->addElement(loadingMessage);
+                this->addElement(loadingMessageText);
+
+                // get the save file
+                RuneSaveRawFile rawSaveFile;
+                Result rc = runeSaveGetSaveRawFile(&rawSaveFile, saveSlot.gameDataPath);
+                
+                if (R_FAILED(rc)){
+                    log("[MENU] - Failed to get raw save file for slot "+std::to_string(saveSlot.index)+"!");
+                    return;
+                }
+
+                // decode the raw   
+                RuneSaveFile decodedSave;
+                rc = runeSaveDecode(&decodedSave, rawSaveFile, *runeMetadata);
 
                 // transition to editor
                 // make an application mgr to deal with this, currently if a new 
                 // editor is created, then so is another menu when returning
                 // so this just leads to infinite memory leakage
                 log("[MENU] - Making editor screen...");
-                Aether::Screen* editor = new Editor(this->window);
+                Aether::Screen* editor = new Editor(this->window, decodedSave);
 
                 log("[MENU] - Showing editor screen...");
                 this->window->showScreen(editor);

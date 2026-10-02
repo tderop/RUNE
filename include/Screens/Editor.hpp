@@ -5,6 +5,7 @@
 
 #include <Aether/Aether.hpp>
 #include <Input/Input.hpp>
+#include <Save/Save.hpp>
 
 struct EditorTab{
     std::vector<std::string> menus;
@@ -20,6 +21,7 @@ using EditorTabData = std::unordered_map<std::string, EditorTab>;
 class Editor : public Aether::Screen{
 private:
     Aether::Window* window;
+    RuneSaveFile saveFile;
 
     EditorTabData tabData;
     std::vector<std::string> tabs;
@@ -40,7 +42,7 @@ public:
     void onUnload() override;
     // void update(unsigned int deltaTime) override;
 
-    Editor(Aether::Window* window);
+    Editor(Aether::Window* window, RuneSaveFile saveFile);
     ~Editor();
 
     void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
