@@ -189,13 +189,19 @@ Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
 
     // seek to position 12 from the beginning
     saveFile.seekg(12, std::ios::beg);
+    
+    int pos = 12;
 
     while (true){
         RuneSaveRawEntry entry;
 
-        if (!saveFile.read(reinterpret_cast<char*>(&entry), 8))
+        // usually 4 bytes off the end, last 4 bytes are always 0xFF 0xFF 0xFF 0xFF
+        if (!saveFile.read(reinterpret_cast<char*>(&entry), 8)){
+            log("[SAVE] - Raw read finished, cursor stopped at position: "+std::to_string(pos));
             break;
-
+        }
+        
+        pos += 8;
         out->entries.push_back(entry);
     }
 

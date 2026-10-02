@@ -145,7 +145,9 @@ void Menu::showSaveSelect(){
 
                 // get the save file
                 RuneSaveRawFile rawSaveFile;
-                Result rc = runeSaveGetSaveRawFile(&rawSaveFile, saveSlot.gameDataPath);
+                std::string dataPath = saveSlot.gameDataPath;
+                // dataPath = "save:/option.sav";
+                Result rc = runeSaveGetSaveRawFile(&rawSaveFile, dataPath);
                 
                 if (R_FAILED(rc)){
                     log("[MENU] - Failed to get raw save file for slot "+std::to_string(saveSlot.index)+"!");

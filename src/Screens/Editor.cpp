@@ -479,7 +479,7 @@ void Editor::onLoad(){
     //         continue;
     //     }
 
-    //     log("[ENTRY] - "+entry.dataName+": "+runeSaveValueToString(entry.value, true));
+    //     log("[ENTRY ("+std::string(runeSaveDataTypeName(entry.dataType))+")] - "+entry.dataName+": "+runeSaveValueToString(entry.value, true));
     // }
 }
 
