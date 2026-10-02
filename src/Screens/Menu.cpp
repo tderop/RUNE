@@ -126,7 +126,10 @@ void Menu::showSaveSelect(){
                 // make an application mgr to deal with this, currently if a new 
                 // editor is created, then so is another menu when returning
                 // so this just leads to infinite memory leakage
+                log("[MENU] - Making editor screen...");
                 Aether::Screen* editor = new Editor(this->window);
+
+                log("[MENU] - Showing editor screen...");
                 this->window->showScreen(editor);
             }
         );

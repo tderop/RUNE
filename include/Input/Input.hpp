@@ -68,5 +68,5 @@ public:
     void bind(std::string bindID, const InputObject& inputObject);
     void unbind(const std::string& bindID);
 
-    Connection<InputSystem&, InputState>& connect(const std::string& bindID, void (*function)(InputSystem&, InputState));
+    Connection<InputSystem&, InputState>& connect(const std::string& bindID, std::function<void(InputSystem&, InputState)> function);
 };

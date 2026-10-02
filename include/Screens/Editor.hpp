@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <Aether/Aether.hpp>
+#include <Input/Input.hpp>
 
 struct EditorTab{
     std::vector<std::string> menus;
@@ -25,6 +26,13 @@ private:
     std::vector<TempElement> temp;
 
     std::vector<Aether::ListButton*> tabButtons;
+    Aether::Rectangle* topPanel;
+
+    std::string selectedTab;
+    int selectedMenu;
+
+    std::vector<Aether::BorderButton*> menuLabels;
+    Aether::Rectangle* menuLabelSelIndicator;
 
 public:
     // standard Aether class methods
@@ -35,10 +43,15 @@ public:
     Editor(Aether::Window* window);
     ~Editor();
 
-    void positionSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
+    void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
 
     void buildScreen();
-    void showTab();
+    void showTab(std::string tabName);
+
+    void showMenu(int menuIdx);
+
+    void nextMenu(InputSystem& inputService, InputState state);
+    void prevMenu(InputSystem& inputService, InputState state);
 
     void cleanTemp();
     
