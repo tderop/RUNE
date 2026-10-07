@@ -7,6 +7,7 @@
 #include <Aether/Aether.hpp>
 #include <Input/Input.hpp>
 #include <Save/Save.hpp>
+#include <WidgetBuilder.hpp>
 
 /**
  * IMPORTANT KEYS
@@ -31,7 +32,9 @@ private:
 
     EditorTabData tabData;
     std::vector<std::string> tabs;
-    std::vector<TempElement> temp;
+    Trove* trove;
+
+    std::vector<EditorWidget*> tempWidgets;
 
     std::vector<Aether::ListButton*> tabButtons;
     Aether::Rectangle* topPanel;
@@ -41,6 +44,8 @@ private:
 
     std::vector<Aether::BorderButton*> menuLabels;
     Aether::Rectangle* menuLabelSelIndicator;
+
+    Aether::PopupList* popupList;
 
 public:
     // standard Aether class methods
@@ -61,9 +66,10 @@ public:
     void nextMenu(InputSystem& inputService, InputState state);
     void prevMenu(InputSystem& inputService, InputState state);
 
-    Aether::Element* getWidgetFromSaveKey(std::string& saveKey, RuneSaveFile& saveFile);
+    EditorWidget* getWidgetFromSaveKey(const std::string& saveKey, RuneSaveFile& saveFile);
+    Aether::PopupList* getPopupList();
 
-    void cleanTemp();
+    void cleanEditorWidgets();
     
     void addScreenElements();
     void showSaveSelect();

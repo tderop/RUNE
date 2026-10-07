@@ -34,7 +34,7 @@ Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), 
             "Stats",
             EditorTab{
                 .menus={"Stats", "Coordinates", "Completionism"},
-                .menuEntries{
+                .menuEntries={
                     {
                         "Stats",
                         {
@@ -51,27 +51,43 @@ Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), 
         {
             "Equipment",
             EditorTab{
-                .menus={"Weapons", "Bows", "Shields", "Armor"}
+                .menus={"Weapons", "Bows", "Shields", "Armor"},
+                .menuEntries={}
             }
         },
 
         {
             "Items",
             EditorTab{
-                .menus={"Materials", "Food", "Key Items"}
+                .menus={"Materials", "Food", "Key Items"},
+                .menuEntries={}
             }
         },
 
         {
             "Dev Editor",
             EditorTab{
-                .menus={"Dev Editor"}
+                .menus={"Dev Editor"},
+                .menuEntries={}
             }
         }
     };
 }
 
 Editor::~Editor(){}
+
+/**
+ * @brief Create an EditorWidget
+ */
+EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, RuneSaveFile& saveFile){
+    // get the save entry
+    RuneSaveEntry* saveEntry = runeSaveGetEntryFromDataName(saveFile, saveKey);
+
+    // create the editor widget
+    EditorWidget* widget = new EditorWidget(saveEntry, popupList, window);
+
+    return widget;
+}
 
 /**
  * @brief Reposition a rectangle to align with a button to show it is selected.
@@ -102,15 +118,6 @@ void Editor::positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aeth
     }
 }
 
-void Editor::cleanTemp(){
-    for (TempElement tempElm : this->temp){
-        tempElm.parentElm->removeElement(tempElm.elm);
-    }
-
-    // empty the meta to stop stale references!!
-    this->temp.clear();
-}
-
 void Editor::nextMenu(InputSystem& inputService, InputState state){
     if (state != InputState::Begin){
         return;
@@ -125,10 +132,6 @@ void Editor::prevMenu(InputSystem& inputService, InputState state){
     }
 
     this->showMenu(this->selectedMenu-1);
-}
-
-Aether::Element* Editor::getWidgetFromSaveKey(std::string& saveKey, RuneSaveFile& saveFile){
-
 }
 
 void Editor::buildScreen(){
@@ -363,9 +366,17 @@ void Editor::buildScreen(){
     });
 }
 
+void Editor::cleanEditorWidgets(){
+    for (EditorWidget* widget : this->tempWidgets){
+        delete widget;
+    }
+
+    this->tempWidgets.clear();
+}
+
 void Editor::showTab(std::string tabName){
     log("[EDITOR] - Cleaning temporary elements...");
-    this->cleanTemp();
+    this->trove->clear();
 
     log("[EDITOR] - Resetting selected menu, setting selected tab, and clearing menu labels...");
     this->selectedMenu = 0;
@@ -439,7 +450,7 @@ void Editor::showTab(std::string tabName){
         menuLabel->setTextColour(TEXT_COLOUR);
         menuLabel->setBorderColour(Aether::Colour{0, 0, 0, 0});
 
-        this->temp.push_back(TempElement{.parentElm=this, .elm=menuLabel});
+        this->trove->addElement(menuLabel);
         this->menuLabels.push_back(menuLabel);
 
         this->addElement(menuLabel);
@@ -482,9 +493,41 @@ void Editor::showMenu(int menuIdx){
             otherBtn->setTextColour(TOP_R);
         }
     }
+
+    // get more menu data
+    std::string tabName = this->tabs.at(menuIdx);
+    EditorTab& thisTabData = this->tabData.at(tabName);
+    
+    // get this tab's entries
+    auto it = thisTabData.menuEntries.find(tabName);
+    if (it == thisTabData.menuEntries.end()){
+        return;
+    }
+
+    // this is a vector of string keys that will be displayed for editing
+    std::vector<std::string>& menuEntries = it->second;
+
+    // non-copying loop through the entries
+    for (const std::string& saveKey : menuEntries){
+        EditorWidget* widget = this->getWidgetFromSaveKey(saveKey, this->saveFile);
+        this->tempWidgets.push_back(widget);
+    }
+}
+
+Aether::PopupList* Editor::getPopupList(){
+    return this->popupList;
 }
 
 void Editor::onLoad(){
+    // build the popupList
+    this->popupList = new Aether::PopupList("Edit Value"); // change to use readable name
+    this->popupList->setBackLabel("Back");
+    this->popupList->setOKLabel("OK");
+    this->popupList->setBackgroundColour(BACKGROUND_COLOUR);
+    this->popupList->setLineColour(SEPARATOR_COLOUR);
+    this->popupList->setListLineColour(Aether::Colour{0, 0, 0, 0});
+    this->popupList->setTextColour(TEXT_COLOUR);
+
     this->buildScreen();
 
     // debug
