@@ -2,13 +2,19 @@
 
 #include <switch.h>
 #include <vector>
+#include <unordered_map>
 
 #include <Aether/Aether.hpp>
 #include <Input/Input.hpp>
 #include <Save/Save.hpp>
 
+/**
+ * IMPORTANT KEYS
+ * CurrentMamo (-830800173): 
+ */
 struct EditorTab{
     std::vector<std::string> menus;
+    std::unordered_map<std::string, std::vector<std::string>> menuEntries;
 };
 
 struct TempElement{
@@ -54,6 +60,8 @@ public:
 
     void nextMenu(InputSystem& inputService, InputState state);
     void prevMenu(InputSystem& inputService, InputState state);
+
+    Aether::Element* getWidgetFromSaveKey(std::string& saveKey, RuneSaveFile& saveFile);
 
     void cleanTemp();
     

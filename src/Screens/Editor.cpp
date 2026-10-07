@@ -33,7 +33,18 @@ Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), 
         {
             "Stats",
             EditorTab{
-                .menus={"Stats", "Coordinates", "Completionism"}
+                .menus={"Stats", "Coordinates", "Completionism"},
+                .menuEntries{
+                    {
+                        "Stats",
+                        {
+                            "CurrentRupee", // Rupee balance
+                            "CurrentMamo",  // Mons balance
+                            "IsGet_Obj_Motorcycle", // Motorcycle Obtained
+                            
+                        }
+                    }
+                }
             }
         },
 
@@ -95,6 +106,9 @@ void Editor::cleanTemp(){
     for (TempElement tempElm : this->temp){
         tempElm.parentElm->removeElement(tempElm.elm);
     }
+
+    // empty the meta to stop stale references!!
+    this->temp.clear();
 }
 
 void Editor::nextMenu(InputSystem& inputService, InputState state){
@@ -111,6 +125,10 @@ void Editor::prevMenu(InputSystem& inputService, InputState state){
     }
 
     this->showMenu(this->selectedMenu-1);
+}
+
+Aether::Element* Editor::getWidgetFromSaveKey(std::string& saveKey, RuneSaveFile& saveFile){
+
 }
 
 void Editor::buildScreen(){
@@ -479,7 +497,7 @@ void Editor::onLoad(){
     //         continue;
     //     }
 
-    //     log("[ENTRY ("+std::string(runeSaveDataTypeName(entry.dataType))+")] - "+entry.dataName+": "+runeSaveValueToString(entry.value, true));
+    //     log("[ENTRY ("+std::string(runeSaveDataTypeName(entry.dataType))+")] - "+std::to_string(entry.id)+": "+runeSaveValueToString(entry.value, true));
     // }
 }
 

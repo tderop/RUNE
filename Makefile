@@ -40,7 +40,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 APP_TITLE   := RUNE
 # APP_TITLEID := 0001000000000016
 APP_VERSION := 0.0.0
-APP_AUTHOR  := TriTech
+APP_AUTHOR  := tderop
 APP_ICON    := $(CURDIR)/RUNE.jpg
 
 TARGET		:=	$(notdir $(CURDIR))

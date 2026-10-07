@@ -165,7 +165,7 @@ using RuneSaveValue = std::variant<
  * @brief An abstraction of a decoded entry in a `.sav` file.
  */
 struct RuneSaveEntry{
-    uint32_t id;
+    int32_t id;
     std::string dataName;
     RuneSaveDataType dataType;
     RuneSaveValue value;
