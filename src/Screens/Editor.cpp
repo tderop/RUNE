@@ -45,6 +45,18 @@ Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), 
                             "CurrentMamo",  // Mons balance
                             "IsGet_Obj_Motorcycle", // Motorcycle Obtained
                             
+                        },
+                    },
+                    {
+                        "Coordinates",
+                        {
+                            "CurrentMamo" // placeholder
+                        },
+                    },
+                    {
+                        "Completionism",
+                        {
+                            "CurrentMamo" // placeholder
                         }
                     }
                 }
@@ -383,7 +395,7 @@ void Editor::buildScreen(){
 void Editor::cleanEditorWidgets(){
     for (EditorWidget* widget : this->tempWidgets){
         log("[EDITOR] - Deleting widget...");
-        delete widget;
+        widget->clearTrove();
     }
 
     this->tempWidgets.clear();
@@ -475,7 +487,9 @@ void Editor::showTab(std::string tabName){
     log("[EDITOR] - Successfully repositioned all menu labels.");
 
     this->showMenu(0);
+
     log("[EDITOR] - Tab shown successfully!");
+    log("==========================================================");
 }
 
 void Editor::showMenu(int menuIdx){
@@ -485,15 +499,19 @@ void Editor::showMenu(int menuIdx){
         return;
     }
 
+    log("[EDITOR] - Preparing to show menu at index "+std::to_string(menuIdx));
     this->selectedMenu = menuIdx;
 
     if (this->menuLabelSelIndicator == nullptr){
+        log("[EDITOR] - Creating menu label select indicator...");
         this->menuLabelSelIndicator = new Aether::Rectangle(0, 0, 60, 2);
         this->menuLabelSelIndicator->setColour(TOP_R);
 
         this->addElement(menuLabelSelIndicator);
+        log("[EDITOR] - Menu label select indicator created!");
     }
 
+    log("[EDITOR] - Finding selected button...");
     Aether::BorderButton* selectedBtn = this->menuLabels.at(menuIdx);
 
     // reposition the select indicator
@@ -503,6 +521,7 @@ void Editor::showMenu(int menuIdx){
     );
 
     // recolor text
+    log("[EDITOR] - Recolouring text...");
     for (Aether::BorderButton* otherBtn : this->menuLabels){
         if (otherBtn != selectedBtn){
             otherBtn->setTextColour(TEXT_COLOUR);
@@ -514,19 +533,28 @@ void Editor::showMenu(int menuIdx){
 
     // get more menu data
     log("[EDITOR] - Getting menu data...");
+
     std::string tabName = this->tabs.at(menuIdx);
     EditorTab& thisTabData = this->tabData.at(tabName);
     log("[EDITOR] - Got tab name and this tab data: '"+tabName+"'");
     
     // get this tab's entries
+    log("[EDITOR] - Finding entries for tab: '"+tabName+"'...");
     auto it = thisTabData.menuEntries.find(tabName);
-    if (it == thisTabData.menuEntries.end()){
-        return;
-    }
+
+    log("[EDITOR] - Find operation complete.");
 
     // this is a vector of string keys that will be displayed for editing
-    log("[EDITOR] - Found the menu entries.");
-    std::vector<std::string>& menuEntries = it->second;
+    std::vector<std::string> placeholder = {""};
+    std::vector<std::string>& menuEntries = placeholder;
+
+    if (it == thisTabData.menuEntries.end()){
+        log("[!! EDITOR !!] - Failed to get this tab's entries.");
+        log("----------------------------------");
+    } else {
+        log("[EDITOR] - Found the menu entries.");
+        menuEntries = it->second;
+    }
 
     // clear all old widgets
     log("[EDITOR] - Cleaning old widgets...");
@@ -548,6 +576,9 @@ void Editor::showMenu(int menuIdx){
     }
 
     log("[EDITOR] - Built all widgets!");
+
+    log("[EDITOR] - Tab shown successfully!");
+    log("----------------------------------");
 }
 
 Aether::PopupList* Editor::getPopupList(){
