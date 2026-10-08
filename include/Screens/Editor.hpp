@@ -43,9 +43,10 @@ private:
     int selectedMenu;
 
     std::vector<Aether::BorderButton*> menuLabels;
-    Aether::Rectangle* menuLabelSelIndicator;
+    Aether::Rectangle* menuLabelSelIndicator = nullptr;
 
     Aether::PopupList* popupList;
+    Aether::List* editorScroll;
 
 public:
     // standard Aether class methods
@@ -67,7 +68,7 @@ public:
     void prevMenu(InputSystem& inputService, InputState state);
 
     EditorWidget* getWidgetFromSaveKey(const std::string& saveKey, RuneSaveFile& saveFile);
-    Aether::PopupList* getPopupList();
+    Aether::PopupList* getPopupList();  
 
     void cleanEditorWidgets();
     

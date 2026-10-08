@@ -19,6 +19,9 @@ int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
 Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), saveFile(saveFile){
+    // init
+    this->trove = new Trove();
+
     // data
     this->tabs = {
         "Stats",
@@ -322,6 +325,14 @@ void Editor::buildScreen(){
 
     debugRect->setColour(MUTED_BACKGROUND_COLOUR);
 
+    // the editor scroll
+    Aether::List* editorScroll = new Aether::List(
+        sidebarFrame->w(),
+        topPanel->h(),
+        WINDOW_RESOLUTION_X-sidebarFrame->w(),
+        WINDOW_RESOLUTION_Y-topPanel->h()
+    );
+
     // add all elements
     log("[EDITOR] - Adding elements...");
     this->addElement(background);
@@ -346,6 +357,9 @@ void Editor::buildScreen(){
     this->addElement(bottomSeparator);
 
     this->addElement(copyrightAndDisclaimer);
+
+    this->addElement(editorScroll);
+    this->editorScroll = editorScroll;
     
     log("[EDITOR] - Screen built successfully");
 
@@ -368,6 +382,7 @@ void Editor::buildScreen(){
 
 void Editor::cleanEditorWidgets(){
     for (EditorWidget* widget : this->tempWidgets){
+        log("[EDITOR] - Deleting widget...");
         delete widget;
     }
 
@@ -449,12 +464,15 @@ void Editor::showTab(std::string tabName){
 
         menuLabel->setTextColour(TEXT_COLOUR);
         menuLabel->setBorderColour(Aether::Colour{0, 0, 0, 0});
-
+        
+        log("[EDITOR] - Adding element to trove...");
         this->trove->addElement(menuLabel);
         this->menuLabels.push_back(menuLabel);
 
         this->addElement(menuLabel);
     }
+
+    log("[EDITOR] - Successfully repositioned all menu labels.");
 
     this->showMenu(0);
     log("[EDITOR] - Tab shown successfully!");
@@ -495,8 +513,10 @@ void Editor::showMenu(int menuIdx){
     }
 
     // get more menu data
+    log("[EDITOR] - Getting menu data...");
     std::string tabName = this->tabs.at(menuIdx);
     EditorTab& thisTabData = this->tabData.at(tabName);
+    log("[EDITOR] - Got tab name and this tab data: '"+tabName+"'");
     
     // get this tab's entries
     auto it = thisTabData.menuEntries.find(tabName);
@@ -505,13 +525,29 @@ void Editor::showMenu(int menuIdx){
     }
 
     // this is a vector of string keys that will be displayed for editing
+    log("[EDITOR] - Found the menu entries.");
     std::vector<std::string>& menuEntries = it->second;
 
+    // clear all old widgets
+    log("[EDITOR] - Cleaning old widgets...");
+    if (this->tempWidgets.size() > 0){
+        this->cleanEditorWidgets();
+    }
+
     // non-copying loop through the entries
+    log("[EDITOR] - Building new widgets...");
     for (const std::string& saveKey : menuEntries){
         EditorWidget* widget = this->getWidgetFromSaveKey(saveKey, this->saveFile);
         this->tempWidgets.push_back(widget);
+
+        if (!widget->isLoaded()){
+            continue; // ignore if failed to load
+        }
+
+        widget->addAllElements(this->editorScroll);
     }
+
+    log("[EDITOR] - Built all widgets!");
 }
 
 Aether::PopupList* Editor::getPopupList(){
