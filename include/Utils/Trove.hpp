@@ -1,0 +1,80 @@
+#include <vector>
+#include <variant>
+
+#include <Aether/Aether.hpp>
+
+/**
+ * @brief bruh?
+ */
+using AetherElement = std::variant<
+    Aether::Element*,
+
+    Aether::Animation*,
+    Aether::AsyncItem*,
+
+    Aether::BaseProgress*,
+    Aether::ProgressBar*,
+    Aether::RoundProgressBar*,
+
+    Aether::BorderButton*,
+
+    Aether::Container*,
+    Aether::ControlBar*,
+    Aether::ListHeadingHelp*,
+    Aether::Spinner*,
+    Aether::Screen*,
+    Aether::Overlay*,
+    Aether::DateTime*,
+    Aether::MessageBox*,
+    Aether::PopupList*,
+    Aether::Scrollable*,
+    Aether::List*,
+    Aether::Menu*,
+
+    
+    // Aether::ControlItem*,
+    Aether::FilledButton*,
+    Aether::HelpButton*,
+    Aether::ListButton*,
+    Aether::ListComment*,
+    Aether::ListHeading*,
+    Aether::ListOption*,
+    Aether::ListSeparator*,
+    Aether::MenuOption*,
+    Aether::MenuSeparator*,
+
+    Aether::Texture*,
+    Aether::BaseText*,
+    Aether::Box*,
+    Aether::Ellipse*,
+    Aether::Image*,
+    Aether::Rectangle*,
+
+    Aether::Text*,
+    Aether::TextBlock*,
+
+    Aether::Tick*
+>;
+
+class Trove{
+    private:
+        std::vector<AetherElement> elements;
+        std::vector<int> numbers;
+
+    public:
+        /**
+         * @brief Create a new element trove.
+         */
+        Trove();
+        ~Trove();
+
+        /**
+         * @brief Add an element to the trove.
+         */
+        void addElement(AetherElement element);
+
+        /**
+         * @brief Remove all elements in the trove. Automatically called when trove is destroyed.
+         */
+        void clear();
+};
