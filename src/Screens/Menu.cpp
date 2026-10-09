@@ -47,8 +47,8 @@ void Menu::showSaveSelect(){
     scrollable->setWrapAround(true);
 
     // get save slots
-    std::vector<RuneSaveSlot> runeSaveSlots;
-    runeSaveGetSaveSlots(&runeSaveSlots);
+    std::vector<Rune::Save::Slot> runeSaveSlots;
+    Rune::Save::GetSaveSlots(&runeSaveSlots);
 
     if (runeSaveSlots.size() == 0){
         log("[MENU] - No save slots found!");
@@ -63,11 +63,11 @@ void Menu::showSaveSelect(){
     // github.com/tderop/RUNE.git
 
     // get first caption file
-    RuneSaveRawFile rawFirstCaption;
-    RuneSaveSlot firstSaveSlot;
+    Rune::Save::RawFile rawFirstCaption;
+    Rune::Save::Slot firstSaveSlot;
 
     firstSaveSlot = runeSaveSlots.at(0);
-    Result gotRawCaption = runeSaveGetSaveRawFile(&rawFirstCaption, firstSaveSlot.captionDataPath);
+    Result gotRawCaption = Rune::Save::GetSaveRawFile(&rawFirstCaption, firstSaveSlot.captionDataPath);
 
     if (R_FAILED(gotRawCaption)){
         log("[INIT] - Failed to get save version! (1)");
@@ -75,8 +75,8 @@ void Menu::showSaveSelect(){
     }
 
     // decode save version
-    std::string saveVersion = runeSaveGetVersionString(
-        RuneSaveVersion(rawFirstCaption.header.version)
+    std::string saveVersion = Rune::Save::GetVersionString(
+        Rune::Save::Version(rawFirstCaption.header.version)
     );
 
     Aether::Text* saveVersionText = new Aether::Text(
@@ -98,18 +98,18 @@ void Menu::showSaveSelect(){
     // recolour
     saveVersionText->setColour(MUTED_TEXT_COLOR);
 
-    for (RuneSaveSlot saveSlot : runeSaveSlots){
+    for (Rune::Save::Slot saveSlot : runeSaveSlots){
         // get save data
-        RuneSaveRawFile rawCaptionFile;
-        Result rc = runeSaveGetSaveRawFile(&rawCaptionFile, saveSlot.captionDataPath);
+        Rune::Save::RawFile rawCaptionFile;
+        Result rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, saveSlot.captionDataPath);
         if (R_FAILED(rc)){
             log("[MENU] - Failed to get raw caption file for save slot "+std::to_string(saveSlot.index));
             continue;
         }
 
         // decode save data
-        RuneSaveFile captionFile;
-        rc = runeSaveDecode(&captionFile, rawCaptionFile, *runeMetadata);
+        Rune::Save::File captionFile;
+        rc = Rune::Save::Decode(&captionFile, rawCaptionFile, *runeMetadata);
         if (R_FAILED(rc)){
             log("[MENU] - Failed to decode caption file for save slot "+std::to_string(saveSlot.index));
         }
@@ -144,10 +144,10 @@ void Menu::showSaveSelect(){
                 this->addElement(loadingMessageText);
 
                 // get the save file
-                RuneSaveRawFile rawSaveFile;
+                Rune::Save::RawFile rawSaveFile;
                 std::string dataPath = saveSlot.gameDataPath;
                 // dataPath = "save:/option.sav";
-                Result rc = runeSaveGetSaveRawFile(&rawSaveFile, dataPath);
+                Result rc = Rune::Save::GetSaveRawFile(&rawSaveFile, dataPath);
                 
                 if (R_FAILED(rc)){
                     log("[MENU] - Failed to get raw save file for slot "+std::to_string(saveSlot.index)+"!");
@@ -155,8 +155,8 @@ void Menu::showSaveSelect(){
                 }
 
                 // decode the raw   
-                RuneSaveFile decodedSave;
-                rc = runeSaveDecode(&decodedSave, rawSaveFile, *runeMetadata);
+                Rune::Save::File decodedSave;
+                rc = Rune::Save::Decode(&decodedSave, rawSaveFile, *runeMetadata);
 
                 // transition to editor
                 // make an application mgr to deal with this, currently if a new 
@@ -226,9 +226,9 @@ void Menu::showSaveSelect(){
         
 
         // location text
-        RuneSaveEntry* saveLocationEntry = runeSaveGetEntryFromDataName(captionFile, SAVE_LOCATION_KEY);
+        Rune::Save::Entry* saveLocationEntry = Rune::Save::GetEntryFromDataName(captionFile, SAVE_LOCATION_KEY);
         if (std::get<std::string>(saveLocationEntry->value).empty()){ // default to map district if no location
-                saveLocationEntry = runeSaveGetEntryFromDataName(captionFile, SAVE_DISTRICT_KEY);
+                saveLocationEntry = Rune::Save::GetEntryFromDataName(captionFile, SAVE_DISTRICT_KEY);
         }
 
         if (saveLocationEntry != nullptr){
@@ -239,7 +239,7 @@ void Menu::showSaveSelect(){
             Aether::Text* locationText = new Aether::Text(
                 slotButton->x()+(size_offset)+captionImg->w()+TEXT_X_OFFSET,
                 slotButton->y()+(slotButton->h()/2),
-                runeSaveValueToString(saveLocationEntry->value, false),
+                Rune::Save::ValueToString(saveLocationEntry->value, false),
                 20
             );
 
@@ -252,8 +252,8 @@ void Menu::showSaveSelect(){
         }
 
         // form timestamp
-        // RuneSaveEntry* lastSaveTime_UpperEntry = runeSaveGetEntryFromDataName(captionFile, LAST_SAVE_TIME_UPPER_KEY); // seemingly meaningless value, tested dates beyond 2038 and 2106 and did not change, perhaps unimplemented rollover value
-        RuneSaveEntry* lastSaveTime_LowerEntry = runeSaveGetEntryFromDataName(captionFile, LAST_SAVE_TIME_LOWER_KEY);
+        // Rune::Save::Entry* lastSaveTime_UpperEntry = Rune::Save::GetEntryFromDataName(captionFile, LAST_SAVE_TIME_UPPER_KEY); // seemingly meaningless value, tested dates beyond 2038 and 2106 and did not change, perhaps unimplemented rollover value
+        Rune::Save::Entry* lastSaveTime_LowerEntry = Rune::Save::GetEntryFromDataName(captionFile, LAST_SAVE_TIME_LOWER_KEY);
         Aether::Text* timeText = nullptr;
 
         if (lastSaveTime_LowerEntry != nullptr){
@@ -277,7 +277,7 @@ void Menu::showSaveSelect(){
         }
 
         // game clear star
-        RuneSaveEntry* gameClearEntry = runeSaveGetEntryFromDataName(captionFile, GAME_CLEAR_KEY);
+        Rune::Save::Entry* gameClearEntry = Rune::Save::GetEntryFromDataName(captionFile, GAME_CLEAR_KEY);
         Aether::Image* starIcon = nullptr;
 
         if (gameClearEntry != nullptr && timeText != nullptr){
@@ -326,7 +326,7 @@ void Menu::showSaveSelect(){
         }
 
         // master mode icon
-        RuneSaveEntry* isMasterModeEntry = runeSaveGetEntryFromDataName(captionFile, IS_MASTER_MODE_KEY);
+        Rune::Save::Entry* isMasterModeEntry = Rune::Save::GetEntryFromDataName(captionFile, IS_MASTER_MODE_KEY);
         if (timeText != nullptr && isMasterModeEntry != nullptr && std::get<bool>(isMasterModeEntry->value)){
             // icon
             Aether::Image* masterModeIcon = new Aether::Image(
@@ -363,7 +363,7 @@ void Menu::showSaveSelect(){
         }
 
         // autosave icon
-        RuneSaveEntry* isAutosaveEntry = runeSaveGetEntryFromDataName(captionFile, IS_AUTOSAVE_KEY);
+        Rune::Save::Entry* isAutosaveEntry = Rune::Save::GetEntryFromDataName(captionFile, IS_AUTOSAVE_KEY);
         if (isAutosaveEntry != nullptr && std::get<bool>(isAutosaveEntry->value)){
             // text
             Aether::Text* autosaveText = new Aether::Text(

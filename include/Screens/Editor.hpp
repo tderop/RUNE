@@ -28,7 +28,7 @@ using EditorTabData = std::unordered_map<std::string, EditorTab>;
 class Editor : public Aether::Screen{
 private:
     Aether::Window* window;
-    RuneSaveFile saveFile;
+    Rune::Save::File saveFile;
 
     EditorTabData tabData;
     std::vector<std::string> tabs;
@@ -54,7 +54,7 @@ public:
     void onUnload() override;
     // void update(unsigned int deltaTime) override;
 
-    Editor(Aether::Window* window, RuneSaveFile saveFile);
+    Editor(Aether::Window* window, Rune::Save::File saveFile);
     ~Editor();
 
     void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
@@ -67,7 +67,7 @@ public:
     void nextMenu(InputSystem& inputService, InputState state);
     void prevMenu(InputSystem& inputService, InputState state);
 
-    EditorWidget* getWidgetFromSaveKey(const std::string& saveKey, RuneSaveFile& saveFile);
+    EditorWidget* getWidgetFromSaveKey(const std::string& saveKey, Rune::Save::File& saveFile);
     Aether::PopupList* getPopupList();  
 
     void cleanEditorWidgets();

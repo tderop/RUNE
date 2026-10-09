@@ -18,7 +18,7 @@ int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
-Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), saveFile(saveFile){
+Editor::Editor(Aether::Window* window, Rune::Save::File saveFile) : window(window), saveFile(saveFile){
     // init
     this->trove = new Trove();
 
@@ -97,9 +97,9 @@ Editor::~Editor(){
 /**
  * @brief Create an EditorWidget
  */
-EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, RuneSaveFile& saveFile){
+EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, Rune::Save::File& saveFile){
     // get the save entry
-    RuneSaveEntry* saveEntry = runeSaveGetEntryFromDataName(saveFile, saveKey);
+    Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName(saveFile, saveKey);
 
     // create the editor widget
     EditorWidget* widget = new EditorWidget(saveEntry, popupList, window);

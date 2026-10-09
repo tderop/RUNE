@@ -14,7 +14,7 @@
 // declarations
 bool exitQueued = false;
 InputSystem& inputService = InputSystem::getService();
-RuneSaveMetadata saveMetadata;
+Rune::Save::Metadata saveMetadata;
 bool mountSuccess = true;
 
 /**
@@ -74,7 +74,7 @@ Result initApplet(){
     }
 
     // load save metadata
-    Result rc = runeSaveLoadMetadata(&saveMetadata);
+    Result rc = Rune::Save::LoadMetadata(&saveMetadata);
     if (R_FAILED(rc)){
         log("Failed to parse BotW .bgsvdata metadata.");
         exitApplet(inputService, InputState::Begin);
@@ -101,7 +101,7 @@ Result initApplet(){
     log("[INIT] - Initialised RomFS");
 
     // mount save data
-    rc = runeSaveMountSaveData();
+    rc = Rune::Save::MountSaveData();
     if (R_FAILED(rc)){
         log("Failed to mount BotW save data.");
         mountSuccess = false;

@@ -50,10 +50,10 @@
 #include "vector3f_data_0_bgdata.h"
 #include "vector4f_data_0_bgdata.h"
 
-RuneSaveMetadata* runeMetadata = nullptr;
+Rune::Save::Metadata* runeMetadata = nullptr;
 const char* testSavePath = "sdmc:/TestSave/";
 
-std::string runeSaveGetVersionString(RuneSaveVersion version){
+std::string Rune::Save::GetVersionString(Rune::Save::Version version){
     switch (version){
         case RuneSaveVersion_100:
             return "1.0.0";
@@ -89,7 +89,7 @@ std::string runeSaveGetVersionString(RuneSaveVersion version){
     return "Unknown";
 }
 
-Result runeSaveGetSaveHeader(RuneSaveHeader* out, const std::string& savePath){
+Result Rune::Save::GetSaveHeader(Rune::Save::Header* out, const std::string& savePath){
     std::ifstream saveFile(savePath, std::ios::binary);
     
     // check if the file successfully opened
@@ -99,7 +99,7 @@ Result runeSaveGetSaveHeader(RuneSaveHeader* out, const std::string& savePath){
     }
 
     // unpack the save header
-    if (!saveFile.read(reinterpret_cast<char*>(out), sizeof(RuneSaveHeader))){
+    if (!saveFile.read(reinterpret_cast<char*>(out), sizeof(Rune::Save::Header))){
         return LibnxError_IoError;
     }
 
@@ -109,7 +109,7 @@ Result runeSaveGetSaveHeader(RuneSaveHeader* out, const std::string& savePath){
 /**
  * @brief mounts the BotW save data to the "save:/" system
  */
-Result runeSaveMountSaveData(){
+Result Rune::Save::MountSaveData(){
     AccountUid userID;
     Result rc = getUserID(&userID);
     if (R_FAILED(rc)){
@@ -129,7 +129,7 @@ Result runeSaveMountSaveData(){
 /**
  * @brief Unpacks all of the save slots in a BotW save file.
  */
-Result runeSaveGetSaveSlots(std::vector<RuneSaveSlot>* out){
+Result Rune::Save::GetSaveSlots(std::vector<Rune::Save::Slot>* out){
     // open the directory
     DIR* dir = opendir("save:/");
     std::string thisPath = "save:/";
@@ -148,8 +148,8 @@ Result runeSaveGetSaveSlots(std::vector<RuneSaveSlot>* out){
                 // get the name of the slot
                 int slotIdx = std::stoi(entry->d_name);
 
-                // build the RuneSaveSlot
-                RuneSaveSlot saveSlot;
+                // build the Rune::Save::Slot
+                Rune::Save::Slot saveSlot;
 
                 saveSlot.index           = slotIdx;
                 saveSlot.path            = thisPath+std::string(entry->d_name);
@@ -167,9 +167,9 @@ Result runeSaveGetSaveSlots(std::vector<RuneSaveSlot>* out){
 }
 
 /**
- * @brief Get a RuneSaveRawFile containing all entries from a provided save file path.
+ * @brief Get a Rune::Save::RawFile containing all entries from a provided save file path.
  */
-Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
+Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string& filePath){
     std::ifstream saveFile(filePath, std::ios::binary);
     
     if (!saveFile.is_open()){
@@ -178,8 +178,8 @@ Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
     }
 
     // get the header
-    RuneSaveHeader header;
-    Result rc = runeSaveGetSaveHeader(&header, filePath);
+    Rune::Save::Header header;
+    Result rc = Rune::Save::GetSaveHeader(&header, filePath);
     if (R_FAILED(rc)){
         log("Failed to get save header.");
         return rc;
@@ -193,7 +193,7 @@ Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
     int pos = 12;
 
     while (true){
-        RuneSaveRawEntry entry;
+        Rune::Save::RawEntry entry;
 
         // usually 4 bytes off the end, last 4 bytes are always 0xFF 0xFF 0xFF 0xFF
         if (!saveFile.read(reinterpret_cast<char*>(&entry), 8)){
@@ -211,27 +211,27 @@ Result runeSaveGetSaveRawFile(RuneSaveRawFile* out, std::string& filePath){
 /**
  * @brief a helper for decoding rune save values. Requires context array. 
  */
-RuneSaveValue runeSaveDecodeValue(RuneSaveDataType dataType, RuneSaveRawFile& rawFileContext, int* i){
-    // stub
-    // this is where unusedfunction waring is
-    return 1;
-}
+// Rune::Save::SaveValue Rune::Save::DecodeValue(Rune::Save::DataType dataType, Rune::Save::RawFile& rawFileContext, int* i){
+//     // stub
+//     // this is where unusedfunction waring is
+//     return 1;
+// }
 
 /**
  * @brief Decode a raw save file.
  */
-Result runeSaveDecode(RuneSaveFile* out, const RuneSaveRawFile& raw, const RuneSaveMetadata& metadata){
+Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw, const Rune::Save::Metadata& metadata){
     // move trivial values
     out->header = raw.header;
 
     for (size_t i = 0; i < raw.entries.size(); i++){
-        const RuneSaveRawEntry& rawEntry = raw.entries[i];
+        const Rune::Save::RawEntry& rawEntry = raw.entries[i];
 
-        RuneSaveEntry entry;
+        Rune::Save::Entry entry;
         entry.id = rawEntry.id;
 
         // data name
-        Result rc = runeSaveGetDataName(metadata, entry.id, &entry.dataName);
+        Result rc = Rune::Save::GetDataName(metadata, entry.id, &entry.dataName);
         if (R_FAILED(rc)){
             // unknown ID
             log(
@@ -243,7 +243,7 @@ Result runeSaveDecode(RuneSaveFile* out, const RuneSaveRawFile& raw, const RuneS
             continue;
         }
 
-        rc = runeSaveGetDataType(metadata, entry.id, &entry.dataType);
+        rc = Rune::Save::GetDataType(metadata, entry.id, &entry.dataType);
         if (R_FAILED(rc)){
             log("[DECODE] - [NAME:"+std::string(entry.dataName)+"] failed to get data type (skipping)");
             continue;
@@ -543,9 +543,9 @@ Result runeSaveDecode(RuneSaveFile* out, const RuneSaveRawFile& raw, const RuneS
 // }
 
 /**
- * @brief Convert a RuneSaveValue to a displayable string
+ * @brief Convert a Rune::Save::Value to a displayable string
  */
-std::string runeSaveValueToString(const RuneSaveValue& value, bool showStringQuotes)
+std::string Rune::Save::ValueToString(const Rune::Save::SaveValue& value, bool showStringQuotes)
 {
     std::ostringstream stream;
 
@@ -635,9 +635,9 @@ std::string runeSaveValueToString(const RuneSaveValue& value, bool showStringQuo
 /**
  * @brief Unpack save metadata
  */
-Result runeSaveLoadMetadata(RuneSaveMetadata* out){
+Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
     // all of the meta files
-    RuneBgsvData bgsvFiles[] = {
+    Rune::Save::BgsvData bgsvFiles[] = {
         {_0_bgsvdata, _0_bgsvdata_size},
         {_1_bgsvdata, _1_bgsvdata_size},
         {_2_bgsvdata, _2_bgsvdata_size},
@@ -649,7 +649,7 @@ Result runeSaveLoadMetadata(RuneSaveMetadata* out){
     };
 
     // all of the data type files
-    RuneBgData bgFiles[] = {
+    Rune::Save::BgData bgFiles[] = {
         {bool_array_data_0_bgdata, bool_array_data_0_bgdata_size, RuneBoolArray},
         {bool_data_0_bgdata, bool_data_0_bgdata_size, RuneBool},
         {bool_data_1_bgdata, bool_data_1_bgdata_size, RuneBool},
@@ -688,7 +688,7 @@ Result runeSaveLoadMetadata(RuneSaveMetadata* out){
 
     for (size_t i = 0; i < sizeof(bgsvFiles) / sizeof(bgsvFiles[0]); i++){
         // log("Parsing bgsvdata file " + std::to_string(i));
-        const RuneBgsvData& file = bgsvFiles[i];
+        const Rune::Save::BgsvData& file = bgsvFiles[i];
 
         byml::Reader reader{
             byml::Buffer{file.data, file.size}
@@ -758,15 +758,15 @@ Result runeSaveLoadMetadata(RuneSaveMetadata* out){
     }
 
      // get the data types
-    for (RuneBgData bgdata : bgFiles){
+    for (Rune::Save::BgData bgdata : bgFiles){
         // parse bgdata file
         byml::Reader reader(
             byml::Buffer{bgdata.data, bgdata.size}
         );
 
         // output datatype
-        RuneSaveDataType dataType = bgdata.dataType;
-        const char* dataTypeName = runeSaveDataTypeName(dataType);
+        Rune::Save::DataType dataType = bgdata.dataType;
+        const char* dataTypeName = Rune::Save::DataTypeName(dataType);
         
         // get datatype
         if (!reader.isValid()){
@@ -821,7 +821,7 @@ Result runeSaveLoadMetadata(RuneSaveMetadata* out){
 /**
  * @brief Get the DataName from an ID
  */
-Result runeSaveGetDataName(const RuneSaveMetadata& metadata, uint32_t id, std::string* outDataName){
+Result Rune::Save::GetDataName(const Rune::Save::Metadata& metadata, uint32_t id, std::string* outDataName){
     // convert unsigned to signed
     int32_t hashValue = static_cast<int32_t>(id);
 
@@ -838,7 +838,7 @@ Result runeSaveGetDataName(const RuneSaveMetadata& metadata, uint32_t id, std::s
 /**
  * @brief Get the data type of a DataName
  */
-Result runeSaveGetDataType(const RuneSaveMetadata& metadata, uint32_t id, RuneSaveDataType* outDataType){
+Result Rune::Save::GetDataType(const Rune::Save::Metadata& metadata, uint32_t id, Rune::Save::DataType* outDataType){
     int32_t hashValue = static_cast<int32_t>(id);
 
     auto it = metadata.dataTypes.find(hashValue);
@@ -851,10 +851,10 @@ Result runeSaveGetDataType(const RuneSaveMetadata& metadata, uint32_t id, RuneSa
 }
 
 /**
- * @brief Gets the name of a RuneSaveDataType
+ * @brief Gets the name of a Rune::Save::DataType
  */
-const char* runeSaveDataTypeName(RuneSaveDataType type) {
-    for (const auto& dataType : RuneSaveDataTypes) {
+const char* Rune::Save::DataTypeName(Rune::Save::DataType type) {
+    for (const auto& dataType : Rune::Save::DataTypes) {
         if (dataType.type == type) {
             return dataType.name;
         }
@@ -864,10 +864,10 @@ const char* runeSaveDataTypeName(RuneSaveDataType type) {
 }
 
 /**
- * @brief Get a RuneSaveEntry from a RuneSaveFile by the entry's DataName
+ * @brief Get a Rune::Save::Entry from a Rune::Save::File by the entry's DataName
  */
-RuneSaveEntry* runeSaveGetEntryFromDataName(RuneSaveFile& saveFile, const std::string& dataName){
-    for (RuneSaveEntry& saveEntry : saveFile.entries){
+Rune::Save::Entry* Rune::Save::GetEntryFromDataName(Rune::Save::File& saveFile, const std::string& dataName){
+    for (Rune::Save::Entry& saveEntry : saveFile.entries){
         if (saveEntry.dataName == dataName){
             return &saveEntry;
         }
