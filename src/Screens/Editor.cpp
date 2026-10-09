@@ -89,7 +89,10 @@ Editor::Editor(Aether::Window* window, RuneSaveFile saveFile) : window(window), 
     };
 }
 
-Editor::~Editor(){}
+Editor::~Editor(){
+    this->cleanEditorWidgets();
+    delete this->trove;
+}
 
 /**
  * @brief Create an EditorWidget
@@ -396,6 +399,7 @@ void Editor::cleanEditorWidgets(){
     for (EditorWidget* widget : this->tempWidgets){
         log("[EDITOR] - Deleting widget...");
         widget->clearTrove();
+        delete widget;
     }
 
     this->tempWidgets.clear();
@@ -534,26 +538,24 @@ void Editor::showMenu(int menuIdx){
     // get more menu data
     log("[EDITOR] - Getting menu data...");
 
-    std::string tabName = this->tabs.at(menuIdx);
-    EditorTab& thisTabData = this->tabData.at(tabName);
-    log("[EDITOR] - Got tab name and this tab data: '"+tabName+"'");
+    EditorTab& thisTabData = this->tabData.at(this->selectedTab);
+    const std::string& menuName = thisTabData.menus.at(menuIdx);
+    log("[EDITOR] - Got menu name and selected tab data: '"+menuName+"'");
     
     // get this tab's entries
-    log("[EDITOR] - Finding entries for tab: '"+tabName+"'...");
-    auto it = thisTabData.menuEntries.find(tabName);
+    log("[EDITOR] - Finding entries for menu: '"+menuName+"'...");
+    auto it = thisTabData.menuEntries.find(menuName);
 
     log("[EDITOR] - Find operation complete.");
 
-    // this is a vector of string keys that will be displayed for editing
-    std::vector<std::string> placeholder = {""};
-    std::vector<std::string>& menuEntries = placeholder;
+    const std::vector<std::string>* menuEntries = nullptr;
 
     if (it == thisTabData.menuEntries.end()){
-        log("[!! EDITOR !!] - Failed to get this tab's entries.");
+        log("[EDITOR] - No entries configured for menu '"+menuName+"'.");
         log("----------------------------------");
     } else {
         log("[EDITOR] - Found the menu entries.");
-        menuEntries = it->second;
+        menuEntries = &it->second;
     }
 
     // clear all old widgets
@@ -564,7 +566,12 @@ void Editor::showMenu(int menuIdx){
 
     // non-copying loop through the entries
     log("[EDITOR] - Building new widgets...");
-    for (const std::string& saveKey : menuEntries){
+    if (menuEntries == nullptr){
+        log("[EDITOR] - Menu shown with no widgets.");
+        return;
+    }
+
+    for (const std::string& saveKey : *menuEntries){
         EditorWidget* widget = this->getWidgetFromSaveKey(saveKey, this->saveFile);
         this->tempWidgets.push_back(widget);
 
