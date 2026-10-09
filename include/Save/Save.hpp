@@ -51,14 +51,7 @@ namespace Rune
             RuneSaveVersion_150 = 0x471B,
             RuneSaveVersion_160 = 0x471E
         };
-        
-        struct DataTypeInfo
-        {
-            DataType type;
-            const char *name;
-        };
-
-        /**
+                /**
          * @brief BotW save data types
          */
         enum DataType
@@ -85,6 +78,12 @@ namespace Rune
             RuneVector3fArray = 0x000F,
             RuneVector3f = 0x0010,
             RuneVector4f = 0x0011
+        };
+        
+        struct DataTypeInfo
+        {
+            DataType type;
+            const char *name;
         };
 
         inline constexpr DataTypeInfo DataTypes[] = {
