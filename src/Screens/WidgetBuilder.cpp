@@ -8,13 +8,15 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popu
     
     // init
     this->_isLoaded = false;
-    this->trove = new Trove();
-    log("[EditorWidget] - Trove created!");
+    this->editButton = nullptr;
 
     if (saveEntry == nullptr){
         log("[!! EDITOR WIDGET !!] - Cannot build widget for a missing save entry.");
         return;
     }
+
+    this->trove = new Trove();
+    log("[EditorWidget] - Trove created!");
 
     // find the widget builder for this datatype
     auto it = WIDGET_BUILDERS.find(saveEntry->dataType);
@@ -28,6 +30,7 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popu
     widgetBuilder(this);
 
     this->_isLoaded = true;
+    log("[WIDGET "+saveEntry->dataName+"] - Completed widget build function. Widget now successfully loaded.");
 }
 
 void EditorWidget::clearTrove(){
@@ -35,7 +38,7 @@ void EditorWidget::clearTrove(){
         return;
     }
 
-    log("[EditorWidget "+this->saveEntry->dataName+"] - Clearing trove.");
+    log("[WIDGET "+this->saveEntry->dataName+"] - Clearing trove.");
     this->trove->clear();
 }
 
@@ -44,12 +47,16 @@ std::vector<AetherElement> EditorWidget::getAllElements(){
 }
 
 void EditorWidget::addAllElements(Aether::Element*  parentElement){
+    log("[WIDGET "+this->saveEntry->dataName+"] - Adding all elements to screen...");
     for (AetherElement elm : this->elements){
-        Aether::Element* toAdd = std::get<Aether::Element*>(elm);
-        parentElement->addElement(toAdd);
-        toAdd->setParent(parentElement);
+        std::visit([parentElement](auto&& arg){
+            Aether::Element* toAdd = arg;
+            parentElement->addElement(toAdd);
+            toAdd->setParent(parentElement);
+        }, elm);
     }
 
+    log("[WIDGET "+this->saveEntry->dataName+"] - Successfully added all widget elements!");
     // clear queued elements
     // this->elements.clear();
 }
@@ -71,15 +78,15 @@ void EditorWidget::addToElements(AetherElement element){
     this->trove->addElement(element); // why?
 }
 
-void EditorWidget::setEditButton(AetherElement editButton){
+void EditorWidget::setEditButton(Aether::ListOption* editButton){
     log("[EditorWidget] - Setting edit button...");
     this->editButton = editButton;
 
     log("[EditorWidget] - Adding edit button to elements...");
-    this->addToElements(editButton);
+    this->addToElements(AetherElement(editButton));
 }
 
-AetherElement EditorWidget::getEditButton(){
+Aether::ListOption* EditorWidget::getEditButton(){
     return this->editButton;
 }
 

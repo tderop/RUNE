@@ -7,45 +7,30 @@
 #include <Utils/Utils.hpp>
 
 #include <Screens/Editor.hpp>
-
+#include <Utils/Trove.hpp>
 
 int SAVE_ICON_SIZE = 16; // 16x16 pixels for image icons (star, hard mode)
 
 /**
  * @brief The Menu constructor
  */
-Menu::Menu(Aether::Window* window) : window(window){}
+Menu::Menu(Aether::Window* window) : window(window){
+    this->trove = new Trove();
+}
 Menu::~Menu(){}
+
+void Menu::addTempElement(Aether::Element* element){
+    // add the element to the screen
+    this->addElement(element);
+
+    // add the same element to the trove
+    this->trove->addElement(element);
+}
 
 /**
  * @brief Create a Scrollable listing all save slots
  */
 void Menu::showSaveSelect(){
-    // new scrollable
-    Aether::List* scrollable = new Aether::List(
-        WINDOW_RESOLUTION_X/2,
-        TOP_SEPARATOR_Y+1,
-        1200,
-        BOTTOM_SEPARATOR_Y-TOP_SEPARATOR_Y-2
-    );
-
-    this->saveSlotScroll = scrollable;
-
-    // centre
-    scrollable->setX(scrollable->x()-scrollable->w()/2);
-    scrollable->setY(TOP_SEPARATOR_Y+1);
-    scrollable->setH(
-        BOTTOM_SEPARATOR_Y-TOP_SEPARATOR_Y-2
-    );
-
-    scrollable->setCatchup(11);
-    scrollable->setScrollBarColour(SEPARATOR_COLOUR);
-    scrollable->setShowScrollBar(true);
-
-    // NEXT SESSION: FIND OUT HOW TO MAKE LISTS SCROLL WITH CONTROLLER NAVIGATION
-    // check NXTM source
-    scrollable->setWrapAround(true);
-
     // get save slots
     std::vector<Rune::Save::Slot> runeSaveSlots;
     Rune::Save::GetSaveSlots(&runeSaveSlots);
@@ -140,8 +125,8 @@ void Menu::showSaveSelect(){
                 loadingMessage->setLineColour(Aether::Colour{0, 0, 0, 0});
                 loadingMessageText->setColour(TEXT_COLOUR);
 
-                this->addElement(loadingMessage);
-                this->addElement(loadingMessageText);
+                this->addTempElement(loadingMessage);
+                this->addTempElement(loadingMessageText);
 
                 // get the save file
                 Rune::Save::RawFile rawSaveFile;
@@ -178,23 +163,27 @@ void Menu::showSaveSelect(){
         // slotButton->setX(scrollable->x());
         slotButton->setH(WINDOW_RESOLUTION_Y/6);
 
-        scrollable->addElement(slotButton);
+        this->saveSlotScroll->addElement(slotButton);
+        this->trove->addElement(slotButton);
 
         // small padding for the comment
         Aether::ListSeparator* commentPadding = new Aether::ListSeparator(16);
-        scrollable->addElement(commentPadding);
+        this->saveSlotScroll->addElement(commentPadding);
+        this->trove->addElement(commentPadding);
         
         // create a comment
         Aether::ListHeading* slotComment = new Aether::ListHeading(
             "Save slot index: "+std::to_string(saveSlot.index)
         );
-        scrollable->addElement(slotComment);
+        this->saveSlotScroll->addElement(slotComment);
+        this->trove->addElement(slotComment);
         slotComment->setRectColour(MUTED_TEXT_COLOR);
         slotComment->setTextColour(MUTED_TEXT_COLOR);
 
         // create a list separator
         Aether::ListSeparator* bottomPadding = new Aether::ListSeparator();
-        scrollable->addElement(bottomPadding);
+        this->saveSlotScroll->addElement(bottomPadding);
+        this->trove->addElement(bottomPadding);
 
         // make save slot image
         Aether::Image* captionImg = new Aether::Image(
@@ -398,13 +387,11 @@ void Menu::showSaveSelect(){
         i++;
     }
 
-    this->addElement(scrollable);
-    this->setFocused(scrollable);
-
     this->addElement(saveVersionText);
+    this->trove->addElement(saveVersionText);
 
     if (firstButton != nullptr){
-        scrollable->setFocused(firstButton);
+        this->saveSlotScroll->setFocused(firstButton);
     }
 
     // finally fixed not scrolling with controller, for some reason had to manually call update
@@ -417,7 +404,7 @@ void Menu::showSaveSelect(){
 /**
  * @brief Add all key elements to the Menu screen.
  */
-void Menu::addScreenElements(){
+void Menu::buildScreen(){
     // add the background
     Aether::Rectangle* background = new Aether::Rectangle(
         0,
@@ -496,6 +483,32 @@ void Menu::addScreenElements(){
     captionText->setX(captionText->x()-captionText->w()/2);
     captionText->setColour(MUTED_TEXT_COLOR);
 
+    // scrollable for showing save slot entries
+    Aether::List* scrollable = new Aether::List(
+        WINDOW_RESOLUTION_X/2,
+        TOP_SEPARATOR_Y+1,
+        1200,
+        BOTTOM_SEPARATOR_Y-TOP_SEPARATOR_Y-2
+    );
+
+    this->saveSlotScroll = scrollable;
+
+    // centre
+    scrollable->setX(scrollable->x()-scrollable->w()/2);
+    scrollable->setY(TOP_SEPARATOR_Y+1);
+    scrollable->setH(
+        BOTTOM_SEPARATOR_Y-TOP_SEPARATOR_Y-2
+    );
+
+    scrollable->setCatchup(11);
+    scrollable->setScrollBarColour(SEPARATOR_COLOUR);
+    scrollable->setShowScrollBar(true);
+
+    // NEXT SESSION: FIND OUT HOW TO MAKE LISTS SCROLL WITH CONTROLLER NAVIGATION
+    // check NXTM source
+    // stupid bug
+    scrollable->setWrapAround(true);
+
     // show all elements (in z-index order)
     this->addElement(background);
     this->addElement(controlBar);
@@ -504,19 +517,21 @@ void Menu::addScreenElements(){
     // this->addElement(captionText);
     this->addElement(topSeparator);
     this->addElement(bottomSeparator);
-
-    showSaveSelect();
+    
+    this->addElement(scrollable);
+    this->setFocused(scrollable);
 }
 
 void Menu::onLoad(){
-    this->addScreenElements();
+    this->showSaveSelect();
 }
 
 /**
  * @brief Clean up all elements on unload to prevent memory leaks.
+ * No!
  */
 void Menu::onUnload(){
-    this->removeAllElements();
+    this->trove->clear();
 }
 
 // do vector decoding

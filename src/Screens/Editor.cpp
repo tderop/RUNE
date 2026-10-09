@@ -104,6 +104,7 @@ EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, Rune::Sav
     // create the editor widget
     EditorWidget* widget = new EditorWidget(saveEntry, popupList, window);
 
+    log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
     return widget;
 }
 
@@ -578,7 +579,7 @@ void Editor::showMenu(int menuIdx){
         if (!widget->isLoaded()){
             continue; // ignore if failed to load
         }
-
+        
         widget->addAllElements(this->editorScroll);
     }
 

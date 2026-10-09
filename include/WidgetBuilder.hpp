@@ -21,7 +21,7 @@
 class EditorWidget
 {
 private:
-    AetherElement editButton;
+    Aether::ListOption* editButton;
     Trove *trove;
     Rune::Save::Entry *saveEntry;
 
@@ -60,12 +60,12 @@ public:
     /**
      * @brief Set the edit button.
      */
-    void setEditButton(AetherElement editButton);
+    void setEditButton(Aether::ListOption* editButton);
 
     /**
      * @brief Get the edit button pointer. Can return nullptr.
      */
-    AetherElement getEditButton();
+    Aether::ListOption* getEditButton();
 
     /**
      * @brief Set the popup list.
@@ -169,29 +169,27 @@ const WidgetBuilderMap WIDGET_BUILDERS = {
                 bool boolSaveValue = std::get<bool>(saveEntry->value);
 
                 widget->addPopupListEntry(std::string("true"), [widget, saveEntry]() { // set entry to true
-                    auto element = widget->getEditButton();
-                    auto* boolButton = std::get_if<Aether::ListOption*>(&element);
-
-                    if (boolButton == nullptr || *boolButton == nullptr) {
-                        log("[WIDGET " + saveEntry->dataName + "] - Invalid bool button!");
+                    Aether::ListOption* editBtn = widget->getEditButton();
+                    if (editBtn == nullptr){
+                        log("[WIDGET " + saveEntry->dataName + "] - No edit button!");
                         return;
                     }
 
                     saveEntry->value = true;
-                    (*boolButton)->setValue("true");
+                    editBtn->setValue("true");
+                    
                 }, (boolSaveValue == true));
 
                 widget->addPopupListEntry(std::string("false"), [widget, saveEntry]() { // set entry to false
-                    auto element = widget->getEditButton();
-                    auto* boolButton = std::get_if<Aether::ListOption*>(&element);
+                    Aether::ListOption* editBtn = widget->getEditButton();
 
-                    if (boolButton == nullptr || *boolButton == nullptr) {
-                        log("[WIDGET " + saveEntry->dataName + "] - Invalid bool button!");
+                    if (editBtn == nullptr){
+                        log("[WIDGET " + saveEntry->dataName + "] - No edit button!");
                         return;
                     }
 
                     saveEntry->value = false;
-                    (*boolButton)->setValue("false");
+                    editBtn->setValue("false");
                 }, (boolSaveValue == false));
 
                 // show the popup list
@@ -203,7 +201,10 @@ const WidgetBuilderMap WIDGET_BUILDERS = {
             });
 
             log("[WIDGET " + saveEntry->dataName + "] - Setting edit button...");
+
             boolButton->setValueColour(TOP_R);
+            boolButton->setLineColour(SEPARATOR_COLOUR);
+            
             widget->setEditButton(boolButton);
 
             log("[WIDGET " + saveEntry->dataName + "] - Created bool widget successfully!");
