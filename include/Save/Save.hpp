@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <array>
 #include <variant>
+#include <byml/value.h>
 
 // consts
 const std::string SAVE_DISTRICT_KEY = "SaveDistrictName";
@@ -51,7 +52,8 @@ namespace Rune
             RuneSaveVersion_150 = 0x471B,
             RuneSaveVersion_160 = 0x471E
         };
-                /**
+
+        /**
          * @brief BotW save data types
          */
         enum DataType
@@ -163,7 +165,10 @@ namespace Rune
             std::vector<float>, // vectors
             std::vector<std::string>,
 
-            std::vector<std::vector<float>> // vector arrays
+            std::vector<std::vector<float>>, // vector arrays
+
+            // meta types
+            // byml::ItemData::Variant
         >;
 
         struct MetaEntry {

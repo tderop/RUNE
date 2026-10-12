@@ -738,10 +738,6 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto dataNameItem = mapping->getByKey("DataName");
             auto hashValueItem = mapping->getByKey("HashValue");
 
-            auto maxValueItem = mapping->getByKey("MaxValue");
-            auto minValueItem = mapping->getByKey("MinValue"); // can be cast?
-            auto defaultValueItem = mapping->getByKey("InitValue");
-
             if (!dataNameItem || !hashValueItem){
                 return LibnxError_BadInput;
             }
@@ -763,12 +759,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             /**
              * NEXT: figure out how to get max/min/default values and cast them to RuneSaveValue??
              */
-            MetaEntry entry = {
-                .dataName=dataName,
-            };
-
-            // set the entry
-            (*out)[*hashValue] = entry;
+            (*out)[*hashValue].dataName = dataName;
         }
     }
 
@@ -828,18 +819,83 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
 
             // find existing metaEntry
             auto it = out->find(*hashValue);
-            MetaEntry entry;
+            MetaEntry* entry;
 
             // if found, set
             bool found = (it != out->end());
             if (found){
                 it->second.dataType = dataType;
+                entry = &it->second;
             } else {
                 // otherwise, make new entry
-                MetaEntry entry = {
-                    .dataType=dataType
-                };
-                (*out)[*hashValue] = entry;
+                entry = &(*out)[*hashValue];
+                entry->dataType = dataType;
+            }
+
+            auto maxValueItem = mapping->getByKey("MaxValue");
+            auto minValueItem = mapping->getByKey("MinValue"); // can be cast?
+            auto defaultValueItem = mapping->getByKey("InitValue");
+
+            // cast for each one (hopefully this works)
+            switch (dataType){
+                case RuneBoolArray:
+                case RuneF32Array:
+                case RuneS32Array:
+                case RuneString64Array:
+                case RuneString256Array:
+                case RuneVector2fArray:
+                case RuneVector3fArray:
+                case RuneVector2f:
+                case RuneVector3f:
+                case RuneVector4f:
+                    auto maxValue  = maxValueItem->getArray();
+                    auto minValue  = minValueItem->getArray();
+                    auto initValue = minValueItem->getArray();
+                    
+                    entry->maxValue  = maxValue;
+                    entry->minValue  = minValue;
+                    entry->initValue = initValue;
+                    break;
+
+                case RuneBool:
+                case RuneRevivalBool:
+                    auto maxValue  = maxValueItem->getBool();
+                    auto minValue  = minValueItem->getBool();
+                    auto initValue = minValueItem->getBool(); 
+
+                    entry->maxValue  = maxValue;
+                    entry->minValue  = minValue;
+                    entry->initValue = initValue;
+                    break;
+
+                case RuneF32:
+                    auto maxValue  = maxValueItem->getFloat();
+                    auto minValue  = minValueItem->getFloat();
+                    auto initValue = minValueItem->getFloat(); 
+
+                    entry->maxValue  = maxValue;
+                    entry->minValue  = minValue;
+                    entry->initValue = initValue;
+
+                case RuneS32:
+                    auto maxValue  = maxValueItem->getInt();
+                    auto minValue  = minValueItem->getInt();
+                    auto initValue = minValueItem->getInt(); 
+
+                    entry->maxValue  = maxValue;
+                    entry->minValue  = minValue;
+                    entry->initValue = initValue;
+
+                case RuneString32:
+                case RuneString64:
+                case RuneString256:
+                    auto maxValue  = maxValueItem->getString();
+                    auto minValue  = minValueItem->getString();
+                    auto initValue = minValueItem->getString();
+
+                    entry->maxValue  = maxValue;
+                    entry->minValue  = minValue;
+                    entry->initValue = initValue;
             }
         }
     }
