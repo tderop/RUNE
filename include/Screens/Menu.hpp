@@ -5,10 +5,11 @@
 
 #include <Aether/Aether.hpp>
 #include <Utils/Trove.hpp>
+#include <Application/Application.hpp>
 
-class Menu : public Aether::Screen{
+class MenuScreen : public Aether::Screen{
 private:
-    Aether::Window* window;
+    Rune::Application* app;
     Aether::List* saveSlotScroll = nullptr;
     Trove* trove;
     // std::vector<Aether::Element*> myElements;
@@ -19,8 +20,8 @@ public:
     void onUnload() override;
     // void update(unsigned int deltaTime) override;
 
-    Menu(Aether::Window* window);
-    ~Menu();
+    MenuScreen(Rune::Application* app);
+    ~MenuScreen();
 
     void buildScreen();
     void showSaveSelect();

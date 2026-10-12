@@ -14,11 +14,73 @@
 #include <vector>
 #include <string>
 
+#include <Application/Application.hpp>
+
 int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
-Editor::Editor(Aether::Window* window, Rune::Save::File saveFile) : window(window), saveFile(saveFile){
+namespace Rune{
+    namespace Editor{
+        EditorTabData TabData = {
+            {
+                "Stats",
+                EditorTab{
+                    .menus={"Stats", "Coordinates", "Completionism"},
+                    .menuEntries={
+                        {
+                            "Stats",
+                            {
+                                "CurrentRupee", // Rupee balance
+                                "CurrentMamo",  // Mons balance
+                                "IsGet_Obj_Motorcycle", // Motorcycle Obtained
+                                
+                            },
+                        },
+                        {
+                            "Coordinates",
+                            {
+                                "CurrentMamo" // placeholder
+                            },
+                        },
+                        {
+                            "Completionism",
+                            {
+                                "CurrentMamo" // placeholder
+                            }
+                        }
+                    }
+                }
+            },
+
+            {
+                "Equipment",
+                EditorTab{
+                    .menus={"Weapons", "Bows", "Shields", "Armor"},
+                    .menuEntries={}
+                }
+            },
+
+            {
+                "Items",
+                EditorTab{
+                    .menus={"Materials", "Food", "Key Items"},
+                    .menuEntries={}
+                }
+            },
+
+            {
+                "Dev Editor",
+                EditorTab{
+                    .menus={"Dev Editor"},
+                    .menuEntries={}
+                }
+            }
+        };
+    } // namespace Rune::Editor
+} // namespace Rune
+
+EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
     // init
     this->trove = new Trove();
 
@@ -32,77 +94,27 @@ Editor::Editor(Aether::Window* window, Rune::Save::File saveFile) : window(windo
 
     // metadata about how tabs should be filled
     // to be used with the "showTabByName" helper
-    this->tabData = {
-        {
-            "Stats",
-            EditorTab{
-                .menus={"Stats", "Coordinates", "Completionism"},
-                .menuEntries={
-                    {
-                        "Stats",
-                        {
-                            "CurrentRupee", // Rupee balance
-                            "CurrentMamo",  // Mons balance
-                            "IsGet_Obj_Motorcycle", // Motorcycle Obtained
-                            
-                        },
-                    },
-                    {
-                        "Coordinates",
-                        {
-                            "CurrentMamo" // placeholder
-                        },
-                    },
-                    {
-                        "Completionism",
-                        {
-                            "CurrentMamo" // placeholder
-                        }
-                    }
-                }
-            }
-        },
-
-        {
-            "Equipment",
-            EditorTab{
-                .menus={"Weapons", "Bows", "Shields", "Armor"},
-                .menuEntries={}
-            }
-        },
-
-        {
-            "Items",
-            EditorTab{
-                .menus={"Materials", "Food", "Key Items"},
-                .menuEntries={}
-            }
-        },
-
-        {
-            "Dev Editor",
-            EditorTab{
-                .menus={"Dev Editor"},
-                .menuEntries={}
-            }
-        }
-    };
 }
 
-Editor::~Editor(){
+/**
+ * @brief Delete visible widgets when deleted.
+ */
+EditorScreen::~EditorScreen(){
     this->cleanEditorWidgets();
     delete this->trove;
 }
 
 /**
- * @brief Create an EditorWidget
+ * @brief Create an EditorWidget.
  */
-EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, Rune::Save::File& saveFile){
+EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
     // get the save entry
-    Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName(saveFile, saveKey);
+    log("[EDITOR] - Getting entry from data name '"+saveKey+"'...");
+    Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName((*this->saveFile), saveKey);
 
     // create the editor widget
-    EditorWidget* widget = new EditorWidget(saveEntry, popupList, window);
+    log("[EDITOR] - Constructing new editor widget...");
+    EditorWidget* widget = new EditorWidget(saveEntry, popupList, app->window());
 
     log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
     return widget;
@@ -111,7 +123,7 @@ EditorWidget* Editor::getWidgetFromSaveKey(const std::string& saveKey, Rune::Sav
 /**
  * @brief Reposition a rectangle to align with a button to show it is selected.
  */
-void Editor::positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn){
+void EditorScreen::positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn){
     selectIndicator->setH(
         (int)((targetBtn->h())*(2.0/3.0))
     );
@@ -137,7 +149,7 @@ void Editor::positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aeth
     }
 }
 
-void Editor::nextMenu(InputSystem& inputService, InputState state){
+void EditorScreen::nextMenu(InputSystem& inputService, InputState state){
     if (state != InputState::Begin){
         return;
     }
@@ -145,7 +157,7 @@ void Editor::nextMenu(InputSystem& inputService, InputState state){
     this->showMenu(this->selectedMenu+1);
 }
 
-void Editor::prevMenu(InputSystem& inputService, InputState state){
+void EditorScreen::prevMenu(InputSystem& inputService, InputState state){
     if (state != InputState::Begin){
         return;
     }
@@ -153,7 +165,7 @@ void Editor::prevMenu(InputSystem& inputService, InputState state){
     this->showMenu(this->selectedMenu-1);
 }
 
-void Editor::buildScreen(){
+void EditorScreen::buildScreen(){
     // make the background frame
     log("[EDITOR] - Making sidebar frame...");
     Aether::Rectangle* sidebarFrame = new Aether::Rectangle(
@@ -349,9 +361,14 @@ void Editor::buildScreen(){
         WINDOW_RESOLUTION_Y-topPanel->h()
     );
 
+    // the control bar
+    Aether::ControlBar* controlBar = new Aether::ControlBar();
+    controlBar->addControl(Aether::Button::MINUS, "Exit");
+
     // add all elements
     log("[EDITOR] - Adding elements...");
     this->addElement(background);
+    this->addElement(controlBar);
 
     this->addElement(topPanel);
     this->addElement(sidebarFrame);
@@ -376,27 +393,20 @@ void Editor::buildScreen(){
 
     this->addElement(editorScroll);
     this->editorScroll = editorScroll;
+
+    // build the popup list
+    this->popupList = new Aether::PopupList("Edit Value"); // change to use readable name
+    this->popupList->setBackLabel("Back");
+    this->popupList->setOKLabel("OK");
+    this->popupList->setBackgroundColour(BACKGROUND_COLOUR);
+    this->popupList->setLineColour(SEPARATOR_COLOUR);
+    this->popupList->setListLineColour(Aether::Colour{0, 0, 0, 0});
+    this->popupList->setTextColour(TEXT_COLOUR);
     
     log("[EDITOR] - Screen built successfully");
-
-    // show tab
-    this->showTab(this->tabs.at(0));
-
-    // wire up input for navigating menus
-    InputSystem& inputService = InputSystem::getService();
-
-    inputService.bind("NextMenu", InputObject(InputType::Gamepad, HidNpadButton_R));
-    inputService.connect("NextMenu", [this](InputSystem& inputService, InputState state){
-        this->nextMenu(inputService, state);
-    });
-
-    inputService.bind("PrevMenu", InputObject(InputType::Gamepad, HidNpadButton_L));
-    inputService.connect("PrevMenu", [this](InputSystem& inputService, InputState state){
-        this->prevMenu(inputService, state);
-    });
 }
 
-void Editor::cleanEditorWidgets(){
+void EditorScreen::cleanEditorWidgets(){
     for (EditorWidget* widget : this->tempWidgets){
         log("[EDITOR] - Deleting widget...");
         widget->clearTrove();
@@ -406,7 +416,7 @@ void Editor::cleanEditorWidgets(){
     this->tempWidgets.clear();
 }
 
-void Editor::showTab(std::string tabName){
+void EditorScreen::showTab(std::string tabName){
     log("[EDITOR] - Cleaning temporary elements...");
     this->trove->clear();
 
@@ -415,7 +425,7 @@ void Editor::showTab(std::string tabName){
     this->selectedTab = tabName;
     this->menuLabels.clear();
 
-    EditorTab tabMeta = tabData.at(tabName);
+    EditorTab tabMeta = Rune::Editor::TabData.at(tabName);
     
     int totalMenus = tabMeta.menus.size();
     int totalTextureLength = 0;
@@ -497,7 +507,7 @@ void Editor::showTab(std::string tabName){
     log("==========================================================");
 }
 
-void Editor::showMenu(int menuIdx){
+void EditorScreen::showMenu(int menuIdx){
     // check if idx exists
     if (menuIdx < 0 || menuIdx > (int)this->menuLabels.size()-1){
         log("[EDITOR] - MenuIdx: "+std::to_string(menuIdx)+", either less than 0 or greater than "+std::to_string((int)this->menuLabels.size()-1)+".");
@@ -539,7 +549,7 @@ void Editor::showMenu(int menuIdx){
     // get more menu data
     log("[EDITOR] - Getting menu data...");
 
-    EditorTab& thisTabData = this->tabData.at(this->selectedTab);
+    EditorTab& thisTabData = Rune::Editor::TabData.at(this->selectedTab);
     const std::string& menuName = thisTabData.menus.at(menuIdx);
     log("[EDITOR] - Got menu name and selected tab data: '"+menuName+"'");
     
@@ -573,7 +583,7 @@ void Editor::showMenu(int menuIdx){
     }
 
     for (const std::string& saveKey : *menuEntries){
-        EditorWidget* widget = this->getWidgetFromSaveKey(saveKey, this->saveFile);
+        EditorWidget* widget = this->getWidgetFromSaveKey(saveKey);
         this->tempWidgets.push_back(widget);
 
         if (!widget->isLoaded()){
@@ -585,40 +595,59 @@ void Editor::showMenu(int menuIdx){
 
     log("[EDITOR] - Built all widgets!");
 
-    log("[EDITOR] - Tab shown successfully!");
+    log("[EDITOR] - Menu shown successfully!");
     log("----------------------------------");
 }
 
-Aether::PopupList* Editor::getPopupList(){
+Aether::PopupList* EditorScreen::getPopupList(){
     return this->popupList;
 }
 
-void Editor::onLoad(){
-    // build the popupList
-    this->popupList = new Aether::PopupList("Edit Value"); // change to use readable name
-    this->popupList->setBackLabel("Back");
-    this->popupList->setOKLabel("OK");
-    this->popupList->setBackgroundColour(BACKGROUND_COLOUR);
-    this->popupList->setLineColour(SEPARATOR_COLOUR);
-    this->popupList->setListLineColour(Aether::Colour{0, 0, 0, 0});
-    this->popupList->setTextColour(TEXT_COLOUR);
-
-    this->buildScreen();
-
-    // debug
-    // for (RuneSaveEntry entry : this->saveFile.entries){
-    //     if (entry.dataName.find("MainField") != std::string::npos){ // ignore revivals
-    //         continue;
-    //     }
-
-    //     if (entry.dataType == RuneRevivalBool){ // explicitly ignore revivals
-    //         continue;
-    //     }
-
-    //     log("[ENTRY ("+std::string(runeSaveDataTypeName(entry.dataType))+")] - "+std::to_string(entry.id)+": "+runeSaveValueToString(entry.value, true));
-    // }
+void EditorScreen::editSaveFile(Rune::Save::File* saveFile){
+    this->saveFile = saveFile;
+    if (saveFile!=nullptr) {
+        this->showTab(this->tabs.at(0));
+    }
 }
 
-void Editor::onUnload(){
+void EditorScreen::onLoad(){
+    // show menu 0
+    
+    // wire up inputs
+    InputSystem& inputService = InputSystem::getService();
 
+    // navigate to next menu when pressing R
+    inputService.bind("NextMenu", InputObject(InputType::Gamepad, HidNpadButton_R));
+    inputService.connect("NextMenu", [this](InputSystem& inputService, InputState state){
+        this->nextMenu(inputService, state);
+    });
+
+    // navigate to previous menu when pressing L
+    inputService.bind("PrevMenu", InputObject(InputType::Gamepad, HidNpadButton_L));
+    inputService.connect("PrevMenu", [this](InputSystem& inputService, InputState state){
+        this->prevMenu(inputService, state);
+    });
+
+    // exit the editor
+    inputService.bind("ExitEditor", InputObject(InputType::Gamepad, HidNpadButton_Minus));
+    inputService.connect("ExitEditor", [this](InputSystem& inputService, InputState state){
+        this->app->showScreen("Menu");
+    });
+}
+
+void EditorScreen::onUnload(){
+    // disconnect input listeners
+    InputSystem& inputService = InputSystem::getService();
+
+    inputService.unbind("NextMenu");
+    inputService.unbind("PrevMenu");
+    inputService.unbind("ExitEditor");
+
+    // clear trove
+    this->trove->clear();
+
+    // unset the save file
+    this->saveFile = nullptr;
+
+    log("============== [EDITOR] - Screen successfully unloaded. ==============");
 }

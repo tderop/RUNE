@@ -52,6 +52,7 @@ SOURCES     := src \
                src/Utils \
                src/Save \
                src/Screens \
+			   src/Application \
                libs/byml/source/byml
 
 DATA		:=	data

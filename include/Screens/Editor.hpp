@@ -9,28 +9,42 @@
 #include <Save/Save.hpp>
 #include <WidgetBuilder.hpp>
 
+#include <Application/Application.hpp>
+
 /**
- * IMPORTANT KEYS
- * CurrentMamo (-830800173): 
+ * @brief A structure representing an editor tab. Used for building the editor user interface.
  */
 struct EditorTab{
     std::vector<std::string> menus;
     std::unordered_map<std::string, std::vector<std::string>> menuEntries;
 };
 
-struct TempElement{
-    Aether::Element* parentElm;
-    Aether::Element* elm;
-};
-
+/**
+ * @brief A type representing the main structure used to build the editor tabs.
+ */
 using EditorTabData = std::unordered_map<std::string, EditorTab>;
 
-class Editor : public Aether::Screen{
-private:
-    Aether::Window* window;
-    Rune::Save::File saveFile;
+namespace Rune{
+    namespace Editor{
+        extern EditorTabData TabData;
+    }
+} // namespace Rune
 
-    EditorTabData tabData;
+/**
+ * IMPORTANT KEYS
+ * CurrentMamo (-830800173): 
+ */
+
+// struct TempElement{
+//     Aether::Element* parentElm;
+//     Aether::Element* elm;
+// };
+
+class EditorScreen : public Aether::Screen{
+private:
+    Rune::Application* app;
+    Rune::Save::File* saveFile = nullptr;
+
     std::vector<std::string> tabs;
     Trove* trove;
 
@@ -50,28 +64,67 @@ private:
 
 public:
     // standard Aether class methods
+
+    /**
+     * @brief Code run by the screen when it is shown.
+     */
     void onLoad() override;
+
+    /**
+     * @brief Code run by the screen when it is hidden.
+     */
     void onUnload() override;
-    // void update(unsigned int deltaTime) override;
 
-    Editor(Aether::Window* window, Rune::Save::File saveFile);
-    ~Editor();
+    EditorScreen(Rune::Application* app);
+    ~EditorScreen();
 
-    void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
-
+    /**
+     * @brief Build all of the screen's base elements. Should only be called once.
+     */
     void buildScreen();
+
+    /**
+     * @brief Show a tab by its name. A tab is an option shown on the left menu (Stats, Equipment, Dev Editor...)
+     */
     void showTab(std::string tabName);
 
+    /**
+     * @brief Show a menu by its index. The maximum value of menuIdx depends on the tab being viewed. (For example, the menus for the Stats tab are Stats, Coordinates, and Completionism)
+     */
     void showMenu(int menuIdx);
 
+    /**
+     * @brief Navigate to the next menu on the current tab.
+     */
     void nextMenu(InputSystem& inputService, InputState state);
+
+    /**
+     * @brief Navigate to the previous menu on the current tab.
+     */
     void prevMenu(InputSystem& inputService, InputState state);
 
-    EditorWidget* getWidgetFromSaveKey(const std::string& saveKey, Rune::Save::File& saveFile);
-    Aether::PopupList* getPopupList();  
+    /**
+     * @brief Generate a widget for interacting with a particular key in save data. These are dev-editor style widgets, used for modifying decoded, raw values.
+     */
+    EditorWidget* getWidgetFromSaveKey(const std::string& saveKey);
 
+    /**
+     * @brief Get the screen's popup list. Mostly used by widgets to show the popup list in order to be modified.
+     */
+    Aether::PopupList* getPopupList(); 
+
+    /**
+     * @brief Set the save file currently being modified by the editor. Without a save file, the editor will fail to work - for likely obvious reasons.
+     */
+    void editSaveFile(Rune::Save::File* saveFile);
+
+    /**
+     * @brief Reposition the blue-green rectangle used to indicate which tab is currently selected.
+     */
+    void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
+
+    /**
+     * @brief Delete all currently visible dev-editor style widgets in the editor.
+     */
     void cleanEditorWidgets();
-    
-    void addScreenElements();
-    void showSaveSelect();
 };

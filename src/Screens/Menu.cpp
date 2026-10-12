@@ -9,17 +9,19 @@
 #include <Screens/Editor.hpp>
 #include <Utils/Trove.hpp>
 
+#include <Application/Application.hpp>
+
 int SAVE_ICON_SIZE = 16; // 16x16 pixels for image icons (star, hard mode)
 
 /**
  * @brief The Menu constructor
  */
-Menu::Menu(Aether::Window* window) : window(window){
+MenuScreen::MenuScreen(Rune::Application* app) : app(app){
     this->trove = new Trove();
 }
-Menu::~Menu(){}
+MenuScreen::~MenuScreen(){}
 
-void Menu::addTempElement(Aether::Element* element){
+void MenuScreen::addTempElement(Aether::Element* element){
     // add the element to the screen
     this->addElement(element);
 
@@ -30,7 +32,7 @@ void Menu::addTempElement(Aether::Element* element){
 /**
  * @brief Create a Scrollable listing all save slots
  */
-void Menu::showSaveSelect(){
+void MenuScreen::showSaveSelect(){
     // get save slots
     std::vector<Rune::Save::Slot> runeSaveSlots;
     Rune::Save::GetSaveSlots(&runeSaveSlots);
@@ -146,12 +148,10 @@ void Menu::showSaveSelect(){
                 // transition to editor
                 // make an application mgr to deal with this, currently if a new 
                 // editor is created, then so is another menu when returning
-                // so this just leads to infinite memory leakage
-                log("[MENU] - Making editor screen...");
-                Aether::Screen* editor = new Editor(this->window, decodedSave);
-
+                // so this just leads to infinite memory leakage // sir yes sir oorah
                 log("[MENU] - Showing editor screen...");
-                this->window->showScreen(editor);
+                EditorScreen* editor = static_cast<EditorScreen*>(this->app->showScreen("Editor")); // EVIL
+                editor->editSaveFile(&decodedSave);
             }
         );
 
@@ -404,7 +404,7 @@ void Menu::showSaveSelect(){
 /**
  * @brief Add all key elements to the Menu screen.
  */
-void Menu::buildScreen(){
+void MenuScreen::buildScreen(){
     // add the background
     Aether::Rectangle* background = new Aether::Rectangle(
         0,
@@ -522,7 +522,7 @@ void Menu::buildScreen(){
     this->setFocused(scrollable);
 }
 
-void Menu::onLoad(){
+void MenuScreen::onLoad(){
     this->showSaveSelect();
 }
 
@@ -530,8 +530,9 @@ void Menu::onLoad(){
  * @brief Clean up all elements on unload to prevent memory leaks.
  * No!
  */
-void Menu::onUnload(){
+void MenuScreen::onUnload(){
     this->trove->clear();
+    log("============== [MENU] - Screen successfully unloaded. ==============");
 }
 
 // do vector decoding

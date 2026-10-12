@@ -7,6 +7,7 @@
 #include <Input/Input.hpp>
 #include <Utils/Utils.hpp>
 #include <Save/Save.hpp>
+#include <Application/Application.hpp>
 
 #include <Screens/Menu.hpp>
 #include <Config.hpp>
@@ -127,12 +128,6 @@ int main(){
     Result rc = initApplet();
     Result appletLaunchStatus = rc;
 
-    // stop processing and show error if failed to initialise
-    // if (R_FAILED(appletLaunchStatus)){
-    //     log("[INIT] - an error ocurred when initialising the applet. Exiting...");
-    //     exitApplet(inputService, InputState::Begin);
-    // }
-
     // if failed, wait for + press
     if (R_FAILED(appletLaunchStatus)){
         while(appletMainLoop() && !exitQueued){
@@ -143,30 +138,11 @@ int main(){
         return 0;
     }
 
-    // the UI window
-    Aether::Window* window = new Aether::Window("Rune", WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, [](const std::string message, const bool important){
-        if (important){
-            log("[!! AETHER !!] - "+message);
-        } else {
-            log("[AETHER] - "+message);
-        }
-    });
+    // the application
+    static Rune::Application* app = new Rune::Application();
+    log("[MAIN] - Successfully loaded application!");
 
-    window->setHighlightAnimation(highlightFunc());
-
-    log("[MAIN] - Successfully loaded Aether window!");
-
-    // prepare the menu
-    Aether::Screen* menu = new Menu(window);
-
-    window->setFadeIn(true);
-    window->setFadeOut(true);
-
-    window->showScreen(menu);
-
-    log("[MAIN] - Successfully loaded menu screen!");
-
-    while (window->loop() && !exitQueued){
+    while (app->window()->loop() && !exitQueued){
         // do updates
         inputService.update();
 
@@ -187,6 +163,6 @@ int main(){
     //     log("[MAIN] - Failed to exit accountSvc: " + std::to_string(rc));
     // }
 
-    delete window;
+    app->deleteWindow();
     return 0;
 }
