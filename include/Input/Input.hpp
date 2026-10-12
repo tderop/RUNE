@@ -42,6 +42,7 @@ private:
     std::unordered_map<std::string, InputObject> bindings;
     std::unordered_map<std::string, Signal<InputSystem&, InputState>> signals;
     std::vector<Connection<InputSystem&, InputState>> connections;
+
 public:
     static InputSystem& getService();
 

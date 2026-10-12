@@ -738,6 +738,10 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto dataNameItem = mapping->getByKey("DataName");
             auto hashValueItem = mapping->getByKey("HashValue");
 
+            auto maxValueItem = mapping->getByKey("MaxValue");
+            auto minValueItem = mapping->getByKey("MinValue"); // can be cast?
+            auto defaultValueItem = mapping->getByKey("InitValue");
+
             if (!dataNameItem || !hashValueItem){
                 return LibnxError_BadInput;
             }
@@ -745,6 +749,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             const char* dataName = dataNameItem->getString();
             auto hashValue = hashValueItem->getInt();
 
+            // debug
             if (*hashValue == 276498232) {
                 log("[META] FOUND 276498232 -> " + std::string(dataName));
             }
@@ -753,7 +758,17 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                 return LibnxError_BadInput;
             }
 
-            out->dataNames[*hashValue] = dataName;
+            // construct metaentry
+
+            /**
+             * NEXT: figure out how to get max/min/default values and cast them to RuneSaveValue??
+             */
+            MetaEntry entry = {
+                .dataName=dataName,
+            };
+
+            // set the entry
+            (*out)[*hashValue] = entry;
         }
     }
 
@@ -810,7 +825,22 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             }
 
             // add datatype to metadata
-            out->dataTypes[*hashValue] = dataType;
+
+            // find existing metaEntry
+            auto it = out->find(*hashValue);
+            MetaEntry entry;
+
+            // if found, set
+            bool found = (it != out->end());
+            if (found){
+                it->second.dataType = dataType;
+            } else {
+                // otherwise, make new entry
+                MetaEntry entry = {
+                    .dataType=dataType
+                };
+                (*out)[*hashValue] = entry;
+            }
         }
     }
 
@@ -826,12 +856,12 @@ Result Rune::Save::GetDataName(const Rune::Save::Metadata& metadata, uint32_t id
     int32_t hashValue = static_cast<int32_t>(id);
 
     // look up in the metadata
-    auto it = metadata.dataNames.find(hashValue);
-    if (it == metadata.dataNames.end()){
+    auto it = metadata.find(hashValue);
+    if (it == metadata.end()){
         return LibnxError_NotFound;
     }
 
-    *outDataName = it->second;
+    *outDataName = it->second.dataName;
     return 0;
 }
 
@@ -841,12 +871,12 @@ Result Rune::Save::GetDataName(const Rune::Save::Metadata& metadata, uint32_t id
 Result Rune::Save::GetDataType(const Rune::Save::Metadata& metadata, uint32_t id, Rune::Save::DataType* outDataType){
     int32_t hashValue = static_cast<int32_t>(id);
 
-    auto it = metadata.dataTypes.find(hashValue);
-    if (it == metadata.dataTypes.end()){
+    auto it = metadata.find(hashValue);
+    if (it == metadata.end()){
         return LibnxError_NotFound;
     }
 
-    *outDataType = it->second;
+    *outDataType = it->second.dataType;
     return 0;
 }
 

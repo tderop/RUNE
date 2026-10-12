@@ -31,7 +31,7 @@ const unsigned int MIN_SEPARATOR_X = 30;
 const int TEXT_X_OFFSET = 6;
 const int TEXT_Y_OFFSET = 12;
 
-const int MIN_SPLASH_SCREEN_TIME = 3000; // ,milliseconds... people won't see my beautiful splash screen :(
+const int MIN_SPLASH_SCREEN_TIME = 3000; // milliseconds... people won't see my beautiful splash screen :(
 
 const long int BOTW_TITLE_ID = 0x01007EF00011E000;
 

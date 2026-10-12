@@ -129,12 +129,6 @@ namespace Rune
             DataType dataType;
         };
 
-        struct Metadata
-        {
-            std::unordered_map<int32_t, std::string> dataNames;
-            std::unordered_map<int32_t, DataType> dataTypes;
-        };
-
         /**
          * @brief An abstraction representing a BotW save slot
          */
@@ -172,6 +166,24 @@ namespace Rune
             std::vector<std::vector<float>> // vector arrays
         >;
 
+        struct MetaEntry {
+            int32_t id;
+            std::string dataName;
+            DataType dataType;
+
+            SaveValue initValue;
+            SaveValue maxValue;
+            SaveValue minValue;
+        };
+
+        // struct Metadata
+        // {
+        //     std::unordered_map<int32_t, std::string> dataNames;
+        //     std::unordered_map<int32_t, DataType> dataTypes;
+        // };
+
+        using Metadata = std::unordered_map<int32_t, MetaEntry>;
+
         /**
          * @brief An abstraction of a decoded entry in a `.sav` file.
          */
@@ -181,6 +193,9 @@ namespace Rune
             std::string dataName;
             DataType dataType;
             SaveValue value;
+
+            SaveValue maxValue; // for building bounds checks
+            SaveValue minValue;
         };
 
         /**
