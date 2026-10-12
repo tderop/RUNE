@@ -405,6 +405,8 @@ void MenuScreen::showSaveSelect(){
  * @brief Add all key elements to the Menu screen.
  */
 void MenuScreen::buildScreen(){
+    log("[MENU] - Building screen...");
+
     // add the background
     Aether::Rectangle* background = new Aether::Rectangle(
         0,

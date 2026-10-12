@@ -877,6 +877,6 @@ Rune::Save::Entry* Rune::Save::GetEntryFromDataName(Rune::Save::File& saveFile, 
         }
     }
 
-    log("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null, expect crash.");
+    log("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null.");
     return nullptr;
 }

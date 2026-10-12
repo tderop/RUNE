@@ -4,12 +4,10 @@
 
 // yum
 EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popupList, Aether::Window* window) 
-    : saveEntry(saveEntry), popupList(popupList), window(window){
+    : editButton(nullptr), trove(nullptr), saveEntry(saveEntry), popupList(popupList), window(window),
+      _isLoaded(false){
     
     // init
-    this->_isLoaded = false;
-    this->editButton = nullptr;
-
     if (saveEntry == nullptr){
         log("[!! EDITOR WIDGET !!] - Cannot build widget for a missing save entry.");
         return;
@@ -66,8 +64,10 @@ bool EditorWidget::isLoaded(){
 }
 
 EditorWidget::~EditorWidget(){
-    this->trove->clear();
-    delete this->trove;
+    if (this->trove != nullptr){
+        this->trove->clear();
+        delete this->trove;
+    }
 }
 
 void EditorWidget::addToElements(AetherElement element){

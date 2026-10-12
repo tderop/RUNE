@@ -14,9 +14,12 @@
 
 // declarations
 bool exitQueued = false;
-InputSystem& inputService = InputSystem::getService();
-Rune::Save::Metadata saveMetadata;
 bool mountSuccess = true;
+
+Rune::Save::Metadata saveMetadata;
+Rune::Application* app;
+
+InputSystem& inputService = InputSystem::getService();
 
 /**
  * Exits the applet.
@@ -74,8 +77,20 @@ Result initApplet(){
         return -4;
     }
 
+    // initialise romfs
+    Result rc = romfsInit();
+    if (R_FAILED(rc)){
+        log("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
+        return -3;
+    }
+
+    log("[INIT] - Initialised RomFS");
+
+    app = new Rune::Application();
+    log("[Rune::Application] - Successfully loaded application manager.");
+
     // load save metadata
-    Result rc = Rune::Save::LoadMetadata(&saveMetadata);
+    rc = Rune::Save::LoadMetadata(&saveMetadata);
     if (R_FAILED(rc)){
         log("Failed to parse BotW .bgsvdata metadata.");
         exitApplet(inputService, InputState::Begin);
@@ -91,15 +106,6 @@ Result initApplet(){
     }
 
     log("[INIT] - Initialised AccountService");
-    
-    // initialise romfs
-    rc = romfsInit();
-    if (R_FAILED(rc)){
-        log("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
-        return -3;
-    }
-
-    log("[INIT] - Initialised RomFS");
 
     // mount save data
     rc = Rune::Save::MountSaveData();
@@ -125,6 +131,7 @@ Result initApplet(){
 }
 
 int main(){
+    // the application
     Result rc = initApplet();
     Result appletLaunchStatus = rc;
 
@@ -138,9 +145,8 @@ int main(){
         return 0;
     }
 
-    // the application
-    static Rune::Application* app = new Rune::Application();
-    log("[MAIN] - Successfully loaded application!");
+    // show the menu once all has loaded
+    // app->showScreen("Menu");
 
     while (app->window()->loop() && !exitQueued){
         // do updates

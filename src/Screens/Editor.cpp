@@ -108,20 +108,22 @@ EditorScreen::~EditorScreen(){
  * @brief Create an EditorWidget.
  */
 EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
-    EditorWidget* widget;
-
     // get the save entry
     log("[EDITOR] - Getting entry from data name '"+saveKey+"'...");
     if (this->saveFile == nullptr){
         log("[EDITOR] - Save file is nullptr! Ignoring request.");
-        return widget;
+        return nullptr;
     }
 
     Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName((*this->saveFile), saveKey);
+    if (saveEntry == nullptr){
+        log("[EDITOR] - Save entry '"+saveKey+"' was not found. Ignoring request.");
+        return nullptr;
+    }
 
     // create the editor widget
     log("[EDITOR] - Constructing new editor widget...");
-    widget = new EditorWidget(saveEntry, popupList, app->window());
+    EditorWidget* widget = new EditorWidget(saveEntry, popupList, app->window());
 
     log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
     return widget;
@@ -424,6 +426,12 @@ void EditorScreen::cleanEditorWidgets(){
 }
 
 void EditorScreen::showTab(std::string tabName){
+    // if new tab is old tab, ignore
+    if (this->selectedTab == tabName){
+        log("[EDITOR] - Already selected tab '"+tabName+"'! Ignoring...");
+        return;
+    }
+
     log("[EDITOR] - Cleaning temporary elements...");
     this->trove->clear();
 
@@ -521,6 +529,12 @@ void EditorScreen::showMenu(int menuIdx){
         return;
     }
 
+    // no.
+    // if (menuIdx == this->selectedMenu){
+    //     log("[EDITOR] - Already viewing menu '"+std::to_string(menuIdx)+"'! Ignoring...");
+    //     return;
+    // }
+
     log("[EDITOR] - Preparing to show menu at index "+std::to_string(menuIdx));
     this->selectedMenu = menuIdx;
 
@@ -592,6 +606,10 @@ void EditorScreen::showMenu(int menuIdx){
 
     for (const std::string& saveKey : *menuEntries){
         EditorWidget* widget = this->getWidgetFromSaveKey(saveKey);
+        if (widget == nullptr){
+            continue;
+        }
+
         this->tempWidgets.push_back(widget);
 
         if (!widget->isLoaded()){
@@ -612,10 +630,15 @@ Aether::PopupList* EditorScreen::getPopupList(){
 }
 
 void EditorScreen::editSaveFile(Rune::Save::File* saveFile){
-    this->saveFile = saveFile;
-    if (saveFile!=nullptr) {
-        this->showTab(this->tabs.at(0));
+    this->cleanEditorWidgets();
+    if (saveFile == nullptr){
+        this->saveFile = nullptr;
+        return;
     }
+
+    this->ownedSaveFile = *saveFile;
+    this->saveFile = &this->ownedSaveFile;
+    this->showTab(this->tabs.at(0));
 }
 
 void EditorScreen::onLoad(){

@@ -44,6 +44,7 @@ class EditorScreen : public Aether::Screen{
 private:
     Rune::Application* app;
     Rune::Save::File* saveFile = nullptr;
+    Rune::Save::File ownedSaveFile;
 
     std::vector<std::string> tabs;
     Trove* trove;
