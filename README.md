@@ -11,6 +11,11 @@ Thanks to:
 
 for making RUNE possible!
 
+## Use of AI (Artificial Intelligence)
+RUNE consists of **entirely human-generated code**.<br><br>
+Although **AI was used to assist RUNE's creation**, it was not involved in code generation or reverse engineering. AI was used for **debugging assistance** and **quick code reviews**. RUNE is not vibe coded; it was developed by hand - the "old fashioned way" - by a CS student that wanted to do something with his spare time. He wouldn't have had anything to do during journeys or breaks otherwise.<br><br>
+<small>homework schmomework</small>
+
 ## Attribution
 - <a href="https://www.flaticon.com/free-icons/foursquare-check-in" title="foursquare check in icons">Foursquare check in icons created by reussy - Flaticon</a>
 
