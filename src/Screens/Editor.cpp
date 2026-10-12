@@ -108,13 +108,20 @@ EditorScreen::~EditorScreen(){
  * @brief Create an EditorWidget.
  */
 EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
+    EditorWidget* widget;
+
     // get the save entry
     log("[EDITOR] - Getting entry from data name '"+saveKey+"'...");
+    if (this->saveFile == nullptr){
+        log("[EDITOR] - Save file is nullptr! Ignoring request.");
+        return widget;
+    }
+
     Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName((*this->saveFile), saveKey);
 
     // create the editor widget
     log("[EDITOR] - Constructing new editor widget...");
-    EditorWidget* widget = new EditorWidget(saveEntry, popupList, app->window());
+    widget = new EditorWidget(saveEntry, popupList, app->window());
 
     log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
     return widget;
@@ -581,6 +588,7 @@ void EditorScreen::showMenu(int menuIdx){
         log("[EDITOR] - Menu shown with no widgets.");
         return;
     }
+    log("[EDITOR] - menuEntries is NOT null, creating entry widgets...");
 
     for (const std::string& saveKey : *menuEntries){
         EditorWidget* widget = this->getWidgetFromSaveKey(saveKey);

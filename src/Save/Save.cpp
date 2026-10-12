@@ -867,11 +867,16 @@ const char* Rune::Save::DataTypeName(Rune::Save::DataType type) {
  * @brief Get a Rune::Save::Entry from a Rune::Save::File by the entry's DataName
  */
 Rune::Save::Entry* Rune::Save::GetEntryFromDataName(Rune::Save::File& saveFile, const std::string& dataName){
+    log("[Rune::Save] - Getting entry from dataName '"+dataName+"'...");
+
+
     for (Rune::Save::Entry& saveEntry : saveFile.entries){
         if (saveEntry.dataName == dataName){
+            log("[Rune::Save] - Entry found for key '"+dataName+"'! Returning entry.");
             return &saveEntry;
         }
     }
 
+    log("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null, expect crash.");
     return nullptr;
 }
