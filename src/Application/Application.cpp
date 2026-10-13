@@ -30,6 +30,7 @@ const useconds_t TWEEN_UPDATE_TIME = 16000; // microseconds
  * @brief A simple application manager designed to properly manage screens and their lifetimes and memory.
  */
 namespace Rune{
+    
     Application::Application(bool fadeScreens){
         this->_fadeScreens = fadeScreens;
 
@@ -157,6 +158,7 @@ namespace Rune{
             log("[Rune::Application] - Showing new screen.");
             this->_window->showScreen(screen);
             this->_currentScreen = screen;
+            this->_currentScreenName = screenName;
 
             if (this->_fadeScreens){
                 // remove rect from old screen
@@ -187,5 +189,9 @@ namespace Rune{
         }
 
         return screen;
+    }
+
+    std::string Application::currentScreenName(){
+        return this->_currentScreenName;
     }
 }

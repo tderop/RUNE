@@ -172,7 +172,7 @@ namespace Rune
         >;
 
         struct MetaEntry {
-            int32_t id;
+            uint32_t id;
             std::string dataName;
             DataType dataType;
 
@@ -194,13 +194,15 @@ namespace Rune
          */
         struct Entry
         {
-            int32_t id;
+            uint32_t id;
             std::string dataName;
             DataType dataType;
             SaveValue value;
 
-            SaveValue maxValue; // for building bounds checks
-            SaveValue minValue;
+            // reduce memory footage by making access methods
+            // SaveValue initValue;
+            // SaveValue maxValue; // for building bounds checks
+            // SaveValue minValue;
         };
 
         /**
@@ -265,6 +267,12 @@ namespace Rune
          * @brief Preload the save metadata for understanding data IDs in a save file
          */
         Result LoadMetadata(Metadata *out);
+
+        /**
+         * @brief Get the meta entry for a save value by its ID.
+         * It's recommended to initialise your out MetaEntry to nullptr in the case that the entry is not found, guards can be developed.
+         */
+        Result GetMetaEntry(const Rune::Save::Metadata& metadata, uint32_t id, MetaEntry* outMetaEntry);
 
         /**
          * @brief Get the DataName from an ID

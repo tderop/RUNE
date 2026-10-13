@@ -8,7 +8,9 @@ namespace Rune{
         private:
             Aether::Window* _window;
             Aether::Overlay* _fadeOverlay;
+
             Aether::Screen* _currentScreen = nullptr;
+            std::string _currentScreenName = "";
 
             bool _fadeScreens;
             std::unordered_map<std::string, Aether::Screen*> screens;
@@ -25,6 +27,11 @@ namespace Rune{
              * @brief Show a screen from its screen name.
              */
             Aether::Screen* showScreen(const std::string& screenName);
+
+            /**
+             * @brief Get the current screen name.
+             */
+            std::string currentScreenName();
 
             /**
              * @brief Delete the window. Used when ending the program.

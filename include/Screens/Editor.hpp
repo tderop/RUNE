@@ -7,7 +7,7 @@
 #include <Aether/Aether.hpp>
 #include <Input/Input.hpp>
 #include <Save/Save.hpp>
-#include <WidgetBuilder.hpp>
+#include <Widgets/EditorWidget.hpp>
 
 #include <Application/Application.hpp>
 
@@ -61,6 +61,7 @@ private:
     Aether::Rectangle* menuLabelSelIndicator = nullptr;
 
     Aether::PopupList* popupList;
+    WidgetOverlay* widgetOverlay;
     Aether::List* editorScroll;
 
 public:

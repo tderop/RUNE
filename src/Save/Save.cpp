@@ -230,10 +230,9 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
         Rune::Save::Entry entry;
         entry.id = rawEntry.id;
 
-        // data name
-        Result rc = Rune::Save::GetDataName(metadata, entry.id, &entry.dataName);
-        if (R_FAILED(rc)){
-            // unknown ID
+        // get the meta entry
+        auto it = metadata.find(entry.id);
+        if (it == metadata.end()){
             log(
                 "[DECODE] - Unknown ID: " +
                 std::to_string(rawEntry.id) +
@@ -243,11 +242,11 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
             continue;
         }
 
-        rc = Rune::Save::GetDataType(metadata, entry.id, &entry.dataType);
-        if (R_FAILED(rc)){
-            log("[DECODE] - [NAME:"+std::string(entry.dataName)+"] failed to get data type (skipping)");
-            continue;
-        }
+        MetaEntry metaEntry = it->second;
+
+        // assign trivial values
+        entry.dataName = metaEntry.dataName;
+        entry.dataType = metaEntry.dataType;
 
         // decode the value
         switch (entry.dataType){
@@ -756,8 +755,6 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                 return LibnxError_BadInput;
             }
 
-            // construct metaentry
-
             /**
              * NEXT: figure out how to get max/min/default values and cast them to RuneSaveValue??
              */
@@ -1031,34 +1028,50 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
 }
 
 /**
- * @brief Get the DataName from an ID
+ * @brief Get the meta entry for a save value by its ID.
+ * It's recommended to initialise your out MetaEntry to nullptr in the case that the entry is not found, guards can be developed.
  */
-Result Rune::Save::GetDataName(const Rune::Save::Metadata& metadata, uint32_t id, std::string* outDataName){
-    // convert unsigned to signed
+Result Rune::Save::GetMetaEntry(const Rune::Save::Metadata& metadata, uint32_t id, MetaEntry* outMetaEntry){
     int32_t hashValue = static_cast<int32_t>(id);
 
-    // look up in the metadata
-    auto it = metadata.find(hashValue);
+    auto it = metadata.find(id);
     if (it == metadata.end()){
         return LibnxError_NotFound;
     }
 
-    *outDataName = it->second.dataName;
+    *outMetaEntry = it->second;
     return 0;
 }
 
 /**
- * @brief Get the data type of a DataName
+ * @brief Get the DataName from an ID
  */
-Result Rune::Save::GetDataType(const Rune::Save::Metadata& metadata, uint32_t id, Rune::Save::DataType* outDataType){
-    int32_t hashValue = static_cast<int32_t>(id);
-
-    auto it = metadata.find(hashValue);
-    if (it == metadata.end()){
-        return LibnxError_NotFound;
+Result Rune::Save::GetDataName(const Rune::Save::Metadata& metadata, uint32_t id, std::string* outDataName){
+    // get meta entry
+    MetaEntry metaEntry;
+    Result rc = Rune::Save::GetMetaEntry(metadata, id, &metaEntry);
+    if (R_FAILED(rc)){
+        return rc;
     }
 
-    *outDataType = it->second.dataType;
+    // set data name
+    *outDataName = metaEntry.dataName;
+    return 0;
+}
+
+/**
+ * @brief Get the data type of a save entry by its ID.
+ */
+Result Rune::Save::GetDataType(const Rune::Save::Metadata& metadata, uint32_t id, Rune::Save::DataType* outDataType){
+    // get meta entry
+    MetaEntry metaEntry;
+    Result rc = Rune::Save::GetMetaEntry(metadata, id, &metaEntry);
+    if (R_FAILED(rc)){
+        return rc;
+    }
+
+    // set data name
+    *outDataType = metaEntry.dataType;
     return 0;
 }
 

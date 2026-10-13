@@ -1,4 +1,4 @@
-#include <WidgetBuilder.hpp>
+#include <Widgets/EditorWidget.hpp>
 #include <Config.hpp>
 #include <Utils/Utils.hpp>
 
@@ -23,6 +23,15 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popu
     if (it == WIDGET_BUILDERS.end()){
         return;
     }
+
+    // find the meta entry
+    Rune::Save::MetaEntry* metaEntry;
+    Result rc = Rune::Save::GetMetaEntry(*runeMetadata, saveEntry->id, metaEntry);
+    if (R_FAILED(rc)){
+        return; // failed to get meta entry
+    }
+
+    this->metaEntry = metaEntry;
 
     auto widgetBuilder = it->second;
     widgetBuilder(this);
@@ -98,8 +107,20 @@ Aether::PopupList* EditorWidget::getPopupList(){
     return this->popupList;
 }
 
+void EditorWidget::setWidgetOverlay(WidgetOverlay* widgetOverlay){
+    this->widgetOverlay = widgetOverlay;
+}
+
+WidgetOverlay* EditorWidget::getWidgetOverlay(){
+    return this->widgetOverlay;
+}
+
 Rune::Save::Entry* EditorWidget::getSaveEntry(){
     return this->saveEntry;
+}
+
+Rune::Save::MetaEntry* EditorWidget::getMetaEntry(){
+    return this->metaEntry;
 }
 
 Aether::Window* EditorWidget::getWindow(){

@@ -26,7 +26,7 @@ InputSystem& inputService = InputSystem::getService();
  * @return none
  */
 void exitApplet(InputSystem& inputService, InputState state){
-    if (state == InputState::Begin){
+    if (state == InputState::Begin && app->currentScreenName() == "Menu"){
         // do exit code here for a safe shutdown
 
         // queue software exit

@@ -123,7 +123,12 @@ EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
 
     // create the editor widget
     log("[EDITOR] - Constructing new editor widget...");
-    EditorWidget* widget = new EditorWidget(saveEntry, popupList, app->window());
+    // create widget overlay
+   
+    EditorWidget* widget = new EditorWidget(saveEntry, app->window());
+
+    widget->setPopupList(this->popupList);
+    widget->setWidgetOverlay(this->widgetOverlay);
 
     log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
     return widget;
@@ -411,6 +416,8 @@ void EditorScreen::buildScreen(){
     this->popupList->setLineColour(SEPARATOR_COLOUR);
     this->popupList->setListLineColour(Aether::Colour{0, 0, 0, 0});
     this->popupList->setTextColour(TEXT_COLOUR);
+
+    this->widgetOverlay = new WidgetOverlay();
     
     log("[EDITOR] - Screen built successfully");
 }
@@ -679,7 +686,7 @@ void EditorScreen::onUnload(){
 
     // unset the save file
     this->saveFile = nullptr;
-    this->selectedTab = "";
+    this->selectedTab = ""; // ez fix
 
     log("============== [EDITOR] - Screen successfully unloaded. ==============");
 }
