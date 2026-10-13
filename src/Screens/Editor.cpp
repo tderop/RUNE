@@ -679,6 +679,7 @@ void EditorScreen::onUnload(){
 
     // unset the save file
     this->saveFile = nullptr;
+    this->selectedTab = "";
 
     log("============== [EDITOR] - Screen successfully unloaded. ==============");
 }
