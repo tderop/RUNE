@@ -7,9 +7,10 @@
 #include <Aether/Aether.hpp>
 #include <Input/Input.hpp>
 #include <Save/Save.hpp>
-#include <Widgets/EditorWidget.hpp>
 
 #include <Application/Application.hpp>
+#include <Widgets/EditorWidget.hpp>
+#include <Widgets/WidgetOverlay.hpp>
 
 /**
  * @brief A structure representing an editor tab. Used for building the editor user interface.

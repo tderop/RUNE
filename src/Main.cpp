@@ -8,7 +8,7 @@
 #include <Utils/Utils.hpp>
 #include <Save/Save.hpp>
 #include <Application/Application.hpp>
-
+#include <Json/Json.hpp>
 #include <Screens/Menu.hpp>
 #include <Config.hpp>
 
@@ -95,6 +95,10 @@ Result initApplet(){
 
     app = new Rune::Application();
     log("[Rune::Application] - Successfully loaded application manager.");
+
+    // initialise JSON
+    Rune::JsonData::Init();
+    log("[INIT] - Initialised Rune::Json");
 
     // load save metadata
     rc = Rune::Save::LoadMetadata(&saveMetadata);

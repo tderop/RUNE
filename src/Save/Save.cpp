@@ -1012,7 +1012,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto minValue = readSaveValue(*minValueItem);
             auto initValue = readSaveValue(*defaultValueItem);
             if (!maxValue || !minValue || !initValue){ // why is this being hit so often?
-                log("[Rune::Save::LoadMetadata] - No maxValue, minValue, or initValue! Datatype: "+std::string(DataTypeName(dataType)));
+                // log("[Rune::Save::LoadMetadata] - No maxValue, minValue, or initValue! Datatype: "+std::string(DataTypeName(dataType)));
                 continue;
             }
             
@@ -1032,14 +1032,21 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
  * It's recommended to initialise your out MetaEntry to nullptr in the case that the entry is not found, guards can be developed.
  */
 Result Rune::Save::GetMetaEntry(const Rune::Save::Metadata& metadata, uint32_t id, MetaEntry* outMetaEntry){
+    log("[Rune::Save::GetMetaEntry] - Getting hashValue from ID...");
     int32_t hashValue = static_cast<int32_t>(id);
 
+    log("[Rune::Save::GetMetaEntry] - Finding ID in metadata...");
     auto it = metadata.find(id);
+
     if (it == metadata.end()){
+        log("[Rune::Save::GetMetaEntry] - ID "+std::to_string(id)+" does not exist in metadata!");
         return LibnxError_NotFound;
     }
 
+    log("[Rune::Save::GetMetaEntry] - Setting out value...");
     *outMetaEntry = it->second;
+
+    log("[Rune::Save::GetMetaEntry] - Retrieved entry successfully.");
     return 0;
 }
 

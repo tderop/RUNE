@@ -1,0 +1,22 @@
+{
+    /**
+    * bool_data
+    */
+    "IsGet_Obj_Motorcycle": {
+        "Readable": "Motorcycle Unlocked",
+        "Description": "Toggle Master-Cycle Zero ownership, independent of unlock requirements."
+    },
+
+    /**
+    * s32_data
+    */
+    "CurrentRupee": {
+        "Readable": "Rupees",
+        "Description": "The current rupee balance in your inventory."
+    },
+    "CurrentMamo": {
+        "Readable": "Mons",
+        "Description": "The current Mon balance for use at Koltin's shop."
+    }
+
+}

@@ -1,10 +1,15 @@
-#include <Widgets/EditorWidget.hpp>
 #include <Config.hpp>
 #include <Utils/Utils.hpp>
+#include <Json/Json.hpp>
+
+#include <Widgets/EditorWidget.hpp>
+#include <Widgets/WidgetBuilder.hpp>
+
+#include <switch.h>
 
 // yum
-EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popupList, Aether::Window* window) 
-    : editButton(nullptr), trove(nullptr), saveEntry(saveEntry), popupList(popupList), window(window),
+EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window) 
+    : editButton(nullptr), trove(nullptr), saveEntry(saveEntry), window(window),
       _isLoaded(false){
     
     // init
@@ -17,23 +22,38 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::PopupList* popu
     log("[EditorWidget] - Trove created!");
 
     // find the widget builder for this datatype
+    log("[EditorWidget] - Finding widget builder for dataType '"
+        +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
+    "'");
     auto it = WIDGET_BUILDERS.find(saveEntry->dataType);
 
     // don't build widget if type doesn't exist
     if (it == WIDGET_BUILDERS.end()){
+        log("[EditorWidget] - Builder not found for '"
+            +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
+        "'!");
         return;
     }
 
+    log("[EditorWidget] - Widget builder found for dataType '"
+        +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
+    "'!");
+
     // find the meta entry
-    Rune::Save::MetaEntry* metaEntry;
-    Result rc = Rune::Save::GetMetaEntry(*runeMetadata, saveEntry->id, metaEntry);
+    log("[EditorWidget] - Getting meta entry for '"+saveEntry->dataName+"'...");
+
+    Rune::Save::MetaEntry metaEntry;
+    Result rc = Rune::Save::GetMetaEntry(*runeMetadata, saveEntry->id, &metaEntry);
     if (R_FAILED(rc)){
+        log("[EditorWidget] - Failed to get meta entry for '"+saveEntry->dataName+"'!");
         return; // failed to get meta entry
     }
 
     this->metaEntry = metaEntry;
+    log("[EditorWidget] - Found and set meta entry for '"+saveEntry->dataName+"'!");
 
     auto widgetBuilder = it->second;
+    log("[EditorWidget] - Running widget builder for '"+saveEntry->dataName+"'...");
     widgetBuilder(this);
 
     this->_isLoaded = true;
@@ -87,6 +107,14 @@ void EditorWidget::addToElements(AetherElement element){
     this->trove->addElement(element); // why?
 }
 
+void EditorWidget::addDescription(const std::string &description){
+    if (!description.empty()){
+        Aether::ListComment* entryComment = new Aether::ListComment(description);
+        entryComment->setTextColour(MUTED_TEXT_COLOR);
+        this->addToElements(entryComment);
+    }
+}
+
 void EditorWidget::setEditButton(Aether::ListOption* editButton){
     log("[EditorWidget] - Setting edit button...");
     this->editButton = editButton;
@@ -120,7 +148,7 @@ Rune::Save::Entry* EditorWidget::getSaveEntry(){
 }
 
 Rune::Save::MetaEntry* EditorWidget::getMetaEntry(){
-    return this->metaEntry;
+    return &this->metaEntry;
 }
 
 Aether::Window* EditorWidget::getWindow(){
@@ -141,11 +169,66 @@ void EditorWidget::removePopupListEntries(){
     this->popupList->removeEntries();
 }
 
+
 std::string getReadableSaveKeyName(std::string& saveKey){
-    if (auto it = READABLE_SAVE_KEYS.find(saveKey); it != READABLE_SAVE_KEYS.end()){ // no contains :pensive:
-        return it->second;
+    log("[getReadableSaveKeyName] - Getting JSON data...");
+    Rune::Json editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(&editorDataJson, "EditorData"))){
+        log("[getReadableSaveKeyName] - Failed to load EditorData JSON.");
+        return saveKey;
     }
 
-    // default to input key if no translation exists
+    if (editorDataJson == nullptr){
+        log("[getReadableSaveKeyName] - EditorData JSON is nullptr.");
+        return saveKey;
+    }
+
+    log("[getReadableSaveKeyName] - Got EditorData JSON!");
+
+    auto it = editorDataJson.find(saveKey);
+    if (it == editorDataJson.end()){
+        log("[getReadableSaveKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
+        return saveKey;
+    }
+
+    if (!it->is_object()){
+        log("[getReadableSaveKeyName] - Entry in EditorData for '"+saveKey+"' is not an object!");
+        return saveKey;
+    }
+
+    auto readableName = it->find("Readable");
+    if (readableName != it->end() && readableName->is_string()){
+        log("[getReadableSaveKeyName] - Found readable name for '"+saveKey+"'!");
+        return readableName->get<std::string>();
+    }
+
     return saveKey;
+}
+
+std::string getSaveKeyDescription(std::string& saveKey){
+    Rune::Json editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(&editorDataJson, "EditorData"))){
+
+        return "";
+    }
+
+    if (editorDataJson == nullptr){
+        return saveKey;
+    }
+
+    auto it = editorDataJson.find(saveKey);
+    if (it == editorDataJson.end()){
+        return "";
+    }
+
+    if (!it->is_object()){
+        return "";
+    }
+
+    auto descriptionEntry = it->find("Description");
+    if (descriptionEntry != it->end() && descriptionEntry->is_string()){
+        return descriptionEntry->get<std::string>();
+    }
+
+    return "";
 }

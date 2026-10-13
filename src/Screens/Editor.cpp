@@ -15,6 +15,9 @@
 #include <string>
 
 #include <Application/Application.hpp>
+#include <Widgets/EditorWidget.hpp>
+#include <Widgets/WidgetOverlay.hpp>
+
 
 int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
@@ -31,9 +34,9 @@ namespace Rune{
                         {
                             "Stats",
                             {
+                                "IsGet_Obj_Motorcycle", // Motorcycle Obtained
                                 "CurrentRupee", // Rupee balance
                                 "CurrentMamo",  // Mons balance
-                                "IsGet_Obj_Motorcycle", // Motorcycle Obtained
                                 
                             },
                         },

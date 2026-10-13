@@ -53,6 +53,8 @@ SOURCES     := src \
                src/Save \
                src/Screens \
 			   src/Application \
+			   src/Widgets \
+			   src/Json \
                libs/byml/source/byml
 
 DATA		:=	data
@@ -60,6 +62,7 @@ INCLUDES := include src \
             libs/Aether/include \
             libs/byml/include \
             libs/range-v3/include \
+			libs/json/include \
             libs/spdlog/include
 
 OUTPUTDIR   := output

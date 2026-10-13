@@ -14,6 +14,7 @@
 #include <Utils/Trove.hpp>
 #include <Utils/Utils.hpp>
 #include <Widgets/WidgetOverlay.hpp>
+#include <Widgets/WidgetBuilder.hpp>
 #include <Config.hpp>
 
 /**
@@ -26,7 +27,7 @@ private:
     Trove *trove;
 
     Rune::Save::Entry* saveEntry; // format on save ruined my asterisk formatting :pensive:
-    Rune::Save::MetaEntry* metaEntry;
+    Rune::Save::MetaEntry metaEntry;
 
     Aether::PopupList* popupList = nullptr;
     WidgetOverlay* widgetOverlay = nullptr;
@@ -37,11 +38,6 @@ private:
 
     bool _isLoaded;
 
-    /**
-     * @brief Add an element to the widget.
-     */
-    void addToElements(AetherElement element);
-
 public:
     EditorWidget(Rune::Save::Entry *saveEntry, Aether::Window *window);
     ~EditorWidget();
@@ -50,6 +46,16 @@ public:
      * @brief Clear the widget's trove
      */
     void clearTrove();
+
+    /**
+     * @brief Add an element to the widget. If you call this outside of the editor widget builder functions - or the EditorWidget class itself - you will be a little bit sad.
+     */
+    void addToElements(AetherElement element);
+
+    /**
+     * @brief Add a description to the editor widget.
+     */
+    void addDescription(const std::string &description);
 
     /**
      * @brief Get all elements that are a part of the widget.
@@ -128,6 +134,11 @@ public:
 std::string getReadableSaveKeyName(std::string &saveKey);
 
 /**
+ * @brief Get a description for the save key. Used for filling list comments in the editor.
+ */
+std::string getSaveKeyDescription(std::string &saveKey);
+
+/**
  * @brief A table mapping save keys to their English identifiers. This should probably be a romfs .JSON file. >:D
  */
 const std::unordered_map<std::string, std::string> READABLE_SAVE_KEYS = {
@@ -138,11 +149,15 @@ const std::unordered_map<std::string, std::string> READABLE_SAVE_KEYS = {
     {"IsGet_Obj_Motorcycle",
      "Motorcycle Unlocked"}};
 
-using WidgetBuilderFunc = std::function<void(EditorWidget *widget)>;
+using WidgetBuilderFunc = void(*)(EditorWidget*);
 using WidgetBuilderMap = std::unordered_map<Rune::Save::DataType, WidgetBuilderFunc>;
 
 /**
  * @brief A table mapping Rune::Save::DataTypes to their respective widget builder functions.
  * I really need to get better at making these look nicer
  */
-extern const WidgetBuilderMap WIDGET_BUILDERS;
+inline const WidgetBuilderMap WIDGET_BUILDERS = {
+    {Rune::Save::RuneBool, Rune::WidgetBuilder::Bool},
+    {Rune::Save::RuneRevivalBool, Rune::WidgetBuilder::Bool},
+    {Rune::Save::RuneS32, Rune::WidgetBuilder::Int}
+};

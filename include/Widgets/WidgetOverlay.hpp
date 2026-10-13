@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Aether/Aether.hpp>
 
 #include <Utils/Utils.hpp>
@@ -6,7 +8,7 @@
 #include <functional>
 
 const int OVL_PANEL_WIDTH = 1280;
-const int OVL_PANEL_HEIGHT = 470; // really?
+const int OVL_PANEL_HEIGHT = 470;
 
 class WidgetOverlay : public Aether::Overlay{
     private:

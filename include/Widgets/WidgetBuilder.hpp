@@ -1,8 +1,9 @@
-#include <Aether/Aether.hpp>
-#include <Widgets/EditorWidget.hpp>
+#pragma once
 
-namespace Rune{
-    namespace WidgetBuilder{
+class EditorWidget;
+
+namespace Rune {
+    namespace WidgetBuilder {
         /**
          * @brief Constructor for boolean values.
          * Will apply to bool & revival bool

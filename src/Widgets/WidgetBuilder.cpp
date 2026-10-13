@@ -80,6 +80,9 @@ namespace Rune{
         
         widget->setEditButton(boolButton);
 
+        // list comment description
+        widget->addDescription(getSaveKeyDescription(saveEntry->dataName));
+
         log("[WIDGET " + saveEntry->dataName + "] - Created bool widget successfully!");
         return;
     }
@@ -108,22 +111,28 @@ namespace Rune{
                 editOverlay->setTitleLabel("Edit Value - "+getReadableSaveKeyName(saveEntry->dataName));
                 
                 // build popup interaction option
-                Aether::Spinner* numSpinner = new Aether::Spinner(0, 0);
+                Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 180);
                 numSpinner->setXY(
                     editOverlay->panel()->x() + editOverlay->panel()->w()/2 - numSpinner->w()/2,
                     editOverlay->panel()->y() + editOverlay->panel()->h()/2 - numSpinner->h()/2
                 );
 
+                numSpinner->setMax(std::get<int>(metaEntry->maxValue));
+                numSpinner->setMin(std::get<int>(metaEntry->minValue));
+                numSpinner->setValue(std::get<int>(saveEntry->value));
+                // numSpinner->setW(240);
+
                 editOverlay->addTempElement(numSpinner);
+                widget->getWindow()->addOverlay(editOverlay);
             }
         );
+
+        intButton->setValueColour(TOP_R);
+        intButton->setLineColour(SEPARATOR_COLOUR);
+
+        widget->setEditButton(intButton);
+        widget->addDescription(getSaveKeyDescription(saveEntry->dataName));
+
+        return;
     }
 } // namespace Rune
-
-/**
- * @brief yippee
- */
-WidgetBuilderMap WIDGET_BUILDERS = {
-    {Rune::Save::RuneBool, Rune::WidgetBuilder::Bool},
-    {Rune::Save::RuneRevivalBool, Rune::WidgetBuilder::Bool}
-};

@@ -46,12 +46,13 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     // the title
     Aether::Text* titleLabel = new Aether::Text(
         72,
-        290,
+        278,
         title,
         26
     );
 
     this->_titleLabel = titleLabel;
+    this->addElement(titleLabel);
 
     // the top separator
     Aether::Rectangle* topSeparator = new Aether::Rectangle(
@@ -80,6 +81,8 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     controlBar->addControl(Aether::Button::PLUS, "Save");
     controlBar->addControl(Aether::Button::B, "Cancel");
 
+    this->addElement(controlBar);
+
     /**
      * Handle saving changes
      */
@@ -97,4 +100,8 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->onButtonPress(Aether::Button::B, [this](){
         this->closeWidgetOverlay();
     });
+}
+
+WidgetOverlay::~WidgetOverlay(){
+    delete this->_trove;
 }
