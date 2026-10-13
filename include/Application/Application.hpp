@@ -7,11 +7,14 @@ namespace Rune{
     class Application{
         private:
             Aether::Window* _window;
-            Aether::Screen* _currentScreen;
+            Aether::Overlay* _fadeOverlay;
+            Aether::Screen* _currentScreen = nullptr;
+
+            bool _fadeScreens;
             std::unordered_map<std::string, Aether::Screen*> screens;
 
         public:
-            Application();
+            Application(bool fadeScreens = false);
 
             /**
              * @brief Get the current application window.

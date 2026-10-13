@@ -115,7 +115,8 @@ void MenuScreen::showSaveSelect(){
                     0,
                     0,
                     "Decoding Save...",
-                    32
+                    32,
+                    Aether::Render::Wait
                 );
 
                 loadingMessageText->setXY(
@@ -126,6 +127,8 @@ void MenuScreen::showSaveSelect(){
                 loadingMessage->setRectangleColour(MUTED_BACKGROUND_COLOUR);
                 loadingMessage->setLineColour(Aether::Colour{0, 0, 0, 0});
                 loadingMessageText->setColour(TEXT_COLOUR);
+
+                loadingMessageText->renderSync();
 
                 this->addTempElement(loadingMessage);
                 this->addTempElement(loadingMessageText);

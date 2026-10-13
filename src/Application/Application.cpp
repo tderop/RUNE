@@ -10,6 +10,8 @@
 #include <Utils/Utils.hpp>
 #include <Config.hpp>
 
+#include <math.h>
+
 /**
  * The current issue is that compilation fails due to linker errors.
  * All to do with Rune::Application. Most likely a syntax misunderstanding.
@@ -17,11 +19,20 @@
  * FIXED ^^ (makefile issue ;-;)
  */
 
+const useconds_t TWEEN_UPDATE_TIME = 16000; // microseconds
+
+// const timespec TIMESPEC_1 = {
+//     .tv_sec=0,
+//     .tv_nsec=TWEEN_UPDATE_TIME
+// };
+
 /**
  * @brief A simple application manager designed to properly manage screens and their lifetimes and memory.
  */
 namespace Rune{
-    Application::Application(){
+    Application::Application(bool fadeScreens){
+        this->_fadeScreens = fadeScreens;
+
         // initialise the window
         this->_window = new Aether::Window(
             "RUNE", 
@@ -40,7 +51,6 @@ namespace Rune{
 
         this->_window->setFadeIn(true);
         this->_window->setFadeOut(true);
-
 
         // create the screens
         log("[Rune::Application] - Initialising screens.");
@@ -102,10 +112,76 @@ namespace Rune{
     
         if (screen != nullptr){
             log("[Rune::Application] - Showing screen '"+screenName+"'...");
-            this->_window->showScreen(screen);
+            
+            // full opacity initially
+            float rectOpacity = 0.0f;
+            int roundedOpacity;
 
-            // unload previous screen (?)
+            // fade out the screen
+            Aether::Rectangle* fadeOutRect = nullptr;
+            if (this->_currentScreen != nullptr && this->_fadeScreens){ // only fade out if there is a current screen
+                fadeOutRect = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0);
+                fadeOutRect->setColour(Aether::Colour{0, 0, 0, 0});
+
+                log("[Rune::Application] - Current screen is not null. Fading out screen.");
+                this->_currentScreen->addElement(fadeOutRect); // add rect to current screen
+
+                // fade IN the rectangle
+                do {
+                    roundedOpacity = rectOpacity;
+
+                    fadeOutRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::min(roundedOpacity, 255))});
+                    rectOpacity += 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
+                    log(std::to_string(roundedOpacity));
+
+                    usleep(TWEEN_UPDATE_TIME);
+                } while (rectOpacity < 255.0f);
+
+                log("[Rune::Application] - Fade out complete.");
+            }
+
+            // store old screen
+            Aether::Screen* oldScreen = this->_currentScreen;
+
+            // add rect to new screen
+            Aether::Rectangle* fadeInRect = nullptr;
+
+            if (this->_fadeScreens){
+                log("[Rune::Application] - Adding fade rect to new screen...");
+                fadeInRect = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0);
+                fadeInRect->setColour(Aether::Colour{0, 0, 0, 255});
+                screen->addElement(fadeInRect);
+            }
+
+            // show new screen
+            log("[Rune::Application] - Showing new screen.");
+            this->_window->showScreen(screen);
             this->_currentScreen = screen;
+
+            if (this->_fadeScreens){
+                // remove rect from old screen
+                if (fadeOutRect != nullptr && oldScreen != nullptr){
+                    oldScreen->removeElement(fadeOutRect);
+                }
+
+                // fade in new screen
+                log("[Rune::Application] - Fading in new screen.");
+                do {
+                    roundedOpacity = rectOpacity;
+
+                    fadeInRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::max(roundedOpacity, 0))});
+                    rectOpacity -= 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
+                    log(std::to_string(roundedOpacity));
+
+                    usleep(TWEEN_UPDATE_TIME);
+                } while (rectOpacity > 0.0f);
+                log("[Rune::Application] - Fade in complete.");
+
+                // remove rect from new screen
+                log("[Rune::Application] - Removing rect from new screen...");
+                this->_currentScreen->removeElement(fadeInRect);
+            }
+
         } else {
             log("[Rune::Application] - Screen is nullptr. Ignoring.");
         }

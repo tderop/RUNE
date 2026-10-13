@@ -39,6 +39,13 @@ void exitApplet(InputSystem& inputService, InputState state){
  * @return Result
  */
 Result initApplet(){
+    // check for emulator presence
+    FILE* emulatorFile = fopen("sdmc:/emulator", "rb");
+    if (emulatorFile != nullptr){
+        logServiceIsEmulator = true;
+        log("[INIT] - Dev emulator environment detected!");
+    }
+
     log("[INIT] - Initialising RUNE...");
 
     AppletType type = appletGetAppletType();

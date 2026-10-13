@@ -6,6 +6,8 @@
 
 #include <Aether/Aether.hpp>
 
+extern bool logServiceIsEmulator;
+
 void log(const std::string& msg);
 Result getUserID(AccountUid* out);
 std::string getUserNickname();

@@ -739,6 +739,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto hashValueItem = mapping->getByKey("HashValue");
 
             if (!dataNameItem || !hashValueItem){
+                log("[Rune::Save::LoadMetadata] - No dataName item or hashValue item found in BYAML!");
                 return LibnxError_BadInput;
             }
 
@@ -751,6 +752,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             }
 
             if (!dataName){
+                log("[Rune::Save::LoadMetadata] - No dataName found!");
                 return LibnxError_BadInput;
             }
 
@@ -802,16 +804,19 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
         for (const auto& item : *dataTypeList){
             auto mapping = item.getHash();
             if (!mapping){
+                log("[Rune::Save::LoadMetadata] - No mapping!");
                 return LibnxError_BadInput;
             }
 
             auto hashValueItem = mapping->getByKey("HashValue");
             if (!hashValueItem){
+                log("[Rune::Save::LoadMetadata] - No hashValue item!");
                 return LibnxError_BadInput;
             }
 
             auto hashValue = hashValueItem->getInt();
             if (!hashValue){
+                log("[Rune::Save::LoadMetadata] - No hashValue!");
                 return LibnxError_BadInput;
             }
 
@@ -833,70 +838,191 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             }
 
             auto maxValueItem = mapping->getByKey("MaxValue");
-            auto minValueItem = mapping->getByKey("MinValue"); // can be cast?
+            auto minValueItem = mapping->getByKey("MinValue");
             auto defaultValueItem = mapping->getByKey("InitValue");
 
-            // cast for each one (hopefully this works)
-            switch (dataType){
-                case RuneBoolArray:
-                case RuneF32Array:
-                case RuneS32Array:
-                case RuneString64Array:
-                case RuneString256Array:
-                case RuneVector2fArray:
-                case RuneVector3fArray:
-                case RuneVector2f:
-                case RuneVector3f:
-                case RuneVector4f:
-                    auto maxValue  = maxValueItem->getArray();
-                    auto minValue  = minValueItem->getArray();
-                    auto initValue = minValueItem->getArray();
-                    
-                    entry->maxValue  = maxValue;
-                    entry->minValue  = minValue;
-                    entry->initValue = initValue;
-                    break;
-
-                case RuneBool:
-                case RuneRevivalBool:
-                    auto maxValue  = maxValueItem->getBool();
-                    auto minValue  = minValueItem->getBool();
-                    auto initValue = minValueItem->getBool(); 
-
-                    entry->maxValue  = maxValue;
-                    entry->minValue  = minValue;
-                    entry->initValue = initValue;
-                    break;
-
-                case RuneF32:
-                    auto maxValue  = maxValueItem->getFloat();
-                    auto minValue  = minValueItem->getFloat();
-                    auto initValue = minValueItem->getFloat(); 
-
-                    entry->maxValue  = maxValue;
-                    entry->minValue  = minValue;
-                    entry->initValue = initValue;
-
-                case RuneS32:
-                    auto maxValue  = maxValueItem->getInt();
-                    auto minValue  = minValueItem->getInt();
-                    auto initValue = minValueItem->getInt(); 
-
-                    entry->maxValue  = maxValue;
-                    entry->minValue  = minValue;
-                    entry->initValue = initValue;
-
-                case RuneString32:
-                case RuneString64:
-                case RuneString256:
-                    auto maxValue  = maxValueItem->getString();
-                    auto minValue  = minValueItem->getString();
-                    auto initValue = minValueItem->getString();
-
-                    entry->maxValue  = maxValue;
-                    entry->minValue  = minValue;
-                    entry->initValue = initValue;
+            if (!maxValueItem || !minValueItem || !defaultValueItem){
+                log("[Rune::Save::LoadMetadata] - No max, min, or default value items found in BYML.");
+                return LibnxError_BadInput;
             }
+            
+            /**
+             * @brief Gets additional metadata about the save entries. This is absolutely horrible. Thanks, BYML.
+             */
+            auto readSaveValue = [dataType](const byml::ItemData& item) -> std::optional<Rune::Save::SaveValue> {
+                switch (dataType){
+                    case RuneBool:
+                    case RuneRevivalBool: {
+                        auto value = item.getBool();
+                        if (!value) {
+                            return std::nullopt;
+                        }
+
+                        return Rune::Save::SaveValue{*value};
+                    }
+
+                    case RuneF32: {
+                        auto value = item.getFloat();
+                        if (!value) {
+                            return std::nullopt;
+                        }
+
+                        return Rune::Save::SaveValue{*value};
+                    }
+
+                    case RuneS32:
+                    case RuneRevivalS32: {
+                        auto value = item.getInt();
+                        if (!value) {
+                            return std::nullopt;
+                        }
+
+                        return Rune::Save::SaveValue{*value};
+                    }
+
+                    case RuneString32:
+                    case RuneString64:
+                    case RuneString256: {
+                        const char* value = item.getString();
+                        if (!value) {
+                            return std::nullopt;
+                        }
+
+                        return Rune::Save::SaveValue{std::string(value)};
+                    }
+
+                    case RuneBoolArray: {
+                        auto array = item.getArray();
+                        if (!array){
+                            return std::nullopt;
+                        }
+
+                        std::vector<bool> values;
+                        for (const auto& element : *array){
+                            auto value = element.getBool();
+                            if (!value) {
+                                return std::nullopt;
+                            }
+                            values.push_back(*value);
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+
+                    case RuneF32Array: {
+                        auto array = item.getArray();
+                        if (!array){
+                            return std::nullopt;
+                        }
+
+                        std::vector<float> values;
+                        for (const auto& element : *array){
+                            auto value = element.getFloat();
+                            if (!value) {
+                                return std::nullopt;
+                            }
+                            values.push_back(*value);
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+                    case RuneS32Array: {
+                        auto array = item.getArray();
+                        if (!array){
+                            return std::nullopt;
+                        }
+
+                        std::vector<int32_t> values;
+                        for (const auto& element : *array){
+                            auto value = element.getInt();
+                            if (!value) {
+                                return std::nullopt;
+                            }
+                            values.push_back(*value);
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+                    case RuneString64Array:
+                    case RuneString256Array: {
+                        auto array = item.getArray();
+                        if (!array){
+                            return std::nullopt;
+                        }
+
+                        std::vector<std::string> values;
+                        for (const auto& element : *array){
+                            const char* value = element.getString();
+                            if (!value) {
+                                return std::nullopt;
+                            }
+                            values.emplace_back(value);
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+                    case RuneVector2f:
+                    case RuneVector3f:
+                    case RuneVector4f: {
+                        auto array = item.getArray();
+                        if (!array){
+                            return std::nullopt;
+                        }
+
+                        std::vector<float> values;
+
+                        for (const auto& element : *array){
+                            auto value = element.getFloat();
+                            if (!value) {
+                                return std::nullopt;
+                            }
+                            values.push_back(*value);
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+                    case RuneVector2fArray:
+                    case RuneVector3fArray: {
+                        auto array = item.getArray();
+                        if (!array) {
+                            return std::nullopt;
+                        }
+
+                        std::vector<std::vector<float>> values;
+
+                        for (const auto& vectorItem : *array){
+                            auto vectorArray = vectorItem.getArray();
+                            if (!vectorArray){
+                                return std::nullopt;
+                            }
+
+                            std::vector<float> vector;
+                            for (const auto& element : *vectorArray){
+                                auto value = element.getFloat();
+                                if (!value){
+                                    return std::nullopt;
+                                }
+
+                                vector.push_back(*value);
+                            }
+
+                            values.push_back(std::move(vector));
+                        }
+                        return Rune::Save::SaveValue{std::move(values)};
+                    }
+
+                    default:
+                        return std::nullopt;
+                }
+            };
+
+            auto maxValue = readSaveValue(*maxValueItem);
+            auto minValue = readSaveValue(*minValueItem);
+            auto initValue = readSaveValue(*defaultValueItem);
+            if (!maxValue || !minValue || !initValue){ // why is this being hit so often?
+                log("[Rune::Save::LoadMetadata] - No maxValue, minValue, or initValue! Datatype: "+std::string(DataTypeName(dataType)));
+                continue;
+            }
+            
+            // cancer ;-;
+            entry->maxValue = std::move(*maxValue);
+            entry->minValue = std::move(*minValue);
+            entry->initValue = std::move(*initValue);
         }
     }
 

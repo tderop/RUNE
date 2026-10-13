@@ -165,7 +165,7 @@ namespace Rune
             std::vector<float>, // vectors
             std::vector<std::string>,
 
-            std::vector<std::vector<float>>, // vector arrays
+            std::vector<std::vector<float>> // vector arrays
 
             // meta types
             // byml::ItemData::Variant

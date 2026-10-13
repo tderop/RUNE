@@ -16,8 +16,8 @@ void SplashScreen::buildScreen(){
     // show the splash image
     log("[SPLASH] - Making splash image...");
     Aether::Image* splashImg = new Aether::Image(
-        940,
-        648,
+        994,
+        640,
         ASSET_PATHS.at("splash"),
         Aether::Render::Wait
     );
@@ -51,6 +51,7 @@ void SplashScreen::onLoad(){
 void SplashScreen::onUnload(){
     // delete the image and set alive status
     this->_alive = false;
+    this->_elapsed = 0;
     log("[SPLASH] - Screen killed.");
 }
 

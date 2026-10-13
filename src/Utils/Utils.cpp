@@ -13,8 +13,14 @@
 #include <functional>
 #include <numbers>
 
+bool logServiceIsEmulator = false;
+
 // functions
 void log(const std::string& msg){
+    if (!logServiceIsEmulator){
+        return;
+    }
+
     // get the char string and buffer size
     const char* c_str     = msg.c_str();
     const size_t str_size = msg.size();
