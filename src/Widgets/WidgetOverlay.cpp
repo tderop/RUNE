@@ -19,9 +19,11 @@ void WidgetOverlay::setTitleLabel(const std::string &title){
     this->_titleLabel->setString(title);
 }
 
-void WidgetOverlay::closeWidgetOverlay(){
+void WidgetOverlay::closeWidgetOverlay(bool isSave){
     this->clearTrove();
     this->close();
+
+    this->onCloseSignal->fire(isSave);
 }
 
 Aether::Rectangle* WidgetOverlay::panel(){
@@ -30,6 +32,7 @@ Aether::Rectangle* WidgetOverlay::panel(){
 
 WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_trove = new Trove();
+    this->onCloseSignal = new Signal<bool>();
 
     // the main panel
     Aether::Rectangle* panel = new Aether::Rectangle(
@@ -87,18 +90,14 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
      * Handle saving changes
      */
     this->onButtonPress(Aether::Button::PLUS, [this](){
-        if (this->_onSave){
-            this->_onSave();
-        }
-
-        this->closeWidgetOverlay();
+        this->closeWidgetOverlay(true);
     });
 
     /**
      * Just close the menu when B is pressed
      */
     this->onButtonPress(Aether::Button::B, [this](){
-        this->closeWidgetOverlay();
+        this->closeWidgetOverlay(false);
     });
 }
 

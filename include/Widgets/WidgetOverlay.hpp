@@ -4,6 +4,7 @@
 
 #include <Utils/Utils.hpp>
 #include <Utils/Trove.hpp>
+#include <Events/Signal.hpp>
 
 #include <functional>
 
@@ -16,9 +17,11 @@ class WidgetOverlay : public Aether::Overlay{
         Aether::Text* _titleLabel = nullptr;
         Aether::Rectangle* _panel = nullptr;
 
-        std::function<void()> _onSave;
+        // std::function<void()> _onSave;
 
     public:
+        Signal<bool>* onCloseSignal;
+
         WidgetOverlay(const std::string &title="");
         ~WidgetOverlay();
 
@@ -30,7 +33,7 @@ class WidgetOverlay : public Aether::Overlay{
         /**
          * @brief Close the widget overlay.
          */
-        void closeWidgetOverlay();
+        void closeWidgetOverlay(bool isSave);
 
         /**
          * @brief Get the panel.

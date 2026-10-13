@@ -2,6 +2,7 @@
 #include <Widgets/WidgetBuilder.hpp>
 
 #include <Save/Save.hpp>
+#include <Events/Signal.hpp>
 
 namespace Rune{
     /**
@@ -123,6 +124,27 @@ namespace Rune{
                 // numSpinner->setW(240);
 
                 editOverlay->addTempElement(numSpinner);
+
+                /**
+                 * ISSUE: DISCONNECTING THIS CONNECTION DOES NOT WORK. CONNECTIONS KEEP STACKING UP.
+                 * PERHAPS LOOK INTO MAKING .once TOMORROW
+                 * I MEAN TODAY
+                 * HELLO ME TOMORROW
+                 */
+                Connection<bool> closeConn = editOverlay->onCloseSignal->connect([&closeConn, numSpinner, widget](bool isSave){
+                    closeConn.disconnect();
+
+                    if (isSave){
+                        // update value
+                        log("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
+                            +std::to_string(numSpinner->value()));
+
+                        int value = numSpinner->value();
+                        widget->getEditButton()->setValue(std::to_string(value));
+                        widget->getSaveEntry()->value = value;
+                    }
+                });
+
                 widget->getWindow()->addOverlay(editOverlay);
             }
         );
