@@ -35,6 +35,9 @@ namespace Rune{
                             "Stats",
                             {
                                 "IsGet_Obj_Motorcycle", // Motorcycle Obtained
+                                //////////////////////////
+                                "<PAD>",
+                                //////////////////////////
                                 "CurrentRupee", // Rupee balance
                                 "CurrentMamo",  // Mons balance
                                 
@@ -115,6 +118,13 @@ EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
     log("[EDITOR] - Getting entry from data name '"+saveKey+"'...");
     if (this->saveFile == nullptr){
         log("[EDITOR] - Save file is nullptr! Ignoring request.");
+        return nullptr;
+    }
+
+    // handle padding
+    if (saveKey == "<PAD>"){
+        Aether::ListSeparator* pad = new Aether::ListSeparator();
+        this->editorScroll->addElement(pad);
         return nullptr;
     }
 
@@ -433,6 +443,7 @@ void EditorScreen::cleanEditorWidgets(){
     }
 
     this->tempWidgets.clear();
+    this->editorScroll->removeAllElements();
 }
 
 void EditorScreen::showTab(std::string tabName){
