@@ -100,10 +100,12 @@ namespace Rune{
         log("[WIDGET] - Creating int widget.");
 
         // Create the button
+        Connection<bool>* closeConn = nullptr;
+
         intButton = new Aether::ListOption(
             getReadableSaveKeyName(saveEntry->dataName),
             Rune::Save::ValueToString(saveEntry->value, false),
-            [widget](){
+            [widget, closeConn]() mutable{
                 WidgetOverlay* editOverlay = widget->getWidgetOverlay();
                 Rune::Save::Entry* saveEntry = widget->getSaveEntry(); // get fresh reference
 
@@ -130,9 +132,10 @@ namespace Rune{
                  * PERHAPS LOOK INTO MAKING .once TOMORROW
                  * I MEAN TODAY
                  * HELLO ME TOMORROW
+                 * 
                  */
-                Connection<bool> closeConn = editOverlay->onCloseSignal->connect([&closeConn, numSpinner, widget](bool isSave){
-                    closeConn.disconnect();
+                editOverlay->onCloseSignal->connectWithId([numSpinner, widget](size_t id, bool isSave){
+                    widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
 
                     if (isSave){
                         // update value

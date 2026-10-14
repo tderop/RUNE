@@ -15,6 +15,7 @@
 #include <Utils/Utils.hpp>
 #include <Widgets/WidgetOverlay.hpp>
 #include <Widgets/WidgetBuilder.hpp>
+#include <Events/Signal.hpp>
 #include <Config.hpp>
 
 /**

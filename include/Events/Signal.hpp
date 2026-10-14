@@ -20,6 +20,7 @@ private:
 public:
     Connection(Signal<Args...>* event, size_t id) : event(event), id(id) {}
     void disconnect();
+
     bool isConnected(){
         return connected;
     }
@@ -54,8 +55,22 @@ public:
 
         // build the item in the list, a list to also ensure the data does not change position
         connections.emplace_back(this, id);
-        return connections.back(); // return the list item so it's by reference
+        return connections.back(); // by reference
     }
+
+    Connection<Args...>& connectWithId(std::function<void(size_t, Args...)> callback){
+        size_t id = nextID++;
+        callbacks[id] = {
+            id,
+            [callback, id](Args... args){
+                callback(id, args...);
+            }
+        };
+
+        connections.emplace_back(this, id);
+        return connections.back();
+    }
+
     // disconnect a connection by its ID, to be called by connections
     void disconnect(size_t connID){
         callbacks.erase(connID);
@@ -63,7 +78,8 @@ public:
 
     // fire the signal and run all bound functions
     void fire(Args... args){
-        for (const auto& [id, callback] : callbacks)
+        std::unordered_map<int, Callback<Args...>> snapshot = callbacks;
+        for (const auto& [id, callback] : snapshot)
         {
             callback.function(args...);
         }
@@ -88,9 +104,12 @@ public:
 
 template<typename... Args>
 void Connection<Args...>::disconnect(){
-    if (not connected)
+    if (not connected){
+        // log("[Connection] - Connection with ID "+std::to_string(this->id)+" is not currently connected.");
         return;
+    }
 
+    // log("[Connection] - Disconnecting connection with ID: "+std::to_string(this->id));
     event->disconnect(id);
     connected = false;
 }
