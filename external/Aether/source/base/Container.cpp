@@ -83,6 +83,9 @@ namespace Aether {
                             return sqrt(pow((pot->x() + pot->w()/2) - (cur->x() + cur->w()/2), 2) + pow(pot->y() - (cur->y() + cur->h()), 2));
                         });
                         break;
+
+                    default:
+                        break;
                 }
                 break;
 

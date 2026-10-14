@@ -1,6 +1,5 @@
 #include <Widgets/EditorWidget.hpp>
 #include <Widgets/WidgetBuilder.hpp>
-#include <Widgets/WidgetSpinner.hpp>
 
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
@@ -108,9 +107,9 @@ namespace Rune{
             numSpinner->setValue(std::get<int>(saveEntry->value));
 
             numSpinner->setLabel(getReadableSaveKeyName(saveEntry->dataName));
-            // numSpinner->onPress([](){
-            //     log("hello my name is jeff the spinner");
-            // });
+            numSpinner->onPress([](){
+                log("hello my name is jeff the spinner");
+            });
 
             editOverlay->addTempElement(numSpinner);
 

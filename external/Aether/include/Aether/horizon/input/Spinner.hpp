@@ -30,6 +30,8 @@ namespace Aether {
             Text * down;
             /** @brief Actual value/text */
             Text * str;
+            /** @brief Value container */
+            Element * valueContainer_;
             /** @brief Label text (hidden if not set) */
             Text * label_;
             /** @brief Up Arrow container (for larger touch area) */
@@ -83,6 +85,11 @@ namespace Aether {
              * @param w spinner width (default 90)
              */
             Spinner(int x, int y, int w = 90);
+
+            /**
+             * @brief Get the value container element.
+             */
+            Element* valueContainer();
 
             /**
              * @brief Attempt to handle given event

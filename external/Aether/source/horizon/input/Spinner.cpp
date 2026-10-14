@@ -39,6 +39,7 @@ namespace Aether {
         Element * e = new Element(0, 0, this->w(), VALUE_FONT_SIZE + VALUE_PADDING * 2);
         e->setXY(this->x() + (this->w() - e->w())/2, this->y() + (this->h() - e->h())/2);
         e->setSelectable(true);
+        this->valueContainer_ = e;
         this->str = new Text(0, 0, "0", VALUE_FONT_SIZE);
         this->str->setXY(e->x() + (e->w() - this->str->w())/2, e->y() + (e->h() - this->str->h())/2);
         e->addElement(this->str);
@@ -61,6 +62,10 @@ namespace Aether {
         this->arrowC = Colour{255, 255, 255, 255};
         this->highlightC = Colour{255, 255, 255, 255};
         this->textC = Colour{255, 255, 255, 255};
+    }
+
+    Element* Spinner::valueContainer(){
+        return this->valueContainer_;
     }
 
     void Spinner::incrementVal() {
@@ -111,6 +116,11 @@ namespace Aether {
                     return true;
                     break;
 
+                case Button::A:
+                    if (this->onPressFunc() != nullptr){
+                        (this->onPressFunc())();
+                    }
+
                 default:
                     break;
             }
@@ -126,7 +136,12 @@ namespace Aether {
               && (e->touchY() >= this->downContainer->y() && e->touchY() < this->downContainer->y() + this->downContainer->h())) {
                 this->decrementVal();
                 b = true;
-            }
+            } else if ((e->touchX() >= this->valueContainer_->x() && e->touchX() < this->valueContainer_->x() + this->valueContainer_->w())
+              && (e->touchY() >= this->valueContainer_->y() && e->touchY() < this->valueContainer_->y() + this->valueContainer_->h())) {
+                if (this->onPressFunc() != nullptr){
+                    (this->onPressFunc())();
+                }
+              }
         }
 
         // Set this element focused if arrows touched (they're the only children that can handle events)
