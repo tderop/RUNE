@@ -115,6 +115,14 @@ void EditorWidget::addDescription(const std::string &description){
     }
 }
 
+void EditorWidget::addEditButton(const std::string &name, const std::string &value){
+    Aether::ListOption* editBtn = new Aether::ListOption(name, value, [](){});
+    editBtn->setValueColour(TOP_R);
+    editBtn->setLineColour(SEPARATOR_COLOUR);
+    
+    this->setEditButton(editBtn);
+}
+
 void EditorWidget::setEditButton(Aether::ListOption* editButton){
     log("[EditorWidget] - Setting edit button...");
     this->editButton = editButton;

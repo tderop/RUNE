@@ -12,7 +12,7 @@
                 "C:/devkitPro/libnx/include",
                 "${workspaceFolder}/libs/byml/include",
                 "${workspaceFolder}/libs/range-v3/include",
-                "${workspaceFolder}/libs/Aether/include",
+                "${workspaceFolder}/external/Aether/include",
                 "C:/devkitPro/portlibs/switch/include",
                 "${workspaceFolder}/libs/json/include",
                 "${workspaceFolder}/build"

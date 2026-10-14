@@ -59,6 +59,14 @@ public:
     void addDescription(const std::string &description);
 
     /**
+     * @brief Add a button to the editor widget.
+     * 
+     * @param name The main text on the list option
+     * @param value The rightmost text on the list option, representing the value of the entry in data.
+     */
+    void addEditButton(const std::string &name, const std::string &value);
+
+    /**
      * @brief Get all elements that are a part of the widget.
      */
     std::vector<AetherElement> getAllElements();

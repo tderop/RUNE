@@ -57,9 +57,14 @@ SOURCES     := src \
 			   src/Json \
                libs/byml/source/byml
 
+# Preserve source paths so same-named files in different Aether directories stay distinct.
+AETHER_SOURCE_DIR := $(if $(TOPDIR),$(TOPDIR),$(CURDIR))/external/Aether/source
+AETHER_SOURCE_FILES := $(shell find "$(AETHER_SOURCE_DIR)" -type f -name "*.cpp")
+AETHER_OBJECT_FILES := $(patsubst $(AETHER_SOURCE_DIR)/%.cpp,aether/%.o,$(AETHER_SOURCE_FILES))
+
 DATA		:=	data
 INCLUDES := include src \
-            libs/Aether/include \
+            external/Aether/include \
             libs/byml/include \
             libs/range-v3/include \
 			libs/json/include \
@@ -79,12 +84,12 @@ CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -Wno-unused-function
-CXXFLAGS += -Wno-overloaded-virtual -Wno-unused-variable -Wno-unused-but-set-variable
+CXXFLAGS += -std=gnu++17 -Wno-overloaded-virtual -Wno-unused-variable -Wno-unused-but-set-variable
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) $(LIBPATHS) -Wl,-Map,$(notdir $*.map)
 
-LIBS := -lAether -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx \
+LIBS := -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx \
 		-lspdlog \
         -lEGL -lglapi -lGLESv2 -ldrm_nouveau \
         -lm \
@@ -96,7 +101,7 @@ LIBS := -lAether -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx \
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS := $(PORTLIBS) $(LIBNX) $(CURDIR)/libs/Aether $(CURDIR)/libs/spdlog
+LIBDIRS := $(PORTLIBS) $(LIBNX) $(CURDIR)/libs/spdlog
 
 
 #---------------------------------------------------------------------------------
@@ -113,6 +118,7 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+export AETHER_OBJECT_FILES
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
@@ -134,7 +140,7 @@ endif
 #---------------------------------------------------------------------------------
 
 export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))
-export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o) $(AETHER_OBJECT_FILES)
 export OFILES 	:=	$(OFILES_BIN) $(OFILES_SRC)
 export HFILES_BIN	:=	$(addsuffix .h,$(subst .,_,$(BINFILES)))
 
@@ -240,6 +246,10 @@ endif
 $(OUTPUT).elf	:	$(OFILES)
 
 $(OFILES_SRC)	: $(HFILES_BIN)
+
+aether/%.o: $(TOPDIR)/external/Aether/source/%.cpp
+	@mkdir -p $(@D)
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -MF $(@:.o=.d) -MT $@ -c $< -o $@
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
