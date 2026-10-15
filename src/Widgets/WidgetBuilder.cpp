@@ -1,5 +1,6 @@
 #include <Widgets/EditorWidget.hpp>
 #include <Widgets/WidgetBuilder.hpp>
+#include <Application/Keyboard.hpp>
 
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
@@ -99,7 +100,7 @@ namespace Rune{
             Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 180);
             numSpinner->setXY(
                 editOverlay->panel()->x() + editOverlay->panel()->w()/2 - numSpinner->w()/2,
-                editOverlay->panel()->y() + editOverlay->panel()->h()/2 - numSpinner->h()/2
+                editOverlay->panel()->y() + editOverlay->panel()->h()/2 - numSpinner->h()/2 - 12
             );
 
             numSpinner->setMax(std::get<int>(metaEntry->maxValue));
@@ -107,8 +108,17 @@ namespace Rune{
             numSpinner->setValue(std::get<int>(saveEntry->value));
 
             numSpinner->setLabel(getReadableSaveKeyName(saveEntry->dataName));
-            numSpinner->onPress([](){
-                log("hello my name is jeff the spinner");
+            numSpinner->onPress([widget, editOverlay, numSpinner, metaEntry](){
+                // get num input
+                float outFloat;
+                Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", 
+                    std::get<int>(metaEntry->minValue), std::get<int>(metaEntry->maxValue));
+
+                if (R_SUCCEEDED(rc)){
+                    // update value
+                    numSpinner->setValue((int)outFloat);
+                    editOverlay->closeWidgetOverlay(true);
+                }
             });
 
             editOverlay->addTempElement(numSpinner);
