@@ -29,19 +29,19 @@ namespace Rune {
         void String(EditorWidget* widget);
 
         /**
-         * @brief Constructor for vector2 values.
+         * @brief Constructor for vector values.
          */
-        void Vector2(EditorWidget* widget);
+        void Vector(EditorWidget* widget);
 
-        /**
-         * @brief Constructor for vector3 values.
-         */
-        void Vector3(EditorWidget* widget);
+        // /**
+        //  * @brief Constructor for vector3 values.
+        //  */
+        // void Vector3(EditorWidget* widget);
 
-        /**
-         * @brief Constructor for vector4 values.
-         */
-        void Vector4(EditorWidget* widget);
+        // /**
+        //  * @brief Constructor for vector4 values.
+        //  */
+        // void Vector4(EditorWidget* widget);
 
     } // namespace WidgetBuilder
 } // namespace Rune

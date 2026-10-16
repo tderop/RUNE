@@ -169,5 +169,8 @@ inline const WidgetBuilderMap WIDGET_BUILDERS = {
     {Rune::Save::RuneBool, Rune::WidgetBuilder::Bool},
     {Rune::Save::RuneRevivalBool, Rune::WidgetBuilder::Bool},
     {Rune::Save::RuneS32, Rune::WidgetBuilder::Int},
-    {Rune::Save::RuneF32, Rune::WidgetBuilder::Float}
+    {Rune::Save::RuneF32, Rune::WidgetBuilder::Float},
+    {Rune::Save::RuneString32, Rune::WidgetBuilder::String},
+    {Rune::Save::RuneString64, Rune::WidgetBuilder::String},
+    {Rune::Save::RuneString256, Rune::WidgetBuilder::String}
 };

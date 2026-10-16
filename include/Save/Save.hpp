@@ -231,7 +231,7 @@ namespace Rune
         /**
          * @brief Convert a RuneSaveValue to a displayable string
          */
-        std::string ValueToString(const SaveValue &value, bool showStringQuotes);
+        std::string ValueToString(const SaveValue &value, bool showStringQuotes=false);
 
         /**
          * @brief Get the save version string from a RuneSaveVersion
