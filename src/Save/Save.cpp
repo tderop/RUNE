@@ -846,7 +846,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             /**
              * @brief Gets additional metadata about the save entries. This is absolutely horrible. Thanks, BYML.
              */
-            auto readSaveValue = [dataType](const byml::ItemData& item) -> std::optional<Rune::Save::SaveValue> {
+            auto readSaveValue = [dataType](const byml::ItemData& item, const std::string &key="", const std::string &cat="") -> std::optional<Rune::Save::SaveValue> {
                 switch (dataType){
                     case RuneBool:
                     case RuneRevivalBool: {
@@ -860,10 +860,13 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
 
                     case RuneF32: {
                         auto value = item.getFloat();
+                        log("[Rune::Save::LoadMetadata] - Getting float value...");
                         if (!value) {
+                            log("[Rune::Save::LoadMetadata] - Failed to get float value: no value!");
                             return std::nullopt;
                         }
-
+                        
+                        log("[Rune::Save::LoadMetadata] - Successfully obtained float value! ("+key+" "+cat+": "+std::to_string(std::get<float>(Rune::Save::SaveValue{*value}))+")");
                         return Rune::Save::SaveValue{*value};
                     }
 
@@ -1008,9 +1011,9 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                 }
             };
 
-            auto maxValue = readSaveValue(*maxValueItem);
-            auto minValue = readSaveValue(*minValueItem);
-            auto initValue = readSaveValue(*defaultValueItem);
+            auto maxValue = readSaveValue(*maxValueItem, entry->dataName, "MAX");
+            auto minValue = readSaveValue(*minValueItem, entry->dataName, "MIN");
+            auto initValue = readSaveValue(*defaultValueItem, entry->dataName, "INIT");
             if (!maxValue || !minValue || !initValue){ // why is this being hit so often?
                 // log("[Rune::Save::LoadMetadata] - No maxValue, minValue, or initValue! Datatype: "+std::string(DataTypeName(dataType)));
                 continue;
