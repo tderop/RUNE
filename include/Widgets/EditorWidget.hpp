@@ -168,5 +168,6 @@ using WidgetBuilderMap = std::unordered_map<Rune::Save::DataType, WidgetBuilderF
 inline const WidgetBuilderMap WIDGET_BUILDERS = {
     {Rune::Save::RuneBool, Rune::WidgetBuilder::Bool},
     {Rune::Save::RuneRevivalBool, Rune::WidgetBuilder::Bool},
-    {Rune::Save::RuneS32, Rune::WidgetBuilder::Int}
+    {Rune::Save::RuneS32, Rune::WidgetBuilder::Int},
+    {Rune::Save::RuneF32, Rune::WidgetBuilder::Float}
 };

@@ -1,4 +1,5 @@
 #include <Application/Keyboard.hpp>
+#include <Utils/Utils.hpp>
 #include <string>
 
 Result Rune::Keyboard::getStringInput(std::string* outStr, const std::string& hint){
@@ -51,6 +52,8 @@ Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, 
     }
 
     if (inputFloat < minValue || inputFloat > maxValue){
+        log("[Rune::Keyboard::getNumberInput] - Error: Input value is OOB ("+std::to_string(minValue)
+            +", "+std::to_string(maxValue)+")");
         return LibnxError_BadInput;
     }
 

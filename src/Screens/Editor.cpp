@@ -40,6 +40,10 @@ namespace Rune{
                                 //////////////////////////
                                 "CurrentRupee", // Rupee balance
                                 "CurrentMamo",  // Mons balance
+                                "<PAD>",
+                                "dummy_float",
+                                "StaminaCurrentMax",
+                                "MiniGame_BirdMan_HillTower_RecordDistance"
                                 
                             },
                         },
@@ -385,7 +389,7 @@ void EditorScreen::buildScreen(){
         sidebarFrame->w(),
         topPanel->h(),
         WINDOW_RESOLUTION_X-sidebarFrame->w(),
-        WINDOW_RESOLUTION_Y-topPanel->h()
+        (WINDOW_RESOLUTION_Y-topPanel->h())-(WINDOW_RESOLUTION_Y-bottomSeparator->y()) // overlap bug fix
     );
 
     // the control bar

@@ -16,6 +16,7 @@ class WidgetOverlay : public Aether::Overlay{
         Trove* _trove;
         Aether::Text* _titleLabel = nullptr;
         Aether::Rectangle* _panel = nullptr;
+        Aether::List* _list = nullptr;
 
         // std::function<void()> _onSave;
 
@@ -44,6 +45,16 @@ class WidgetOverlay : public Aether::Overlay{
          * @brief Add an element that will be deleted when the overlay menu closes.
          */
         void addTempElement(Aether::Element* element);
+
+        /**
+         * @brief Add an Aether::List to the overlay. This is temporary and will be deleted when the overlay is closed.
+         */
+        void addList();
+
+        /**
+         * @brief Get the list. Will return nullptr if no list has been created with addList()
+         */
+        Aether::List* list();
 
         /**
          * @brief Set the title text content of the widget overlay.

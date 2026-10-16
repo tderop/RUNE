@@ -54,6 +54,7 @@ SOURCES     := src \
                src/Screens \
 			   src/Application \
 			   src/Widgets \
+			   src/Widgets/Builders \
 			   src/Json \
                libs/byml/source/byml
 

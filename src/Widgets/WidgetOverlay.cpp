@@ -3,12 +3,23 @@
 #include <Config.hpp>
 
 void WidgetOverlay::clearTrove(){
+    this->_list = nullptr;
     this->_trove->clear();
 }
 
 void WidgetOverlay::addTempElement(Aether::Element* element){
     this->_trove->addElement(element);
     this->addElement(element);
+}
+
+void WidgetOverlay::addList(){
+    Aether::List* list = new Aether::List(30, 322, 1220, 326);
+    this->addTempElement(list);
+    this->_list = list;
+}
+
+Aether::List* WidgetOverlay::list(){
+    return this->_list;
 }
 
 void WidgetOverlay::setTitleLabel(const std::string &title){
