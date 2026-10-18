@@ -33,6 +33,13 @@
     "MiniGame_BirdMan_HillTower_RecordDistance": {
         "Readable": "Paragliding Minigame Record",
         "Description": "Your record distance travelled in the 'Bird Man Research' paragliding minigame. Why do you even need to edit this?"
-    }
+    },
 
+    /**
+    * string_data
+    */
+    "ActorName_SeakSensor_Slot0": {
+        "Readable": "Shiekah Sensor Target",
+        "Description": "The currently targeted Sheikah Sensor actor name."
+    }
 }

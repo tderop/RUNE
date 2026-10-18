@@ -40,10 +40,16 @@ namespace Rune{
                                 //////////////////////////
                                 "CurrentRupee", // Rupee balance
                                 "CurrentMamo",  // Mons balance
+                                //////////////////////////
                                 "<PAD>",
-                                "dummy_float",
+                                //////////////////////////
+                                // "dummy_float",
                                 "StaminaCurrentMax",
-                                "MiniGame_BirdMan_HillTower_RecordDistance"
+                                "MiniGame_BirdMan_HillTower_RecordDistance",
+                                //////////////////////////
+                                "<PAD>",
+                                //////////////////////////
+                                "ActorName_SeakSensor_Slot0"
                                 
                             },
                         },
