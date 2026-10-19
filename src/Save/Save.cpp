@@ -960,14 +960,41 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                     case RuneVector2f:
                     case RuneVector3f:
                     case RuneVector4f: {
+                        size_t vectorSize;
+                        switch (dataType){
+                            case RuneVector2f:
+                                vectorSize = 2;
+                                break;
+                            case RuneVector3f:
+                                vectorSize = 3;
+                                break;
+                            case RuneVector4f:
+                                vectorSize = 4;
+                                break;
+                            default:
+                                return std::nullopt;
+                        }
+
                         auto array = item.getArray();
                         if (!array){
                             return std::nullopt;
                         }
 
-                        std::vector<float> values;
+                        const byml::Array* vectorArray = &*array;
+                        auto firstElement = array->getByIndex(0);
+                        if (firstElement){
+                            auto nestedArray = firstElement->getArray();
+                            if (nestedArray){
+                                vectorArray = &*nestedArray;
+                            }
+                        }
 
-                        for (const auto& element : *array){
+                        if (vectorArray->numItems() != vectorSize){
+                            return std::nullopt;
+                        }
+
+                        std::vector<float> values;
+                        for (const auto& element : *vectorArray){
                             auto value = element.getFloat();
                             if (!value) {
                                 return std::nullopt;
@@ -1014,8 +1041,11 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto maxValue = readSaveValue(*maxValueItem, entry->dataName, "MAX");
             auto minValue = readSaveValue(*minValueItem, entry->dataName, "MIN");
             auto initValue = readSaveValue(*defaultValueItem, entry->dataName, "INIT");
-            if (!maxValue || !minValue || !initValue){ // why is this being hit so often?
-                // log("[Rune::Save::LoadMetadata] - No maxValue, minValue, or initValue! Datatype: "+std::string(DataTypeName(dataType)));
+            if (!maxValue || !minValue || !initValue){
+                if (dataType == RuneVector2f || dataType == RuneVector3f || dataType == RuneVector4f){
+                    log("[Rune::Save::LoadMetadata] - Failed to decode bounds/default values for '"
+                        +entry->dataName+"' ("+std::string(dataTypeName)+").");
+                }
                 continue;
             }
             

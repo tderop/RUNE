@@ -7,11 +7,11 @@
 #include <Save/Save.hpp>
 #include <Config.hpp>
 
+#include <Utils/Utils.hpp>
+
 #include <string>
 
-int SPINNER_SPACING = 20;
-int SPINNER_WIDTH = 180;
-
+const std::string KEY_PREFIX = "Button_";
 std::vector<std::string> VECTOR_LETTERS = {"X", "Y", "Z", "A"};
 
 void Rune::WidgetBuilder::Vector(EditorWidget* widget){
@@ -31,65 +31,65 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
         std::string readableValue = Rune::Save::ValueToString(saveEntry->value);
         ovl->setTitleLabel(readableName);
 
-        // build the number spinners
+        ovl->addList();
+
+        // build the number buttons
         auto value = std::get<std::vector<float>>(saveEntry->value);
-        int vectorSize = value.size();
+        size_t vectorSize = value.size();
 
-        std::vector<Aether::Spinner*> spinners;
+        std::vector<Aether::ListOption*> buttons;
 
-        for (int i = 0; i < vectorSize; i++){
-            Aether::Spinner* newSpinner = new Aether::Spinner(
-                i*(SPINNER_WIDTH+SPINNER_SPACING),
-                0,
-                SPINNER_WIDTH
-            );
+        for (size_t i = 0; i < vectorSize; i++){
+            Aether::ListOption* editBtn = new Aether::ListOption(
+                VECTOR_LETTERS.at(i),
+                Rune::Save::ValueToString(value.at(i)),
+                [widget, i](){
+                    float outFloat;
 
-            newSpinner->setValue(value.at(i));
-            spinners.push_back(newSpinner);
+                    log("[Rune::WidgetBuilder::Vector] - Getting metadata...");
+                    Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
 
-            widget->addElementWithKey(newSpinner, "Spinner_"+std::to_string(i));
-            newSpinner->setLabel(VECTOR_LETTERS.at(i));
+                    log("[Rune::WidgetBuilder::Vector] - Got metadata, getting bounds...");
+                    log("[Rune::WidgetBuilder::Vector] - minValue: '"
+                        +Rune::Save::ValueToString(metaEntry->minValue)+"' | maxValue: '"
+                        +Rune::Save::ValueToString(metaEntry->maxValue)+"' | initValue: '"
+                        +Rune::Save::ValueToString(metaEntry->initValue)+"'");
 
-            // Open the keyboard when the spinner is activated to get an input
-            newSpinner->onPress([widget, i](){
-                float outFloat;
-                Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", 
-                    std::get<float>(widget->getMetaEntry()->minValue), 
-                    std::get<float>(widget->getMetaEntry()->maxValue)
-                );
+                    const auto* minValues = std::get_if<std::vector<float>>(&metaEntry->minValue);
+                    const auto* maxValues = std::get_if<std::vector<float>>(&metaEntry->maxValue);
 
-                if (R_SUCCEEDED(rc)){
-                    AetherElement spinnerElm;
-                    rc = widget->getElementAtKey(spinnerElm, "Spinner_"+std::to_string(i));
-                    Aether::Spinner* spinner = std::get<Aether::Spinner*>(spinnerElm);
+                    if (!minValues || !maxValues ||
+                        i >= minValues->size() || i >= maxValues->size()){
 
-                    spinner->setValue((int)outFloat);
+                        log("[Rune::WidgetBuilder::Vector] - Invalid component bounds in metadata.");
+                        return;
+                    }
+
+                    float minValue = minValues->at(i);
+                    float maxValue = maxValues->at(i);
+
+                    log("[Rune::WidgetBuilder::Vector] - Got bounds, showing keyboard...");
+                    Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", minValue, maxValue);
+
+                    if (R_SUCCEEDED(rc)){
+                        log("[Rune::WidgetBuilder::Vector] - Success, setting value");
+
+                        AetherElement buttonElm;
+                        rc = widget->getElementAtKey(buttonElm, KEY_PREFIX+std::to_string(i));
+                        Aether::ListOption* button = std::get<Aether::ListOption*>(buttonElm);
+                        button->setValue(std::to_string(outFloat));
+                    }
                 }
-            });
-        }
-
-        // reposition them
-        int middleIdx  = ((vectorSize/2)-1) + vectorSize%2;
-        int ovlCenterX = (ovl->panel()->x()) + (ovl->panel()->w()/2);
-
-        Aether::Spinner* centerSpinner = spinners.at(middleIdx);
-
-        int xOffset;
-        if (vectorSize%2){
-            xOffset = ovlCenterX - (centerSpinner->x()) - (centerSpinner->w()/2);
-        } else {
-            Aether::Spinner* nextSpinner = spinners.at(middleIdx+1);
-            xOffset = ovlCenterX - (centerSpinner->x()) - (centerSpinner->w()) - (SPINNER_SPACING/2);
-        }
-
-        int centerY = (ovl->panel()->y())+(ovl->panel()->h()/2)-(centerSpinner->h()/2);
-        for (Aether::Spinner* spinner : spinners){
-            spinner->setXY(
-                spinner->x()+xOffset,
-                centerY
             );
 
-            ovl->addTempElement(spinner);
+            editBtn->setLineColour(SEPARATOR_COLOUR);
+            editBtn->setValueColour(TOP_R);
+
+            editBtn->setValue(std::to_string(value.at(i)));
+            buttons.push_back(editBtn);
+
+            widget->addElementWithKey(editBtn, KEY_PREFIX+std::to_string(i));
+            ovl->list()->addElement(editBtn);
         }
 
         ovl->onCloseSignal->connectWithId([widget](size_t id, bool isSave){
@@ -103,13 +103,13 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                 int vectorSize = oldValue.size();
                 std::vector<float> newValue;
 
-                // get all spinners and build new value
+                // get all buttons and build new value
                 for (int i = 0; i < vectorSize; i++){
-                    AetherElement spinnerElm;
-                    Result rc = widget->getElementAtKey(spinnerElm, "Spinner_"+std::to_string(i));
+                    AetherElement buttonElm;
+                    Result rc = widget->getElementAtKey(buttonElm, KEY_PREFIX+std::to_string(i));
 
-                    Aether::Spinner* spinner = std::get<Aether::Spinner*>(spinnerElm);
-                    newValue.push_back(spinner->value());
+                    Aether::ListOption* editBtn = std::get<Aether::ListOption*>(buttonElm);
+                    newValue.push_back(std::stof(editBtn->value()));
                 }
 
                 log("[Rune::WidgetBuilder::String] - Inner edit button value: '"+Rune::Save::ValueToString(newValue)+"'");

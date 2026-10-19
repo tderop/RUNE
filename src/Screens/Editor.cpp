@@ -46,7 +46,7 @@ namespace Rune{
                                 // "dummy_float",
                                 "StaminaCurrentMax",
                                 "MiniGame_BirdMan_HillTower_RecordDistance",
-                                //////////////////////////2
+                                //////////////////////////
                                 "<PAD>",
                                 //////////////////////////
                                 "ActorName_SeakSensor_Slot0"
@@ -56,7 +56,13 @@ namespace Rune{
                         {
                             "Coordinates",
                             {
-                                "PlayerSavePos"
+                                "PlayerSavePos",
+                                "Horse_Pos",
+                                //////////////////////////
+                                "<PAD>",
+                                //////////////////////////
+                                "WarpDLC_DestPos",
+                                "ShootingStarPosition"
                             },
                         },
                         {

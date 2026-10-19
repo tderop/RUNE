@@ -49,5 +49,17 @@
     "PlayerSavePos":{
         "Readable": "Link Position",
         "Description": "Link's current position in Hyrule."
+    },
+    "WarpDLC_DestPos": {
+        "Readable": "Travel Medallion Position",
+        "Description": "The position of the travel medallion if placed."
+    },
+    "Horse_Pos": {
+        "Readable": "Horse Position",
+        "Description": "The current position of the active horse."
+    },
+    "ShootingStarPosition": {
+        "Readable": "Star Fragment Position",
+        "Description": "The position of the current active Star Fragment if present."
     }
 }
