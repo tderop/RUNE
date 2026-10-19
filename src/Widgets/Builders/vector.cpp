@@ -110,6 +110,8 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
 
                     Aether::ListOption* editBtn = std::get<Aether::ListOption*>(buttonElm);
                     newValue.push_back(std::stof(editBtn->value()));
+
+                    widget->removeElementByKey(KEY_PREFIX+std::to_string(i));
                 }
 
                 log("[Rune::WidgetBuilder::String] - Inner edit button value: '"+Rune::Save::ValueToString(newValue)+"'");

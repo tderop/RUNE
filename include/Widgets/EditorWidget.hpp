@@ -70,6 +70,8 @@ public:
      */
     Result getElementAtKey(AetherElement& outElm, const std::string& elmKey);
 
+    Result removeElementByKey(const std::string& elmKey);
+
     /**
      * @brief Add a description to the editor widget.
      */

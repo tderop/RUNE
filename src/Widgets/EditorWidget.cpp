@@ -122,7 +122,7 @@ void EditorWidget::addElementWithKey(AetherElement element, const std::string& e
         }
     }
 
-    this->trove->addElement(element);
+    // this->trove->addElement(element);
     this->keyedElements.push_back({elmKey, element});
 }
 
@@ -136,6 +136,22 @@ Result EditorWidget::getElementAtKey(AetherElement& outElm, const std::string& e
     }
 
     return LibnxError_NotFound;
+}
+
+Result EditorWidget::removeElementByKey(const std::string& elmKey){
+    size_t removed = 0;
+    for (int i = (this->keyedElements.size()-1); i >= 0; i--){
+        auto it = this->keyedElements.at(i);
+        if (it.first == elmKey){
+            this->keyedElements.erase(
+                this->keyedElements.begin()+i
+            );
+
+            removed += 1;
+        }
+    }
+
+    return removed > 0;
 }
 
 void EditorWidget::addDescription(const std::string &description){
