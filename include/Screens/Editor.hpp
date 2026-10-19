@@ -112,6 +112,11 @@ public:
     EditorWidget* getWidgetFromSaveKey(const std::string& saveKey);
 
     /**
+     * @brief Generates, adds and displays a widget from its save key.
+     */
+    void makeWidget(const std::string &saveKey);
+
+    /**
      * @brief Get the screen's popup list. Mostly used by widgets to show the popup list in order to be modified.
      */
     Aether::PopupList* getPopupList(); 

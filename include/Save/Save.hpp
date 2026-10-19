@@ -151,6 +151,9 @@ namespace Rune
         {
             uint32_t id;
             uint32_t value;
+
+            RawEntry(uint32_t id_, uint32_t value_): id(id_), value(value_) {}
+            RawEntry() = default;
         };
         static_assert(sizeof(RawEntry) == 8); // the size of a save entry MUST be 8
 
@@ -288,6 +291,16 @@ namespace Rune
          * @brief Get a RuneSaveEntry from a RuneSaveFile by the entry's DataName
          */ 
         Entry* GetEntryFromDataName(File &saveFile, const std::string &dataName);
+
+        /**
+         * @brief Convert a decoded save file to a raw save file.
+         */
+        RawFile* Encode(File &saveFile);
+
+        /**
+         * @brief Compile a save file back from RawFile to .sav
+         */
+        void CompileRawSaveFile(RawFile &rawSaveFile, const std::string &outputPath);
     }
 }
 

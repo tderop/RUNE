@@ -18,6 +18,30 @@
         "Readable": "Mons",
         "Description": "The current Mon balance for use at Koltin's shop."
     },
+    // "KorokNutsNum": {
+    //     "Readable": "Korok Seeds",
+    //     "Description": "The number of collected Korok Seeds."
+    // },
+    "HiddenKorok_Number": {
+        "Readable": "Korok Seeds",
+        "Description": "The number of collected Korok Seeds."
+    },
+    "DefeatedSandwormNum": {
+        "Readable": "Moldugas Defeated",
+        "Description": "The number of unique Moldugas defeated."
+    },
+    "DefeatedForestGiantNum": {
+        "Readable": "Hinoxes Defeated",
+        "Description": "The number of unique Hinoxes defeated."
+    },
+    "DefeatedGolemNum": {
+        "Readable": "Taluses Defeated",
+        "Description": "The number of unique Taluses defeated"
+    },
+    "PlayReport_PlayTime": {
+        "Readable": "Total Playtime",
+        "Description": "The amount of time played (in seconds)"
+    },
 
     /**
     * f32_data

@@ -23,85 +23,6 @@ int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
-namespace Rune{
-    namespace Editor{
-        EditorTabData TabData = {
-            {
-                "Stats",
-                EditorTab{
-                    .menus={"Stats", "Coordinates", "Completionism"},
-                    .menuEntries={
-                        {
-                            "Stats",
-                            {
-                                "IsGet_Obj_Motorcycle", // Motorcycle Obtained
-                                //////////////////////////
-                                "<PAD>",
-                                //////////////////////////
-                                "CurrentRupee", // Rupee balance
-                                "CurrentMamo",  // Mons balance
-                                //////////////////////////
-                                "<PAD>",
-                                //////////////////////////
-                                // "dummy_float",
-                                "StaminaCurrentMax",
-                                "MiniGame_BirdMan_HillTower_RecordDistance",
-                                //////////////////////////
-                                "<PAD>",
-                                //////////////////////////
-                                "ActorName_SeakSensor_Slot0"
-                                
-                            },
-                        },
-                        {
-                            "Coordinates",
-                            {
-                                "PlayerSavePos",
-                                "Horse_Pos",
-                                //////////////////////////
-                                "<PAD>",
-                                //////////////////////////
-                                "WarpDLC_DestPos",
-                                "ShootingStarPosition"
-                            },
-                        },
-                        {
-                            "Completionism",
-                            {
-                                "CurrentMamo" // placeholder
-                            }
-                        }
-                    }
-                }
-            },
-
-            {
-                "Equipment",
-                EditorTab{
-                    .menus={"Weapons", "Bows", "Shields", "Armor"},
-                    .menuEntries={}
-                }
-            },
-
-            {
-                "Items",
-                EditorTab{
-                    .menus={"Materials", "Food", "Key Items"},
-                    .menuEntries={}
-                }
-            },
-
-            {
-                "Dev Editor",
-                EditorTab{
-                    .menus={"Dev Editor"},
-                    .menuEntries={}
-                }
-            }
-        };
-    } // namespace Rune::Editor
-} // namespace Rune
-
 EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
     // init
     this->trove = new Trove();
@@ -124,43 +45,6 @@ EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
 EditorScreen::~EditorScreen(){
     this->cleanEditorWidgets();
     delete this->trove;
-}
-
-/**
- * @brief Create an EditorWidget.
- */
-EditorWidget* EditorScreen::getWidgetFromSaveKey(const std::string& saveKey){
-    // get the save entry
-    log("[EDITOR] - Getting entry from data name '"+saveKey+"'...");
-    if (this->saveFile == nullptr){
-        log("[EDITOR] - Save file is nullptr! Ignoring request.");
-        return nullptr;
-    }
-
-    // handle padding
-    if (saveKey == "<PAD>"){
-        Aether::ListSeparator* pad = new Aether::ListSeparator();
-        this->editorScroll->addElement(pad);
-        return nullptr;
-    }
-
-    Rune::Save::Entry* saveEntry = Rune::Save::GetEntryFromDataName((*this->saveFile), saveKey);
-    if (saveEntry == nullptr){
-        log("[EDITOR] - Save entry '"+saveKey+"' was not found. Ignoring request.");
-        return nullptr;
-    }
-
-    // create the editor widget
-    log("[EDITOR] - Constructing new editor widget...");
-    // create widget overlay
-   
-    EditorWidget* widget = new EditorWidget(saveEntry, app->window());
-
-    widget->setPopupList(this->popupList);
-    widget->setWidgetOverlay(this->widgetOverlay);
-
-    log("[EDITOR] - Widget for '"+saveKey+"' successfully built. isLoaded? "+std::to_string(widget->isLoaded()));
-    return widget;
 }
 
 /**
@@ -451,17 +335,6 @@ void EditorScreen::buildScreen(){
     log("[EDITOR] - Screen built successfully");
 }
 
-void EditorScreen::cleanEditorWidgets(){
-    for (EditorWidget* widget : this->tempWidgets){
-        log("[EDITOR] - Deleting widget...");
-        widget->clearTrove();
-        delete widget;
-    }
-
-    this->tempWidgets.clear();
-    this->editorScroll->removeAllElements();
-}
-
 void EditorScreen::showTab(std::string tabName){
     // if new tab is old tab, ignore
     if (this->selectedTab == tabName){
@@ -642,18 +515,8 @@ void EditorScreen::showMenu(int menuIdx){
     log("[EDITOR] - menuEntries is NOT null, creating entry widgets...");
 
     for (const std::string& saveKey : *menuEntries){
-        EditorWidget* widget = this->getWidgetFromSaveKey(saveKey);
-        if (widget == nullptr){
-            continue;
-        }
-
-        this->tempWidgets.push_back(widget);
-
-        if (!widget->isLoaded()){
-            continue; // ignore if failed to load
-        }
-        
-        widget->addAllElements(this->editorScroll);
+        // Handling bespoke widgets
+        this->makeWidget(saveKey);
     }
 
     log("[EDITOR] - Built all widgets!");

@@ -1,4 +1,7 @@
 #include <Application/Application.hpp>
+#include <Application/Tests.hpp>
+
+#include <Input/Input.hpp>
 
 #include <unordered_map>
 #include <Aether/Aether.hpp>
@@ -89,9 +92,26 @@ namespace Rune{
 
         log("[Rune::Application] - Screen setup complete.");
 
+        InputSystem& inputService = InputSystem::getService();
+
+        inputService.bind("StartTests", InputObject(InputType::Gamepad, HidNpadButton_L));
+        Connection<InputSystem&, InputObject> beginTestsConn = inputService.inputBegan.connectWithId([this](size_t id, InputSystem& svc, InputObject inputObj){
+            if (inputObj.keyCode == HidNpadButton_L){
+                svc.inputBegan.disconnect(id);
+                if (this->currentScreenName() != "Splash"){
+                    return;
+                }
+
+                Rune::Tests::Run();
+                this->window()->exit();
+            }
+        });
+
         // show the initial splash screen
-        Connection<> loadCompleteConn = splashScreen->loadCompleteSignal->connect([this, &loadCompleteConn](){
+        Connection<> loadCompleteConn = splashScreen->loadCompleteSignal->connect([this, &loadCompleteConn, &beginTestsConn](){
             loadCompleteConn.disconnect(); // remove this connection
+            beginTestsConn.disconnect();
+
             // transition to menu screen
             this->showScreen("Menu");
         });
@@ -105,7 +125,8 @@ namespace Rune{
     }
 
     void Application::deleteWindow(){
-        delete this->_window;
+        this->_window->exit();
+        // delete this->_window;
     }
 
     Aether::Screen* Application::showScreen(const std::string& screenName){

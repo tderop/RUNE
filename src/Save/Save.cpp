@@ -314,7 +314,7 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
                 break; // bruh
             }
 
-            // vegctgros
+            // vectors
             case RuneVector2f:
             case RuneVector3f:
             case RuneVector4f:{
