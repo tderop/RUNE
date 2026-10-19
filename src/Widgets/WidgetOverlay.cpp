@@ -31,10 +31,10 @@ void WidgetOverlay::setTitleLabel(const std::string &title){
 }
 
 void WidgetOverlay::closeWidgetOverlay(bool isSave){
+    this->onCloseSignal->fire(isSave);
+
     this->clearTrove();
     this->close();
-
-    this->onCloseSignal->fire(isSave);
 }
 
 Aether::Rectangle* WidgetOverlay::panel(){

@@ -37,6 +37,8 @@ private:
     std::vector<std::string> popupListEntries;
     std::vector<AetherElement> elements;
 
+    std::vector<std::pair<std::string, AetherElement>> keyedElements;
+
     bool _isLoaded;
 
 public:
@@ -52,6 +54,21 @@ public:
      * @brief Add an element to the widget. If you call this outside of the editor widget builder functions - or the EditorWidget class itself - you will be a little bit sad.
      */
     void addToElements(AetherElement element);
+
+    /**
+     * @brief Add an element to the widget, and store it to be accessible later.
+     * @param element The element to be added
+     * @param elmKey The key via which the element will be accessible
+     */
+    void addElementWithKey(AetherElement element, const std::string& elmKey);
+
+    /**
+     * @brief Get the element at a set key
+     * @param outElm Where the element pointer will be stored on output
+     * @param elmKey The key via which the element was saved
+     * @return success
+     */
+    Result getElementAtKey(AetherElement& outElm, const std::string& elmKey);
 
     /**
      * @brief Add a description to the editor widget.
@@ -163,7 +180,6 @@ using WidgetBuilderMap = std::unordered_map<Rune::Save::DataType, WidgetBuilderF
 
 /**
  * @brief A table mapping Rune::Save::DataTypes to their respective widget builder functions.
- * I really need to get better at making these look nicer
  */
 inline const WidgetBuilderMap WIDGET_BUILDERS = {
     {Rune::Save::RuneBool, Rune::WidgetBuilder::Bool},
@@ -172,5 +188,8 @@ inline const WidgetBuilderMap WIDGET_BUILDERS = {
     {Rune::Save::RuneF32, Rune::WidgetBuilder::Float},
     {Rune::Save::RuneString32, Rune::WidgetBuilder::String},
     {Rune::Save::RuneString64, Rune::WidgetBuilder::String},
-    {Rune::Save::RuneString256, Rune::WidgetBuilder::String}
+    {Rune::Save::RuneString256, Rune::WidgetBuilder::String},
+    {Rune::Save::RuneVector2f, Rune::WidgetBuilder::Vector},
+    {Rune::Save::RuneVector3f, Rune::WidgetBuilder::Vector},
+    {Rune::Save::RuneVector4f, Rune::WidgetBuilder::Vector}
 };

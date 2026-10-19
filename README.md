@@ -4,6 +4,7 @@
 ## Credits
 Thanks to:
 - ZeldaMods for save file information found at https://zeldamods.org/wiki/Save_Files
+- MrCheeze for `actor_names.json`, a part of the botw-tools repository https://github.com/MrCheeze/botw-tools/
 - Léo Lam (@leoetlino) at ZeldaMods for the bymlplus library for parsing BYAML files: https://github.com/zeldamods/bymlplus
     - Required range-v3 by Eric Niebler (@ericniebler)
     - Required spdlog by Gabi Melman (@gabime)

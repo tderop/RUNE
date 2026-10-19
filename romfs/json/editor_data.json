@@ -40,6 +40,14 @@
     */
     "ActorName_SeakSensor_Slot0": {
         "Readable": "Shiekah Sensor Target",
-        "Description": "The currently targeted Sheikah Sensor actor name."
+        "Description": "The currently targeted Sheikah Sensor actor name. If you know how to edit this then you know ball."
+    },
+
+    /**
+    * vector3f_data
+    */
+    "PlayerSavePos":{
+        "Readable": "Link Position",
+        "Description": "Link's current position in Hyrule."
     }
 }

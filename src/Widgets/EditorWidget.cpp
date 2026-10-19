@@ -67,6 +67,9 @@ void EditorWidget::clearTrove(){
 
     log("[WIDGET "+this->saveEntry->dataName+"] - Clearing trove.");
     this->trove->clear();
+
+    // clear keyed elements
+    this->keyedElements.clear();
 }
 
 std::vector<AetherElement> EditorWidget::getAllElements(){
@@ -105,6 +108,34 @@ void EditorWidget::addToElements(AetherElement element){
 
     log("[EditorWidget] - Adding element to trove...");
     this->trove->addElement(element); // why?
+}
+
+void EditorWidget::addElementWithKey(AetherElement element, const std::string& elmKey){
+    // determine if key already exists, and remove duplicates
+    for (int i = (this->keyedElements.size()-1); i >= 0; i--){
+        auto it = this->keyedElements.at(i);
+        
+        if (it.first == elmKey){
+            this->keyedElements.erase(
+                this->keyedElements.begin()+i
+            );
+        }
+    }
+
+    this->trove->addElement(element);
+    this->keyedElements.push_back({elmKey, element});
+}
+
+Result EditorWidget::getElementAtKey(AetherElement& outElm, const std::string& elmKey){
+    // search for elm
+    for (auto [key, elm] : this->keyedElements){
+        if (key == elmKey){
+            outElm = elm;
+            return 0;
+        }
+    }
+
+    return LibnxError_NotFound;
 }
 
 void EditorWidget::addDescription(const std::string &description){
