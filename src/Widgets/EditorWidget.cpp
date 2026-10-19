@@ -110,50 +110,6 @@ void EditorWidget::addToElements(AetherElement element){
     this->trove->addElement(element); // why?
 }
 
-void EditorWidget::addElementWithKey(AetherElement element, const std::string& elmKey){
-    // determine if key already exists, and remove duplicates
-    for (int i = (this->keyedElements.size()-1); i >= 0; i--){
-        auto it = this->keyedElements.at(i);
-        
-        if (it.first == elmKey){
-            this->keyedElements.erase(
-                this->keyedElements.begin()+i
-            );
-        }
-    }
-
-    // this->trove->addElement(element);
-    this->keyedElements.push_back({elmKey, element});
-}
-
-Result EditorWidget::getElementAtKey(AetherElement& outElm, const std::string& elmKey){
-    // search for elm
-    for (auto [key, elm] : this->keyedElements){
-        if (key == elmKey){
-            outElm = elm;
-            return 0;
-        }
-    }
-
-    return LibnxError_NotFound;
-}
-
-Result EditorWidget::removeElementByKey(const std::string& elmKey){
-    size_t removed = 0;
-    for (int i = (this->keyedElements.size()-1); i >= 0; i--){
-        auto it = this->keyedElements.at(i);
-        if (it.first == elmKey){
-            this->keyedElements.erase(
-                this->keyedElements.begin()+i
-            );
-
-            removed += 1;
-        }
-    }
-
-    return removed > 0;
-}
-
 void EditorWidget::addDescription(const std::string &description){
     if (!description.empty()){
         Aether::ListComment* entryComment = new Aether::ListComment(description);

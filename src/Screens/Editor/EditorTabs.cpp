@@ -45,7 +45,11 @@ namespace Rune{
                             "Completionism",
                             {
                                 "HiddenKorok_Number", // placeholder
-                                "IsGet_Obj_Motorcycle" // Motorcycle Obtained
+                                "IsGet_Obj_Motorcycle", // Motorcycle Obtained
+                                "DefeatedSandwormNum",
+                                "DefeatedForestGiantNum",
+                                "DefeatedGolemNum",
+                                "PlayReport_PlayTime"
                             }
                         }
                     }

@@ -56,23 +56,6 @@ public:
     void addToElements(AetherElement element);
 
     /**
-     * @brief Add an element to the widget, and store it to be accessible later.
-     * @param element The element to be added
-     * @param elmKey The key via which the element will be accessible
-     */
-    void addElementWithKey(AetherElement element, const std::string& elmKey);
-
-    /**
-     * @brief Get the element at a set key
-     * @param outElm Where the element pointer will be stored on output
-     * @param elmKey The key via which the element was saved
-     * @return success
-     */
-    Result getElementAtKey(AetherElement& outElm, const std::string& elmKey);
-
-    Result removeElementByKey(const std::string& elmKey);
-
-    /**
      * @brief Add a description to the editor widget.
      */
     void addDescription(const std::string &description);

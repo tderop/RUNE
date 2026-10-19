@@ -11,7 +11,6 @@
 
 #include <string>
 
-const std::string KEY_PREFIX = "Button_";
 std::vector<std::string> VECTOR_LETTERS = {"X", "Y", "Z", "A"};
 
 void Rune::WidgetBuilder::Vector(EditorWidget* widget){
@@ -43,7 +42,11 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
             Aether::ListOption* editBtn = new Aether::ListOption(
                 VECTOR_LETTERS.at(i),
                 Rune::Save::ValueToString(value.at(i)),
-                [widget, i](){
+                [](){}
+            );
+
+            editBtn->onPress(
+                [widget, editBtn, i](){
                     float outFloat;
 
                     log("[Rune::WidgetBuilder::Vector] - Getting metadata...");
@@ -73,11 +76,7 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
 
                     if (R_SUCCEEDED(rc)){
                         log("[Rune::WidgetBuilder::Vector] - Success, setting value");
-
-                        AetherElement buttonElm;
-                        rc = widget->getElementAtKey(buttonElm, KEY_PREFIX+std::to_string(i));
-                        Aether::ListOption* button = std::get<Aether::ListOption*>(buttonElm);
-                        button->setValue(std::to_string(outFloat));
+                        editBtn->setValue(std::to_string(outFloat));
                     }
                 }
             );
@@ -88,11 +87,10 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
             editBtn->setValue(std::to_string(value.at(i)));
             buttons.push_back(editBtn);
 
-            widget->addElementWithKey(editBtn, KEY_PREFIX+std::to_string(i));
             ovl->list()->addElement(editBtn);
         }
 
-        ovl->onCloseSignal->connectWithId([widget](size_t id, bool isSave){
+        ovl->onCloseSignal->connectWithId([widget, buttons](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
 
             if (isSave){
@@ -104,14 +102,8 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                 std::vector<float> newValue;
 
                 // get all buttons and build new value
-                for (int i = 0; i < vectorSize; i++){
-                    AetherElement buttonElm;
-                    Result rc = widget->getElementAtKey(buttonElm, KEY_PREFIX+std::to_string(i));
-
-                    Aether::ListOption* editBtn = std::get<Aether::ListOption*>(buttonElm);
+                for (Aether::ListOption* editBtn : buttons){
                     newValue.push_back(std::stof(editBtn->value()));
-
-                    widget->removeElementByKey(KEY_PREFIX+std::to_string(i));
                 }
 
                 log("[Rune::WidgetBuilder::String] - Inner edit button value: '"+Rune::Save::ValueToString(newValue)+"'");
