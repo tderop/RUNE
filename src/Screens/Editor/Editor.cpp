@@ -295,54 +295,45 @@ void EditorScreen::buildScreen(){
 
     // confirmation message box
     Aether::MessageBox* confirmBox = new Aether::MessageBox();
-    Aether::Text* confirmText = new Aether::Text(0, 0, "Text", 24);
+    Aether::MessageBox* messageBox = new Aether::MessageBox();
 
     confirmBox->setBodySize(770, 320);
-    confirmBox->addElement(confirmText);
     confirmBox->setRectangleColour(BACKGROUND_COLOUR);
 
-    confirmText->setColour(TEXT_COLOUR);
+    messageBox->setBodySize(770, 320);
+    messageBox->setRectangleColour(BACKGROUND_COLOUR);
+
     confirmBox->setLineColour(SEPARATOR_COLOUR);
+    messageBox->setLineColour(SEPARATOR_COLOUR);
 
     // modified Aether source so I can access left and right border buttons
     confirmBox->addLeftButton("Yes", [](){});
     confirmBox->addRightButton("No", [](){});
 
+    messageBox->addTopButton("OK", [messageBox](){
+        messageBox->close();
+    });
+
     // handle compiling the save when saving
     this->onButtonPress(Aether::Button::PLUS, 
-        [this, confirmBox, confirmText](){
+        [this, confirmBox, messageBox]{
 
         Aether::Window* window = this->app->window();
         log("[EDITOR] - Plus pressed, requesting save...");
+        confirmBox->setString("Save changes? This will modify this save slot.");
+        confirmBox->leftButton()->onPress([this, window, confirmBox, messageBox](){
 
-        // modified aether to get the rect
-        // getBodySize was playing up
-        confirmText->setString("Save changes? This will modify this save slot.");
-        confirmText->setXY(
-            confirmBox->rect()->x() + confirmBox->rect()->w()/2 - confirmText->textureWidth()/2,
-            confirmBox->rect()->y() + (confirmBox->rect()->h()-confirmBox->leftButton()->h())/2 - confirmText->textureHeight()/2 // wall of maths
-        );
-
-        log("[TEXT] - X: "+std::to_string(confirmText->x())+", Y: "+std::to_string(confirmText->y()));
-
-        confirmBox->leftButton()->onPress([this, confirmBox, confirmText](){
             // encode the save file
             Rune::Save::RawFile* rawFile = Rune::Save::Encode(this->saveFile);
 
-            // print the output
-            for (const auto& entry : rawFile->entries){
-                // log("["+std::to_string(entry.id)+"] - "+std::to_string(entry.value));
-                // if (entry.id == 588553208){
-                //     log("[I AM RUPEES] - RUPEES!!!!!!!!!! UOEWIJFOIJEWOFJOJDLFKJSIEJFOWIJSLDKFJLIEWJFOLKSDJFLLEWIJF - " + std::to_string(entry.value));
-                // }
-            }
-
             // remove the confirm box
-            // confirmText->setHidden(true);
             confirmBox->close();
+
+            messageBox->setString("Save successfully updated!");
+            window->addOverlay(messageBox);
         });
 
-        confirmBox->rightButton()->onPress([this, confirmBox, confirmText]{
+        confirmBox->rightButton()->onPress([this, confirmBox]{
             // confirmText->setHidden(true);
             confirmBox->close();
         });

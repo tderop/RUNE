@@ -8,7 +8,7 @@
 #define BUTTON_HEIGHT 70
 
 namespace Aether {
-    MessageBox::MessageBox() {
+    MessageBox::MessageBox(const std::string& message) {
         this->rect_ = new Rectangle(640 - WIDTH/2, 360 - HEIGHT/2, WIDTH, HEIGHT, 8);
         this->addElement(this->rect_);
 
@@ -24,6 +24,10 @@ namespace Aether {
         this->addElement(this->topH);
         this->addElement(this->bottomH);
         this->addElement(this->vertH);
+
+        this->label_ = new Aether::Text(0, 0, "", 24);
+        this->addElement(this->label_);
+        this->setString(message);
 
         // Pressing b just closes the box
         this->onButtonPress(Button::B, [this](){
@@ -65,6 +69,29 @@ namespace Aether {
             this->right->setXY(this->rect_->x() + this->rect_->w()/2 + 1, this->rect_->y() + this->rect_->h() - BUTTON_HEIGHT);
             this->vertH->setX(this->rect_->x() + this->rect_->w()/2 - 1);
         }
+    }
+
+    void MessageBox::setString(const std::string& text){
+        this->label_->setString(text);
+
+        Aether::BorderButton* btn = nullptr;
+        if (this->left != nullptr){
+            btn = this->left;
+        } else if (this->right != nullptr){
+            btn = this->right;
+        } else if (this->top != nullptr) {
+            btn = this->top;
+        }
+        
+        int containerHeight = this->rect_->h();
+        if (btn != nullptr){
+            containerHeight -= btn->h();
+        }
+
+        this->label_->setXY(
+            this->rect_->x() + this->rect_->w()/2 - this->label_->textureWidth()/2,
+            this->rect_->y() + containerHeight/2 - this->label_->textureHeight()/2
+        );
     }
 
     void MessageBox::resizeElements() {

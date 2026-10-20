@@ -33,6 +33,8 @@ namespace Aether {
             Rectangle * rect_;
             /** @brief Button text colour */
             Colour buttonColour;
+            /** @brief Central message text element */
+            Text * label_;
 
             /**
              * @brief Repositions the buttons
@@ -48,7 +50,7 @@ namespace Aether {
             /**
              * @brief Construct a new Message Box object.
              */
-            MessageBox();
+            MessageBox(const std::string& message="");
 
             /**
              * @brief Get the left border button.
@@ -64,6 +66,11 @@ namespace Aether {
              * @brief Get the body (rect)
              */
             Rectangle* rect();
+
+            /**
+             * @brief Add a message to the message box
+             */
+            void setString(const std::string& text);
 
             /**
              * @brief Set the line colour
@@ -133,7 +140,7 @@ namespace Aether {
 
             /**
              * @brief Set the body element
-             * Does nothing if a body has been set alreadu!
+             * Does nothing if a body has been set already!
              * @param e body element to set
              */
             void setBody(Element * e);
