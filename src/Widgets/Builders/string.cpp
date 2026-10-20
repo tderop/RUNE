@@ -20,7 +20,8 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
     widget->addDescription(
         getSaveKeyDescription(saveEntry->dataName)
     );
-    widget->getEditButton()->onPress([widget](){
+
+    widget->getEditButton()->onPress([widget]() mutable{
         WidgetOverlay* ovl           = widget->getWidgetOverlay();
         Rune::Save::Entry* saveEntry = widget->getSaveEntry();
 
@@ -29,6 +30,7 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
         ovl->setTitleLabel(readableName);
         
         Aether::ListOption* editBtn = new Aether::ListOption(readableName, readableValue, [](){});
+
         editBtn->setLineColour(SEPARATOR_COLOUR); editBtn->setValueColour(TOP_R);
         editBtn->onPress([widget, editBtn](){
             std::string outStr;
@@ -40,6 +42,10 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
 
         ovl->addList();
         ovl->list()->addElement(editBtn);
+
+        // focus the first button
+        ovl->setFocused(ovl->list());
+        ovl->list()->setFocused(editBtn);
 
         ovl->onCloseSignal->connectWithId([widget, editBtn](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
@@ -53,6 +59,5 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
             }
         });
         widget->getWindow()->addOverlay(ovl);
-
     });
 }

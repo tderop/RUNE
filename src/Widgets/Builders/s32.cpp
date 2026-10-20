@@ -62,7 +62,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
                     +std::to_string(numSpinner->value()));
 
                 int value = numSpinner->value();
-                widget->getEditButton()->setValue(std::to_string(value));
+                widget->getEditButton()->setValue(Rune::Save::ValueToString(value));
                 widget->getSaveEntry()->value = value;
             }
         });

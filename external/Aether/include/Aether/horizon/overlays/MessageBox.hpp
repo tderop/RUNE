@@ -63,6 +63,11 @@ namespace Aether {
             BorderButton* rightButton();
 
             /**
+             * @brief Get the top border button.
+             */
+            BorderButton* topButton();
+            
+            /**
              * @brief Get the body (rect)
              */
             Rectangle* rect();

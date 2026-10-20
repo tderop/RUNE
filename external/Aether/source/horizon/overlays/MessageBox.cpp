@@ -43,6 +43,10 @@ namespace Aether {
         return this->right;
     }
 
+    BorderButton* MessageBox::topButton(){
+        return this->top;
+    }
+
     Rectangle* MessageBox::rect(){
         return this->rect_;
     }

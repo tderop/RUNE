@@ -43,3 +43,4 @@ const std::unordered_map<std::string, std::string> ASSET_PATHS = {
 };
 
 const std::string DEFAULT_EDITOR_TAB = "Stats";
+const std::string BACKUP_PATH = "sdmc:/switch/RUNE/backups/";

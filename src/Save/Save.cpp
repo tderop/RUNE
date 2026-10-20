@@ -136,6 +136,7 @@ Result Rune::Save::GetSaveSlots(std::vector<Rune::Save::Slot>* out){
 
     if (dir == nullptr){
         // return LibnxError_NotFound;
+        log("[Rune::Save::GetSlots] - Failed to mount save data! Mounting test save; may be emulation development environment.");
         dir = opendir(testSavePath);
         thisPath = testSavePath;
     }
@@ -169,13 +170,15 @@ Result Rune::Save::GetSaveSlots(std::vector<Rune::Save::Slot>* out){
 /**
  * @brief Get a Rune::Save::RawFile containing all entries from a provided save file path.
  */
-Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string& filePath){
+Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string filePath){
     std::ifstream saveFile(filePath, std::ios::binary);
     
     if (!saveFile.is_open()){
         log("Failed to open save file path. ('"+filePath+"')");
         return LibnxError_NotFound;
     }
+
+    out->path = filePath;
 
     // get the header
     Rune::Save::Header header;
@@ -222,6 +225,7 @@ Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string& filePat
  */
 Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw, const Rune::Save::Metadata& metadata){
     // move trivial values
+    out->path   = raw.path;
     out->header = raw.header;
 
     for (size_t i = 0; i < raw.entries.size(); i++){
@@ -566,22 +570,13 @@ std::string Rune::Save::ValueToString(const Rune::Save::SaveValue& value, bool s
         else if constexpr (
             std::is_same_v<T, int32_t>
         ) {
-            // std::string strValue = std::to_string(value);
+            std::string str = std::to_string(value);
+            size_t start = (value < 0) ? 1 : 0;
+            for (size_t i = str.size(); i > start + 3; i -= 3){
+                str.insert(i-3, 1, ',');
+            }
 
-            // std::string result;
-            // int j = 0;
-
-            // // iterate through backwards and insert commas
-            // for (int i = strValue.size()-1; i >= 0; i--){
-            //     if (!(j%3)){
-            //         result.insert(0, ",");
-            //     }
-            //     result.insert(0, 1, strValue[i]);
-
-            //     j++;
-            // }
-            // why am I stupid
-            stream << value;
+            stream << str;
         } 
         else if constexpr(
             std::is_same_v<T, float>

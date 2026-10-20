@@ -213,6 +213,7 @@ namespace Rune
          */
         struct RawFile
         {
+            std::string path;
             Header header;
             std::vector<RawEntry> entries;
         };
@@ -222,6 +223,7 @@ namespace Rune
          */
         struct File
         {
+            std::string path;
             Header header;
             std::vector<Entry> entries;
         };
@@ -259,7 +261,7 @@ namespace Rune
         /**
          * @brief Get a RuneSaveRawFile containing all entries from a provided save file path.
          */
-        Result GetSaveRawFile(RawFile *out, std::string &filePath);
+        Result GetSaveRawFile(RawFile *out, std::string filePath);
 
         /**
          * @brief Get the RuneSaveFile from a RuneSaveRawFile
@@ -300,7 +302,7 @@ namespace Rune
         /**
          * @brief Compile a save file back from RawFile to .sav
          */
-        Result Compile(RawFile &rawSaveFile, const std::string &outputPath);
+        Result CompileTo(RawFile* rawSaveFile, const std::string &outputPath);
     }
 }
 

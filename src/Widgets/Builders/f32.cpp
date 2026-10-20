@@ -59,6 +59,10 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
         editOverlay->addList();
         editOverlay->list()->addElement(editBtn);
 
+        // focus the first button
+        editOverlay->setFocused(editOverlay->list());
+        editOverlay->list()->setFocused(editBtn);
+
         // save on close
         editOverlay->onCloseSignal->connectWithId([widget, editBtn](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);

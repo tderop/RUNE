@@ -320,26 +320,35 @@ void EditorScreen::buildScreen(){
 
         Aether::Window* window = this->app->window();
         log("[EDITOR] - Plus pressed, requesting save...");
+
         confirmBox->setString("Save changes? This will modify this save slot.");
         confirmBox->leftButton()->onPress([this, window, confirmBox, messageBox](){
 
             // encode the save file
             Rune::Save::RawFile* rawFile = Rune::Save::Encode(this->saveFile);
 
+            // compile the save file
+            Result rc = Rune::Save::CompileTo(rawFile, rawFile->path);
+
             // remove the confirm box
             confirmBox->close();
 
-            messageBox->setString("Save successfully updated!");
+            if (R_SUCCEEDED(rc)){
+                messageBox->setString("Saved! Backups are in the sdcard:/switch/RUNE directory.");
+            } else {
+                messageBox->setString("An error ocurred when compiling edited save file.");
+            }
+
             window->addOverlay(messageBox);
+            messageBox->setFocused(messageBox->topButton());
         });
 
         confirmBox->rightButton()->onPress([this, confirmBox]{
-            // confirmText->setHidden(true);
             confirmBox->close();
         });
 
-        // confirmText->setHidden(false);
         window->addOverlay(confirmBox);
+        confirmBox->setFocused(confirmBox->leftButton());
     });
 
     // add all elements

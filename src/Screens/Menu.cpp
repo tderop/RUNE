@@ -438,8 +438,8 @@ void MenuScreen::buildScreen(){
 
     // make the control bar
     Aether::ControlBar* controlBar = new Aether::ControlBar();
+        controlBar->addControl(Aether::Button::PLUS, "Exit");
     controlBar->addControl(Aether::Button::A, "Select");
-    controlBar->addControl(Aether::Button::PLUS, "Exit");
     controlBar->setEnabledColour(TEXT_COLOUR);
     controlBar->setDisabledColour(MUTED_TEXT_COLOR);
 
