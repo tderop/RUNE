@@ -163,7 +163,7 @@ namespace Rune
             float,
             std::string,
 
-            std::vector<bool>,
+            std::vector<bool>, // NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NOOOOOOO
             std::vector<int32_t>,
             std::vector<float>, // vectors
             std::vector<std::string>,
@@ -295,12 +295,12 @@ namespace Rune
         /**
          * @brief Convert a decoded save file to a raw save file.
          */
-        RawFile* Encode(File &saveFile);
+        RawFile* Encode(File* saveFile);
 
         /**
          * @brief Compile a save file back from RawFile to .sav
          */
-        void CompileRawSaveFile(RawFile &rawSaveFile, const std::string &outputPath);
+        Result Compile(RawFile &rawSaveFile, const std::string &outputPath);
     }
 }
 

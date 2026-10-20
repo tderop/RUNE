@@ -290,8 +290,66 @@ void EditorScreen::buildScreen(){
 
     // the control bar
     Aether::ControlBar* controlBar = new Aether::ControlBar();
-    controlBar->addControl(Aether::Button::MINUS, "Exit");
     controlBar->addControl(Aether::Button::PLUS, "Save");
+    controlBar->addControl(Aether::Button::MINUS, "Exit");
+
+    // confirmation message box
+    Aether::MessageBox* confirmBox = new Aether::MessageBox();
+    Aether::Text* confirmText = new Aether::Text(0, 0, "Text", 24);
+
+    confirmBox->setBodySize(770, 320);
+    confirmBox->addElement(confirmText);
+    confirmBox->setRectangleColour(BACKGROUND_COLOUR);
+
+    confirmText->setColour(TEXT_COLOUR);
+    confirmBox->setLineColour(SEPARATOR_COLOUR);
+
+    // modified Aether source so I can access left and right border buttons
+    confirmBox->addLeftButton("Yes", [](){});
+    confirmBox->addRightButton("No", [](){});
+
+    // handle compiling the save when saving
+    this->onButtonPress(Aether::Button::PLUS, 
+        [this, confirmBox, confirmText](){
+
+        Aether::Window* window = this->app->window();
+        log("[EDITOR] - Plus pressed, requesting save...");
+
+        // modified aether to get the rect
+        // getBodySize was playing up
+        confirmText->setString("Save changes? This will modify this save slot.");
+        confirmText->setXY(
+            confirmBox->rect()->x() + confirmBox->rect()->w()/2 - confirmText->textureWidth()/2,
+            confirmBox->rect()->y() + (confirmBox->rect()->h()-confirmBox->leftButton()->h())/2 - confirmText->textureHeight()/2 // wall of maths
+        );
+
+        log("[TEXT] - X: "+std::to_string(confirmText->x())+", Y: "+std::to_string(confirmText->y()));
+
+        confirmBox->leftButton()->onPress([this, confirmBox, confirmText](){
+            // encode the save file
+            Rune::Save::RawFile* rawFile = Rune::Save::Encode(this->saveFile);
+
+            // print the output
+            for (const auto& entry : rawFile->entries){
+                // log("["+std::to_string(entry.id)+"] - "+std::to_string(entry.value));
+                // if (entry.id == 588553208){
+                //     log("[I AM RUPEES] - RUPEES!!!!!!!!!! UOEWIJFOIJEWOFJOJDLFKJSIEJFOWIJSLDKFJLIEWJFOLKSDJFLLEWIJF - " + std::to_string(entry.value));
+                // }
+            }
+
+            // remove the confirm box
+            // confirmText->setHidden(true);
+            confirmBox->close();
+        });
+
+        confirmBox->rightButton()->onPress([this, confirmBox, confirmText]{
+            // confirmText->setHidden(true);
+            confirmBox->close();
+        });
+
+        // confirmText->setHidden(false);
+        window->addOverlay(confirmBox);
+    });
 
     // add all elements
     log("[EDITOR] - Adding elements...");

@@ -30,7 +30,7 @@ namespace Aether {
             /** @brief Element used as body (set to nullptr if nothing). Anchored at top left of rectangle. */
             Element * body;
             /** @brief Rectangle "background" */
-            Rectangle * rect;
+            Rectangle * rect_;
             /** @brief Button text colour */
             Colour buttonColour;
 
@@ -49,6 +49,21 @@ namespace Aether {
              * @brief Construct a new Message Box object.
              */
             MessageBox();
+
+            /**
+             * @brief Get the left border button.
+             */
+            BorderButton* leftButton();
+
+            /**
+             * @brief Get the right border button.
+             */
+            BorderButton* rightButton();
+
+            /**
+             * @brief Get the body (rect)
+             */
+            Rectangle* rect();
 
             /**
              * @brief Set the line colour
