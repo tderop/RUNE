@@ -8,6 +8,8 @@
 #include <Utils/Utils.hpp>
 #include <Config.hpp>
 
+#include <switch.h>
+
 /**
  * oh boy
  */
@@ -363,6 +365,12 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
     // Close the file
     log("[Rune::Save::CompileTo] - Closing new file...");
     sav.close();
+
+    // COMMIT CHANGES
+    Result rc = fsdevCommitDevice("save");
+    if (R_FAILED(rc)){
+        return rc;
+    }
 
     // All is well
     log("[Rune::Save::CompileTo] - All is well.");
