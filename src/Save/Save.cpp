@@ -564,7 +564,26 @@ std::string Rune::Save::ValueToString(const Rune::Save::SaveValue& value, bool s
             }
         }
         else if constexpr (
-            std::is_same_v<T, int32_t> ||
+            std::is_same_v<T, int32_t>
+        ) {
+            // std::string strValue = std::to_string(value);
+
+            // std::string result;
+            // int j = 0;
+
+            // // iterate through backwards and insert commas
+            // for (int i = strValue.size()-1; i >= 0; i--){
+            //     if (!(j%3)){
+            //         result.insert(0, ",");
+            //     }
+            //     result.insert(0, 1, strValue[i]);
+
+            //     j++;
+            // }
+            // why am I stupid
+            stream << value;
+        } 
+        else if constexpr(
             std::is_same_v<T, float>
         ) {
             stream << value;

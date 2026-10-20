@@ -13,8 +13,6 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File &saveFile){
     output->header = saveFile.header;
 
     // MAIN ITERATOR
-    size_t cursor = 0;
-
     for (Entry entry : saveFile.entries){
         switch (entry.dataType){
             case RuneBool:
@@ -43,7 +41,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File &saveFile){
                 float decodedValue = std::get<float>(entry.value);
                 std::memcpy(&rawEntry.value, &decodedValue, sizeof(decodedValue));
 
-                output->entries[cursor] = rawEntry;
+                output->entries.push_back(rawEntry);
                 break;
             }
 
@@ -65,7 +63,6 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File &saveFile){
                         continue;
                 }
 
-                uint32_t* outValue;
                 std::string value = std::get<std::string>(entry.value);
 
                 // determine the total number of chunks required
@@ -93,12 +90,10 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File &saveFile){
                         rawValue |= static_cast<uint32_t>(static_cast<unsigned char>(c) << (byte * 8));
                     }
 
-                    // ASSIGN ID!!!
-                    output->entries[cursor + chunk].id    = entry.id;
-                    output->entries[cursor + chunk].value = rawValue;
+                    output->entries.emplace_back(entry.id, rawValue);
                 }
 
-                cursor += chunkCount - 1;
+                break;
             }
 
             case RuneVector2f:
@@ -136,18 +131,43 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File &saveFile){
                     std::memcpy(&rawEntry.value, &decodedComponent, sizeof(decodedComponent));
 
                     // Add the new component entry to the list of encoded raw entries
-                    output->entries[cursor+componentIdx] = rawEntry;
+                    output->entries.push_back(rawEntry);
                 }
 
-                // Advance the cursor
-                cursor += vectorSize - 1;
                 break;
             }
-            default:
-                continue;
-        }
 
-        cursor++;
+            case RuneString64Array:
+            case RuneString256Array: {
+                
+                break;
+            }
+
+            case RuneVector2fArray:
+            case RuneVector3fArray: {
+
+                break;
+            }
+
+            case RuneS32Array: {
+
+                break;
+            }
+
+            case RuneF32Array: {
+
+                break;
+            }
+
+            case RuneBoolArray: {
+
+                break;
+            }
+
+            default: {
+                // do nothing
+            }
+        }
     }
 
     return output;

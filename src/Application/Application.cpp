@@ -126,7 +126,7 @@ namespace Rune{
 
     void Application::deleteWindow(){
         this->_window->exit();
-        // delete this->_window;
+        delete this->_window;
     }
 
     Aether::Screen* Application::showScreen(const std::string& screenName){

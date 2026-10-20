@@ -12,12 +12,14 @@
 #include <Screens/Menu.hpp>
 #include <Config.hpp>
 
+#include <cstdlib>
+
 // declarations
 bool exitQueued = false;
 bool mountSuccess = true;
 
 Rune::Save::Metadata saveMetadata;
-Rune::Application* app;
+Rune::Application* app = nullptr;
 
 InputSystem& inputService = InputSystem::getService();
 
@@ -26,11 +28,12 @@ InputSystem& inputService = InputSystem::getService();
  * @return none
  */
 void exitApplet(InputSystem& inputService, InputState state){
-    if (state == InputState::Begin && app->currentScreenName() == "Menu"){
-        // do exit code here for a safe shutdown
-
-        // queue software exit
-        exitQueued = true;
+    if (state == InputState::Begin){
+        if (app != nullptr && app->currentScreenName() == "Menu"){
+            exitQueued = true;
+        } else if (app == nullptr){
+            exitQueued = true;
+        }   
     }
 }   
 
@@ -81,7 +84,13 @@ Result initApplet(){
         printf("\x1b[1;37m--------------------------------------\x1b[0m\n");
 
         consoleUpdate(NULL);
-        return -4;
+
+        while(appletMainLoop() && !exitQueued){
+            inputService.update();
+        }
+
+        consoleExit(NULL);
+        std::exit(EXIT_SUCCESS);
     }
 
     // initialise romfs
@@ -143,18 +152,7 @@ Result initApplet(){
 
 int main(){
     // the application
-    Result rc = initApplet();
-    Result appletLaunchStatus = rc;
-
-    // if failed, wait for + press
-    if (R_FAILED(appletLaunchStatus)){
-        while(appletMainLoop() && !exitQueued){
-            inputService.update();
-        }
-
-        consoleExit(NULL);
-        return 0;
-    }
+    initApplet();
 
     // show the menu once all has loaded
     // app->showScreen("Menu");
@@ -169,7 +167,7 @@ int main(){
     log("[MAIN] - Exiting RUNE...");
 
     // close romfs
-    rc = romfsExit();
+    Result rc = romfsExit();
     if (R_FAILED(rc)){
         log("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
     }

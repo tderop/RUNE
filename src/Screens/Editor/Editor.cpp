@@ -291,6 +291,7 @@ void EditorScreen::buildScreen(){
     // the control bar
     Aether::ControlBar* controlBar = new Aether::ControlBar();
     controlBar->addControl(Aether::Button::MINUS, "Exit");
+    controlBar->addControl(Aether::Button::PLUS, "Save");
 
     // add all elements
     log("[EDITOR] - Adding elements...");
