@@ -25,19 +25,6 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window)
     log("[EditorWidget] - Finding widget builder for dataType '"
         +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
     "'");
-    auto it = WIDGET_BUILDERS.find(saveEntry->dataType);
-
-    // don't build widget if type doesn't exist
-    if (it == WIDGET_BUILDERS.end()){
-        log("[EditorWidget] - Builder not found for '"
-            +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
-        "'!");
-        return;
-    }
-
-    log("[EditorWidget] - Widget builder found for dataType '"
-        +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
-    "'!");
 
     // find the meta entry
     log("[EditorWidget] - Getting meta entry for '"+saveEntry->dataName+"'...");
@@ -49,12 +36,40 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window)
         return; // failed to get meta entry
     }
 
+    // Search for the widget builder
+    // First, check editor override
+    WidgetBuilderFunc* widgetBuilder = nullptr;
+    if (!metaEntry.editor.empty()){
+        auto it = UNIQUE_WIDGET_BUILDERS.find(metaEntry.editor);
+        if (it != UNIQUE_WIDGET_BUILDERS.end()){
+            // builder found
+            *widgetBuilder = it->second;
+        }
+    }
+
+    // Fallback to generic editor if no unique editor was found
+    if (widgetBuilder == nullptr){
+        auto it = WIDGET_BUILDERS.find(saveEntry->dataType);
+
+        // don't build widget if type doesn't exist
+        if (it == WIDGET_BUILDERS.end()){
+            log("[EditorWidget] - Builder not found for '"
+                +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
+            "'!");
+            return;
+        }
+
+        log("[EditorWidget] - Widget builder found for dataType '"
+            +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
+        "'!");
+        
+        *widgetBuilder = it->second;
+    }
+
     this->metaEntry = metaEntry;
     log("[EditorWidget] - Found and set meta entry for '"+saveEntry->dataName+"'!");
-
-    auto widgetBuilder = it->second;
     log("[EditorWidget] - Running widget builder for '"+saveEntry->dataName+"'...");
-    widgetBuilder(this);
+    (*widgetBuilder)(this);
 
     this->_isLoaded = true;
     log("[WIDGET "+saveEntry->dataName+"] - Completed widget build function. Widget now successfully loaded.");

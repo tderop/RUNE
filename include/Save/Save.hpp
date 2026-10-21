@@ -177,6 +177,7 @@ namespace Rune
         struct MetaEntry {
             uint32_t id;
             std::string dataName;
+            std::string editor;
             DataType dataType;
 
             SaveValue initValue;

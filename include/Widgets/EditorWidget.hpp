@@ -1,5 +1,4 @@
 #pragma once
-// PLEASE MAKE THIS A NAMESPACE OR OOP OR SOMETHING PLEASE PLEASE PLEASE PLEASE DON'T MAKE ANOTHER ONE WITHOUT REWRITING THIS WHOLE ABOMINATION
 
 /**
  * @brief This .hpp is actually just a .cpp in disguise at this point.
@@ -162,6 +161,7 @@ const std::unordered_map<std::string, std::string> READABLE_SAVE_KEYS = {
 
 using WidgetBuilderFunc = void(*)(EditorWidget*);
 using WidgetBuilderMap = std::unordered_map<Rune::Save::DataType, WidgetBuilderFunc>;
+using UniqueBuilderMap = std::unordered_map<std::string, WidgetBuilderFunc>;
 
 /**
  * @brief A table mapping Rune::Save::DataTypes to their respective widget builder functions.
@@ -177,4 +177,11 @@ inline const WidgetBuilderMap WIDGET_BUILDERS = {
     {Rune::Save::RuneVector2f, Rune::WidgetBuilder::Vector},
     {Rune::Save::RuneVector3f, Rune::WidgetBuilder::Vector},
     {Rune::Save::RuneVector4f, Rune::WidgetBuilder::Vector}
+};
+
+/**
+ * @brief A table mapping std::strings to their respective widget builder override functions.
+ */
+inline const UniqueBuilderMap UNIQUE_WIDGET_BUILDERS = {
+
 };

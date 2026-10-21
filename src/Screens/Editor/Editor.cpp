@@ -310,6 +310,20 @@ void EditorScreen::buildScreen(){
     confirmBox->addLeftButton("Yes", [](){});
     confirmBox->addRightButton("No", [](){});
 
+    // Exiting the editor
+    this->onButtonPress(Aether::Button::MINUS, [this, confirmBox](){
+        confirmBox->setString("Are you sure you want to exit?");
+        confirmBox->leftButton()->onPress([this, confirmBox](){
+            confirmBox->close();
+        });
+
+        confirmBox->rightButton()->onPress([this, confirmBox](){
+            confirmBox->close();
+        });
+
+        this->app->window()->addOverlay(confirmBox);
+    });
+
     messageBox->addTopButton("OK", [messageBox](){
         messageBox->close();
     });

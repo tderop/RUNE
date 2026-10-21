@@ -50,9 +50,12 @@
         "Readable": "Dummy Value",
         "Description": "This value does nothing. It has a minimum value of 0, and a maximum value of 255."
     },
-    "StaminaCurrentMax": {
+    "StaminaMax": {
         "Readable": "Max Stamina",
-        "Description": "Supposedly your maximum stamina, however the fact this is a float value between 0 and 65535 is strange."
+        "Editor": "Stamina",
+        "Description": "Link's current maximum stamina."
+
+        // "MaxValue": 3000
     },
     "MiniGame_BirdMan_HillTower_RecordDistance": {
         "Readable": "Paragliding Minigame Record",
@@ -64,6 +67,7 @@
     */
     "ActorName_SeakSensor_Slot0": {
         "Readable": "Shiekah Sensor Target",
+        "Editor": "ActorName",
         "Description": "The currently targeted Sheikah Sensor actor name. If you know how to edit this then you know ball."
     },
 

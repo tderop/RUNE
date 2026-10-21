@@ -11,6 +11,8 @@
 #include <Config.hpp>
 #include <byml/byml.h>
 
+#include <Json/Json.hpp>
+
 // the save data meta files
 #include "0_bgsvdata.h"
 #include "1_bgsvdata.h"
@@ -696,6 +698,14 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
         {vector4f_data_0_bgdata, vector4f_data_0_bgdata_size, RuneVector4f}
     };
 
+    // parse JSON data
+    Rune::Json editorJson;
+    Result rc = Rune::JsonData::GetJsonById(&editorJson, "EditorData");
+
+    if (R_FAILED(rc)){
+        return LibnxError_IoError; // :shrug:
+    }
+
     // for getting ID
     std::unordered_map<std::string, uint32_t> dataNameToId; 
 
@@ -769,9 +779,16 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                 return LibnxError_BadInput;
             }
 
-            /**
-             * NEXT: figure out how to get max/min/default values and cast them to RuneSaveValue??
-             */
+            // Find editor metadata
+            auto it = editorJson.find(dataName);
+            if (it != editorJson.end() && it->is_object()){
+                // Assign editor
+                auto editorOverride = it->find("Editor");
+                if (editorOverride != it->end() && editorOverride->is_object()){
+                    (*out)[*hashValue].editor = editorOverride->get<std::string>();
+                }
+            }
+
             (*out)[*hashValue].dataName = dataName;
         }
     }
