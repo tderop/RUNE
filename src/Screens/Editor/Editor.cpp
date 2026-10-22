@@ -315,6 +315,7 @@ void EditorScreen::buildScreen(){
         confirmBox->setString("Are you sure you want to exit?");
         confirmBox->leftButton()->onPress([this, confirmBox](){
             confirmBox->close();
+            this->app->showScreen("Menu");
         });
 
         confirmBox->rightButton()->onPress([this, confirmBox](){
@@ -322,6 +323,7 @@ void EditorScreen::buildScreen(){
         });
 
         this->app->window()->addOverlay(confirmBox);
+        confirmBox->setFocused(confirmBox->leftButton());
     });
 
     messageBox->addTopButton("OK", [messageBox](){
@@ -633,10 +635,10 @@ void EditorScreen::onLoad(){
     });
 
     // exit the editor
-    inputService.bind("ExitEditor", InputObject(InputType::Gamepad, HidNpadButton_Minus));
-    inputService.connect("ExitEditor", [this](InputSystem& inputService, InputState state){
-        this->app->showScreen("Menu");
-    });
+    // inputService.bind("ExitEditor", InputObject(InputType::Gamepad, HidNpadButton_Minus));
+    // inputService.connect("ExitEditor", [this](InputSystem& inputService, InputState state){
+    //     this->app->showScreen("Menu");
+    // });
 }
 
 void EditorScreen::onUnload(){

@@ -42,7 +42,7 @@ void MenuScreen::showSaveSelect(){
         return;
     }
 
-    int i = 0;
+    size_t idx = 0;
     Aether::ListButton* firstButton = nullptr;
 
     // // show save version
@@ -85,23 +85,68 @@ void MenuScreen::showSaveSelect(){
     // recolour
     saveVersionText->setColour(MUTED_TEXT_COLOR);
 
-    for (Rune::Save::Slot saveSlot : runeSaveSlots){
-        // get save data
+    // insertion sort in chronological order
+
+    /**
+     * @brief temporary struct holding data for a save slot to help with sorting
+     */
+    struct SortedSaveBundle {
+        Rune::Save::Slot slot;
+        Rune::Save::File file;
+        int32_t timestamp;
+
+        SortedSaveBundle(Rune::Save::Slot slot_, Rune::Save::File file_, int32_t timestamp_) : slot(slot_), file(file_), timestamp(timestamp_) {}
+        SortedSaveBundle() = default;
+    };
+
+    // Where the sorted slots will end up
+    std::vector<SortedSaveBundle> bundles;
+
+    // Prepare bundles
+    log("[Menu] - Preparing save bundles for insertion sort...");
+    for (const auto& saveSlot : runeSaveSlots){
         Rune::Save::RawFile rawCaptionFile;
         Result rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, saveSlot.captionDataPath);
         if (R_FAILED(rc)){
-            log("[MENU] - Failed to get raw caption file for save slot "+std::to_string(saveSlot.index));
             continue;
         }
 
-        // decode save data
         Rune::Save::File captionFile;
         rc = Rune::Save::Decode(&captionFile, rawCaptionFile, *runeMetadata);
         if (R_FAILED(rc)){
-            log("[MENU] - Failed to decode caption file for save slot "+std::to_string(saveSlot.index));
+            continue;
         }
 
-        // get relevant info
+        Rune::Save::Entry* timeEntry = Rune::Save::GetEntryFromDataName(captionFile, LAST_SAVE_TIME_LOWER_KEY);
+        int32_t timestamp = std::get<int32_t>(timeEntry->value);
+
+        bundles.emplace_back(saveSlot, std::move(captionFile), timestamp);
+    }
+
+    // Sort the slots with insertion sort
+    log("[Menu] - Insertion sort ready");
+    for (size_t i = 1; i < bundles.size(); i++){
+        log("[Menu] - Moving bundle");
+        SortedSaveBundle bundle = std::move(bundles.at(i));
+        int j = (int)i - 1;
+
+        // Shift all slots with timestamps less than bundles.at(j).timestamp to the right
+        log("[Menu] = Shifting slots");
+        while (j >= 0 && bundles.at(j).timestamp < bundle.timestamp){
+            bundles[j + 1] = std::move(bundles.at(j));
+            j--;
+        }
+
+        // Insert bundle
+        log("[Menu] - Inserting bundle");
+        bundles[j + 1] = std::move(bundle);
+    }
+
+    log("[Menu] - Insertion sort complete!");
+    for (const SortedSaveBundle& saveBundle : bundles){
+        // Get caption file and save slot
+        Rune::Save::File captionFile = std::move(saveBundle.file);
+        Rune::Save::Slot saveSlot = saveBundle.slot;
 
         // create a new list button
         Aether::ListButton* slotButton = new Aether::ListButton(
@@ -165,26 +210,27 @@ void MenuScreen::showSaveSelect(){
 
         // slotButton->setX(scrollable->x());
         slotButton->setH(WINDOW_RESOLUTION_Y/6);
+        slotButton->setLineColour(SEPARATOR_COLOUR);
 
         this->saveSlotScroll->addElement(slotButton);
         this->trove->addElement(slotButton);
 
         // small padding for the comment
-        Aether::ListSeparator* commentPadding = new Aether::ListSeparator(16);
-        this->saveSlotScroll->addElement(commentPadding);
-        this->trove->addElement(commentPadding);
+        // Aether::ListSeparator* commentPadding = new Aether::ListSeparator(16);
+        // this->saveSlotScroll->addElement(commentPadding);
+        // this->trove->addElement(commentPadding);
         
         // create a comment
-        Aether::ListHeading* slotComment = new Aether::ListHeading(
-            "Save slot index: "+std::to_string(saveSlot.index)
-        );
-        this->saveSlotScroll->addElement(slotComment);
-        this->trove->addElement(slotComment);
-        slotComment->setRectColour(MUTED_TEXT_COLOR);
-        slotComment->setTextColour(MUTED_TEXT_COLOR);
+        // Aether::ListHeading* slotComment = new Aether::ListHeading(
+        //     "Save slot index: "+std::to_string(saveSlot.index)
+        // );
+        // this->saveSlotScroll->addElement(slotComment);
+        // this->trove->addElement(slotComment);
+        // slotComment->setRectColour(MUTED_TEXT_COLOR);
+        // slotComment->setTextColour(MUTED_TEXT_COLOR);
 
         // create a list separator
-        Aether::ListSeparator* bottomPadding = new Aether::ListSeparator();
+        Aether::ListSeparator* bottomPadding = new Aether::ListSeparator(32U);
         this->saveSlotScroll->addElement(bottomPadding);
         this->trove->addElement(bottomPadding);
 
@@ -387,7 +433,7 @@ void MenuScreen::showSaveSelect(){
             slotButton->addElement(autosaveLabel);
             slotButton->addElement(autosaveText);
         }
-        i++;
+        idx++;
     }
 
     this->addElement(saveVersionText);

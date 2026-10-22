@@ -18,6 +18,12 @@
         "Readable": "Mons",
         "Description": "The current Mon balance for use at Koltin's shop."
     },
+    "MaxHartValue": {
+        "Readable": "Max Hearts",
+        "Editor": "Hearts",
+        "Description": "Link's current maximum hearts."
+    },
+
     // "KorokNutsNum": {
     //     "Readable": "Korok Seeds",
     //     "Description": "The number of collected Korok Seeds."
@@ -88,6 +94,6 @@
     },
     "ShootingStarPosition": {
         "Readable": "Star Fragment Position",
-        "Description": "The position of the current active Star Fragment if present."
+        "Description": "The position of the current active Star Fragment. Setting this when there is no current Star Fragment will spawn one at that position when the file is loaded."
     }
 }

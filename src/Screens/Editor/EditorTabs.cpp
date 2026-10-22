@@ -20,7 +20,8 @@ namespace Rune{
                                 "<PAD>",
                                 //////////////////////////
                                 // "dummy_float",
-                                "StaminaCurrentMax",
+                                "MaxHartValue",
+                                "StaminaMax",
                                 "MiniGame_BirdMan_HillTower_RecordDistance",
                                 //////////////////////////
                                 "<PAD>",

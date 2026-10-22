@@ -38,13 +38,19 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window)
 
     // Search for the widget builder
     // First, check editor override
-    WidgetBuilderFunc* widgetBuilder = nullptr;
+    log("[EditorWidget] - Initialising widget builder func...");
+    WidgetBuilderFunc widgetBuilder = nullptr;
+
     if (!metaEntry.editor.empty()){
+        log("[EditorWidget] - Meta entry shows unique editor! Searching for editor...");
         auto it = UNIQUE_WIDGET_BUILDERS.find(metaEntry.editor);
         if (it != UNIQUE_WIDGET_BUILDERS.end()){
             // builder found
-            *widgetBuilder = it->second;
+            log("[EditorWidget] - Builder found! Assigning function.");
+            widgetBuilder = it->second;
         }
+
+        log("[EditorWidget] - Unique builder not found.");
     }
 
     // Fallback to generic editor if no unique editor was found
@@ -63,7 +69,10 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window)
             +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
         "'!");
         
-        *widgetBuilder = it->second;
+        log("[EditorWidget] - Assigning function value...");
+        widgetBuilder = it->second;
+
+        log("[EditorWidget] - Function value assigned!");
     }
 
     this->metaEntry = metaEntry;
