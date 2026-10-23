@@ -44,8 +44,12 @@ namespace Rune{
 class EditorScreen : public Aether::Screen{
 private:
     Rune::Application* app;
-    Rune::Save::File* saveFile = nullptr;
-    Rune::Save::File ownedSaveFile;
+
+    Rune::Save::Slot slotCopy;
+
+    Rune::Save::Slot* saveSlot = nullptr;
+    Rune::Save::File* saveFile = new Rune::Save::File();
+    Rune::Save::File* captionFile = new Rune::Save::File();
 
     std::vector<std::string> tabs;
     Trove* trove;
@@ -122,9 +126,9 @@ public:
     Aether::PopupList* getPopupList(); 
 
     /**
-     * @brief Set the save file currently being modified by the editor. Without a save file, the editor will fail to work - for likely obvious reasons.
+     * @brief Set the save slot currently being modified by the editor. Without a save slot, the editor will fail to work - for obvious reasons.
      */
-    void editSaveFile(Rune::Save::File* saveFile);
+    void editSaveSlot(Rune::Save::Slot* saveSlot);
 
     /**
      * @brief Reposition the blue-green rectangle used to indicate which tab is currently selected.

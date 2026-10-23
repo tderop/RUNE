@@ -604,15 +604,68 @@ Aether::PopupList* EditorScreen::getPopupList(){
     return this->popupList;
 }
 
-void EditorScreen::editSaveFile(Rune::Save::File* saveFile){
+void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
+    // Clear existing widgets
     this->cleanEditorWidgets();
-    if (saveFile == nullptr){
-        this->saveFile = nullptr;
+
+    if (saveSlot == nullptr){
+        // saveSlot is a pointer for slotCopy
+        this->saveSlot = nullptr;
+
+        // Free save file memory
+        delete this->saveFile;
+        delete this->captionFile;
+
+        // Create new empty files to be populated
+        this->saveFile = new Rune::Save::File();
+        this->captionFile = new Rune::Save::File();
+
+        // Empty selected tab string
+        this->selectedTab = "";
         return;
     }
 
-    this->ownedSaveFile = *saveFile;
-    this->saveFile = &this->ownedSaveFile;
+    // Save a copy of the slot
+    this->slotCopy = *saveSlot;
+    this->saveSlot = &this->slotCopy;
+
+    // Get the raw save file
+    Rune::Save::RawFile rawSaveFile;
+    std::string saveFileDataPath = saveSlot->gameDataPath;
+    Result rc = Rune::Save::GetSaveRawFile(&rawSaveFile, saveFileDataPath);
+    if (R_FAILED(rc)){
+        log("[EDITOR] - Failed to get raw save file for slot "+std::to_string(saveSlot->index)+"!");
+        return;
+    }
+
+    // Decode the raw save file
+    log("[EDITOR] - Decoding raw save file...");
+    rc = Rune::Save::Decode(this->saveFile, rawSaveFile, *runeMetadata);
+    if (R_FAILED(rc)){
+        log("[EDITOR] - Failed to decode save file for slot "+std::to_string(saveSlot->index)+"!");
+    }
+
+    log("[EDITOR] - Raw save file decoded successfully!");
+
+    // Get the raw caption file
+    log("[EDITOR] - Getting raw caption file...");
+    Rune::Save::RawFile rawCaptionFile;
+    std::string captionFileDataPath = saveSlot->captionDataPath;
+    rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, captionFileDataPath);
+    if (R_FAILED(rc)){
+        log("[EDITOR] - Failed to get raw caption file for slot "+std::to_string(saveSlot->index)+"!");
+    }
+
+    // Decode the raw caption file
+    log("[EDITOR] - Decoding raw caption file...");
+    rc = Rune::Save::Decode(this->captionFile, rawCaptionFile, *runeMetadata);
+    if (R_FAILED(rc)){
+        log("[EDITOR] - Failed to decode caption file for slot "+std::to_string(saveSlot->index)+"!");
+    }
+
+    log("[EDITOR] - Raw caption file decoded successfully!");
+
+    // Show the first tab
     this->showTab(this->tabs.at(0));
 }
 
@@ -652,9 +705,8 @@ void EditorScreen::onUnload(){
     // clear trove
     this->trove->clear();
 
-    // unset the save file
-    this->saveFile = nullptr;
-    this->selectedTab = ""; // ez fix
+    // Edit null
+    this->editSaveSlot(nullptr);
 
     log("============== [EDITOR] - Screen successfully unloaded. ==============");
 }

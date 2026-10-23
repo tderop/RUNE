@@ -24,11 +24,6 @@
 
 const useconds_t TWEEN_UPDATE_TIME = 16000; // microseconds
 
-// const timespec TIMESPEC_1 = {
-//     .tv_sec=0,
-//     .tv_nsec=TWEEN_UPDATE_TIME
-// };
-
 /**
  * @brief A simple application manager designed to properly manage screens and their lifetimes and memory.
  */

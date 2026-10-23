@@ -153,53 +153,21 @@ void MenuScreen::showSaveSelect(){
             "",
             [saveSlot, this]() mutable{   
                 log("[MENU] - Save slot "+std::to_string(saveSlot.index)+" was selected.");
-                
-                // show loading
-                Aether::MessageBox* loadingMessage = new Aether::MessageBox();
-                Aether::Text* loadingMessageText = new Aether::Text(
-                    0,
-                    0,
-                    "Decoding Save...",
-                    32,
-                    Aether::Render::Wait
-                );
+                // New logic: give save SLOT to editor instead of save file, so the editor can access caption.sav
+                // and some other stuff too, not exclusively game_data.sav
 
-                loadingMessageText->setXY(
-                    loadingMessage->x()+(loadingMessage->w()/2)-(loadingMessageText->textureWidth()/2),
-                    loadingMessage->y()+(loadingMessage->h()/2)-(loadingMessageText->textureHeight()/2)
-                );
+                // This means the editor also handles fetching the raw save file and decoding it, which makes more sense than 
+                // the menu fetching and decoding it, which is what it used to do
 
-                loadingMessage->setRectangleColour(MUTED_BACKGROUND_COLOUR);
-                loadingMessage->setLineColour(Aether::Colour{0, 0, 0, 0});
-                loadingMessageText->setColour(TEXT_COLOUR);
-
-                loadingMessageText->renderSync();
-
-                this->addTempElement(loadingMessage);
-                this->addTempElement(loadingMessageText);
-
-                // get the save file
-                Rune::Save::RawFile rawSaveFile;
-                std::string dataPath = saveSlot.gameDataPath;
-                // dataPath = "save:/option.sav";
-                Result rc = Rune::Save::GetSaveRawFile(&rawSaveFile, dataPath);
-                
-                if (R_FAILED(rc)){
-                    log("[MENU] - Failed to get raw save file for slot "+std::to_string(saveSlot.index)+"!");
-                    return;
-                }
-
-                // decode the raw   
-                Rune::Save::File decodedSave;
-                rc = Rune::Save::Decode(&decodedSave, rawSaveFile, *runeMetadata);
-
-                // transition to editor
-                // make an application mgr to deal with this, currently if a new 
-                // editor is created, then so is another menu when returning
-                // so this just leads to infinite memory leakage // sir yes sir oorah
+                // Although I shouldn't make the editor dependent on other data
+                // This is initially for supporting showing the thumbnail and timestamp in the editor to remind the user which save they are editing,
+                // but it may be useful for other changes later on!
                 log("[MENU] - Showing editor screen...");
-                EditorScreen* editor = static_cast<EditorScreen*>(this->app->showScreen("Editor")); // EVIL
-                editor->editSaveFile(&decodedSave);
+                EditorScreen* editor = static_cast<EditorScreen*>(this->app->showScreen("Editor")); // Yes, I still hate this
+
+                // Pass the selected save slot to the editor
+                // New crash: maybe saveSlot goes out of scope? It can't until editSaveSlot() has finished execution, however.
+                editor->editSaveSlot(&saveSlot);
             }
         );
 

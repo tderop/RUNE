@@ -2,28 +2,31 @@
 #include <switch.h>
 
 // Source libs
-#include <Events/Signal.hpp>
-#include <Input/Input.hpp>
-#include <Utils/Utils.hpp>
-#include <Save/Save.hpp>
-#include <Application/Application.hpp>
-#include <Json/Json.hpp>
-#include <Screens/Menu.hpp>
-#include <Config.hpp>
+#include <Input/Input.hpp> // Provides my own InputService
+#include <Utils/Utils.hpp> // Provides various utility functions (mainly log())
+#include <Save/Save.hpp> // Provides Rune::Save::Metadata functionality and other Rune::Save types for parsing metadata on load
+#include <Application/Application.hpp> // Provides Rune::Application for managing different screens
+#include <Json/Json.hpp> // Provides Rune::Json and Rune::JsonData for handling RUNE's romFS JSON files
 
 // External libs
-#include <Aether/Aether.hpp>
+#include <Aether/Aether.hpp> // The main UI library used by RUNE, initially developed by @tallbl0nde, but slightly modified by myself
 
 // C libs
-#include <cstdlib>
+#include <cstdlib> // Required for std::exit for early exits (when the application was launched in applet mode instead of with title takeover)
 
-// Declarations
+// Checked every "frame" - determines whether the application should exit or not.
 bool exitQueued = false;
+
+// Determines whether the BotW save data was successfully mounted at save:/
 bool mountSuccess = true;
 
+// The save metadata. Provides additional information about save entries
 Rune::Save::Metadata saveMetadata;
+
+// The application manager for RUNE
 Rune::Application* app = nullptr;
 
+// My own input system. Makes getting raw inputs and binding them to actions much more convenient.
 InputSystem& inputService = InputSystem::getService();
 
 /**
@@ -115,7 +118,8 @@ Result initApplet(){
     Result rc = romfsInit();
     if (R_FAILED(rc)){
         log("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
-        return -3;
+        return -3; // These arbitrary negative values just specify what type of error ocurred during applet initialisation.
+        // Currently, they don't do anything, but this value may get used in the future, that is why I assigned each failure route with a unique error code.
     }
 
     log("[INIT] - Initialised RomFS");
