@@ -1,8 +1,7 @@
-// portlibs
+// libnx
 #include <switch.h>
-#include <Aether/Aether.hpp>
 
-// source libs
+// Source libs
 #include <Events/Signal.hpp>
 #include <Input/Input.hpp>
 #include <Utils/Utils.hpp>
@@ -12,9 +11,13 @@
 #include <Screens/Menu.hpp>
 #include <Config.hpp>
 
+// External libs
+#include <Aether/Aether.hpp>
+
+// C libs
 #include <cstdlib>
 
-// declarations
+// Declarations
 bool exitQueued = false;
 bool mountSuccess = true;
 
@@ -24,14 +27,16 @@ Rune::Application* app = nullptr;
 InputSystem& inputService = InputSystem::getService();
 
 /**
- * Exits the applet.
+ * @brief Exits the applet.
  * @return none
  */
 void exitApplet(InputSystem& inputService, InputState state){
+    // If the exit button has just been pressed down, queue exit
     if (state == InputState::Begin){
+        // If there is a valid app, and the current active screen is the main menu, queue exit
         if (app != nullptr && app->currentScreenName() == "Menu"){
             exitQueued = true;
-        } else if (app == nullptr){
+        } else if (app == nullptr){ // If app is uninitialised, exit
             exitQueued = true;
         }   
     }
@@ -42,7 +47,8 @@ void exitApplet(InputSystem& inputService, InputState state){
  * @return Result
  */
 Result initApplet(){
-    // check for emulator presence
+    // Check for the presence of an emulator to determine whether log() should print messages to the console or not
+    // This is unique to my own emulator development environment, I put an empty file called "emulator" on the virtual SD card
     FILE* emulatorFile = fopen("sdmc:/emulator", "rb");
     if (emulatorFile != nullptr){
         logServiceIsEmulator = true;
@@ -51,15 +57,21 @@ Result initApplet(){
 
     log("[INIT] - Initialising RUNE...");
 
+    // Determine the applet type
+    // This is in order to prevent launching RUNE in applet mode; it will crash without a selected user and may not have enough
+    // memory to run otherwise.
     AppletType type = appletGetAppletType();
 
-    // bind exit
+    // Initialise InputService
     inputService.init();
     log("[INIT] - Initialised InputService");
     
+    // Bind the exit keybind
     inputService.bind("Exit", InputObject(InputType::Gamepad, HidNpadButton_Plus));
     inputService.connect("Exit", exitApplet);
 
+    // If RUNE is in applet mode, initialise the console and tell the user with a big
+    // warning to open RUNE in title takeover mode
     if (type != AppletType_Application && type != AppletType_SystemApplication){
         consoleInit(NULL);
         printf("\x1b[1;31m======================================\x1b[0m\n\n");
@@ -83,17 +95,22 @@ Result initApplet(){
         printf("\x1b[1;37m             \x1b[1;32m[+]\x1b[1;37m  EXIT\x1b[0m\n\n");
         printf("\x1b[1;37m--------------------------------------\x1b[0m\n");
 
+        // Update the console to show prints
         consoleUpdate(NULL);
 
+        // Wait for an exit to be queued by pressing "+"
         while(appletMainLoop() && !exitQueued){
             inputService.update();
         }
 
+        // Close the console
         consoleExit(NULL);
+
+        // Force exit the program
         std::exit(EXIT_SUCCESS);
     }
 
-    // initialise romfs
+    // initialise romFS for accessing RUNE assets
     Result rc = romfsInit();
     if (R_FAILED(rc)){
         log("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
@@ -102,14 +119,23 @@ Result initApplet(){
 
     log("[INIT] - Initialised RomFS");
 
+    // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application();
     log("[Rune::Application] - Successfully loaded application manager.");
 
-    // initialise JSON
+    // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
     Rune::JsonData::Init();
     log("[INIT] - Initialised Rune::Json");
 
-    // load save metadata
+    /**
+     * Parse the save metadata. The save metadata contains basically all of the information required to decode save files, including (but not limited to):
+     * - Data type
+     * - Data name (internal key)
+     * - Hash value (crc32 of internal key, stored as a signed 32-bit integer in BYAML files.)
+     * - Minimum value
+     * - Maximum value
+     * - Initial (default) value
+     */
     rc = Rune::Save::LoadMetadata(&saveMetadata);
     if (R_FAILED(rc)){
         log("Failed to parse BotW .bgsvdata metadata.");
@@ -119,7 +145,7 @@ Result initApplet(){
 
     log("[INIT] - Parsed save metadata files");
 
-    // initialise the account system
+    // Initialise the account service. This is used for knowing which user's save file should be accessed.
     rc = accountInitialize(AccountServiceType_Application);
     if (R_FAILED(rc)){
         return -1;
@@ -127,23 +153,23 @@ Result initApplet(){
 
     log("[INIT] - Initialised AccountService");
 
-    // mount save data
+    // Mount the BotW Save Data. This mounts the save data as an accessible filesystem on save:/
+    // Making changes to this filesystem without using fsdevCommitDevice("save:/") will not save changes (as I learned the hard way)
     rc = Rune::Save::MountSaveData();
     if (R_FAILED(rc)){
-        log("Failed to mount BotW save data.");
+        log("[INIT] - Failed to mount BotW save data.");
         mountSuccess = false;
-        // return;
     }
     else {
         log("[INIT] - Mounted BotW save data");
     }
 
 
-    // init finished, log ready
+    // The application initialised successfully
     if (mountSuccess){
         log("[INIT] - Initialised RUNE successfully!");
     }
-    else {
+    else { // Allow launch with failures for now, mainly for testing purposes
         log("[INIT] - Initialised RUNE, but with problems.");
     }
 
@@ -151,33 +177,26 @@ Result initApplet(){
 }
 
 int main(){
-    // the application
+    // Initialise RUNE
     initApplet();
 
-    // show the menu once all has loaded
-    // app->showScreen("Menu");
-
     while (app->window()->loop() && !exitQueued){
-        // do updates
+        // Update InputService (allows for InputService connections, input detection, basically required for the whole system to work)
         inputService.update();
-
-        // main code here
     }
 
     log("[MAIN] - Exiting RUNE...");
 
-    // close romfs
+    // Exit romFS (the path used to access RUNE's assets such as images and JSON files)
     Result rc = romfsExit();
     if (R_FAILED(rc)){
         log("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
     }
 
+    // Exit the account service
     accountExit();
 
-    // if (R_FAILED(rc)){
-    //     log("[MAIN] - Failed to exit accountSvc: " + std::to_string(rc));
-    // }
-
+    // Delete the window (for some reason deleting the window is required for a successful close)
     app->deleteWindow();
     return 0;
 }
