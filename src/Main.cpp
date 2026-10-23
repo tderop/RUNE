@@ -28,7 +28,8 @@ InputSystem& inputService = InputSystem::getService();
 
 /**
  * @brief Exits the applet.
- * @return none
+ * @param inputService the main InputService object
+ * @param state the InputState provided by the InputService event
  */
 void exitApplet(InputSystem& inputService, InputState state){
     // If the exit button has just been pressed down, queue exit
@@ -43,7 +44,7 @@ void exitApplet(InputSystem& inputService, InputState state){
 }   
 
 /**
- * Initialises the applet.
+ * @brief Initialises the applet.
  * @return Result
  */
 Result initApplet(){
@@ -180,6 +181,11 @@ int main(){
     // Initialise RUNE
     initApplet();
 
+    // If you're wondering where the main code is, check /src/Application/Application.cpp
+    // This handles showing the splash screen, and then loading the first screen: the menu (Menu.cpp)
+    // This is the case because of the new Rune::Application that was created in initApplet()
+
+    // The rest of the main function covers InputService polling, and exiting services when closing
     while (app->window()->loop() && !exitQueued){
         // Update InputService (allows for InputService connections, input detection, basically required for the whole system to work)
         inputService.update();
