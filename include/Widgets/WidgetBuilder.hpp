@@ -33,15 +33,15 @@ namespace Rune {
          */
         void Vector(EditorWidget* widget);
 
-        // /**
-        //  * @brief Constructor for vector3 values.
-        //  */
-        // void Vector3(EditorWidget* widget);
+        /**
+         * @brief Constructor for the stamina editor.
+         */
+        void Stamina(EditorWidget* widget);
 
-        // /**
-        //  * @brief Constructor for vector4 values.
-        //  */
-        // void Vector4(EditorWidget* widget);
+        /**
+         * @brief Constructor for the hearts editor.
+         */
+        void Hearts(EditorWidget* widget); 
 
     } // namespace WidgetBuilder
 } // namespace Rune

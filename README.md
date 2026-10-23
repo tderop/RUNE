@@ -44,3 +44,6 @@ Upon receiving a legitimate takedown request, I will review the claim and remove
 I may also remove or disable access to material voluntarily where there is a reasonable basis to believe that its distribution infringes the rights of another party.
 
 False or fraudulent takedown requests will be disregarded.
+
+## Disclaimer
+When you use RUNE, you are doing so at your own risk. RUNE and/or its contributors are **not responsible for lost or corrupted save data**. RUNE stores backups of edited `.sav` files in `sdmc:/switch/RUNE/backups` with the filename format `game_data.sav.BAK_DD.MM.YYYY_HH.MM`, the timestamp being that of when the save file was edited.

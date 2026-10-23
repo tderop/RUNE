@@ -62,6 +62,8 @@ namespace Aether {
             Colour highlightC;
             /** @brief Text colour */
             Colour textC;
+            /** @brief Function that runs when value is changed */
+            std::function<void()> onValueChangeFunc;
 
             /**
              * @brief Increase value once by step size specified until max is reached.
@@ -85,6 +87,11 @@ namespace Aether {
              * @param w spinner width (default 90)
              */
             Spinner(int x, int y, int w = 90);
+
+            /**
+             * @brief Set the onValueChange callback
+             */
+            void onValueChange(std::function<void()> f);
 
             /**
              * @brief Get the value container element.

@@ -183,5 +183,6 @@ inline const WidgetBuilderMap WIDGET_BUILDERS = {
  * @brief A table mapping std::strings to their respective widget builder override functions.
  */
 inline const UniqueBuilderMap UNIQUE_WIDGET_BUILDERS = {
-
+    {"Stamina", Rune::WidgetBuilder::Stamina},
+    {"Hearts", Rune::WidgetBuilder::Hearts}
 };

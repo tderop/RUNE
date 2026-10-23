@@ -58,10 +58,12 @@ using AetherElement = std::variant<
     Aether::Tick*
 >;
 
+/**
+ * @brief An object for cleaning up Aether elements more efficiently.
+ */
 class Trove{
     private:
         std::vector<AetherElement> elements;
-        std::vector<int> numbers;
 
     public:
         /**

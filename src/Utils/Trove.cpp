@@ -4,7 +4,9 @@
 #include <Utils/Trove.hpp>
 #include <Utils/Utils.hpp>
 
-Trove::Trove(){};
+Trove::Trove(){
+    log("[Trove::Trove] - Trove created.");
+};
 
 void Trove::addElement(AetherElement element){
     // log("[TROVE] - Adding element to trove...");

@@ -12,7 +12,7 @@ namespace Rune{
         std::unordered_map<std::string, std::string> JsonPaths = {
             {   
                 "EditorData",
-                "romfs:/json/editor_data.json"
+                "romfs:/json/editor_data.jsonc"
             },
             {
                 "ActorNames",

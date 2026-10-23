@@ -64,6 +64,10 @@ namespace Aether {
         this->textC = Colour{255, 255, 255, 255};
     }
 
+    void Spinner::onValueChange(std::function<void()> f){
+        this->onValueChangeFunc = std::move(f);
+    }
+
     Element* Spinner::valueContainer(){
         return this->valueContainer_;
     }
@@ -276,6 +280,10 @@ namespace Aether {
         }
         this->str->setString(tmp);
         this->str->setX(this->x() + (this->w() - this->str->w())/2);
+
+        if (this->onValueChangeFunc){
+            (this->onValueChangeFunc)();
+        }
     }
 
     int Spinner::min() {

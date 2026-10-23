@@ -39,8 +39,18 @@ const std::unordered_map<std::string, std::string> ASSET_PATHS = {
     {"check",    "romfs:/assets/check.png"},
     {"triforce", "romfs:/assets/triforce.png"},
     {"star",     "romfs:/assets/star.png"},
-    {"splash",   "romfs:/assets/splash.png"}
+    {"splash",   "romfs:/assets/splash.png"},
+
+    {"staminawheel_1", "romfs:/assets/wheel_1.png"},
+    {"staminawheel_2", "romfs:/assets/wheel_2.png"},
+    {"staminawheel_3", "romfs:/assets/wheel_3.png"},
+    {"staminawheel_4", "romfs:/assets/wheel_4.png"},
+    {"staminawheel_5", "romfs:/assets/wheel_5.png"},
+
+    {"heart", "romfs:/assets/heart.png"}
 };
 
 const std::string DEFAULT_EDITOR_TAB = "Stats";
 const std::string BACKUP_PATH = "sdmc:/switch/RUNE/backups/";
+
+const std::string RUNE_VERSION = "0.0.0";
