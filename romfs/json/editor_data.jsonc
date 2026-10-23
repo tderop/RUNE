@@ -1,0 +1,99 @@
+{
+    /**
+    * bool_data
+    */
+    "IsGet_Obj_Motorcycle": {
+        "Readable": "Motorcycle Unlocked",
+        "Description": "Toggle Master-Cycle Zero ownership, independent of unlock requirements."
+    },
+
+    /**
+    * s32_data
+    */
+    "CurrentRupee": {
+        "Readable": "Rupees",
+        "Description": "The current rupee balance in your inventory."
+    },
+    "CurrentMamo": {
+        "Readable": "Mons",
+        "Description": "The current Mon balance for use at Koltin's shop."
+    },
+    "MaxHartValue": {
+        "Readable": "Max Hearts",
+        "Editor": "Hearts",
+        "Description": "Link's current maximum hearts."
+    },
+
+    // "KorokNutsNum": {
+    //     "Readable": "Korok Seeds",
+    //     "Description": "The number of collected Korok Seeds."
+    // },
+    "HiddenKorok_Number": {
+        "Readable": "Korok Seeds",
+        "Description": "The number of collected Korok Seeds."
+    },
+    "DefeatedSandwormNum": {
+        "Readable": "Moldugas Defeated",
+        "Description": "The number of unique Moldugas defeated."
+    },
+    "DefeatedForestGiantNum": {
+        "Readable": "Hinoxes Defeated",
+        "Description": "The number of unique Hinoxes defeated."
+    },
+    "DefeatedGolemNum": {
+        "Readable": "Taluses Defeated",
+        "Description": "The number of unique Taluses defeated"
+    },
+    "PlayReport_PlayTime": {
+        "Readable": "Total Playtime",
+        "Description": "The amount of time played (in seconds)"
+    },
+
+    /**
+    * f32_data
+    */
+    "dummy_float": {
+        "Readable": "Dummy Value",
+        "Description": "This value does nothing. It has a minimum value of 0, and a maximum value of 255."
+    },
+    "StaminaMax": {
+        "Readable": "Max Stamina",
+        "Editor": "Stamina",
+        "Description": "Link's current maximum stamina."
+
+        // "MaxValue": 3000
+    },
+    "MiniGame_BirdMan_HillTower_RecordDistance": {
+        "Readable": "Paragliding Minigame Record",
+        "Description": "Your record distance travelled in the 'Bird Man Research' paragliding minigame. Why do you even need to edit this?"
+    },
+
+    /**
+    * string_data
+    */
+    "ActorName_SeakSensor_Slot0": {
+        "Readable": "Shiekah Sensor Target",
+        "Editor": "ActorName",
+        "Description": "The currently targeted Sheikah Sensor actor name. If you know how to edit this then you know ball."
+    },
+
+    /**
+    * vector3f_data
+    */
+    "PlayerSavePos":{
+        "Readable": "Link Position",
+        "Description": "Link's current position in Hyrule."
+    },
+    "WarpDLC_DestPos": {
+        "Readable": "Travel Medallion Position",
+        "Description": "The position of the travel medallion if placed."
+    },
+    "Horse_Pos": {
+        "Readable": "Horse Position",
+        "Description": "The current position of the active horse."
+    },
+    "ShootingStarPosition": {
+        "Readable": "Star Fragment Position",
+        "Description": "The position of the current active Star Fragment. Setting this when there is no current Star Fragment will spawn one at that position when the file is loaded."
+    }
+}
