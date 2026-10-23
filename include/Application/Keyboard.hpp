@@ -23,7 +23,7 @@ namespace Rune{
              * 
              * @return the result (whether input succeeded or errored)
             */
-           static Result getNumberInput(float* outFloat, const std::string& hint="", float minValue = -__FLT_MAX__, float maxValue = __FLT_MAX__);
+           static Result getNumberInput(float* outFloat, const std::string& hint="", float minValue = -__FLT_MAX__, float maxValue = __FLT_MAX__, bool showDecimal=false, bool showMinus=true);
 
     }; // namespace Keyboard
 } // namespace Rune

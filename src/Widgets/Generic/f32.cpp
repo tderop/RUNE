@@ -44,7 +44,8 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
                 Result rc = Rune::Keyboard::getNumberInput(
                     &outFloat, "Enter a decimal value...", 
                     std::get<float>(widget->getMetaEntry()->minValue),
-                    std::get<float>(widget->getMetaEntry()->maxValue)
+                    std::get<float>(widget->getMetaEntry()->maxValue),
+                    true
                 );
 
                 if (R_SUCCEEDED(rc)){

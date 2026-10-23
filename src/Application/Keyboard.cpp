@@ -24,7 +24,7 @@ Result Rune::Keyboard::getStringInput(std::string* outStr, const std::string& hi
     return 0;
 }
 
-Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, float minValue, float maxValue){
+Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, float minValue, float maxValue, bool showDecimal, bool showMinus){
     SwkbdConfig kbd;
     Result rc = swkbdCreate(&kbd, 0);
     if (R_FAILED(rc)){
@@ -33,6 +33,19 @@ Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, 
 
     swkbdConfigSetType(&kbd, SwkbdType_NumPad);
     swkbdConfigSetGuideText(&kbd, hint.c_str());
+    swkbdConfigSetBlurBackground(&kbd, 1); // 1 is the default value used by swkbdMakePresetDefault()
+
+    // Set left and right keys
+    char minus = '-';
+    char decimal = '.';
+
+    if (showMinus){
+        swkbdConfigSetLeftOptionalSymbolKey(&kbd, &minus);
+    }
+
+    if (showDecimal){
+        swkbdConfigSetRightOptionalSymbolKey(&kbd, &decimal);
+    }
 
     char buf[16] = {0};
     rc = swkbdShow(&kbd, buf, sizeof(buf));

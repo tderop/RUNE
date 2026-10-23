@@ -72,7 +72,7 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                     float maxValue = maxValues->at(i);
 
                     log("[Rune::WidgetBuilder::Vector] - Got bounds, showing keyboard...");
-                    Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", minValue, maxValue);
+                    Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", minValue, maxValue, true);
 
                     if (R_SUCCEEDED(rc)){
                         log("[Rune::WidgetBuilder::Vector] - Success, setting value");
