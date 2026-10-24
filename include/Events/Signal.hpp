@@ -74,6 +74,16 @@ public:
     // disconnect a connection by its ID, to be called by connections
     void disconnect(size_t connID){
         callbacks.erase(connID);
+
+        // let the memory roam free
+        // auto it = connections.begin();
+        // while (it != connections.end()){
+        //     if ((*it).id == connID){
+        //         it = connections.erase(it);
+        //     } else {
+        //         it++;
+        //     }
+        // }
     }
 
     // fire the signal and run all bound functions
@@ -110,6 +120,6 @@ void Connection<Args...>::disconnect(){
     }
 
     // log("[Connection] - Disconnecting connection with ID: "+std::to_string(this->id));
-    event->disconnect(id);
     connected = false;
+    event->disconnect(id);
 }

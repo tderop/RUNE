@@ -302,6 +302,7 @@ namespace Rune
 
         /**
          * @brief Compile a save file back from RawFile to .sav
+         * YOU ARE RESPONSIBLE FOR MANAGING THE MEMORY OF RAWSAVEFILE!!!
          */
         Result CompileTo(RawFile* rawSaveFile, const std::string &outputPath);
     }

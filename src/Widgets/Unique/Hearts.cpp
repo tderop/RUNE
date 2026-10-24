@@ -211,7 +211,9 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         // save on close
         editOverlay->onCloseSignal->connectWithId([widget, numSpinner, heartTrove](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
+
             heartTrove->clear();
+            delete heartTrove;
 
             if (isSave){
                 // And after rigorously overcommenting my code instead of actually developing, I found a bug I didn't even intend to find

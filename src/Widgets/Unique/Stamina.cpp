@@ -71,6 +71,8 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
         numSpinner->onValueChange([numSpinner, editOverlay, staminaTrove](){
             // log("[Stamina] - Clearing stamina trove...");
             staminaTrove->clear();
+            delete staminaTrove;
+
             // log("[Stamina] - Getting numSpinner value...");
             int value = numSpinner->value();
 

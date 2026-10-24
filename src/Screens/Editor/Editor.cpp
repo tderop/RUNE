@@ -346,6 +346,9 @@ void EditorScreen::buildScreen(){
             // compile the save file
             Result rc = Rune::Save::CompileTo(rawFile, rawFile->path);
 
+            // free memory
+            delete rawFile;
+
             // remove the confirm box
             confirmBox->close();
 

@@ -113,5 +113,8 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
 }
 
 WidgetOverlay::~WidgetOverlay(){
+    this->onCloseSignal->clear();
+    
+    delete this->onCloseSignal;
     delete this->_trove;
 }
