@@ -21,7 +21,7 @@ class WidgetOverlay : public Aether::Overlay{
         // std::function<void()> _onSave;
 
     public:
-        Signal<bool>* onCloseSignal;
+        Signal<bool>* onCloseSignal = nullptr;
 
         WidgetOverlay(const std::string &title="");
         ~WidgetOverlay();
