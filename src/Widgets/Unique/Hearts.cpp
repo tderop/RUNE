@@ -16,7 +16,7 @@ const int HEARTS_PER_ROW = 15;
 const int HEART_IMG_SIZE = 22;
 const int HEART_IMG_PADDING = 5;
 
-const int MAX_HEARTS = 60;
+const int MAX_HEARTS = 30;
 
 /**
  * @brief Convert an int value (e.g. 12) to an understandable value (e.g. 3 hearts)
