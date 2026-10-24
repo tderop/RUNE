@@ -16,6 +16,8 @@ const int HEARTS_PER_ROW = 15;
 const int HEART_IMG_SIZE = 22;
 const int HEART_IMG_PADDING = 5;
 
+const int MAX_HEARTS = 60;
+
 /**
  * @brief Convert an int value (e.g. 12) to an understandable value (e.g. 3 hearts)
  */
@@ -81,56 +83,65 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         );
 
         // Show heart containers when the number spinner value is changed
-        Trove* heartTrove = new Trove();
-        numSpinner->onValueChange([numSpinner, editOverlay, heartTrove](){
-            // Delete all hearts on screen
-            heartTrove->clear();
+        std::vector<Aether::Image*>* hearts = new std::vector<Aether::Image*>;
+
+        numSpinner->onValueChange([numSpinner, editOverlay, hearts](){
+            // The initial X position of the first heart on each row
+            int initX = numSpinner->x() + numSpinner->w() + 36;
+            // The initial Y position of every heart on the first row
+            int initY = numSpinner->valueContainer()->y() + numSpinner->valueContainer()->h()/2 - HEART_IMG_SIZE - HEART_IMG_PADDING/2;
 
             // Get the current value of the number spinner
             int value = numSpinner->value();
 
-            if (!value){
-                // If the value is zero, do nothing
-                return;
-            }
+            // if (!value){
+            //     // If the value is zero, do nothing
+            //     return;
+            // }
 
             // The currently processing heart row (each row consists of 15 hearts, every time 15 hearts have been made this is incremented)
-            int row = 0;
+            int row = hearts->size()/HEARTS_PER_ROW;
 
             // Currently processing heart column
-            int col = 0;
+            int col = (hearts->size()%HEARTS_PER_ROW);
 
-            // The initial X position of the first heart on each row
-            int xPos = numSpinner->x() + numSpinner->w() + 36;
-            // The initial Y position of every heart on the first row
-            int yPos = numSpinner->valueContainer()->y() + numSpinner->valueContainer()->h()/2 - HEART_IMG_SIZE - HEART_IMG_PADDING/2;
+            // reformat hearts
 
-            for (int h = 1; h <= value; ++h){
-                // Make the heart image
-                Aether::Image* heart = new Aether::Image(
-                    xPos+(col*(HEART_IMG_SIZE+HEART_IMG_PADDING)),
-                    yPos+(row*(HEART_IMG_SIZE+HEART_IMG_PADDING)),
-                    ASSET_PATHS.at("heart"),
-                    Aether::Render::Wait
-                );
+            // If the number spinner value is greater than the current number of hearts, generate more hearts
+            if (value > (int)hearts->size()){
+                // Create the number of hearts equal to the difference between hearts.size() and value
+                // log("[Hearts] - Generating "+std::to_string(value-hearts->size())+" hearts.");
 
-                // log(std::to_string(heart->y()));
+                size_t toGenerate = value-(hearts->size());
+                for (size_t i = 0; i < toGenerate; ++i){
+                    Aether::Image* newHeart = new Aether::Image(
+                        initX+(col*(HEART_IMG_SIZE+HEART_IMG_PADDING)),
+                        initY+(row*(HEART_IMG_SIZE+HEART_IMG_PADDING)),
+                        ASSET_PATHS.at("heart"),
+                        Aether::Render::Wait
+                    );
 
-                // Set the size to 24x24
-                heart->setScaleDimensions(HEART_IMG_SIZE, HEART_IMG_SIZE);
-                heart->renderSync();
+                    // Set the size to 24x24
+                    newHeart->setScaleDimensions(HEART_IMG_SIZE, HEART_IMG_SIZE);
+                    newHeart->renderAsync();
 
-                // Add the heart to the edit overlay, and also add it to the heart trove
-                editOverlay->addElement(heart);
-                heartTrove->addElement(heart);
+                    // Add new hearts
+                    editOverlay->addElement(newHeart);
+                    hearts->push_back(newHeart);
 
-                // Increment column
-                col++;
+                    // Recalculate row and column
+                    row = hearts->size()/HEARTS_PER_ROW;
+                    col = (hearts->size()%HEARTS_PER_ROW);
+                }
+            } else {
+                // Remove hearts until the cursor (i) reaches the last heart that should be rendered
+                for (int i = (hearts->size()-1); i > value-1; i--){
+                    // Remove the heart image at this index
+                    Aether::Image* heartImg = hearts->at(i);
+                    editOverlay->removeElement(heartImg);
 
-                // Increment row every 15 hearts, and reset row
-                if (h%HEARTS_PER_ROW == 0 && h != 0){
-                    row++;
-                    col=0;
+                    // Remove the heart from the vector
+                    hearts->erase(hearts->begin()+i);
                 }
             }
         });
@@ -140,7 +151,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
         // Set the value of the number spinner to the current value divided by four
         numSpinner->setValue(std::min(
-            30,
+            MAX_HEARTS,
             std::get<int32_t>(saveEntry->value)/UPGRADE_VALUE
         ));
 
@@ -148,7 +159,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
 
         // Set the maximum value of the number spinner to the max hearts (30), and the minimum value (will always be zero, idk why Nintendo would decide to implement negative hearts one day)
-        numSpinner->setMax(30);
+        numSpinner->setMax(MAX_HEARTS);
         numSpinner->setMin(0);
 
         // Some extra info about the health value
@@ -209,11 +220,16 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         editOverlay->setFocused(numSpinner);
 
         // save on close
-        editOverlay->onCloseSignal->connectWithId([widget, numSpinner, heartTrove](size_t id, bool isSave){
+        editOverlay->onCloseSignal->connectWithId([widget, numSpinner, hearts](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
 
-            heartTrove->clear();
-            delete heartTrove;
+            for (size_t i = 0; i < hearts->size(); ++i){
+                Aether::Image* heartImg = hearts->at(i);
+                widget->getWidgetOverlay()->removeElement(heartImg);
+            }
+
+            // Free memory
+            delete hearts;
 
             if (isSave){
                 // And after rigorously overcommenting my code instead of actually developing, I found a bug I didn't even intend to find
