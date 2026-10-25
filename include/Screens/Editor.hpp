@@ -52,7 +52,8 @@ private:
     Rune::Save::File* captionFile = new Rune::Save::File();
 
     std::vector<std::string> tabs;
-    Trove* trove;
+    Trove* pageTrove;
+    Trove* screenTrove;
 
     std::vector<EditorWidget*> tempWidgets;
 

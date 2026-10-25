@@ -23,9 +23,12 @@ int TAB_BUTTON_HEIGHT = 64; // px
 int EDITOR_TOP_Y = 72;
 int MAX_TITLE_LENGTH = 16;
 
+float CAPTION_IMAGE_SCALE = 0.9f;
+
 EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
     // init
-    this->trove = new Trove();
+    this->pageTrove = new Trove();
+    this->screenTrove = new Trove();
 
     // data
     this->tabs = {
@@ -44,7 +47,12 @@ EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
  */
 EditorScreen::~EditorScreen(){
     this->cleanEditorWidgets();
-    delete this->trove;
+
+    this->pageTrove->clear();
+    this->screenTrove->clear();
+
+    delete this->pageTrove;
+    delete this->screenTrove;
 }
 
 /**
@@ -421,7 +429,7 @@ void EditorScreen::showTab(std::string tabName){
     }
 
     log("[EDITOR] - Cleaning temporary elements...");
-    this->trove->clear();
+    this->pageTrove->clear();
 
     log("[EDITOR] - Resetting selected menu, setting selected tab, and clearing menu labels...");
     this->selectedMenu = 0;
@@ -496,7 +504,7 @@ void EditorScreen::showTab(std::string tabName){
         menuLabel->setBorderColour(Aether::Colour{0, 0, 0, 0});
         
         log("[EDITOR] - Adding element to trove...");
-        this->trove->addElement(menuLabel);
+        this->pageTrove->addElement(menuLabel);
         this->menuLabels.push_back(menuLabel);
 
         this->addElement(menuLabel);
@@ -668,6 +676,108 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 
     log("[EDITOR] - Raw caption file decoded successfully!");
 
+    // Load the caption image
+    // Get the last tab button for alignment
+    Aether::ListButton* lastTabBtn = this->tabButtons.at(this->tabButtons.size()-1);
+
+    // The Y offset of the caption image relative to the final tab button
+    int captionImgOffsetY = 48;
+
+    Aether::Image* captionImg = new Aether::Image(
+        lastTabBtn->x(),
+        lastTabBtn->y()+lastTabBtn->h()+captionImgOffsetY,
+        this->saveSlot->captionImgPath,
+        Aether::Render::Wait
+    );
+
+    // Scale the image
+    captionImg->setScaleDimensions(
+        static_cast<float>(lastTabBtn->w()) * CAPTION_IMAGE_SCALE,
+        ((static_cast<float>(lastTabBtn->w()) / 16.0f) * 9.0f) * CAPTION_IMAGE_SCALE
+    );
+
+    // Reposition the image
+    captionImg->setX(
+        lastTabBtn->x() + lastTabBtn->w()/2 - captionImg->scaleWidth()/2
+    );
+
+    // Render the image
+    captionImg->renderSync();
+
+    // Add the image to the screen and the screen trove (clears when screen is unloaded)
+    this->screenTrove->addElement(captionImg);
+    this->addElement(captionImg);
+
+    // Get the caption timestamp
+    std::string timestamp = formatUnixTimestamp(
+        std::get<int32_t>(Rune::Save::GetEntryFromDataName(
+            *this->captionFile, LAST_SAVE_TIME_LOWER_KEY)->value // lovely
+        )
+    );
+
+    // Make the caption timestamp text
+    Aether::Text* captionImgTimestamp = new Aether::Text(
+        0,
+        0,
+        timestamp,
+        14
+    );
+
+    // Reposition the timestamp text
+    captionImgTimestamp->setXY(
+        captionImg->x()+(captionImg->scaleWidth()/2)-(captionImgTimestamp->textureWidth()/2),
+        captionImg->y()+captionImg->scaleHeight()+6
+    );
+
+    // Set the text colour
+    captionImgTimestamp->setColour(TEXT_COLOUR);
+
+    // Add the text to the screen and its trove
+    this->screenTrove->addElement(captionImgTimestamp);
+    this->addElement(captionImgTimestamp);
+
+    // Add autosave lavel
+    if (std::get<bool>(
+        Rune::Save::GetEntryFromDataName(
+            *this->captionFile, IS_AUTOSAVE_KEY)
+            ->value
+        )
+    ){
+        Aether::Text* autosaveText = new Aether::Text(
+            0,
+            0,
+            "Autosave",
+            12
+        );
+
+        int autosaveOffsetX = 6, autosaveOffsetY = 3;
+
+        // Reposition the autosave text
+        autosaveText->setXY(
+            captionImg->x() + (captionImg->scaleWidth()) - (autosaveText->textureWidth()) - autosaveOffsetX,
+            captionImg->y() + (captionImg->scaleHeight()) - (autosaveText->textureHeight()) - autosaveOffsetY
+        );
+
+        // The background rect
+        Aether::Rectangle* autosaveRect = new Aether::Rectangle(
+            autosaveText->x() - autosaveOffsetX,
+            autosaveText->y() - autosaveOffsetY,
+            autosaveText->textureWidth() + autosaveOffsetX*2,
+            autosaveText->textureHeight() + autosaveOffsetY*2
+        );
+
+        // Make the label darker than the background
+        autosaveRect->setColour(MUTED_BACKGROUND_COLOUR);
+
+        // Add background to the screen
+        this->screenTrove->addElement(autosaveRect);
+        this->addElement(autosaveRect);
+
+        // Then add autosave text
+        this->screenTrove->addElement(autosaveText);
+        this->addElement(autosaveText);
+    }
+
     // Show the first tab
     this->showTab(this->tabs.at(0));
 }
@@ -706,7 +816,8 @@ void EditorScreen::onUnload(){
     inputService.unbind("ExitEditor");
 
     // clear trove
-    this->trove->clear();
+    this->pageTrove->clear();
+    this->screenTrove->clear();
 
     // Edit null
     this->editSaveSlot(nullptr);
