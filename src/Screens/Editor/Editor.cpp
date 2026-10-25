@@ -15,15 +15,21 @@
 #include <string>
 
 #include <Application/Application.hpp>
-#include <Widgets/EditorWidget.hpp>
-#include <Widgets/WidgetOverlay.hpp>
 
+// Widgets used to modify values
+#include <Editor/EditorWidget.hpp>
+#include <Editor/WidgetOverlay.hpp>
 
+// Menus used to hold widgets
+#include <Editor/EditorMenu.hpp>
+#include <Editor/MenuBuilder.hpp>
+
+// Constants
 int TAB_BUTTON_HEIGHT = 64; // px
-int EDITOR_TOP_Y = 72;
-int MAX_TITLE_LENGTH = 16;
+int EDITOR_TOP_Y = 72; // px
+int MAX_TITLE_LENGTH = 16; // px
 
-float CAPTION_IMAGE_SCALE = 0.9f;
+float CAPTION_IMAGE_SCALE = 0.9f; // relative width of the image relative to the last ListButton in the tabs list
 
 EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
     // init
@@ -46,7 +52,7 @@ EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
  * @brief Delete visible widgets when deleted.
  */
 EditorScreen::~EditorScreen(){
-    this->cleanEditorWidgets();
+    this->cleanMenu();
 
     this->pageTrove->clear();
     this->screenTrove->clear();
@@ -60,26 +66,22 @@ EditorScreen::~EditorScreen(){
  */
 void EditorScreen::positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn){
     selectIndicator->setH(
-        (int)((targetBtn->h())*(2.0/3.0))
+        (static_cast<float>(targetBtn->h()))*(2.0f/3.0f)
     );
-
-    // log("Select Indicator Height: "+std::to_string(selectIndicator->h())+"px");
 
     selectIndicator->setXY(
-        targetBtn->x()+(int)(TEXT_X_OFFSET/2.0),
-        (targetBtn->y())+((int)targetBtn->h()/2.0)-((int)selectIndicator->h()/2.0) // yummy
+        targetBtn->x() + (TEXT_X_OFFSET/2.0f),
+        (targetBtn->y()) 
+        + (static_cast<float>(targetBtn->h())/2.0f) 
+        - (static_cast<float>(selectIndicator->h())/2.0f) // yummy
     );
-    // log("Select Indicator X: "+std::to_string(selectIndicator->x())+"px");
-    // log("Select Indicator Y: "+std::to_string(selectIndicator->y())+"px");
 
     for (Aether::ListButton* otherBtn : this->tabButtons){
         if (otherBtn != targetBtn){
             otherBtn->setTextColour(TEXT_COLOUR);
-            // otherBtn->setLineColour(SEPARATOR_COLOUR);
         }
         else{
             otherBtn->setTextColour(TOP_R);
-            // otherBtn->setLineColour(TEXT_COLOUR);
         }
     }
 }
@@ -136,8 +138,6 @@ void EditorScreen::buildScreen(){
     logoText->setColour(TEXT_COLOUR);
 
     // RUNE logo separator
-    // INTEGER DIVISION BUG OH MY FUCKING GOD
-    // sidebarFrame->w()*(2/3)
     log("[EDITOR] - Making logo separator...");
     int logoSeparatorWidth = static_cast<int>(sidebarFrame->w()*(3.0/4.0));
     Aether::Rectangle* logoSeparator = new Aether::Rectangle(
@@ -387,15 +387,9 @@ void EditorScreen::buildScreen(){
     this->addElement(sidebarFrame);
 
     this->addElement(logoText);
-
-    /**
-     * 00:00:12.911 |W| HLE.GuestThread.46 KernelSvc OutputDebugString: [!! AETHER !!] - Couldn't render filled rectangle texture: Invalid values
-     */
     this->addElement(logoSeparator);
-    // wasn't even a bug with the image
     this->addElement(logoImg);
 
-    // this->addElement(debugRect);
     this->addElement(tabButtonList);
     this->addElement(selIndicator);
 
@@ -519,17 +513,15 @@ void EditorScreen::showTab(std::string tabName){
 }
 
 void EditorScreen::showMenu(int menuIdx){
-    // check if idx exists
-    if (menuIdx < 0 || menuIdx > (int)this->menuLabels.size()-1){
-        log("[EDITOR] - MenuIdx: "+std::to_string(menuIdx)+", either less than 0 or greater than "+std::to_string((int)this->menuLabels.size()-1)+".");
-        return;
+    // wrap around if R pressed at end of tabs
+    if (menuIdx > (int)this->menuLabels.size()-1){
+        menuIdx = 0;
     }
 
-    // no.
-    // if (menuIdx == this->selectedMenu){
-    //     log("[EDITOR] - Already viewing menu '"+std::to_string(menuIdx)+"'! Ignoring...");
-    //     return;
-    // }
+    // wrap around if L pressed at start of tabs
+    if (menuIdx < 0){
+        menuIdx = (this->menuLabels.size())-1;
+    }
 
     log("[EDITOR] - Preparing to show menu at index "+std::to_string(menuIdx));
     this->selectedMenu = menuIdx;
@@ -569,43 +561,51 @@ void EditorScreen::showMenu(int menuIdx){
     EditorTab& thisTabData = Rune::Editor::TabData.at(this->selectedTab);
     const std::string& menuName = thisTabData.menus.at(menuIdx);
     log("[EDITOR] - Got menu name and selected tab data: '"+menuName+"'");
+
+    // Get this menu's builder
+    auto buildPair = thisTabData.menuBuilders.find(menuName);
+    std::string builderName=""; // Initialises to empty string without initialiser but just doing it because I'm a consistency goblin
+
+    // If it exists, set the builder name
+    if (buildPair != thisTabData.menuBuilders.end()){
+        builderName = buildPair->second;
+    }
+
+    // Get this menu's entries
+    auto entryPair = thisTabData.menuEntries.find(menuName);
+    std::vector<std::string> menuEntries={};
+
+    // If it exists, set the menu's entries
+    if (entryPair != thisTabData.menuEntries.end()){
+        menuEntries = entryPair->second;
+    }
+
+    // Clean the old menu
+    this->cleanMenu();
+
+    // Build the new menu
+    EditorMenu* menu = new EditorMenu(menuName, this->app->window());
+
+    // Set the save file
+    menu->setSaveFile(this->saveFile);
+
+    // Set the scroll for menus that may need it (entries)
+    menu->setList(this->editorScroll);
+
+    // Set the save entries (for entries)
+    menu->setDataNames(menuEntries);
+
+    // Set the popupList (for entries)
+    menu->setPopupList(this->popupList);
+
+    // Set the widgetOverlay (for entries, AGAIN)
+    menu->setWidgetOverlay(this->widgetOverlay);
+
+    // Build the menu
+    menu->build(builderName);
     
-    // get this tab's entries
-    log("[EDITOR] - Finding entries for menu: '"+menuName+"'...");
-    auto it = thisTabData.menuEntries.find(menuName);
-
-    log("[EDITOR] - Find operation complete.");
-
-    const std::vector<std::string>* menuEntries = nullptr;
-
-    if (it == thisTabData.menuEntries.end()){
-        log("[EDITOR] - No entries configured for menu '"+menuName+"'.");
-        log("----------------------------------");
-    } else {
-        log("[EDITOR] - Found the menu entries.");
-        menuEntries = &it->second;
-    }
-
-    // clear all old widgets
-    log("[EDITOR] - Cleaning old widgets...");
-    if (this->tempWidgets.size() > 0){
-        this->cleanEditorWidgets();
-    }
-
-    // non-copying loop through the entries
-    log("[EDITOR] - Building new widgets...");
-    if (menuEntries == nullptr){
-        log("[EDITOR] - Menu shown with no widgets.");
-        return;
-    }
-    log("[EDITOR] - menuEntries is NOT null, creating entry widgets...");
-
-    for (const std::string& saveKey : *menuEntries){
-        // Handling bespoke widgets
-        this->makeWidget(saveKey);
-    }
-
-    log("[EDITOR] - Built all widgets!");
+    // Set current menu
+    this->currentMenu = menu;
 
     log("[EDITOR] - Menu shown successfully!");
     log("----------------------------------");
@@ -616,8 +616,8 @@ Aether::PopupList* EditorScreen::getPopupList(){
 }
 
 void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
-    // Clear existing widgets
-    this->cleanEditorWidgets();
+    // Delete current menu
+    this->cleanMenu();
 
     if (saveSlot == nullptr){
         // saveSlot is a pointer for slotCopy
@@ -799,12 +799,6 @@ void EditorScreen::onLoad(){
     inputService.connect("PrevMenu", [this](InputSystem& inputService, InputState state){
         this->prevMenu(inputService, state);
     });
-
-    // exit the editor
-    // inputService.bind("ExitEditor", InputObject(InputType::Gamepad, HidNpadButton_Minus));
-    // inputService.connect("ExitEditor", [this](InputSystem& inputService, InputState state){
-    //     this->app->showScreen("Menu");
-    // });
 }
 
 void EditorScreen::onUnload(){

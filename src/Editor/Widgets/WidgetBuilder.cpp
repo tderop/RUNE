@@ -1,5 +1,5 @@
-#include <Widgets/EditorWidget.hpp>
-#include <Widgets/WidgetBuilder.hpp>
+#include <Editor/EditorWidget.hpp>
+#include <Editor/WidgetBuilder.hpp>
 #include <Application/Keyboard.hpp>
 
 #include <Save/Save.hpp>

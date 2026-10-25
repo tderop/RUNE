@@ -53,9 +53,11 @@ SOURCES     := src \
                src/Save \
                src/Screens \
 			   src/Application \
-			   src/Widgets \
-			   src/Widgets/Generic \
-			   src/Widgets/Unique \
+			   src/Editor \
+			   src/Editor/Menus \
+			   src/Editor/Widgets \
+			   src/Editor/Widgets/Generic \
+			   src/Editor/Widgets/Unique \
 			   src/Screens/Editor \
 			   src/Json \
                libs/byml/source/byml

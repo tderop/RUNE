@@ -59,7 +59,8 @@ namespace Rune{
                                 "IsGet_Obj_Motorcycle" // Motorcycle Obtained
                             }
                         }
-                    }
+                    },
+                    .menuBuilders={}
                 }
             },
 
@@ -67,7 +68,13 @@ namespace Rune{
                 "Equipment",
                 EditorTab{
                     .menus={"Weapons", "Bows", "Shields", "Armor"},
-                    .menuEntries={}
+                    .menuEntries={},
+                    .menuBuilders={
+                        {"Weapons", "Inventory"}, 
+                        {"Bows", "Inventory"},
+                        {"Shields", "Inventory"},
+                        {"Armor", "Inventory"}
+                    }
                 }
             },
 
@@ -75,7 +82,12 @@ namespace Rune{
                 "Items",
                 EditorTab{
                     .menus={"Materials", "Food", "Key Items"},
-                    .menuEntries={}
+                    .menuEntries={},
+                    .menuBuilders={
+                        {"Materials", "Inventory"}, 
+                        {"Food", "Inventory"},
+                        {"Key Items", "Inventory"}
+                    }
                 }
             },
 
@@ -83,7 +95,10 @@ namespace Rune{
                 "Dev Editor",
                 EditorTab{
                     .menus={"Dev Editor"},
-                    .menuEntries={}
+                    .menuEntries={},
+                    .menuBuilders={
+                        {"Dev Editor", "AllEntries"}
+                    }
                 }
             }
         };

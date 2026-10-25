@@ -9,8 +9,10 @@
 #include <Save/Save.hpp>
 
 #include <Application/Application.hpp>
-#include <Widgets/EditorWidget.hpp>
-#include <Widgets/WidgetOverlay.hpp>
+#include <Editor/EditorWidget.hpp>
+#include <Editor/WidgetOverlay.hpp>
+
+#include <Editor/EditorMenu.hpp>
 
 /**
  * @brief A structure representing an editor tab. Used for building the editor user interface.
@@ -18,6 +20,7 @@
 struct EditorTab{
     std::vector<std::string> menus;
     std::unordered_map<std::string, std::vector<std::string>> menuEntries;
+    std::unordered_map<std::string, std::string> menuBuilders;
 };
 
 /**
@@ -56,6 +59,7 @@ private:
     Trove* screenTrove;
 
     std::vector<EditorWidget*> tempWidgets;
+    EditorMenu* currentMenu = nullptr;
 
     std::vector<Aether::ListButton*> tabButtons;
     Aether::Rectangle* topPanel;
@@ -137,7 +141,7 @@ public:
     void positionTabSelectIndicator(Aether::Rectangle* selectIndicator, Aether::ListButton* targetBtn);
 
     /**
-     * @brief Delete all currently visible dev-editor style widgets in the editor.
+     * @brief Clean the current menu
      */
-    void cleanEditorWidgets();
+    void cleanMenu();
 };

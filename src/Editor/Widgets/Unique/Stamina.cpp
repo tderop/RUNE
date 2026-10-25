@@ -1,6 +1,6 @@
-#include <Widgets/WidgetBuilder.hpp>
-#include <Widgets/EditorWidget.hpp>
-#include <Widgets/WidgetOverlay.hpp> // maybe should be all one header idk
+#include <Editor/WidgetBuilder.hpp>
+#include <Editor/EditorWidget.hpp>
+#include <Editor/WidgetOverlay.hpp> // maybe should be all one header idk
 
 #include <Application/Keyboard.hpp>
 #include <Config.hpp>

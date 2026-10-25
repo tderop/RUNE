@@ -2,8 +2,8 @@
 #include <Utils/Utils.hpp>
 #include <Json/Json.hpp>
 
-#include <Widgets/EditorWidget.hpp>
-#include <Widgets/WidgetBuilder.hpp>
+#include <Editor/EditorWidget.hpp>
+#include <Editor/WidgetBuilder.hpp>
 
 #include <switch.h>
 
@@ -89,6 +89,10 @@ void EditorWidget::clearTrove(){
         return;
     }
 
+    if (this->trove == nullptr){
+        return;
+    }
+
     log("[WIDGET "+this->saveEntry->dataName+"] - Clearing trove.");
     this->trove->clear();
 
@@ -120,10 +124,9 @@ bool EditorWidget::isLoaded(){
 }
 
 EditorWidget::~EditorWidget(){
-    if (this->trove != nullptr){
-        this->trove->clear();
-        delete this->trove;
-    }
+    // Clear trove and delete it
+    this->clearTrove();
+    delete this->trove;
 }
 
 void EditorWidget::addToElements(AetherElement element){

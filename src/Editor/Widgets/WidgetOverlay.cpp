@@ -1,5 +1,5 @@
 #include <Aether/Aether.hpp>
-#include <Widgets/WidgetOverlay.hpp>
+#include <Editor/WidgetOverlay.hpp>
 #include <Config.hpp>
 
 void WidgetOverlay::clearTrove(){
