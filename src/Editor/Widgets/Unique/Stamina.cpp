@@ -36,19 +36,19 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
     Rune::Save::Entry* saveEntry = widget->getSaveEntry();
 
     widget->addEditButton(
-        getReadableSaveKeyName(saveEntry->dataName),
+        Rune::Save::GetReadableKeyName(saveEntry->dataName),
         floatToStamina(std::get<float>(saveEntry->value))
     );  
 
     widget->addDescription(
-        getSaveKeyDescription(saveEntry->dataName)
+        Rune::Save::GetKeyDescription(saveEntry->dataName)
     );
 
     widget->getEditButton()->onPress([widget]() mutable{
         WidgetOverlay* editOverlay = widget->getWidgetOverlay();
         Rune::Save::Entry* saveEntry = widget->getSaveEntry(); // get fresh reference
 
-        editOverlay->setTitleLabel("Edit Value - "+getReadableSaveKeyName(saveEntry->dataName));
+        editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
         
         // build spinner
         Aether::Spinner* numSpinner = new Aether::Spinner(

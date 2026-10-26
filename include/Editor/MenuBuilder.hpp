@@ -20,7 +20,7 @@ namespace Rune{
 
 
         /** @brief Create and return a widget from a save key */
-        EditorWidget* AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync=false);
+        EditorWidget* AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync=false, std::vector<std::any> meta={}, Aether::Element* parentOverride=nullptr);
     }
 };
 

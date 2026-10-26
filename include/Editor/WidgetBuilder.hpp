@@ -48,6 +48,11 @@ namespace Rune {
          */
         void Hearts(EditorWidget* widget); 
 
+        /**
+         * @brief Constructor for tiles in the inventory editor menus.
+         */
+        void Tile(EditorWidget* widget);
+
     } // namespace WidgetBuilder
 } // namespace Rune
 
@@ -77,5 +82,6 @@ inline const WidgetBuilderMap WIDGET_BUILDERS = {
  */
 inline const UniqueBuilderMap UNIQUE_WIDGET_BUILDERS = {
     {"Stamina", Rune::WidgetBuilder::Stamina},
-    {"Hearts", Rune::WidgetBuilder::Hearts}
+    {"Hearts", Rune::WidgetBuilder::Hearts},
+    {"Tile", Rune::WidgetBuilder::Tile}
 };

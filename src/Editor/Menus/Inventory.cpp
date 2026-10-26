@@ -1,9 +1,11 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
+#include <Editor/EditorWidget.hpp>
 
 #include <Utils/Utils.hpp>
 #include <Save/Save.hpp>
 #include <Json/Json.hpp>
+#include <Config.hpp>
 
 #include <string>
 #include <vector>
@@ -11,8 +13,19 @@
 
 // CONFIG
 
+// UI
+const int X_START_OFFSET = 60;
+const int Y_START_OFFSET = 36;
+
+const int TILE_SIZE = 120;
+const int TILE_PADDING = 12;
+
+const int TILES_PER_ROW = 5;
+
 // All of the items in Link's pouch are merged into one massive array of max length 420. This is going to be a little annoying.
 const std::string INVENTORY_KEY = "PorchItem";
+const std::string INVENTORY_VALUE_KEY = "PorchItem_Value1";
+
 const std::map<std::string, std::vector<std::string>> INVENTORY_PREFIXES = {
     {
         "Weapons",
@@ -58,11 +71,20 @@ const std::map<std::string, std::vector<std::string>> INVENTORY_IGNORES = {
 struct InventoryItem{
     std::string actorName;
     std::string name;
+    int32_t value;
+
     size_t index;
 
-    InventoryItem(std::string _actorName, std::string _name, size_t _index) : actorName(_actorName), name(_name), index(_index) {}
+    InventoryItem(std::string _actorName, std::string _name, int32_t _value, size_t _index) : actorName(_actorName), name(_name), value(_value), index(_index) {}
     InventoryItem() = default;
 };
+
+/**
+ * InventoryItem Value:
+ * - Weapons (Swords, Shields, Bows): Durability (MAX __INT32_MAX__) * 100 (why x100 I do not know, f32 support without f32 array?)
+ * - Materials, Food, Key Items: Quantity (MAX 999)
+ * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
+ */
 
 std::string getNameFromActorName(const std::string& actorName){
     // get json obj
@@ -108,7 +130,20 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Rune::Save::Entry* inventoryEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(),INVENTORY_KEY);
     auto inventory = std::get<std::vector<std::string>>(inventoryEntry->value);
 
+    // Get the itemValues entry entry
+    Rune::Save::Entry* valuesEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), INVENTORY_VALUE_KEY);
+    auto itemValues = std::get<std::vector<int32_t>>(valuesEntry->value); 
+
     int currentIdx = -1;
+    int localIdx = 0; // this index only increments when a valid slot has been found
+
+    // The menu body, used for positioning tiles
+    Aether::Container* menuBody = menu->body();
+
+    int startX = menuBody->x() + X_START_OFFSET;
+    int startY = menuBody->y() + Y_START_OFFSET;
+
+    // Iterate through inventory and populate slots
     for (const std::string& actorName : inventory){
         // Two linear searches through prefixes and ignores
         currentIdx++;
@@ -150,11 +185,25 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
         // A valid item, process and make inventory object
         std::string itemName = getNameFromActorName(actorName);
-        log("Valid item for "+menu->menuName()+": "+itemName);
+        log("Valid item for "+menu->menuName()+": "+itemName+" ("+actorName+") x"+std::to_string(itemValues.at(currentIdx)), true);
 
-        inventoryItems.emplace_back(actorName, itemName, currentIdx);
+        InventoryItem inventoryItem{actorName, itemName, itemValues.at(currentIdx), static_cast<size_t>(currentIdx)};
+        inventoryItems.push_back(inventoryItem);
 
-        // Make inventory tile
+        // Calculate position of the new tile
+        int tileX = startX + (TILE_SIZE+TILE_PADDING)*(localIdx%TILES_PER_ROW);
+        int tileY = startY + (localIdx/TILES_PER_ROW)*(TILE_SIZE+TILE_PADDING);
+
+        // Make inventory tile (use widgets)
+        Rune::MenuBuilder::AddWidgetFromSaveKey(
+            menu,
+            INVENTORY_KEY,
+            true,
+            {tileX, tileY, TILE_SIZE, TILE_SIZE, itemName},
+            menu->body()
+        );
+
+        localIdx++;
     }
 
     return;

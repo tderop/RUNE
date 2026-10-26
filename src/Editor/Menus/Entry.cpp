@@ -6,7 +6,7 @@
 
 const std::string PADDING_KEY = "<PAD>";
 
-EditorWidget* Rune::MenuBuilder::AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync){
+EditorWidget* Rune::MenuBuilder::AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync, std::vector<std::any> meta, Aether::Element* parentOverride){
     // Get the save entry
     Rune::Save::Entry* saveEntry = Rune::Save
     ::GetEntryFromDataName(*(menu->saveFile()), saveKey);
@@ -17,7 +17,7 @@ EditorWidget* Rune::MenuBuilder::AddWidgetFromSaveKey(EditorMenu* menu, const st
     }
 
     // Create the editor widget
-    EditorWidget* widget = new EditorWidget(saveEntry, menu->window(), renderAsync);
+    EditorWidget* widget = new EditorWidget(saveEntry, menu, renderAsync, meta);
 
     widget->setPopupList(menu->popupList());
     widget->setWidgetOverlay(menu->widgetOverlay());
@@ -33,7 +33,11 @@ EditorWidget* Rune::MenuBuilder::AddWidgetFromSaveKey(EditorMenu* menu, const st
     }
 
     // Add all the elements from the widget to the list
-    widget->addAllElements(menu->list()); 
+    if (parentOverride==nullptr){
+        widget->addAllElements(menu->list()); 
+    } else {
+        widget->addAllElements(parentOverride);
+    }
 
     return widget;
 }

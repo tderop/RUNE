@@ -305,6 +305,16 @@ namespace Rune
          * YOU ARE RESPONSIBLE FOR MANAGING THE MEMORY OF RAWSAVEFILE!!!
          */
         Result CompileTo(RawFile* rawSaveFile, const std::string &outputPath);
+
+        /**
+         * @brief Get a readable name for an internal dataName
+         */
+        std::string GetReadableKeyName(std::string& saveKey);
+
+        /**
+         * @brief Get a description from an internal dataName
+         */
+        std::string GetKeyDescription(std::string& saveKey);
     }
 }
 

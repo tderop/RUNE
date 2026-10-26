@@ -14,8 +14,8 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
     log("[WIDGET] - Creating int widget.");
 
     // Create the button
-    widget->addEditButton(getReadableSaveKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
-    widget->addDescription(getSaveKeyDescription(saveEntry->dataName));
+    widget->addEditButton(Rune::Save::GetReadableKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
+    widget->addDescription(Rune::Save::GetKeyDescription(saveEntry->dataName));
 
     // Set its onPress
     widget->getEditButton()->onPress([widget]() mutable{
@@ -24,7 +24,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
 
         // get min/max/init values
         Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
-        editOverlay->setTitleLabel("Edit Value - "+getReadableSaveKeyName(saveEntry->dataName));
+        editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
         
         // build popup interaction option
         Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 180);
@@ -37,7 +37,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
         numSpinner->setMin(std::get<int>(metaEntry->minValue));
         numSpinner->setValue(std::get<int>(saveEntry->value));
 
-        numSpinner->setLabel(getReadableSaveKeyName(saveEntry->dataName));
+        numSpinner->setLabel(Rune::Save::GetReadableKeyName(saveEntry->dataName));
         numSpinner->onPress([widget, editOverlay, numSpinner, metaEntry](){
             // get num input
             float outFloat;

@@ -14,18 +14,18 @@
 void Rune::WidgetBuilder::String(EditorWidget* widget){
     Rune::Save::Entry* saveEntry = widget->getSaveEntry();
     widget->addEditButton(
-        getReadableSaveKeyName(saveEntry->dataName),
+        Rune::Save::GetReadableKeyName(saveEntry->dataName),
         Rune::Save::ValueToString(saveEntry->value, false)
     );
     widget->addDescription(
-        getSaveKeyDescription(saveEntry->dataName)
+        Rune::Save::GetKeyDescription(saveEntry->dataName)
     );
 
     widget->getEditButton()->onPress([widget]() mutable{
         WidgetOverlay* ovl           = widget->getWidgetOverlay();
         Rune::Save::Entry* saveEntry = widget->getSaveEntry();
 
-        std::string readableName  = getReadableSaveKeyName(saveEntry->dataName);
+        std::string readableName  = Rune::Save::GetReadableKeyName(saveEntry->dataName);
         std::string readableValue = Rune::Save::ValueToString(saveEntry->value);
         ovl->setTitleLabel(readableName);
         

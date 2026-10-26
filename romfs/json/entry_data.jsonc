@@ -125,5 +125,10 @@
     "PlayerName": {
         "Readable": "Player Name",
         "Description": "'PlayerName', a seemingly unused value, likely originally designed - like older Zelda games - for the player to choose their own name. Interesting!"
+    },
+    "PorchItem": {
+        "Readable": "PorchItem",
+        "Description": "Inventory items stored as an array of actor names.",
+        "Editor": "Tile" // For inventory-type menus. Tells the Widget builder to make a square slot.
     }
 }

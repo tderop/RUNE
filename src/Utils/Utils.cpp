@@ -14,7 +14,7 @@
 #include <numbers>
 
 bool logServiceIsEmulator = false;
-bool isVerbose = true;
+bool isVerbose = false;
 
 // functions
 void log(const std::string& msg, bool isImportant){

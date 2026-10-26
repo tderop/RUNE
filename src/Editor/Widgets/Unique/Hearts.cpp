@@ -4,6 +4,7 @@
 
 #include <Application/Keyboard.hpp>
 #include <Config.hpp>
+#include <Save/Save.hpp>
 
 #include <Utils/Trove.hpp>
 
@@ -51,13 +52,13 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
     // Add the edit button
     widget->addEditButton(
-        getReadableSaveKeyName(saveEntry->dataName),
+        Rune::Save::GetReadableKeyName(saveEntry->dataName),
         intToHearts(std::get<int32_t>(saveEntry->value))
     );  
 
     // Add the description comment
     widget->addDescription(
-        getSaveKeyDescription(saveEntry->dataName)
+        Rune::Save::GetKeyDescription(saveEntry->dataName)
     );
 
     // Set the on press function
@@ -67,7 +68,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         Rune::Save::Entry* saveEntry = widget->getSaveEntry();
 
         // Set the title label of the overlay
-        editOverlay->setTitleLabel("Edit Value - "+getReadableSaveKeyName(saveEntry->dataName));
+        editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
         
         // Build the spinner used to select the heart count
         Aether::Spinner* numSpinner = new Aether::Spinner(

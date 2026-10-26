@@ -1176,3 +1176,66 @@ Rune::Save::Entry* Rune::Save::GetEntryFromDataName(Rune::Save::File& saveFile, 
     log("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null.");
     return nullptr;
 }
+
+std::string Rune::Save::GetReadableKeyName(std::string& saveKey){
+    log("[Rune::Save::GetReadableKeyName] - Getting JSON data...");
+    Rune::Json* editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
+        log("[Rune::Save::GetReadableKeyName] - Failed to load EditorData JSON.");
+        return saveKey;
+    }
+
+    if (editorDataJson == nullptr){
+        log("[Rune::Save::GetReadableKeyName] - EditorData JSON is nullptr.");
+        return saveKey;
+    }
+
+    log("[Rune::Save::GetReadableKeyName] - Got EditorData JSON!");
+
+    auto it = editorDataJson->find(saveKey);
+    if (it == editorDataJson->end()){
+        log("[Rune::Save::GetReadableKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
+        return saveKey;
+    }
+
+    if (!it->is_object()){
+        log("[Rune::Save::GetReadableKeyName] - Entry in EditorData for '"+saveKey+"' is not an object!");
+        return saveKey;
+    }
+
+    auto readableName = it->find("Readable");
+    if (readableName != it->end() && readableName->is_string()){
+        log("[Rune::Save::GetReadableKeyName] - Found readable name for '"+saveKey+"'!");
+        return readableName->get<std::string>();
+    }
+
+    return saveKey;
+}
+
+std::string Rune::Save::GetKeyDescription(std::string& saveKey){
+    Rune::Json* editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
+
+        return "";
+    }
+
+    if (editorDataJson == nullptr){
+        return saveKey;
+    }
+
+    auto it = editorDataJson->find(saveKey);
+    if (it == editorDataJson->end()){
+        return "";
+    }
+
+    if (!it->is_object()){
+        return "";
+    }
+
+    auto descriptionEntry = it->find("Description");
+    if (descriptionEntry != it->end() && descriptionEntry->is_string()){
+        return descriptionEntry->get<std::string>();
+    }
+
+    return "";
+}

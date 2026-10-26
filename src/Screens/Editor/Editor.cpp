@@ -592,7 +592,7 @@ void EditorScreen::showMenu(int menuIdx){
     this->cleanMenu();
 
     // Build the new menu
-    EditorMenu* menu = new EditorMenu(menuName, this->app->window());
+    EditorMenu* menu = new EditorMenu(menuName, this->app->window(), this);
 
     // Set the save file
     menu->setSaveFile(this->saveFile);
@@ -611,6 +611,7 @@ void EditorScreen::showMenu(int menuIdx){
 
     // Build the menu
     menu->build(builderName);
+    this->editorScroll->setSelectable((builderName!="Inventory"));
     
     // Set current menu
     this->currentMenu = menu;

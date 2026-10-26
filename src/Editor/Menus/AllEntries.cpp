@@ -15,7 +15,7 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
         if (entry.dataName.find("Porch") != std::string::npos){
             log(
                 "["+entry.dataName+"] - "+Rune::Save::ValueToString(entry.value), 
-                true
+                false
             );
         }
 

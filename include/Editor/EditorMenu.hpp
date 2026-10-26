@@ -29,11 +29,17 @@ class EditorMenu {
         /** @brief The main application window */
         Aether::Window* _window = nullptr;
 
+        /** @brief The current screen */
+        Aether::Screen* _screen = nullptr;
+
         /** @brief The popupList */
         Aether::PopupList* _popupList = nullptr;
 
         /** @brief The widgetOverlay */
         WidgetOverlay* _widgetOverlay = nullptr;
+
+        /** @brief The body container */
+        Aether::Container* _body = nullptr;
 
         /** @brief The widgets held by this menu */
         std::vector<EditorWidget*> widgets;
@@ -43,7 +49,8 @@ class EditorMenu {
 
     public:
         /** @brief Create a new EditorMenu object */
-        EditorMenu(std::string menuName, Aether::Window* window);
+        EditorMenu(std::string menuName, Aether::Window* window, 
+            Aether::Screen* screen);
 
         /** @brief Destroy the EditorMenu */
         ~EditorMenu();
@@ -96,4 +103,7 @@ class EditorMenu {
 
         /** @brief Get the save file pointer */
         Rune::Save::File* saveFile();
+
+        /** @brief Get the menu body */
+        Aether::Container* body();
 };

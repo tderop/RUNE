@@ -1,10 +1,12 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
 
-EditorMenu::EditorMenu(std::string menuName, Aether::Window* window){
+EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Screen* screen){
     // init
     this->_menuName = menuName;
     this->_window = window;
+    this->_screen = screen;
+
     this->trove = new Trove();
 
     // Doesn't matter if no menu builder, just make empty object
@@ -62,6 +64,18 @@ std::vector<std::string> EditorMenu::dataNames(){
 
 // Set list
 void EditorMenu::setList(Aether::List* list){
+    if (this->_body == nullptr){
+        this->_body = new Aether::Container(
+            list->x(),
+            list->y(),
+            list->w(),
+            list->h()
+        );
+
+        this->_screen->addElement(_body);
+        this->addElement(_body);
+    }
+
     this->_list = list;
 }
 
@@ -96,4 +110,8 @@ void EditorMenu::setWidgetOverlay(WidgetOverlay* widgetOverlay){
 
 WidgetOverlay* EditorMenu::widgetOverlay(){
     return this->_widgetOverlay;
+}
+
+Aether::Container* EditorMenu::body(){
+    return this->_body;
 }

@@ -7,6 +7,7 @@
 #include <functional>
 #include <vector>
 #include <string>
+#include <any>
 
 #include <Save/Save.hpp>
 #include <Aether/Aether.hpp>
@@ -14,8 +15,11 @@
 #include <Utils/Utils.hpp>
 #include <Editor/WidgetOverlay.hpp>
 #include <Editor/WidgetBuilder.hpp>
+#include <Editor/EditorMenu.hpp>
 #include <Events/Signal.hpp>
 #include <Config.hpp>
+
+class EditorMenu;
 
 /**
  * @brief Abstraction of a basic editor widget
@@ -23,26 +27,30 @@
 class EditorWidget
 {
 private:
-    Aether::ListOption* editButton;
-    Trove *trove;
+    Aether::ListOption* editButton = nullptr;
+    Trove *trove = nullptr;
 
     Rune::Save::Entry* saveEntry; // format on save ruined my asterisk formatting :pensive:
     Rune::Save::MetaEntry metaEntry;
 
     Aether::PopupList* popupList = nullptr;
     WidgetOverlay* widgetOverlay = nullptr;
-    Aether::Window* window;
+    EditorMenu* menu = nullptr;
+    Aether::Window* window = nullptr;
 
     std::vector<std::string> popupListEntries;
     std::vector<AetherElement> elements;
 
     std::vector<std::pair<std::string, AetherElement>> keyedElements;
 
-    bool _isLoaded;
+    /** @brief Extra metadata passed into widget constructor */
+    std::vector<std::any> meta;
+
+    bool _isLoaded = false;
     bool renderAsync = false;
 
 public:
-    EditorWidget(Rune::Save::Entry *saveEntry, Aether::Window *window, bool renderAsync=false);
+    EditorWidget(Rune::Save::Entry *saveEntry, EditorMenu* menu, bool renderAsync=false, std::vector<std::any> meta={});
     ~EditorWidget();
 
     /**
@@ -142,17 +150,27 @@ public:
      * @brief Returns whether elements should be rendered async when possible
      */
     bool isRenderAsync();
+
+    /**
+     * @brief Get the menu that hosts this EditorWidget
+     */
+    EditorMenu* getMenu();
+
+    /**
+     * @brief Get any additional metadata provided when the EditorWidget was constructed
+     */
+    std::vector<std::any> getMeta();
 };
 
 /**
  * @brief Get a readable save key name from the original save key... e.g. 'CurrentRupee' = 'Rupees'. Will return the original save key if no translation is found.
  */
-std::string getReadableSaveKeyName(std::string &saveKey);
+std::string Rune::Save::GetReadableKeyName(std::string &saveKey);
 
 /**
  * @brief Get a description for the save key. Used for filling list comments in the editor.
  */
-std::string getSaveKeyDescription(std::string &saveKey);
+std::string Rune::Save::GetKeyDescription(std::string &saveKey);
 
 /**
  * @brief A table mapping save keys to their English identifiers. This should probably be a romfs .JSON file. >:D

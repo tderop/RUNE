@@ -11,8 +11,8 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
     Rune::Save::Entry* saveEntry = widget->getSaveEntry();
 
     // Make btn
-    widget->addEditButton(getReadableSaveKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
-    widget->addDescription(getSaveKeyDescription(saveEntry->dataName));
+    widget->addEditButton(Rune::Save::GetReadableKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
+    widget->addDescription(Rune::Save::GetKeyDescription(saveEntry->dataName));
 
     // set click callback
     widget->getEditButton()->onPress([widget, saveEntry](){
@@ -29,7 +29,7 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
 
         // update its title
         log("[WIDGET " + saveEntry->dataName + "] - Getting readable save key name...");
-        std::string readableSaveKey = getReadableSaveKeyName(saveEntry->dataName);
+        std::string readableSaveKey = Rune::Save::GetReadableKeyName(saveEntry->dataName);
         popupList->setTitleLabel("Edit Value - " + readableSaveKey); // kinda looks ugly`
 
         // add true/false options

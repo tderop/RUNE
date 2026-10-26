@@ -4,16 +4,21 @@
 
 #include <Editor/EditorWidget.hpp>
 #include <Editor/WidgetBuilder.hpp>
+#include <Editor/EditorMenu.hpp>
+
+#include <any>
 
 #include <switch.h>
 
 const int MAX_VALUE_LENGTH = 28; // characters
 // yum
-EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window, bool renderAsync) 
-    : editButton(nullptr), trove(nullptr), saveEntry(saveEntry), window(window),
-      _isLoaded(false), renderAsync(renderAsync){
+EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, EditorMenu* menu, bool renderAsync, std::vector<std::any> meta) 
+    : saveEntry(saveEntry), menu(menu), meta(meta){
     
     // init
+    this->renderAsync = renderAsync;
+    this->window = this->menu->window();
+
     if (saveEntry == nullptr){
         log("[!! EDITOR WIDGET !!] - Cannot build widget for a missing save entry.");
         return;
@@ -208,70 +213,14 @@ void EditorWidget::removePopupListEntries(){
     this->popupList->removeEntries();
 }
 
-
-std::string getReadableSaveKeyName(std::string& saveKey){
-    log("[getReadableSaveKeyName] - Getting JSON data...");
-    Rune::Json* editorDataJson = nullptr;
-    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
-        log("[getReadableSaveKeyName] - Failed to load EditorData JSON.");
-        return saveKey;
-    }
-
-    if (editorDataJson == nullptr){
-        log("[getReadableSaveKeyName] - EditorData JSON is nullptr.");
-        return saveKey;
-    }
-
-    log("[getReadableSaveKeyName] - Got EditorData JSON!");
-
-    auto it = editorDataJson->find(saveKey);
-    if (it == editorDataJson->end()){
-        log("[getReadableSaveKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
-        return saveKey;
-    }
-
-    if (!it->is_object()){
-        log("[getReadableSaveKeyName] - Entry in EditorData for '"+saveKey+"' is not an object!");
-        return saveKey;
-    }
-
-    auto readableName = it->find("Readable");
-    if (readableName != it->end() && readableName->is_string()){
-        log("[getReadableSaveKeyName] - Found readable name for '"+saveKey+"'!");
-        return readableName->get<std::string>();
-    }
-
-    return saveKey;
-}
-
-std::string getSaveKeyDescription(std::string& saveKey){
-    Rune::Json* editorDataJson = nullptr;
-    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
-
-        return "";
-    }
-
-    if (editorDataJson == nullptr){
-        return saveKey;
-    }
-
-    auto it = editorDataJson->find(saveKey);
-    if (it == editorDataJson->end()){
-        return "";
-    }
-
-    if (!it->is_object()){
-        return "";
-    }
-
-    auto descriptionEntry = it->find("Description");
-    if (descriptionEntry != it->end() && descriptionEntry->is_string()){
-        return descriptionEntry->get<std::string>();
-    }
-
-    return "";
-}
-
 bool EditorWidget::isRenderAsync(){
     return this->renderAsync;
+}
+
+EditorMenu* EditorWidget::getMenu(){
+    return this->menu;
+}
+
+std::vector<std::any> EditorWidget::getMeta(){
+    return this->meta;
 }

@@ -17,8 +17,8 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
     log("[WIDGET] - Creating float widget.");
 
     // Create the button
-    widget->addEditButton(getReadableSaveKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
-    widget->addDescription(getSaveKeyDescription(saveEntry->dataName));
+    widget->addEditButton(Rune::Save::GetReadableKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
+    widget->addDescription(Rune::Save::GetKeyDescription(saveEntry->dataName));
 
     // Set its onPress
     widget->getEditButton()->onPress([widget]() mutable{
@@ -26,11 +26,11 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
         Rune::Save::Entry* saveEntry = widget->getSaveEntry(); // get fresh reference
 
         // get min/max/init values
-        editOverlay->setTitleLabel("Edit Value - "+getReadableSaveKeyName(saveEntry->dataName));
+        editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
         
         // build list option
         Aether::ListOption* editBtn = new Aether::ListOption(
-            getReadableSaveKeyName(saveEntry->dataName), 
+            Rune::Save::GetReadableKeyName(saveEntry->dataName), 
             Rune::Save::ValueToString(saveEntry->value, false),
             [](){}
         );
