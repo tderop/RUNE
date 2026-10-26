@@ -8,7 +8,7 @@
 
 extern bool logServiceIsEmulator;
 
-void log(const std::string& msg);
+void log(const std::string& msg, bool isImportant=false);
 Result getUserID(AccountUid* out);
 std::string getUserNickname();
 std::string getDeviceNickname();

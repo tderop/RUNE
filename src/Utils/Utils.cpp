@@ -14,10 +14,15 @@
 #include <numbers>
 
 bool logServiceIsEmulator = false;
+bool isVerbose = false;
 
 // functions
-void log(const std::string& msg){
+void log(const std::string& msg, bool isImportant){
     if (!logServiceIsEmulator){
+        return;
+    }
+
+    if (!isImportant && !isVerbose){
         return;
     }
 

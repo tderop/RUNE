@@ -6,6 +6,14 @@
         "Readable": "Motorcycle Unlocked",
         "Description": "Toggle Master-Cycle Zero ownership, independent of unlock requirements."
     },
+    "IsGet_Obj_Porch_Weapon": {
+        "Readable": "Weapon Obtained",
+        "Description": "Determines whether a weapon has ever been picked up before."
+    },
+    "IsGet_Obj_Porch_Bow": {
+        "Readable": "Bow Obtained",
+        "Description": "Determines whether a bow has ever been picked up before."
+    },
 
     /**
     * s32_data
@@ -49,6 +57,18 @@
         "Description": "The amount of time played (in seconds)",
         "Unit": "seconds"
     },
+    "WeaponPorchStockNum": {
+        "Readable": "Weapon Slots",
+        "Description": "The number of available slots in the weapon inventory."
+    },
+    "ShieldPorchStockNum": {
+        "Readable": "Shield Slots",
+        "Description": "The number of available slots in the shield inventory."
+    },
+    "BowPorchStockNum": {
+        "Readable": "Bow Slots",
+        "Description": "The number of available slots in the bow inventory."
+    },
 
     /**
     * f32_data
@@ -76,7 +96,7 @@
     "ActorName_SeakSensor_Slot0": {
         "Readable": "Shiekah Sensor Target",
         "Editor": "ActorName",
-        "Description": "The currently targeted Sheikah Sensor actor name. If you know how to edit this then you know ball."
+        "Description": "The currently targeted Sheikah Sensor actor name."
     },
 
     /**
@@ -97,5 +117,13 @@
     "ShootingStarPosition": {
         "Readable": "Star Fragment Position",
         "Description": "The position of the current active Star Fragment. Setting this when there is no current Star Fragment will spawn one at that position when the file is loaded."
+    },
+
+    /**
+    * other
+    */
+    "PlayerName": {
+        "Readable": "Player Name",
+        "Description": "'PlayerName', a seemingly unused value, likely originally designed - like older Zelda games - for the player to choose their own name. Interesting!"
     }
 }
