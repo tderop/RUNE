@@ -699,8 +699,8 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
     };
 
     // parse JSON data
-    Rune::Json editorJson;
-    Result rc = Rune::JsonData::GetJsonById(&editorJson, "EditorData");
+    Rune::Json* editorJson;
+    Result rc = Rune::JsonData::GetJsonById(editorJson, "EditorData");
 
     if (R_FAILED(rc)){
         return LibnxError_IoError; // :shrug:
@@ -780,8 +780,8 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             }
 
             // Find editor metadata
-            auto it = editorJson.find(dataName);
-            if (it != editorJson.end() && it->is_object()){
+            auto it = editorJson->find(dataName);
+            if (it != editorJson->end() && it->is_object()){
                 // Assign editor
                 auto editorOverride = it->find("Editor");
                 if (editorOverride != it->end()){

@@ -23,6 +23,6 @@ namespace Rune{
         /**
          * @brief Get JSON data by the JSON ID.
          */
-        Result GetJsonById(Rune::Json* out, const std::string &id);
+        Result GetJsonById(Rune::Json*& out, const std::string &id);
     } // namespace JsonData
 } // namespace Rune

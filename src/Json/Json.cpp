@@ -38,7 +38,7 @@ void Rune::JsonData::Init(){
     }
 }
 
-Result Rune::JsonData::GetJsonById(Rune::Json* out, const std::string &id){
+Result Rune::JsonData::GetJsonById(Rune::Json*& out, const std::string &id){
     log("[Rune::JsonData::GetJsonById] - Getting JSON by ID: '"+id+"'");
     auto editDataJsonEntry = Rune::JsonData::JsonObjects.find(id);
 
@@ -47,9 +47,9 @@ Result Rune::JsonData::GetJsonById(Rune::Json* out, const std::string &id){
         return LibnxError_NotFound;
     }
 
-    log("[Rune::JsonData::GetJsonById] - Found JSON data for ID: '"+id+"'! Copying data to out.");
-    *out = editDataJsonEntry->second; // copy data to pointer
+    log("[Rune::JsonData::GetJsonById] - Found JSON data for ID: '"+id+"'! Setting out pointer.");
+    out = &(Rune::JsonData::JsonObjects.find(id)->second); // set pointer
 
-    log("[Rune::JsonData::GetJsonById] - Data copied. Returning success.");
+    log("[Rune::JsonData::GetJsonById] - Pointer set. Returning success.");
     return 0;
 }

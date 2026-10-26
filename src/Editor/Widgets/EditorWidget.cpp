@@ -211,8 +211,8 @@ void EditorWidget::removePopupListEntries(){
 
 std::string getReadableSaveKeyName(std::string& saveKey){
     log("[getReadableSaveKeyName] - Getting JSON data...");
-    Rune::Json editorDataJson = nullptr;
-    if (R_FAILED(Rune::JsonData::GetJsonById(&editorDataJson, "EditorData"))){
+    Rune::Json* editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
         log("[getReadableSaveKeyName] - Failed to load EditorData JSON.");
         return saveKey;
     }
@@ -224,8 +224,8 @@ std::string getReadableSaveKeyName(std::string& saveKey){
 
     log("[getReadableSaveKeyName] - Got EditorData JSON!");
 
-    auto it = editorDataJson.find(saveKey);
-    if (it == editorDataJson.end()){
+    auto it = editorDataJson->find(saveKey);
+    if (it == editorDataJson->end()){
         log("[getReadableSaveKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
         return saveKey;
     }
@@ -245,8 +245,8 @@ std::string getReadableSaveKeyName(std::string& saveKey){
 }
 
 std::string getSaveKeyDescription(std::string& saveKey){
-    Rune::Json editorDataJson = nullptr;
-    if (R_FAILED(Rune::JsonData::GetJsonById(&editorDataJson, "EditorData"))){
+    Rune::Json* editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
 
         return "";
     }
@@ -255,8 +255,8 @@ std::string getSaveKeyDescription(std::string& saveKey){
         return saveKey;
     }
 
-    auto it = editorDataJson.find(saveKey);
-    if (it == editorDataJson.end()){
+    auto it = editorDataJson->find(saveKey);
+    if (it == editorDataJson->end()){
         return "";
     }
 
