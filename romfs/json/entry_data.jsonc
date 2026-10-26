@@ -46,7 +46,8 @@
     },
     "PlayReport_PlayTime": {
         "Readable": "Total Playtime",
-        "Description": "The amount of time played (in seconds)"
+        "Description": "The amount of time played (in seconds)",
+        "Unit": "seconds"
     },
 
     /**
@@ -65,7 +66,8 @@
     },
     "MiniGame_BirdMan_HillTower_RecordDistance": {
         "Readable": "Paragliding Minigame Record",
-        "Description": "Your record distance travelled in the 'Bird Man Research' paragliding minigame. Why do you even need to edit this?"
+        "Description": "Your record distance travelled in the 'Bird Man Research' paragliding minigame. Why do you even need to edit this?",
+        "Unit": "metres"
     },
 
     /**

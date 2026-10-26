@@ -1,7 +1,33 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
 
+#include <Save/Save.hpp>
+
+const int ENTRIES_PER_PAGE = 50;
+
 void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
-    // stub
-    return;
+    // Iterate through all entries and add a widget for every one
+    // This gonna cause INSANE lag
+
+    size_t totalEntries = 0;
+    for (const auto& entry : menu->saveFile()->entries){
+        if (entry.dataType == Rune::Save::RuneRevivalBool 
+            || entry.dataType == Rune::Save::RuneRevivalS32){
+
+            continue;
+        }
+
+        if (entry.dataType != Rune::Save::RuneString64){
+            continue;
+        }
+
+        totalEntries++;
+        Rune::MenuBuilder::AddWidgetFromSaveKey(menu, entry.dataName, true);
+
+        if (totalEntries >= ENTRIES_PER_PAGE){
+            break;
+        }
+    }
+
+    // Wow new framework OP only 3 lines of code
 }

@@ -20,6 +20,8 @@ namespace Aether {
             Text * hint_;
             /** @brief Pointer to value text */
             Text * value_;
+            /** @brief The maximum value string length. */
+            int maxLength;
 
             /**
              * @brief Repositions all elements.
@@ -34,7 +36,7 @@ namespace Aether {
              * @param v value string
              * @param f function to invoke when option is selected
              */
-            ListOption(std::string t, std::string v, std::function<void()> f);
+            ListOption(std::string t, std::string v, std::function<void()> f, int maxLength=-1);
 
             /**
              * @brief Get the line colour (top rectangle colour)

@@ -8,12 +8,14 @@
 #define TEXT_PADDING 16
 
 namespace Aether {
-    ListOption::ListOption(std::string t, std::string v, std::function<void()> f) : Element() {
+    ListOption::ListOption(std::string t, std::string v, std::function<void()> f, int maxLength) : Element() {
         Element::setH(HEIGHT);
+        this->maxLength = maxLength;
         this->topR = new Rectangle(0, 0, this->w(), 1);
         this->bottomR = new Rectangle(0, this->y() + this->h(), this->w(), 1);
         this->hint_ = new Text(0, 0, t, FONT_SIZE);
-        this->value_ = new Text(0, 0, v, FONT_SIZE);
+        this->value_ = new Text(0, 0, "", FONT_SIZE);
+        this->setValue(v);
         this->addElement(this->topR);
         this->addElement(this->bottomR);
         this->addElement(this->hint_);
@@ -80,6 +82,17 @@ namespace Aether {
     }
 
     void ListOption::setValue(std::string s) {
+        if (this->maxLength >= 0){
+            if (static_cast<int>(s.size()) > this->maxLength){
+                if (this->maxLength >= 3){
+                    s.resize(this->maxLength-3);
+                    s+="...";
+                } else {
+                    s.resize(this->maxLength);
+                }
+            }
+        }
+
         this->value_->setString(s);
         this->positionElements();
     }

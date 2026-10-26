@@ -39,9 +39,10 @@ private:
     std::vector<std::pair<std::string, AetherElement>> keyedElements;
 
     bool _isLoaded;
+    bool renderAsync = false;
 
 public:
-    EditorWidget(Rune::Save::Entry *saveEntry, Aether::Window *window);
+    EditorWidget(Rune::Save::Entry *saveEntry, Aether::Window *window, bool renderAsync=false);
     ~EditorWidget();
 
     /**
@@ -65,7 +66,7 @@ public:
      * @param name The main text on the list option
      * @param value The rightmost text on the list option, representing the value of the entry in data.
      */
-    void addEditButton(const std::string &name, const std::string &value);
+    void addEditButton(const std::string &name, std::string value);
 
     /**
      * @brief Get all elements that are a part of the widget.
@@ -136,6 +137,11 @@ public:
      * @brief Returns whether the editor widget was successfully loaded or not.
      */
     bool isLoaded();
+
+    /**
+     * @brief Returns whether elements should be rendered async when possible
+     */
+    bool isRenderAsync();
 };
 
 /**

@@ -6,6 +6,38 @@
 
 const std::string PADDING_KEY = "<PAD>";
 
+EditorWidget* Rune::MenuBuilder::AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync){
+    // Get the save entry
+    Rune::Save::Entry* saveEntry = Rune::Save
+    ::GetEntryFromDataName(*(menu->saveFile()), saveKey);
+
+    if (saveEntry == nullptr){
+        // Failed to get save entry!
+        return nullptr;
+    }
+
+    // Create the editor widget
+    EditorWidget* widget = new EditorWidget(saveEntry, menu->window(), renderAsync);
+
+    widget->setPopupList(menu->popupList());
+    widget->setWidgetOverlay(menu->widgetOverlay());
+
+    // This section replaces the old EditorScreen::makeWidget()
+    
+    // Take ownership of the widget
+    menu->addWidget(widget);
+
+    // If the widget is not loaded, ignore
+    if (!widget->isLoaded()){
+        return nullptr;
+    }
+
+    // Add all the elements from the widget to the list
+    widget->addAllElements(menu->list()); 
+
+    return widget;
+}
+
 void Rune::MenuBuilder::Entry(EditorMenu* menu){
     // Get the entry names used by this menu
     std::vector<std::string> menuEntries = menu->dataNames();
@@ -57,32 +89,6 @@ void Rune::MenuBuilder::Entry(EditorMenu* menu){
             continue; // Proceed to next key
         }
 
-        // Get the save entry
-        Rune::Save::Entry* saveEntry = Rune::Save
-        ::GetEntryFromDataName(*(menu->saveFile()), saveKey);
-
-        if (saveEntry == nullptr){
-            // Failed to get save entry!
-            continue;
-        }
-
-        // Create the editor widget
-        EditorWidget* widget = new EditorWidget(saveEntry, menu->window());
-
-        widget->setPopupList(menu->popupList());
-        widget->setWidgetOverlay(menu->widgetOverlay());
-
-        // This section replaces the old EditorScreen::makeWidget()
-        
-        // Take ownership of the widget
-        menu->addWidget(widget);
-
-        // If the widget is not loaded, ignore
-        if (!widget->isLoaded()){
-            continue;
-        }
-
-        // Add all the elements from the widget to the list
-        widget->addAllElements(menu->list()); 
+        Rune::MenuBuilder::AddWidgetFromSaveKey(menu, saveKey);
     }
 }

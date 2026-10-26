@@ -7,10 +7,11 @@
 
 #include <switch.h>
 
+const int MAX_VALUE_LENGTH = 28; // characters
 // yum
-EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window) 
+EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, Aether::Window* window, bool renderAsync) 
     : editButton(nullptr), trove(nullptr), saveEntry(saveEntry), window(window),
-      _isLoaded(false){
+      _isLoaded(false), renderAsync(renderAsync){
     
     // init
     if (saveEntry == nullptr){
@@ -145,8 +146,8 @@ void EditorWidget::addDescription(const std::string &description){
     }
 }
 
-void EditorWidget::addEditButton(const std::string &name, const std::string &value){
-    Aether::ListOption* editBtn = new Aether::ListOption(name, value, [](){});
+void EditorWidget::addEditButton(const std::string &name, std::string value){
+    Aether::ListOption* editBtn = new Aether::ListOption(name, value, [](){}, MAX_VALUE_LENGTH);
     editBtn->setValueColour(TOP_R);
     editBtn->setLineColour(SEPARATOR_COLOUR);
     
@@ -269,4 +270,8 @@ std::string getSaveKeyDescription(std::string& saveKey){
     }
 
     return "";
+}
+
+bool EditorWidget::isRenderAsync(){
+    return this->renderAsync;
 }

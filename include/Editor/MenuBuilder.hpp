@@ -1,6 +1,9 @@
 #pragma once
 
 #include <map>
+#include <string>
+
+#include <Editor/EditorWidget.hpp>
 
 class EditorMenu;
 
@@ -14,6 +17,10 @@ namespace Rune{
 
         /** @brief Create a menu for all entries. Used by the Dev Editor. */
         void AllEntries(EditorMenu* menu);
+
+
+        /** @brief Create and return a widget from a save key */
+        EditorWidget* AddWidgetFromSaveKey(EditorMenu* menu, const std::string& saveKey, bool renderAsync=false);
     }
 };
 

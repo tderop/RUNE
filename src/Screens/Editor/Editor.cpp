@@ -231,8 +231,8 @@ void EditorScreen::buildScreen(){
 
     // create tab buttons
     log("[EDITOR] - Making tab buttons...");
-    Aether::Rectangle* selIndicator = new Aether::Rectangle(0, 0, 3, 1);
-    selIndicator->setColour(TOP_R);
+    this->tabLabelSelIndicator = new Aether::Rectangle(0, 0, 3, 1);
+    this->tabLabelSelIndicator->setColour(TOP_R);
 
     int tabIdx = 0;
 
@@ -241,9 +241,8 @@ void EditorScreen::buildScreen(){
         Aether::ListButton* tabButton;
         tabButton = new Aether::ListButton(
             tabName,
-            [this, tabName, selIndicator, tabIdx](){
+            [this, tabName, tabIdx](){
                 log(tabName+" was selected");
-                positionTabSelectIndicator(selIndicator, this->tabButtons.at(tabIdx));
                 this->showTab(tabName);
             }
         );
@@ -264,7 +263,6 @@ void EditorScreen::buildScreen(){
 
     // reposition select indicator
     log("[EDITOR] - Positioning select indicator and showing tab...");
-    positionTabSelectIndicator(selIndicator, tabButtons.at(0));
 
     // adjust height of list accordingly
     log("[EDITOR] - Adjusting height of tab button container...");
@@ -391,7 +389,7 @@ void EditorScreen::buildScreen(){
     this->addElement(logoImg);
 
     this->addElement(tabButtonList);
-    this->addElement(selIndicator);
+    this->addElement(this->tabLabelSelIndicator);
 
     this->addElement(topSeparator);
     this->addElement(bottomSeparator);
@@ -507,6 +505,16 @@ void EditorScreen::showTab(std::string tabName){
     log("[EDITOR] - Successfully repositioned all menu labels.");
 
     this->showMenu(0);
+
+    // find the tab index
+    size_t tabIdx = 0;
+    for (const std::string& tab : this->tabs){
+        if (tab == tabName){
+            positionTabSelectIndicator(this->tabLabelSelIndicator, tabButtons.at(tabIdx));
+        }
+
+        tabIdx++;
+    }
 
     log("[EDITOR] - Tab shown successfully!");
     log("==========================================================");
@@ -777,9 +785,6 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
         this->screenTrove->addElement(autosaveText);
         this->addElement(autosaveText);
     }
-
-    // Show the first tab
-    this->showTab(this->tabs.at(0));
 }
 
 void EditorScreen::onLoad(){
@@ -799,6 +804,9 @@ void EditorScreen::onLoad(){
     inputService.connect("PrevMenu", [this](InputSystem& inputService, InputState state){
         this->prevMenu(inputService, state);
     });
+
+    // Show the first tab
+    this->showTab(this->tabs.at(0));
 }
 
 void EditorScreen::onUnload(){

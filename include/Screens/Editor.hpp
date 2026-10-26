@@ -68,6 +68,8 @@ private:
     int selectedMenu;
 
     std::vector<Aether::BorderButton*> menuLabels;
+
+    Aether::Rectangle* tabLabelSelIndicator = nullptr;
     Aether::Rectangle* menuLabelSelIndicator = nullptr;
 
     Aether::PopupList* popupList;
