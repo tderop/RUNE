@@ -14,7 +14,7 @@
 // CONFIG
 
 // UI
-const int X_START_OFFSET = 60;
+const int X_START_OFFSET = 140;
 const int Y_START_OFFSET = 36;
 
 const int TILE_SIZE = 120;
@@ -25,6 +25,10 @@ const int TILES_PER_ROW = 5;
 // All of the items in Link's pouch are merged into one massive array of max length 420. This is going to be a little annoying.
 const std::string INVENTORY_KEY = "PorchItem";
 const std::string INVENTORY_VALUE_KEY = "PorchItem_Value1";
+
+// Bounds
+const int MAX_MATERIAL_QUANTITY = 999;
+const int MAX_WEAPON_DURABILITY = __INT32_MAX__;
 
 const std::map<std::string, std::vector<std::string>> INVENTORY_PREFIXES = {
     {
@@ -102,6 +106,20 @@ std::string getNameFromActorName(const std::string& actorName){
 
     // get the readable name
     return actorNameEntry->get<std::string>();
+}
+
+// Arrows may need to be handled separately
+std::vector<std::string> quantityMenus = {"Materials", "Food", "Key Items"};
+
+std::string formatValue(const std::string& menuName, int32_t value){
+    // if menuName is materials, it will be X
+    for (const std::string& otherMenu : quantityMenus){
+        if (otherMenu == menuName){
+            return "x"+std::to_string(value);
+        }
+    }
+
+    return "";
 }
 
 void Rune::MenuBuilder::Inventory(EditorMenu* menu){
@@ -185,9 +203,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
         // A valid item, process and make inventory object
         std::string itemName = getNameFromActorName(actorName);
-        log("Valid item for "+menu->menuName()+": "+itemName+" ("+actorName+") x"+std::to_string(itemValues.at(currentIdx)), true);
+        int32_t itemValue = itemValues.at(currentIdx);
 
-        InventoryItem inventoryItem{actorName, itemName, itemValues.at(currentIdx), static_cast<size_t>(currentIdx)};
+        log("Valid item for "+menu->menuName()+": "+itemName+" ("+actorName+") x"+std::to_string(itemValue), true);
+
+        InventoryItem inventoryItem{actorName, itemName, itemValue, static_cast<size_t>(currentIdx)};
         inventoryItems.push_back(inventoryItem);
 
         // Calculate position of the new tile
@@ -199,7 +219,15 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             menu,
             INVENTORY_KEY,
             true,
-            {tileX, tileY, TILE_SIZE, TILE_SIZE, itemName},
+            {
+                tileX, 
+                tileY, 
+                TILE_SIZE, 
+                TILE_SIZE, 
+                itemName,
+                std::string("NoLabel"),
+                formatValue(menu->menuName(), itemValue)
+            },
             menu->body()
         );
 
