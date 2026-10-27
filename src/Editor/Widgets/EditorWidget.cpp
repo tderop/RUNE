@@ -92,10 +92,12 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, EditorMenu* menu, bool 
 
 void EditorWidget::clearTrove(){
     if (!this->_isLoaded){
+        log("[EditorWidget::clearTrove] - Not loaded, not clearing.");
         return;
     }
 
     if (this->trove == nullptr){
+        log("[EditorWidget::clearTrove] - No trove initialised, not clearing.");
         return;
     }
 
@@ -112,6 +114,7 @@ std::vector<AetherElement> EditorWidget::getAllElements(){
 
 void EditorWidget::addAllElements(Aether::Element*  parentElement){
     log("[WIDGET "+this->saveEntry->dataName+"] - Adding all elements to screen...");
+    
     for (AetherElement elm : this->elements){
         std::visit([parentElement](auto&& arg){
             Aether::Element* toAdd = arg;

@@ -11,15 +11,41 @@ EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Scr
 
     this->_trove = new Trove();
 
+    // default reload func - just recreate
+    this->onReload([this](){
+        log("=============== [RELOADING: "+_menuName+"...] ===============", true);
+
+        this->onDelete();
+        this->_trove = new Trove();
+
+        // if list is not null, reset it to generate new body
+        if (this->_list != nullptr){
+            this->setList(this->_list);
+        }
+
+        // rebuild
+        if (!this->builder.empty()){
+            this->build(this->builder);
+        }
+    });
+
     // Doesn't matter if no menu builder, just make empty object
 }
 
-EditorMenu::~EditorMenu(){
+void EditorMenu::onDelete(){
     this->clearAllWidgets();
 
     // Clear my own trove
     this->_trove->clear();
     delete this->_trove;
+
+    // reset garbage pointers
+    this->_trove = nullptr;
+    this->_body = nullptr;
+}
+
+EditorMenu::~EditorMenu(){
+    this->onDelete();
 }
 
 void EditorMenu::build(std::string builderName){
@@ -27,6 +53,8 @@ void EditorMenu::build(std::string builderName){
     if (builderName.empty()){
         builderName = "Entry";
     }
+
+    this->builder = builderName;
 
     // Find menu builder
     auto it = MENU_BUILDERS.find(builderName);
@@ -128,6 +156,24 @@ void EditorMenu::clearAllWidgets(){
     this->widgets.clear();
 }
 
+void EditorMenu::onReload(std::function<void()> f){
+    this->_onReload = f;
+}
+
+void EditorMenu::requestReload(){
+    this->_reloadQueued = true;
+}
+
+void EditorMenu::reload(){
+    this->_reloadQueued = false;
+    if (this->_onReload){
+        this->_onReload();
+    }
+}
+
+bool EditorMenu::reloadQueued(){
+    return this->_reloadQueued;
+}
 // Trove* EditorMenu::trove(){
 //     return this->_trove;
 // }

@@ -46,13 +46,36 @@ std::string getNameFromActorName(const std::string& actorName){
 std::vector<std::string> quantityMenus = {"Materials", "Food", "Key Items"};
 
 std::string formatValue(const std::string& menuName, const Rune::Inventory::Item& inventoryItem){
-    // if menuName is materials, it will be X
+    // Quantity-based
     for (const std::string& otherMenu : quantityMenus){
         if (otherMenu == menuName){
             return "x"+std::to_string(inventoryItem.value);
         }
     }
 
+    // Equipment
+    Rune::Json* equipmentJson;
+    Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+
+    auto it = Rune::Inventory::kLabelValueKeys.find(menuName);
+    if (it != Rune::Inventory::kLabelValueKeys.end()){
+        std::string labelValueKey = it->second;
+        auto it = equipmentJson->find(inventoryItem.actorName);
+
+        if (it != equipmentJson->end() && it->is_object()){
+            auto labelValue = it->find(labelValueKey);
+
+            if (labelValue->is_number()){
+                return std::to_string(labelValue->get<int>());
+            } else {
+                log("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
+            }
+        } else {
+            log("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
+        }
+    } else {
+        log("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
+    }
     return "";
 }
 
@@ -112,6 +135,8 @@ void showTilePage(EditorMenu* menu, std::vector<Rune::Inventory::Item> inventory
 }
 
 void Rune::MenuBuilder::Inventory(EditorMenu* menu){
+    log("[Rune::MenuBuilder::Inventory] - Running menu builder...");
+
     // Disable right stick navigation
     Aether::SetRightStickNavigation(false);
 
@@ -122,6 +147,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     if (prefixEntry == Rune::Inventory::kInventoryPrefixes.end()){
         return;
     }
+
+    log("[Rune::MenuBuilder::Inventory] - Got prefix entry!");
 
     std::vector<std::string> prefixes = prefixEntry->second;
 
@@ -143,8 +170,36 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Rune::Save::Entry* valuesEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), Rune::Inventory::kInventoryValueKey);
     auto itemValues = std::get<std::vector<int32_t>>(valuesEntry->value); 
 
+    // Get buffs data
+    auto flagSpKeyEntry  = Rune::Inventory::kFlagSpKeys.find(menu->menuName());
+    auto valueSpKeyEntry = Rune::Inventory::kValueSpKeys.find(menu->menuName());
+    
+    Rune::Save::Entry* flagSpEntry;
+    Rune::Save::Entry* valueSpEntry;
+
+    std::vector<int32_t> flagSp;
+    std::vector<int32_t> valueSp;
+
+    if (flagSpKeyEntry != Rune::Inventory::kFlagSpKeys.end() 
+        && valueSpKeyEntry != Rune::Inventory::kValueSpKeys.end())
+    {     
+        flagSpEntry  = Rune::Save::GetEntryFromDataName(*menu->saveFile(), flagSpKeyEntry->second);
+        valueSpEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), valueSpKeyEntry->second);
+
+        flagSp = std::get<std::vector<int32_t>>(flagSpEntry->value);
+        valueSp = std::get<std::vector<int32_t>>(valueSpEntry->value);
+    }
+
     int currentIdx = -1;
     int localIdx = 0; // this index only increments when a valid slot has been found
+
+    auto tileStyleEntry = Rune::Inventory::kLabelTileStyles.find(menu->menuName());
+    Rune::Inventory::TileStyle tileStyle = Rune::Inventory::TileStyle::NoLabel;
+
+    // unpack style pair
+    if (tileStyleEntry != Rune::Inventory::kLabelTileStyles.end()){
+        tileStyle = tileStyleEntry->second;
+    }
 
     // Iterate through inventory and populate slots
     for (const std::string& actorName : inventory){
@@ -190,10 +245,31 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         std::string itemName = getNameFromActorName(actorName);
         int32_t itemValue = itemValues.at(currentIdx);
 
-        // log("Valid item for "+menu->menuName()+": "+itemName+" ("+actorName+") x"+std::to_string(itemValue), true);
+        // Get buffs
+        int32_t itemFlagSp = 0;
+        int32_t itemValueSp = 0;
 
-        Rune::Inventory::Item inventoryItem{actorName, itemName, itemValue, static_cast<size_t>(currentIdx)};
+        // Check that there are buffs for this inventory type and apply them
+        if (!flagSp.empty() && static_cast<int>(flagSp.size()) >= localIdx+1){
+            itemFlagSp = flagSp.at(localIdx);
+        }
+
+        if (!valueSp.empty() && static_cast<int>(valueSp.size()) >= localIdx+1){
+            itemValueSp = valueSp.at(localIdx);
+        }
+        
+        Rune::Inventory::Item inventoryItem{
+            actorName, 
+            itemName, 
+            itemValue, 
+            static_cast<size_t>(currentIdx),
+            itemFlagSp,
+            itemValueSp,
+            tileStyle
+        };
+
         inventoryItems.push_back(inventoryItem);
+        localIdx++;
     }
 
     // Pad to fill all available unlocked slots
@@ -207,7 +283,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         int maxUnlockedSlots = std::get<int32_t>(slotEntry->value);
 
         // Fill with padding slots
-        for (int i = (inventoryItems.size()-1); i < maxUnlockedSlots; ++i){
+        for (int i = (inventoryItems.size()-1); i < (maxUnlockedSlots-1); ++i){
             Rune::Inventory::Item newItem;
             newItem.type = Rune::Inventory::TileType::Empty;
 
@@ -263,10 +339,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             // Disable it by default (will be enabled if applicable by passing ellipse vector into showTilePage)
             menuDot->setColour(Rune::Inventory::kDisabledEllipse);
             
-            // The menu controls the dot's lifespan
-            menu->addElement(menuDot);
-
-            // Add the dot to the menu's main body
+            // The body owns the dot
             menu->body()->addElement(menuDot);
 
             // Store the new circle

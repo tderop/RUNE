@@ -45,8 +45,20 @@ class EditorMenu {
         /** @brief The element trove (cleared when menu is destroyed) */
         Trove* _trove = nullptr;
 
+        /** @brief The reload function */
+        std::function<void()> _onReload;
+
+        /** @brief Determines whether a reload is pending */
+        bool _reloadQueued = false;
+
         /** @brief The widgets held by this menu */
         std::vector<EditorWidget*> widgets;
+
+        /** @brief The cached builder used to construct */
+        std::string builder;
+
+        /** @brief the destructor */
+        void onDelete();
 
     public:
         /** @brief Create a new EditorMenu object */
@@ -113,6 +125,18 @@ class EditorMenu {
 
         /** @brief Delete all owned widgets */
         void clearAllWidgets();
+
+        /** @brief Set the reload function */
+        void onReload(std::function<void()> f);
+
+        /** @brief Reload the menu (runs reload function) */
+        void reload();
+
+        /** @brief Request for the menu to be reloaded. */
+        void requestReload();
+
+        /** @brief Check if a reload is pending */
+        bool reloadQueued();
 
         /** @brief Access the menu's trove */
         // Trove* trove();

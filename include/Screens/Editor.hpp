@@ -89,6 +89,11 @@ public:
      */
     void onUnload() override;
 
+    /**
+     * @brief Code run by the screen every frame
+     */
+    void update(unsigned int dt) override;
+
     EditorScreen(Rune::Application* app);
     ~EditorScreen();
 

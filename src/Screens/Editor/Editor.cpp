@@ -827,3 +827,13 @@ void EditorScreen::onUnload(){
 
     log("============== [EDITOR] - Screen successfully unloaded. ==============");
 }
+
+void EditorScreen::update(unsigned int dt){
+    Aether::Screen::update(dt);
+
+    if (this->currentMenu != nullptr){
+        if (this->currentMenu->reloadQueued()){
+            this->currentMenu->reload();
+        }
+    }
+}

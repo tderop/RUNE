@@ -23,9 +23,16 @@ const std::map<std::string, std::string> Rune::Inventory::kValueSpKeys = {
     {"Shields", "PorchShield_ValueSp"}
 };
 
+const std::map<std::string, std::string> Rune::Inventory::kLabelValueKeys = {
+    {"Weapons", "Attack"}, // Account for attack up
+    {"Bows", "Attack"}, // Account for attack up & multishot
+    {"Shields", "Guard"}, // Account for guard up
+    {"Armor", "Defence"}
+};
+
 const std::map<std::string, size_t> Rune::Inventory::kMaxSlots = {
-    {"Weapons", 20},
-    {"Bows", 14},
+    {"Weapons", 21},
+    {"Bows", 13},
     {"Shields", 20},
     {"Armor", 100}, // goof
     {"Materials", 160},
@@ -52,7 +59,7 @@ const std::map<std::string, std::vector<std::string>> Rune::Inventory::kInventor
     },
     {
         "Materials",
-        {"Item_", "BeeHome", "Animal_", "Obj_FirewoodBundle"}
+        {"Item_", "BeeHome", "Animal_", "Obj_FireWoodBundle"}
     },
     {
         "Food",
@@ -71,6 +78,13 @@ const std::map<std::string, std::vector<std::string>> Rune::Inventory::kInventor
     },
     {
         "Key Items",
-        {"Obj_FirewoodBundle"}
+        {"Obj_FireWoodBundle"}
     }
+};
+
+extern const std::map<std::string, Rune::Inventory::TileStyle> Rune::Inventory::kLabelTileStyles = {
+    {"Weapons", Rune::Inventory::TileStyle::Label},
+    {"Bows", Rune::Inventory::TileStyle::Label},
+    {"Shields", Rune::Inventory::TileStyle::Label},
+    {"Armor", Rune::Inventory::TileStyle::Label}
 };
