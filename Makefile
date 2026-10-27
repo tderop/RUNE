@@ -55,6 +55,7 @@ SOURCES     := src \
 			   src/Application \
 			   src/Editor \
 			   src/Editor/Menus \
+			   src/Editor/Menus/Inventory \
 			   src/Editor/Widgets \
 			   src/Editor/Widgets/Generic \
 			   src/Editor/Widgets/Unique \
