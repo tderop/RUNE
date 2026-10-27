@@ -1,26 +1,25 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
 
+#include <functional>
+
 EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Screen* screen){
     // init
     this->_menuName = menuName;
     this->_window = window;
     this->_screen = screen;
 
-    this->trove = new Trove();
+    this->_trove = new Trove();
 
     // Doesn't matter if no menu builder, just make empty object
 }
 
 EditorMenu::~EditorMenu(){
-    // Clear all owned widgets
-    for (EditorWidget* widget : this->widgets){
-        delete widget; // now clears this widgets' trove and deletes it automatically!
-    }
+    this->clearAllWidgets();
 
     // Clear my own trove
-    this->trove->clear();
-    delete this->trove;
+    this->_trove->clear();
+    delete this->_trove;
 }
 
 void EditorMenu::build(std::string builderName){
@@ -44,7 +43,11 @@ void EditorMenu::addWidget(EditorWidget* widget){
 }
 
 void EditorMenu::addElement(AetherElement element){
-    this->trove->addElement(element);
+    this->_trove->addElement(element);
+}
+
+void EditorMenu::giveTask(std::function<void()> task){
+    this->_trove->giveTask(task);
 }
 
 // Return menuName
@@ -115,3 +118,16 @@ WidgetOverlay* EditorMenu::widgetOverlay(){
 Aether::Container* EditorMenu::body(){
     return this->_body;
 }
+
+void EditorMenu::clearAllWidgets(){
+    // Clear all owned widgets
+    for (EditorWidget* widget : this->widgets){
+        delete widget; // now clears this widgets' trove and deletes it automatically!
+    }
+
+    this->widgets.clear();
+}
+
+// Trove* EditorMenu::trove(){
+//     return this->_trove;
+// }

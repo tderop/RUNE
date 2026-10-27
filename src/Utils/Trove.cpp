@@ -16,6 +16,10 @@ void Trove::addElement(AetherElement element){
     // log("[TROVE] - Successfully added element to trove!");
 }
 
+void Trove::giveTask(std::function<void()> task){
+    this->tasks.push_back(task);
+}
+
 void Trove::clear() {
     // log("[TROVE] - Removing elements...");
     // log("[TROVE] - About to inspect vector...");
@@ -59,6 +63,14 @@ void Trove::clear() {
 
     // log("[TROVE] - Clearing vector...");
     this->elements.clear();
+
+    // Run all tasks
+    for (const auto& task : this->tasks){
+        task();
+    }
+
+    // Clear all tasks
+    this->tasks.clear();
 
     // log("[TROVE] - Done.");
 }

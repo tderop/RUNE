@@ -1,18 +1,24 @@
 #include "Aether/InputEvent.hpp"
 #include "Aether/utils/Utils.hpp"
 
+bool rightStickNavigation = true;
+
 namespace Aether {
+    void SetRightStickNavigation(bool e){
+        rightStickNavigation = e;
+    }
+
     InputEvent::InputEvent(SDL_Event e) {
         // Turn all directional events into dpad
         Button tmp = Utils::SDLtoButton(e.jbutton.button);
         if (e.type == SDL_JOYBUTTONDOWN || e.type == SDL_JOYBUTTONUP) {
-            if (tmp == Button::LSTICK_LEFT || tmp == Button::RSTICK_LEFT) {
+            if (tmp == Button::LSTICK_LEFT || (tmp == Button::RSTICK_LEFT && rightStickNavigation)) {
                 tmp = Button::DPAD_LEFT;
-            } else if (tmp == Button::LSTICK_RIGHT || tmp == Button::RSTICK_RIGHT) {
+            } else if (tmp == Button::LSTICK_RIGHT || (tmp == Button::RSTICK_RIGHT && rightStickNavigation)) {
                 tmp = Button::DPAD_RIGHT;
-            } else if (tmp == Button::LSTICK_UP || tmp == Button::RSTICK_UP) {
+            } else if (tmp == Button::LSTICK_UP || (tmp == Button::RSTICK_UP && rightStickNavigation)) {
                 tmp = Button::DPAD_UP;
-            } else if (tmp == Button::LSTICK_DOWN || tmp == Button::RSTICK_DOWN) {
+            } else if (tmp == Button::LSTICK_DOWN || (tmp == Button::RSTICK_DOWN && rightStickNavigation)) {
                 tmp = Button::DPAD_DOWN;
             }
         }

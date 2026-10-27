@@ -163,7 +163,7 @@ namespace Rune
             float,
             std::string,
 
-            std::vector<bool>, // NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NOOOOOOO
+            std::vector<uint8_t>, // bool vectors (thank you so much C++ for being so amazing)
             std::vector<int32_t>,
             std::vector<float>, // vectors
             std::vector<std::string>,

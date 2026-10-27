@@ -512,7 +512,7 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
 
             // evil case 4
             case RuneBoolArray: {
-                std::vector<bool> values;
+                std::vector<uint8_t> values;
 
                 uint32_t id = rawEntry.id;
 
@@ -928,7 +928,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
                             return std::nullopt;
                         }
 
-                        std::vector<bool> values;
+                        std::vector<uint8_t> values;
                         for (const auto& element : *array){
                             auto value = element.getBool();
                             if (!value) {

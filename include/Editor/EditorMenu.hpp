@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 
 #include <Editor/EditorWidget.hpp>
 #include <Editor/WidgetOverlay.hpp>
@@ -41,11 +42,11 @@ class EditorMenu {
         /** @brief The body container */
         Aether::Container* _body = nullptr;
 
+        /** @brief The element trove (cleared when menu is destroyed) */
+        Trove* _trove = nullptr;
+
         /** @brief The widgets held by this menu */
         std::vector<EditorWidget*> widgets;
-
-        /** @brief The element trove (cleared when menu is destroyed) */
-        Trove* trove = nullptr;
 
     public:
         /** @brief Create a new EditorMenu object */
@@ -67,6 +68,9 @@ class EditorMenu {
 
         /** @brief Add an element to this menu. Will be destroyed alongside the menu. */
         void addElement(AetherElement element);
+
+        /** @brief Give the menu a task to run when it is destroyed */
+        void giveTask(std::function<void()> task);
 
         /** @brief Get the menu name */
         std::string menuName();
@@ -106,4 +110,10 @@ class EditorMenu {
 
         /** @brief Get the menu body */
         Aether::Container* body();
+
+        /** @brief Delete all owned widgets */
+        void clearAllWidgets();
+
+        /** @brief Access the menu's trove */
+        // Trove* trove();
 };

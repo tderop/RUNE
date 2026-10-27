@@ -6,6 +6,11 @@
 
 namespace Aether {
     /**
+     * @brief Set whether menus can be navigated via the right stick or not.
+     */
+    void SetRightStickNavigation(bool e);
+
+    /**
      * @brief Enum class that contains all events types supported by Aether for handling
      */
     enum EventType {

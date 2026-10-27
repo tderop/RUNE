@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <variant>
+#include <functional>
 
 #include <Aether/Aether.hpp>
 
@@ -64,6 +65,7 @@ using AetherElement = std::variant<
 class Trove{
     private:
         std::vector<AetherElement> elements;
+        std::vector<std::function<void()>> tasks;
 
     public:
         /**
@@ -78,7 +80,12 @@ class Trove{
         void addElement(AetherElement element);
 
         /**
-         * @brief Remove all elements in the trove. Automatically called when trove is destroyed.
+         * @brief Give the trove a task to complete when it is cleared.
+         */
+        void giveTask(std::function<void()> task);
+
+        /**
+         * @brief Remove all elements in the trove.
          */
         void clear();
 };

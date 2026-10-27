@@ -264,9 +264,9 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
 
             case RuneBoolArray: {
                 const auto& values = 
-                    std::get<std::vector<bool>>(entry.value);
+                    std::get<std::vector<uint8_t>>(entry.value);
 
-                for (bool toEncode : values){
+                for (uint8_t toEncode : values){
                     output->entries.emplace_back(
                         entry.id,
                         static_cast<uint32_t>(toEncode)
