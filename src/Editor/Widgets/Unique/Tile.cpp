@@ -28,20 +28,18 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     std::string itemName  = inventoryItem.name;
     std::string labelText = std::any_cast<std::string>(widgetMeta.at(1));
+    Aether::BorderButton* tileBtn = std::any_cast<Aether::BorderButton*>(widgetMeta.at(2));
 
-    // Make the filled button
-    Aether::BorderButton* tileBtn = new Aether::BorderButton(
-        buttonX,
-        buttonY,
-        buttonW,
-        buttonH,
-        4,
-        itemName,
-        24,
-        [inventoryItem](){
-            log(inventoryItem.actorName);
-        }
-    );
+    // Apply button attributes
+    tileBtn->setXYWH(buttonX, buttonY, buttonW, buttonH);
+    tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
+    tileBtn->setString(itemName);
+    tileBtn->setTextColour(TEXT_COLOUR);
+    tileBtn->onPress([inventoryItem](){
+        log(inventoryItem.actorName+
+            ", flagSp: "+intToHex(inventoryItem.flagSp)+
+            ", valueSp: "+intToHex(inventoryItem.valueSp));
+    });
 
     // Set the colour and add it to the widget
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
@@ -82,7 +80,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     );
 
                     labelBg->setXY(
-                        tileBtn->x()+tileBtn->w()-labelBg->w()/2-6,
+                        tileBtn->x()+tileBtn->w()-labelBg->w()/2-Rune::Inventory::kTilePadding,
                         tileBtn->y()+tileBtn->h()-labelBg->h()/2-6
                     );
 
@@ -123,7 +121,6 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         case (Rune::Inventory::TileType::Add): {
             // Show "+" symbol
             tileBtn->setString("+");
-
             tileBtn->onPress([menu, widget](){
                 // Add a new slot
                 // Find the save key

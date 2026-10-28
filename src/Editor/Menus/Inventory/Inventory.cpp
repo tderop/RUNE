@@ -20,7 +20,7 @@
 /**
  * Rune::Inventory::Item Value:
  * - Weapons (Swords, Shields, Bows): Durability (MAX __INT32_MAX__) * 100 (why x100 I do not know, f32 support without f32 array?)
- * - Materials, Food, Key Items: Quantity (MAX 999)
+* - Materials, Food, Key Items: Quantity (MAX 999)
  * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
  */
 
@@ -97,6 +97,8 @@ void showTilePage(EditorMenu* menu, std::vector<Rune::Inventory::Item> inventory
         )
     );
 
+    Aether::BorderButton* firstBtn = nullptr;
+
     for (size_t i = cursorStart; i < cursorEnd; ++i){
         // Get the inventory item
         Rune::Inventory::Item& inventoryItem = inventoryItems.at(i);
@@ -110,16 +112,30 @@ void showTilePage(EditorMenu* menu, std::vector<Rune::Inventory::Item> inventory
         inventoryItem.y = tileY;
 
         // Make inventory tile (use widgets)
+
+        // Assign tile a border button, store it for later if first
+        Aether::BorderButton* widgetBtn = new Aether::BorderButton(-1, -1, 1, 1, 4, "", 24, [](){});
+        if (firstBtn == nullptr){
+            firstBtn = widgetBtn;
+        }
+
+        // Build the new tile widget
         Rune::MenuBuilder::AddWidgetFromSaveKey(
             menu,
             Rune::Inventory::kInventoryKey,
             true,
             {
                 inventoryItem,
-                formatValue(menu->menuName(), inventoryItem)
+                formatValue(menu->menuName(), inventoryItem),
+                widgetBtn
             },
             menu->body()
         );
+    }
+
+    // If first button is not null, focus it
+    if (firstBtn != nullptr){
+        menu->body()->setFocused(firstBtn);
     }
 
     // Highlight the right menu dot
@@ -331,9 +347,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         for (int i = 0; i <= maxPage; ++i){
             // Create a new circle
             Aether::Ellipse* menuDot = new Aether::Ellipse(
-                menu->body()->x()+Rune::Inventory::kXStartOffset + (i*(8+Rune::Inventory::kTilePadding)), 
+                0,
                 menu->body()->y()+Rune::Inventory::kYStartOffset - 18, 
-                8
+                Rune::Inventory::kDotWidth
             );
 
             // Disable it by default (will be enabled if applicable by passing ellipse vector into showTilePage)
@@ -345,6 +361,17 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             // Store the new circle
             ellipses->push_back(menuDot);
         }
+    }
+
+    // Calculate values for dot repositioning
+    float centerPosition = (menu->body()->x() + Rune::Inventory::kXStartOffset + (Rune::Inventory::kGridWidth/2));
+    int dotStride = Rune::Inventory::kDotWidth + Rune::Inventory::kDotPadding;
+    int dotStart = centerPosition - (((ellipses->size())-1)*(dotStride))/2.0f;
+
+    // Reposition menu dots
+    for (int i = 0; i < static_cast<int>(ellipses->size()); ++i){
+        Aether::Ellipse* menuDot = ellipses->at(i);
+        menuDot->setX(dotStart + (i*dotStride));
     }
 
     // Show the first page

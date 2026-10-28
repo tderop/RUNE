@@ -14,5 +14,6 @@ std::string getUserNickname();
 std::string getDeviceNickname();
 std::string formatUnixTimestamp(int32_t unixTimestamp);
 std::function<Aether::Colour(uint32_t)> highlightFunc();
+std::string intToHex(int i);
 
 void clearLine();

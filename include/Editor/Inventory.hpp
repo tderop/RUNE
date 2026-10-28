@@ -16,6 +16,9 @@ namespace Rune{
         inline constexpr int kTilesPerRow = 5;
         inline constexpr int kTilesPerPage = 20;
 
+        inline constexpr int kDotWidth = 8;
+        inline constexpr int kDotPadding = 12;
+
         inline constexpr int kGridWidth  = (kTileSize+kTilePadding)*kTilesPerRow;
         inline constexpr int kGridHeight = (kTileSize+kTilePadding)*(kTilesPerPage/kTilesPerRow);
         

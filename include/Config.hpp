@@ -15,13 +15,13 @@ inline const Aether::Colour SELECTED_TEXT_COLOUR{49, 210, 247, 255};
 
 inline const Aether::Colour SEPARATOR_COLOUR{96, 96, 96, 255};
 inline const Aether::Colour LIGHT_SEPARATOR_COLOUR{96, 96, 96, 150};
-inline const Aether::Colour BACKGROUND_COLOUR{45, 45, 45, 255};
-inline const Aether::Colour MUTED_BACKGROUND_COLOUR{30, 30, 30, 255};
+inline const Aether::Colour BACKGROUND_COLOUR{35, 35, 35, 255};
+inline const Aether::Colour MUTED_BACKGROUND_COLOUR{20, 20, 20, 255};
 inline const Aether::Colour DEBUG_COLOUR{5, 5, 10, 255};
 inline const Aether::Colour TOP_R{89, 252, 220, 255};
 inline const Aether::Colour BOTTOM_R{20, 202, 197, 255};
 
-inline const Aether::Colour EDITOR_SIDEBAR_COLOUR{69, 69, 69, 255};
+inline const Aether::Colour EDITOR_SIDEBAR_COLOUR{45, 45, 45, 255};
 
 const unsigned int TOP_SEPARATOR_Y = 90;
 const unsigned int BOTTOM_SEPARATOR_Y = 647;

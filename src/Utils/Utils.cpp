@@ -138,3 +138,16 @@ std::function<Aether::Colour(uint32_t)> highlightFunc() {
         return col;
     };
 }
+
+std::string intToHex(int i){
+    std::stringstream ss;
+    ss << std::hex << i;
+    std::string hexStr = ss.str();
+
+    ss.str("");
+    ss.clear();
+    ss << "0x" << std::setfill('0') << std::setw(8) << std::hex << i;
+    std::string hexFormatted = ss.str();
+
+    return hexFormatted;
+}

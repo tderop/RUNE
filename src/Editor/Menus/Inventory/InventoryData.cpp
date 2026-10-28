@@ -31,7 +31,7 @@ const std::map<std::string, std::string> Rune::Inventory::kLabelValueKeys = {
 };
 
 const std::map<std::string, size_t> Rune::Inventory::kMaxSlots = {
-    {"Weapons", 21},
+    {"Weapons", 20},
     {"Bows", 13},
     {"Shields", 20},
     {"Armor", 100}, // goof

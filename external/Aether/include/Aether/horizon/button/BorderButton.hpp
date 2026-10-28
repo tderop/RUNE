@@ -14,6 +14,13 @@ namespace Aether {
         private:
             Box * box;          /** @brief The box associated with the button */
             Text * text;        /** @brief The text in the button */
+            unsigned int textSize;
+            std::string textContent;
+
+            /**
+             * @brief Resize the internal text label so it fits within the button
+             */
+            void resizeText();
 
         public:
             /**
