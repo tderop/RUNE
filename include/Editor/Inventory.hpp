@@ -8,7 +8,7 @@ namespace Rune{
     namespace Inventory{
         // UI Configurations
         inline constexpr int kXStartOffset = 140;
-        inline constexpr int kYStartOffset = 36;
+        inline constexpr int kYStartOffset = 42;
 
         inline constexpr int kTileSize = 120;
         inline constexpr int kTilePadding = 12;
@@ -22,6 +22,8 @@ namespace Rune{
         inline constexpr int kGridWidth  = (kTileSize+kTilePadding)*kTilesPerRow;
         inline constexpr int kGridHeight = (kTileSize+kTilePadding)*(kTilesPerPage/kTilesPerRow);
         
+        inline constexpr float kThumbScale = 0.85;
+
         inline const Aether::Colour kDisabledEllipse{255, 255, 255, 75};
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
 
@@ -87,5 +89,8 @@ namespace Rune{
 
             Item() = default;
         };
+
+        std::string getThumbPathFromActorName(const std::string& actorName);
+        std::string getNameFromActorName(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

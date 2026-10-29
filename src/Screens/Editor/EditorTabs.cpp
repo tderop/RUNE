@@ -102,5 +102,12 @@ namespace Rune{
                 }
             }
         };
+
+        std::vector<std::string> Tabs = {
+            "Stats",
+            "Equipment",
+            "Items",
+            "Dev Editor"
+        };
     }
 }

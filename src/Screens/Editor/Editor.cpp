@@ -31,21 +31,16 @@ int MAX_TITLE_LENGTH = 16; // px
 
 float CAPTION_IMAGE_SCALE = 0.9f; // relative width of the image relative to the last ListButton in the tabs list
 
+/**
+ * The constructor for the editor screen. Runs once when a new screen is
+ * created in the application manager.
+ */
 EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
-    // init
+    // Make troves
+    // This trove stores elements to be destroyed when the *tab* is changed (left sidebar)
     this->pageTrove = new Trove();
+    // This trove stores elements to be destroyed when the window's screen is changed (Editor unloads)
     this->screenTrove = new Trove();
-
-    // data
-    this->tabs = {
-        "Stats",
-        "Equipment",
-        "Items",
-        "Dev Editor"
-    };
-
-    // metadata about how tabs should be filled
-    // to be used with the "showTabByName" helper
 }
 
 /**
@@ -53,10 +48,8 @@ EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
  */
 EditorScreen::~EditorScreen(){
     this->cleanMenu();
-
     this->pageTrove->clear();
     this->screenTrove->clear();
-
     delete this->pageTrove;
     delete this->screenTrove;
 }
@@ -236,7 +229,7 @@ void EditorScreen::buildScreen(){
 
     int tabIdx = 0;
 
-    for (std::string tabName : this->tabs){
+    for (std::string tabName : Rune::Editor::Tabs){
         // make a button
         Aether::ListButton* tabButton;
         tabButton = new Aether::ListButton(
@@ -508,7 +501,7 @@ void EditorScreen::showTab(std::string tabName){
 
     // find the tab index
     size_t tabIdx = 0;
-    for (const std::string& tab : this->tabs){
+    for (const std::string& tab : Rune::Editor::Tabs){
         if (tab == tabName){
             positionTabSelectIndicator(this->tabLabelSelIndicator, tabButtons.at(tabIdx));
         }
@@ -705,7 +698,7 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
         ((static_cast<float>(lastTabBtn->w()) / 16.0f) * 9.0f) * CAPTION_IMAGE_SCALE
     );
 
-    // Reposition the image
+    // Reposition the image 
     captionImg->setX(
         lastTabBtn->x() + lastTabBtn->w()/2 - captionImg->scaleWidth()/2
     );
@@ -807,7 +800,7 @@ void EditorScreen::onLoad(){
     });
 
     // Show the first tab
-    this->showTab(this->tabs.at(0));
+    this->showTab(Rune::Editor::Tabs.at(0));
 }
 
 void EditorScreen::onUnload(){

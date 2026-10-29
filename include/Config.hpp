@@ -36,21 +36,24 @@ const int MIN_SPLASH_SCREEN_TIME = 3000; // milliseconds... people won't see my 
 const long int BOTW_TITLE_ID = 0x01007EF00011E000;
 
 const std::unordered_map<std::string, std::string> ASSET_PATHS = {
-    {"check",    "romfs:/assets/check.png"},
-    {"triforce", "romfs:/assets/triforce.png"},
-    {"star",     "romfs:/assets/star.png"},
-    {"splash",   "romfs:/assets/splash.png"},
+    {"check",    "romfs:/img/check.png"},
+    {"edit",     "romfs:/img/edit.png"},
+    {"triforce", "romfs:/img/triforce.png"},
+    {"star",     "romfs:/img/star.png"},
+    {"splash",   "romfs:/img/splash.png"},
+    {"chib",     "romfs:/img/hd/chib.png"},
 
-    {"staminawheel_1", "romfs:/assets/wheel_1.png"},
-    {"staminawheel_2", "romfs:/assets/wheel_2.png"},
-    {"staminawheel_3", "romfs:/assets/wheel_3.png"},
-    {"staminawheel_4", "romfs:/assets/wheel_4.png"},
-    {"staminawheel_5", "romfs:/assets/wheel_5.png"},
+    {"staminawheel_1", "romfs:/img/wheel_1.png"},
+    {"staminawheel_2", "romfs:/img/wheel_2.png"},
+    {"staminawheel_3", "romfs:/img/wheel_3.png"},
+    {"staminawheel_4", "romfs:/img/wheel_4.png"},
+    {"staminawheel_5", "romfs:/img/wheel_5.png"},
 
-    {"heart", "romfs:/assets/heart.png"}
+    {"heart", "romfs:/img/heart.png"}
 };
 
 const std::string DEFAULT_EDITOR_TAB = "Stats";
 const std::string BACKUP_PATH = "sdmc:/switch/RUNE/backups/";
+const std::string THUMB_PATH  = "romfs:/img/thumb/";
 
 const std::string RUNE_VERSION = "0.0.0";

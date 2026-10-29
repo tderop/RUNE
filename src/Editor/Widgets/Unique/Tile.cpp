@@ -33,8 +33,43 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     // Apply button attributes
     tileBtn->setXYWH(buttonX, buttonY, buttonW, buttonH);
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
-    tileBtn->setString(itemName);
-    tileBtn->setTextColour(TEXT_COLOUR);
+
+    // Determine whether to use an image or plain text for the button
+    std::string thumbPath = Rune::Inventory::getThumbPathFromActorName(inventoryItem.actorName);
+
+    // If the thumbnail path exists, add an image
+    if (!thumbPath.empty()){
+        Aether::Image* thumbImg = new Aether::Image(
+            0,
+            0,
+            thumbPath,
+            Aether::Render::Wait
+        );
+
+        // Set size
+        int thumbSize = static_cast<int>(Rune::Inventory::kTileSize*Rune::Inventory::kThumbScale);
+        thumbImg->setScaleDimensions(
+            thumbSize,
+            thumbSize
+        );
+
+        // Render img
+        thumbImg->renderAsync();
+
+        // Reposition img
+        thumbImg->setXY(
+            tileBtn->x()+tileBtn->w()/2-thumbImg->scaleWidth()/2,
+            tileBtn->y()+tileBtn->h()/2-thumbImg->scaleHeight()/2
+        );
+
+        // Add img
+        widget->addToElements(thumbImg);
+
+    } else { // Otherwise, just show the name of the item
+        tileBtn->setString(itemName);
+        tileBtn->setTextColour(TEXT_COLOUR);
+    }
+
     tileBtn->onPress([inventoryItem](){
         log(inventoryItem.actorName+
             ", flagSp: "+intToHex(inventoryItem.flagSp)+

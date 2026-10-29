@@ -31,6 +31,7 @@ using EditorTabData = std::unordered_map<std::string, EditorTab>;
 namespace Rune{
     namespace Editor{
         extern EditorTabData TabData;
+        extern std::vector<std::string> Tabs;
     }
 } // namespace Rune
 

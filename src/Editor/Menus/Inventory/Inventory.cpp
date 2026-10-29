@@ -16,6 +16,7 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <filesystem>
 
 /**
  * Rune::Inventory::Item Value:
@@ -24,7 +25,7 @@
  * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
  */
 
-std::string getNameFromActorName(const std::string& actorName){
+std::string Rune::Inventory::getNameFromActorName(const std::string& actorName){
     // get json obj
     Rune::Json* actorNameJson;
     Result rc = Rune::JsonData::GetJsonById(actorNameJson, "ActorNames");
@@ -40,6 +41,14 @@ std::string getNameFromActorName(const std::string& actorName){
 
     // get the readable name
     return actorNameEntry->get<std::string>();
+}
+
+std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorName=""){
+    // Build the full path to the thumbnail asset
+    std::string fullPath = THUMB_PATH+actorName+".png";
+
+    // Check if there is a file there, and return an empty string if the file does not exist.
+    return (std::filesystem::exists(fullPath)) ? fullPath : "";
 }
 
 // Arrows may need to be handled separately
@@ -258,7 +267,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
 
         // A valid item, process and make inventory object
-        std::string itemName = getNameFromActorName(actorName);
+        std::string itemName = Rune::Inventory::getNameFromActorName(actorName);
         int32_t itemValue = itemValues.at(currentIdx);
 
         // Get buffs
