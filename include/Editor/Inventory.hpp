@@ -64,6 +64,8 @@ namespace Rune{
             int32_t value;
             size_t index;
 
+            std::string category;
+
             int32_t flagSp=0; // buff
             int32_t valueSp=0; // buff value
 
@@ -80,17 +82,19 @@ namespace Rune{
                 std::string _name, 
                 int32_t _value, 
                 size_t _index,
+                std::string _category,
                 int32_t _flagSp=0,
                 int32_t _valueSp=0,
                 TileStyle _style=TileStyle::NoLabel,
                 TileType _type=TileType::Standard
-            ) : actorName(_actorName), name(_name), value(_value), index(_index), flagSp(_flagSp), 
-                valueSp(_valueSp), style(_style), type(_type) {}
+            ) : actorName(_actorName), name(_name), value(_value), index(_index), category(_category),
+                flagSp(_flagSp), valueSp(_valueSp), style(_style), type(_type) {}
 
             Item() = default;
         };
 
         std::string getThumbPathFromActorName(const std::string& actorName);
+        std::string getThumbPathFromInventoryItem(const Item& inventoryItem);
         std::string getNameFromActorName(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

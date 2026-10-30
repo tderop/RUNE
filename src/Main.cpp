@@ -11,6 +11,9 @@
 // External libs
 #include <Aether/Aether.hpp> // The main UI library used by RUNE, initially developed by @tallbl0nde, but slightly modified by myself
 
+// C++ libs
+#include <filesystem> // Moved an fopen call to std::filesystem::exists to be less evil
+
 // C libs
 #include <cstdlib> // Required for std::exit for early exits (when the application was launched in applet mode instead of with title takeover)
 
@@ -19,6 +22,9 @@ bool exitQueued = false;
 
 // Determines whether the BotW save data was successfully mounted at save:/
 bool mountSuccess = true;
+
+// A bool pointer for the Application Manager to reference to determine if the launch was successful or not.
+bool* initSuccess = &mountSuccess;
 
 // The save metadata. Provides additional information about save entries
 Rune::Save::Metadata saveMetadata;
@@ -38,8 +44,10 @@ void exitApplet(InputSystem& inputService, InputState state){
     // If the exit button has just been pressed down, queue exit
     if (state == InputState::Begin){
         // If there is a valid app, and the current active screen is the main menu, queue exit
-        if (app != nullptr && app->currentScreenName() == "Menu"){
-            exitQueued = true;
+        if (app != nullptr && app->window() != nullptr 
+            && app->currentScreenName() == "Menu"){
+
+            app->window()->exit();
         } else if (app == nullptr){ // If app is uninitialised, exit
             exitQueued = true;
         }   
@@ -53,8 +61,7 @@ void exitApplet(InputSystem& inputService, InputState state){
 Result initApplet(){
     // Check for the presence of an emulator to determine whether log() should print messages to the console or not
     // This is unique to my own emulator development environment, I put an empty file called "emulator" on the virtual SD card
-    FILE* emulatorFile = fopen("sdmc:/emulator", "rb");
-    if (emulatorFile != nullptr){
+    if (std::filesystem::exists("sdmc:/emulator")){
         logServiceIsEmulator = true;
         log("[INIT] - Dev emulator environment detected!");
     }
@@ -125,7 +132,7 @@ Result initApplet(){
     log("[INIT] - Initialised RomFS");
 
     // Initialise the RUNE application manager. This handles screen management.
-    app = new Rune::Application();
+    app = new Rune::Application(initSuccess);
     log("[Rune::Application] - Successfully loaded application manager.");
 
     // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
@@ -190,7 +197,7 @@ int main(){
     // This is the case because of the new Rune::Application that was created in initApplet()
 
     // The rest of the main function covers InputService polling, and exiting services when closing
-    while (app->window()->loop() && !exitQueued){
+    while (app->window()->loop()){
         // Update InputService (allows for InputService connections, input detection, basically required for the whole system to work)
         inputService.update();
     }
@@ -206,7 +213,8 @@ int main(){
     // Exit the account service
     accountExit();
 
-    // Delete the window (for some reason deleting the window is required for a successful close)
+    // Delete the window for full cleanup
     app->deleteWindow();
+
     return 0;
 }

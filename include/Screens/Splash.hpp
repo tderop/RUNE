@@ -13,7 +13,7 @@ class SplashScreen : public Aether::Screen{
         int _elapsed = 0;
 
     public:
-        Signal<>* loadCompleteSignal = new Signal();
+        Signal<>* loadCompleteSignal = new Signal<>();
 
         SplashScreen(Rune::Application* app);
 

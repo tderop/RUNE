@@ -13,10 +13,11 @@ namespace Rune{
             std::string _currentScreenName = "";
 
             bool _fadeScreens;
+            bool* _initSuccess;
             std::unordered_map<std::string, Aether::Screen*> screens;
 
         public:
-            Application(bool fadeScreens = false);
+            Application(bool* initSuccess, bool fadeScreens = false);
 
             /**
              * @brief Get the current application window.

@@ -1,4 +1,5 @@
 #include "Aether/horizon/overlays/MessageBox.hpp"
+#include "Aether/primary/TextBlock.hpp"
 
 // Default dimensions
 #define WIDTH 770
@@ -25,7 +26,14 @@ namespace Aether {
         this->addElement(this->bottomH);
         this->addElement(this->vertH);
 
-        this->label_ = new Aether::Text(0, 0, "", 24);
+        this->label_ = new TextBlock(
+            0, 0,
+            "",
+            24,
+            WIDTH*0.8,
+            Aether::Render::Wait
+        );
+
         this->addElement(this->label_);
         this->setString(message);
 
@@ -96,6 +104,8 @@ namespace Aether {
             this->rect_->x() + this->rect_->w()/2 - this->label_->textureWidth()/2,
             this->rect_->y() + containerHeight/2 - this->label_->textureHeight()/2
         );
+
+        this->label_->renderSync();
     }
 
     void MessageBox::resizeElements() {
@@ -142,6 +152,7 @@ namespace Aether {
         this->addElement(this->left);
         this->vertH->setHidden(false);
         this->repositionButtons();
+        this->setString(this->label_->string());
     }
 
     void MessageBox::addRightButton(std::string s, std::function<void()> f) {
@@ -151,6 +162,7 @@ namespace Aether {
         this->addElement(this->right);
         this->vertH->setHidden(false);
         this->repositionButtons();
+        this->setString(this->label_->string());
     }
 
     void MessageBox::addTopButton(std::string s, std::function<void()> f) {
@@ -160,6 +172,7 @@ namespace Aether {
         this->addElement(this->top);
         this->topH->setHidden(false);
         this->repositionButtons();
+        this->setString(this->label_->string());
     }
 
     void MessageBox::getBodySize(int * w, int * h) {

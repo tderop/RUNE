@@ -51,6 +51,11 @@ std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorN
     return (std::filesystem::exists(fullPath)) ? fullPath : "";
 }
 
+std::string Rune::Inventory::getThumbPathFromInventoryItem(const Rune::Inventory::Item& inventoryItem){
+    // Mainly for handling dyed armor/elixirs
+    return "";
+}
+
 // Arrows may need to be handled separately
 std::vector<std::string> quantityMenus = {"Materials", "Food", "Key Items"};
 
@@ -288,6 +293,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             itemName, 
             itemValue, 
             static_cast<size_t>(currentIdx),
+            menu->menuName(),
             itemFlagSp,
             itemValueSp,
             tileStyle

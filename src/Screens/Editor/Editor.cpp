@@ -705,7 +705,7 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 
     // Render the image
     captionImg->renderSync();
-
+    
     // Add the image to the screen and the screen trove (clears when screen is unloaded)
     this->screenTrove->addElement(captionImg);
     this->addElement(captionImg);

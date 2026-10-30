@@ -29,7 +29,8 @@ const useconds_t TWEEN_UPDATE_TIME = 16000; // microseconds
  */
 namespace Rune{
     
-    Application::Application(bool fadeScreens){
+    Application::Application(bool* initSuccess, bool fadeScreens){
+        this->_initSuccess = initSuccess;
         this->_fadeScreens = fadeScreens;
 
         // initialise the window
@@ -103,12 +104,28 @@ namespace Rune{
         });
 
         // show the initial splash screen
-        Connection<> loadCompleteConn = splashScreen->loadCompleteSignal->connect([this, &loadCompleteConn, &beginTestsConn](){
-            loadCompleteConn.disconnect(); // remove this connection
+        Connection<> loadCompleteConn = splashScreen->loadCompleteSignal->connectWithId([this, &beginTestsConn, splashScreen](size_t id){
             beginTestsConn.disconnect();
+            splashScreen->loadCompleteSignal->disconnect(id);
 
-            // transition to menu screen
-            this->showScreen("Menu");
+            if (*this->_initSuccess){
+                // transition to menu screen
+                this->showScreen("Menu");
+            } else { // failed to launch, notify user
+                Aether::MessageBox* messageBox = new Aether::MessageBox(
+                    "RUNE failed to launch.\n\nPlease make sure you have save data for The Legend of Zelda: "
+                    "Breath of the Wild on this account."
+                );
+
+                messageBox->addTopButton("Exit", [this](){
+                    this->_window->exit();
+                });
+
+                messageBox->setRectangleColour(BACKGROUND_COLOUR);
+                messageBox->setLineColour(Aether::Colour{0, 0, 0, 0});
+
+                this->_window->addOverlay(messageBox);
+            }
         });
 
         this->showScreen("Splash");
@@ -120,7 +137,7 @@ namespace Rune{
     }
 
     void Application::deleteWindow(){
-        this->_window->exit();
+        // this->_window->exit();
         delete this->_window;
     }
 

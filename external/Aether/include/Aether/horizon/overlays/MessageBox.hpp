@@ -3,6 +3,7 @@
 
 #include "Aether/horizon/button/BorderButton.hpp"
 #include "Aether/primary/Rectangle.hpp"
+#include "Aether/primary/TextBlock.hpp"
 #include "Aether/Overlay.hpp"
 
 namespace Aether {
@@ -34,7 +35,7 @@ namespace Aether {
             /** @brief Button text colour */
             Colour buttonColour;
             /** @brief Central message text element */
-            Text * label_;
+            TextBlock * label_;
 
             /**
              * @brief Repositions the buttons
