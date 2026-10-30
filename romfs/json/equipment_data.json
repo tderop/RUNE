@@ -915,13 +915,17 @@
     "Name": "Desert Voe Trousers",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_067_Lower"
+    "NextRank": "Armor_067_Lower",
+    "IconActorName": "Armor_008_Lower",
+    "PrevRank": "Armor_065_Lower"
   },
   "Armor_007_Upper": {
     "Name": "Zora Armor",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_062_Upper"
+    "NextRank": "Armor_062_Upper",
+    "IconActorName": "Armor_006_Upper",
+    "PrevRank": "Armor_006_Upper"
   },
   "Armor_500_Head": {
     "Name": "Armor_500_Head",
@@ -937,13 +941,17 @@
     "Name": "Rubber Helm",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_104_Head"
+    "NextRank": "Armor_104_Head",
+    "IconActorName": "Armor_046_Head",
+    "PrevRank": "Armor_046_Head"
   },
   "Armor_060_Upper": {
     "Name": "Tunic of the Wild",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_061_Upper"
+    "NextRank": "Armor_061_Upper",
+    "IconActorName": "Armor_005_Upper",
+    "PrevRank": "Armor_039_Upper"
   },
   "Armor_001_Lower": {
     "Name": "Hylian Trousers",
@@ -961,36 +969,47 @@
     "Name": "Diamond Circlet",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_120_Head"
+    "NextRank": "Armor_120_Head",
+    "IconActorName": "Obj_Head_024",
+    "PrevRank": "Armor_118_Head"
   },
   "Armor_002_Head": {
     "Name": "Hylian Hood",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_003_Head"
+    "NextRank": "Armor_003_Head",
+    "IconActorName": "Armor_001_Head",
+    "PrevRank": "Armor_001_Head_B"
   },
   "Armor_224_Head": {
     "Name": "Sheik's Mask",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_220_Head",
+    "PrevRank": "Armor_223_Head_B"
   },
   "Armor_071_Lower": {
     "Name": "Snowquill Trousers",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_072_Lower"
+    "NextRank": "Armor_072_Lower",
+    "IconActorName": "Armor_009_Lower",
+    "PrevRank": "Armor_036_Lower"
   },
   "Armor_026_Head": {
     "Name": "Sapphire Circlet",
     "StarNum": 1,
     "Defence": 3,
-    "NextRank": "Armor_125_Head"
+    "NextRank": "Armor_125_Head",
+    "IconActorName": "Obj_Head_026"
   },
   "Armor_077_Upper": {
     "Name": "Stealth Chest Guard",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_078_Upper"
+    "NextRank": "Armor_078_Upper",
+    "IconActorName": "Armor_012_Upper",
+    "PrevRank": "Armor_042_Upper"
   },
   "Armor_200_Head": {
     "Name": "Cap of Time",
@@ -1001,30 +1020,40 @@
   "Armor_073_Head": {
     "Name": "Snowquill Headdress",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_009_Head",
+    "PrevRank": "Armor_072_Head"
   },
   "Armor_168_Head": {
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_169_Head"
+    "NextRank": "Armor_169_Head",
+    "IconActorName": "Armor_184_Head",
+    "PrevRank": "Armor_199_Head"
   },
   "Armor_096_Head": {
     "Name": "Soldier's Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_097_Head"
+    "NextRank": "Armor_097_Head",
+    "IconActorName": "Armor_020_Head",
+    "PrevRank": "Armor_095_Head"
   },
   "Armor_197_Head": {
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_183_Head",
+    "PrevRank": "Armor_196_Head"
   },
   "Armor_227_Lower": {
     "Name": "Fierce Deity Boots",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_228_Lower"
+    "NextRank": "Armor_228_Lower",
+    "IconActorName": "Armor_225_Lower",
+    "PrevRank": "Armor_226_Lower"
   },
   "Armor_172_Head": {
     "Name": "Majora's Mask",
@@ -1035,13 +1064,17 @@
     "Name": "Sapphire Circlet",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_128_Head"
+    "NextRank": "Armor_128_Head",
+    "IconActorName": "Obj_Head_026",
+    "PrevRank": "Armor_126_Head"
   },
   "Armor_154_Lower": {
     "Name": "Sand Boots",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_155_Lower"
+    "NextRank": "Armor_155_Lower",
+    "IconActorName": "Armor_049_Lower",
+    "PrevRank": "Armor_153_Lower"
   },
   "Armor_043_Lower": {
     "Name": "Well-Worn Trousers",
@@ -1052,7 +1085,9 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_191_Head"
+    "NextRank": "Armor_191_Head",
+    "IconActorName": "Armor_182_Head",
+    "PrevRank": "Armor_182_Head"
   },
   "Armor_048_Lower": {
     "Name": "Barbarian Leg Wraps",
@@ -1063,7 +1098,9 @@
   "Armor_120_Head": {
     "Name": "Diamond Circlet",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Obj_Head_024",
+    "PrevRank": "Armor_119_Head"
   },
   "Armor_220_Head_B": {
     "Name": "Sheik's Mask",
@@ -1080,13 +1117,17 @@
     "Name": "Ancient Greaves",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_102_Lower"
+    "NextRank": "Armor_102_Lower",
+    "IconActorName": "Armor_021_Lower",
+    "PrevRank": "Armor_100_Lower"
   },
   "Armor_218_Upper": {
     "Name": "Tunic of the Sky",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_219_Upper"
+    "NextRank": "Armor_219_Upper",
+    "IconActorName": "Armor_215_Upper",
+    "PrevRank": "Armor_217_Upper"
   },
   "Armor_021_Head": {
     "Name": "Ancient Helm",
@@ -1097,7 +1138,9 @@
   "Armor_086_Lower": {
     "Name": "Climbing Boots",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_014_Lower",
+    "PrevRank": "Armor_085_Lower"
   },
   "Armor_215_Lower": {
     "Name": "Trousers of the Sky",
@@ -1109,19 +1152,25 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_075_Head"
+    "NextRank": "Armor_075_Head",
+    "IconActorName": "Armor_011_Head",
+    "PrevRank": "Armor_037_Head"
   },
   "Armor_213_Upper": {
     "Name": "Tunic of Twilight",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_214_Upper"
+    "NextRank": "Armor_214_Upper",
+    "IconActorName": "Armor_210_Upper",
+    "PrevRank": "Armor_212_Upper"
   },
   "Armor_207_Head": {
     "Name": "Cap of the Wind",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_208_Head"
+    "NextRank": "Armor_208_Head",
+    "IconActorName": "Armor_205_Head",
+    "PrevRank": "Armor_206_Head"
   },
   "Armor_Default_Extra_01": {
     "Name": "Armor_Default_Extra_01",
@@ -1143,19 +1192,25 @@
     "Name": "Tunic of the Wild",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_039_Upper"
+    "NextRank": "Armor_039_Upper",
+    "IconActorName": "Armor_005_Upper",
+    "PrevRank": "Armor_005_Upper"
   },
   "Armor_223_Head": {
     "Name": "Sheik's Mask",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_224_Head"
+    "NextRank": "Armor_224_Head",
+    "IconActorName": "Armor_220_Head",
+    "PrevRank": "Armor_222_Head"
   },
   "Armor_202_Lower": {
     "Name": "Trousers of Time",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_203_Lower"
+    "NextRank": "Armor_203_Lower",
+    "IconActorName": "Armor_200_Lower",
+    "PrevRank": "Armor_201_Lower"
   },
   "Armor_171_Lower": {
     "Name": "Phantom Greaves",
@@ -1165,19 +1220,25 @@
   "Armor_209_Lower": {
     "Name": "Trousers of the Wind",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_205_Lower",
+    "PrevRank": "Armor_208_Lower"
   },
   "Armor_104_Head": {
     "Name": "Rubber Helm",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_105_Head"
+    "NextRank": "Armor_105_Head",
+    "IconActorName": "Armor_046_Head",
+    "PrevRank": "Armor_103_Head"
   },
   "Armor_097_Upper": {
     "Name": "Soldier's Armor",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_098_Upper"
+    "NextRank": "Armor_098_Upper",
+    "IconActorName": "Armor_020_Upper",
+    "PrevRank": "Armor_096_Upper"
   },
   "Armor_Default_Lower": {
     "Name": "Armor_Default_Lower",
@@ -1187,7 +1248,9 @@
   "Armor_204_Upper": {
     "Name": "Tunic of Time",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_200_Upper",
+    "PrevRank": "Armor_203_Upper"
   },
   "Armor_021_Upper": {
     "Name": "Ancient Cuirass",
@@ -1199,13 +1262,16 @@
     "Name": "Armor_012",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_077_Head"
+    "NextRank": "Armor_077_Head",
+    "IconActorName": "Armor_012_Head"
   },
   "Armor_040_Lower": {
     "Name": "Desert Voe Trousers",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_065_Lower"
+    "NextRank": "Armor_065_Lower",
+    "IconActorName": "Armor_008_Lower",
+    "PrevRank": "Armor_008_Lower"
   },
   "Armor_046_Upper": {
     "Name": "Rubber Armor",
@@ -1217,13 +1283,17 @@
     "Name": "Trousers of the Sky",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_217_Lower"
+    "NextRank": "Armor_217_Lower",
+    "IconActorName": "Armor_215_Lower",
+    "PrevRank": "Armor_215_Lower"
   },
   "Armor_085_Lower": {
     "Name": "Climbing Boots",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_086_Lower"
+    "NextRank": "Armor_086_Lower",
+    "IconActorName": "Armor_014_Lower",
+    "PrevRank": "Armor_084_Lower"
   },
   "Armor_011_Head": {
     "Name": "Flamebreaker Helm",
@@ -1234,19 +1304,25 @@
   "Armor_102_Lower": {
     "Name": "Ancient Greaves",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_021_Lower",
+    "PrevRank": "Armor_101_Lower"
   },
   "Armor_088_Upper": {
     "Name": "Radiant Shirt",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_089_Upper"
+    "NextRank": "Armor_089_Upper",
+    "IconActorName": "Armor_017_Upper",
+    "PrevRank": "Armor_087_Upper"
   },
   "Armor_104_Upper": {
     "Name": "Rubber Armor",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_105_Upper"
+    "NextRank": "Armor_105_Upper",
+    "IconActorName": "Armor_046_Upper",
+    "PrevRank": "Armor_103_Upper"
   },
   "Armor_210_Upper": {
     "Name": "Tunic of Twilight",
@@ -1258,19 +1334,25 @@
     "Name": "Climbing Gear",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_084_Upper"
+    "NextRank": "Armor_084_Upper",
+    "IconActorName": "Armor_014_Upper",
+    "PrevRank": "Armor_014_Upper"
   },
   "Armor_036_Upper": {
     "Name": "Snowquill Tunic",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_071_Upper"
+    "NextRank": "Armor_071_Upper",
+    "IconActorName": "Armor_009_Upper",
+    "PrevRank": "Armor_009_Upper"
   },
   "Armor_035_Head": {
     "Name": "Cap of the Wild",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_039_Head"
+    "NextRank": "Armor_039_Head",
+    "IconActorName": "Armor_005_Head",
+    "PrevRank": "Armor_005_Head"
   },
   "Armor_501_Upper": {
     "Name": "Armor_501_Upper",
@@ -1281,19 +1363,25 @@
     "Name": "Cap of Twilight",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_214_Head"
+    "NextRank": "Armor_214_Head",
+    "IconActorName": "Armor_210_Head",
+    "PrevRank": "Armor_212_Head"
   },
   "Armor_085_Head": {
     "Name": "Climber's Bandanna",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_086_Head"
+    "NextRank": "Armor_086_Head",
+    "IconActorName": "Armor_014_Head",
+    "PrevRank": "Armor_084_Head"
   },
   "Armor_060_Head": {
     "Name": "Cap of the Wild",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_061_Head"
+    "NextRank": "Armor_061_Head",
+    "IconActorName": "Armor_005_Head",
+    "PrevRank": "Armor_039_Head"
   },
   "Armor_174_Upper": {
     "Name": "Tingle's Shirt",
@@ -1309,13 +1397,17 @@
   "Armor_209_Head": {
     "Name": "Cap of the Wind",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_205_Head",
+    "PrevRank": "Armor_208_Head"
   },
   "Armor_201_Lower": {
     "Name": "Trousers of Time",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_202_Lower"
+    "NextRank": "Armor_202_Lower",
+    "IconActorName": "Armor_200_Lower",
+    "PrevRank": "Armor_200_Lower"
   },
   "Armor_179_Lower": {
     "Name": "Royal Guard Boots",
@@ -1326,25 +1418,33 @@
     "Name": "Tunic of the Wind",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_208_Upper"
+    "NextRank": "Armor_208_Upper",
+    "IconActorName": "Armor_205_Upper",
+    "PrevRank": "Armor_206_Upper"
   },
   "Armor_134_Head": {
     "Name": "Opal Earrings",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_135_Head"
+    "NextRank": "Armor_135_Head",
+    "IconActorName": "Obj_Head_028",
+    "PrevRank": "Armor_133_Head"
   },
   "Armor_113_Upper": {
     "Name": "Barbarian Armor",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_114_Upper"
+    "NextRank": "Armor_114_Upper",
+    "IconActorName": "Armor_048_Upper",
+    "PrevRank": "Armor_112_Upper"
   },
   "Armor_099_Lower": {
     "Name": "Ancient Greaves",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_100_Lower"
+    "NextRank": "Armor_100_Lower",
+    "IconActorName": "Armor_021_Lower",
+    "PrevRank": "Armor_021_Lower"
   },
   "Armor_009_Lower": {
     "Name": "Snowquill Trousers",
@@ -1356,7 +1456,9 @@
     "Name": "Hylian Tunic",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_015_Upper"
+    "NextRank": "Armor_015_Upper",
+    "IconActorName": "Armor_001_Upper",
+    "PrevRank": "Armor_003_Upper"
   },
   "Armor_183_Head": {
     "Name": "Vah Rudania Divine Helm",
@@ -1368,24 +1470,32 @@
     "Name": "Desert Voe Trousers",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_066_Lower"
+    "NextRank": "Armor_066_Lower",
+    "IconActorName": "Armor_008_Lower",
+    "PrevRank": "Armor_040_Lower"
   },
   "Armor_098_Head": {
     "Name": "Soldier's Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_020_Head",
+    "PrevRank": "Armor_097_Head"
   },
   "Armor_002_Lower": {
     "Name": "Hylian Trousers",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_003_Lower"
+    "NextRank": "Armor_003_Lower",
+    "IconActorName": "Armor_001_Lower",
+    "PrevRank": "Armor_001_Lower"
   },
   "Armor_063_Upper": {
     "Name": "Zora Armor",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_064_Upper"
+    "NextRank": "Armor_064_Upper",
+    "IconActorName": "Armor_006_Upper",
+    "PrevRank": "Armor_062_Upper"
   },
   "Armor_185_Lower": {
     "Name": "Salvager Trousers",
@@ -1396,31 +1506,40 @@
     "Name": "Opal Earrings",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_134_Head"
+    "NextRank": "Armor_134_Head",
+    "IconActorName": "Obj_Head_028",
+    "PrevRank": "Armor_028_Head"
   },
   "Armor_028_Head": {
     "Name": "Opal Earrings",
     "StarNum": 1,
     "Defence": 3,
-    "NextRank": "Armor_133_Head"
+    "NextRank": "Armor_133_Head",
+    "IconActorName": "Obj_Head_028"
   },
   "Armor_129_Head": {
     "Name": "Topaz Earrings",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_130_Head"
+    "NextRank": "Armor_130_Head",
+    "IconActorName": "Obj_Head_027",
+    "PrevRank": "Armor_027_Head"
   },
   "Armor_233_Lower": {
     "Name": "Trousers of the Hero",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_234_Lower"
+    "NextRank": "Armor_234_Lower",
+    "IconActorName": "Armor_230_Lower",
+    "PrevRank": "Armor_232_Lower"
   },
   "Armor_199_Head": {
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_168_Head"
+    "NextRank": "Armor_168_Head",
+    "IconActorName": "Armor_184_Head",
+    "PrevRank": "Armor_198_Head"
   },
   "Armor_140_Lower": {
     "Name": "Snow Boots",
@@ -1430,34 +1549,46 @@
   "Armor_067_Head": {
     "Name": "Desert Voe Headband",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_008_Head",
+    "PrevRank": "Armor_066_Head"
   },
   "Armor_214_Head": {
     "Name": "Cap of Twilight",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_210_Head",
+    "PrevRank": "Armor_213_Head"
   },
   "Armor_072_Lower": {
     "Name": "Snowquill Trousers",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_073_Lower"
+    "NextRank": "Armor_073_Lower",
+    "IconActorName": "Armor_009_Lower",
+    "PrevRank": "Armor_071_Lower"
   },
   "Armor_079_Lower": {
     "Name": "Stealth Tights",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_012_Lower",
+    "PrevRank": "Armor_078_Lower"
   },
   "Armor_015_Lower": {
     "Name": "Hylian Trousers",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_001_Lower",
+    "PrevRank": "Armor_004_Lower"
   },
   "Armor_074_Upper": {
     "Name": "Flamebreaker Armor",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_075_Upper"
+    "NextRank": "Armor_075_Upper",
+    "IconActorName": "Armor_011_Upper",
+    "PrevRank": "Armor_037_Upper"
   },
   "Armor_230_Head": {
     "Name": "Cap of the Hero",
@@ -1468,42 +1599,56 @@
   "Armor_229_Upper": {
     "Name": "Fierce Deity Armor",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_225_Upper",
+    "PrevRank": "Armor_228_Upper"
   },
   "Armor_151_Upper": {
     "Name": "Champion's Tunic",
     "StarNum": 5,
-    "Defence": 32
+    "Defence": 32,
+    "IconActorName": "Armor_116_Upper",
+    "PrevRank": "Armor_150_Upper"
   },
   "Armor_157_Lower": {
     "Name": "Snow Boots",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_158_Lower"
+    "NextRank": "Armor_158_Lower",
+    "IconActorName": "Armor_141_Lower",
+    "PrevRank": "Armor_156_Lower"
   },
   "Armor_117_Head": {
     "Name": "Diamond Circlet",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_118_Head"
+    "NextRank": "Armor_118_Head",
+    "IconActorName": "Obj_Head_024",
+    "PrevRank": "Armor_024_Head"
   },
   "Armor_218_Head": {
     "Name": "Cap of the Sky",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_219_Head"
+    "NextRank": "Armor_219_Head",
+    "IconActorName": "Armor_215_Head",
+    "PrevRank": "Armor_217_Head"
   },
   "Armor_040_Upper": {
     "Name": "Desert Voe Spaulder",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_065_Upper"
+    "NextRank": "Armor_065_Upper",
+    "IconActorName": "Armor_008_Upper",
+    "PrevRank": "Armor_008_Upper"
   },
   "Armor_195_Head": {
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_196_Head"
+    "NextRank": "Armor_196_Head",
+    "IconActorName": "Armor_183_Head",
+    "PrevRank": "Armor_194_Head"
   },
   "Armor_021_Lower": {
     "Name": "Ancient Greaves",
@@ -1521,65 +1666,85 @@
     "Name": "Sapphire Circlet",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_126_Head"
+    "NextRank": "Armor_126_Head",
+    "IconActorName": "Obj_Head_026",
+    "PrevRank": "Armor_026_Head"
   },
   "Armor_024_Head": {
     "Name": "Diamond Circlet",
     "StarNum": 1,
     "Defence": 4,
-    "NextRank": "Armor_117_Head"
+    "NextRank": "Armor_117_Head",
+    "IconActorName": "Obj_Head_024"
   },
   "Armor_085_Upper": {
     "Name": "Climbing Gear",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_086_Upper"
+    "NextRank": "Armor_086_Upper",
+    "IconActorName": "Armor_014_Upper",
+    "PrevRank": "Armor_084_Upper"
   },
   "Armor_216_Upper": {
     "Name": "Tunic of the Sky",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_217_Upper"
+    "NextRank": "Armor_217_Upper",
+    "IconActorName": "Armor_215_Upper",
+    "PrevRank": "Armor_215_Upper"
   },
   "Armor_079_Head_B": {
     "Name": "Armor_012",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_012_Head"
   },
   "Armor_102_Upper": {
     "Name": "Ancient Cuirass",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_021_Upper",
+    "PrevRank": "Armor_101_Upper"
   },
   "Armor_088_Lower": {
     "Name": "Radiant Tights",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_089_Lower"
+    "NextRank": "Armor_089_Lower",
+    "IconActorName": "Armor_017_Lower",
+    "PrevRank": "Armor_087_Lower"
   },
   "Armor_104_Lower": {
     "Name": "Rubber Tights",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_105_Lower"
+    "NextRank": "Armor_105_Lower",
+    "IconActorName": "Armor_046_Lower",
+    "PrevRank": "Armor_103_Lower"
   },
   "Armor_071_Head": {
     "Name": "Snowquill Headdress",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_072_Head"
+    "NextRank": "Armor_072_Head",
+    "IconActorName": "Armor_009_Head",
+    "PrevRank": "Armor_036_Head"
   },
   "Armor_083_Lower": {
     "Name": "Climbing Boots",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_084_Lower"
+    "NextRank": "Armor_084_Lower",
+    "IconActorName": "Armor_014_Lower",
+    "PrevRank": "Armor_014_Lower"
   },
   "Armor_202_Head": {
     "Name": "Cap of Time",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_203_Head"
+    "NextRank": "Armor_203_Head",
+    "IconActorName": "Armor_200_Head",
+    "PrevRank": "Armor_201_Head"
   },
   "Armor_210_Lower": {
     "Name": "Trousers of Twilight",
@@ -1591,7 +1756,9 @@
     "Name": "Snowquill Trousers",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_071_Lower"
+    "NextRank": "Armor_071_Lower",
+    "IconActorName": "Armor_009_Lower",
+    "PrevRank": "Armor_009_Lower"
   },
   "Armor_501_Lower": {
     "Name": "Armor_501_Lower",
@@ -1607,7 +1774,9 @@
     "Name": "Fierce Deity Mask",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_227_Head"
+    "NextRank": "Armor_227_Head",
+    "IconActorName": "Armor_225_Head",
+    "PrevRank": "Armor_225_Head"
   },
   "Armor_174_Lower": {
     "Name": "Tingle's Tights",
@@ -1623,31 +1792,41 @@
     "Name": "Tunic of Time",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_202_Upper"
+    "NextRank": "Armor_202_Upper",
+    "IconActorName": "Armor_200_Upper",
+    "PrevRank": "Armor_200_Upper"
   },
   "Armor_207_Lower": {
     "Name": "Trousers of the Wind",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_208_Lower"
+    "NextRank": "Armor_208_Lower",
+    "IconActorName": "Armor_205_Lower",
+    "PrevRank": "Armor_206_Lower"
   },
   "Armor_113_Lower": {
     "Name": "Barbarian Leg Wraps",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_114_Lower"
+    "NextRank": "Armor_114_Lower",
+    "IconActorName": "Armor_048_Lower",
+    "PrevRank": "Armor_112_Lower"
   },
   "Armor_099_Upper": {
     "Name": "Ancient Cuirass",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_100_Upper"
+    "NextRank": "Armor_100_Upper",
+    "IconActorName": "Armor_021_Upper",
+    "PrevRank": "Armor_021_Upper"
   },
   "Armor_101_Head": {
     "Name": "Ancient Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_102_Head"
+    "NextRank": "Armor_102_Head",
+    "IconActorName": "Armor_021_Head",
+    "PrevRank": "Armor_100_Head"
   },
   "Armor_048_Head": {
     "Name": "Barbarian Helm",
@@ -1659,7 +1838,8 @@
     "Name": "Armor_012",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_078_Head"
+    "NextRank": "Armor_078_Head",
+    "IconActorName": "Armor_012_Head"
   },
   "Armor_009_Upper": {
     "Name": "Snowquill Tunic",
@@ -1671,24 +1851,32 @@
     "Name": "Desert Voe Spaulder",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_066_Upper"
+    "NextRank": "Armor_066_Upper",
+    "IconActorName": "Armor_008_Upper",
+    "PrevRank": "Armor_040_Upper"
   },
   "Armor_004_Lower": {
     "Name": "Hylian Trousers",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_015_Lower"
+    "NextRank": "Armor_015_Lower",
+    "IconActorName": "Armor_001_Lower",
+    "PrevRank": "Armor_003_Lower"
   },
   "Armor_063_Lower": {
     "Name": "Zora Greaves",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_064_Lower"
+    "NextRank": "Armor_064_Lower",
+    "IconActorName": "Armor_006_Lower",
+    "PrevRank": "Armor_062_Lower"
   },
   "Armor_106_Head": {
     "Name": "Rubber Helm",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_046_Head",
+    "PrevRank": "Armor_105_Head"
   },
   "Armor_022_Head_B": {
     "Name": "Bokoblin Mask",
@@ -1699,7 +1887,9 @@
     "Name": "Hylian Tunic",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_003_Upper"
+    "NextRank": "Armor_003_Upper",
+    "IconActorName": "Armor_001_Upper",
+    "PrevRank": "Armor_001_Upper"
   },
   "Armor_185_Upper": {
     "Name": "Salvager Vest",
@@ -1710,42 +1900,55 @@
     "Name": "Tunic of the Hero",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_234_Upper"
+    "NextRank": "Armor_234_Upper",
+    "IconActorName": "Armor_230_Upper",
+    "PrevRank": "Armor_232_Upper"
   },
   "Armor_007_Head": {
     "Name": "Zora Helm",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_062_Head"
+    "NextRank": "Armor_062_Head",
+    "IconActorName": "Armor_006_Head",
+    "PrevRank": "Armor_006_Head"
   },
   "Armor_222_Head_B": {
     "Name": "Sheik's Mask",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_223_Head"
+    "NextRank": "Armor_223_Head",
+    "IconActorName": "Armor_220_Head"
   },
   "Armor_221_Head": {
     "Name": "Sheik's Mask",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_222_Head"
+    "NextRank": "Armor_222_Head",
+    "IconActorName": "Armor_220_Head",
+    "PrevRank": "Armor_220_Head"
   },
   "Armor_072_Upper": {
     "Name": "Snowquill Tunic",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_073_Upper"
+    "NextRank": "Armor_073_Upper",
+    "IconActorName": "Armor_009_Upper",
+    "PrevRank": "Armor_071_Upper"
   },
   "Armor_138_Head": {
     "Name": "Amber Earrings",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_139_Head"
+    "NextRank": "Armor_139_Head",
+    "IconActorName": "Obj_Head_029",
+    "PrevRank": "Armor_137_Head"
   },
   "Armor_079_Upper": {
     "Name": "Stealth Chest Guard",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_012_Upper",
+    "PrevRank": "Armor_078_Upper"
   },
   "Armor_205_Head": {
     "Name": "Cap of the Wind",
@@ -1757,23 +1960,31 @@
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_189_Head"
+    "NextRank": "Armor_189_Head",
+    "IconActorName": "Armor_181_Head",
+    "PrevRank": "Armor_187_Head"
   },
   "Armor_074_Lower": {
     "Name": "Flamebreaker Boots",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_075_Lower"
+    "NextRank": "Armor_075_Lower",
+    "IconActorName": "Armor_011_Lower",
+    "PrevRank": "Armor_037_Lower"
   },
   "Armor_076_Head": {
     "Name": "Flamebreaker Helm",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_011_Head",
+    "PrevRank": "Armor_075_Head"
   },
   "Armor_015_Upper": {
     "Name": "Hylian Tunic",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_001_Upper",
+    "PrevRank": "Armor_004_Upper"
   },
   "Armor_177_Head": {
     "Name": "Ravio's Hood",
@@ -1784,36 +1995,48 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_193_Head"
+    "NextRank": "Armor_193_Head",
+    "IconActorName": "Armor_182_Head",
+    "PrevRank": "Armor_191_Head"
   },
   "Armor_089_Head": {
     "Name": "Radiant Mask",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_090_Head"
+    "NextRank": "Armor_090_Head",
+    "IconActorName": "Armor_017_Head",
+    "PrevRank": "Armor_088_Head"
   },
   "Armor_229_Lower": {
     "Name": "Fierce Deity Boots",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_225_Lower",
+    "PrevRank": "Armor_228_Lower"
   },
   "Armor_122_Head": {
     "Name": "Ruby Circlet",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_123_Head"
+    "NextRank": "Armor_123_Head",
+    "IconActorName": "Obj_Head_025",
+    "PrevRank": "Armor_121_Head"
   },
   "Armor_039_Head": {
     "Name": "Cap of the Wild",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_060_Head"
+    "NextRank": "Armor_060_Head",
+    "IconActorName": "Armor_005_Head",
+    "PrevRank": "Armor_035_Head"
   },
   "Armor_007_Lower": {
     "Name": "Zora Greaves",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_062_Lower"
+    "NextRank": "Armor_062_Lower",
+    "IconActorName": "Armor_006_Lower",
+    "PrevRank": "Armor_006_Lower"
   },
   "Armor_Default_Extra_00": {
     "Name": "Armor_Default_Extra_00",
@@ -1824,13 +2047,17 @@
     "Name": "Desert Voe Spaulder",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_067_Upper"
+    "NextRank": "Armor_067_Upper",
+    "IconActorName": "Armor_008_Upper",
+    "PrevRank": "Armor_065_Upper"
   },
   "Armor_186_Head": {
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_187_Head"
+    "NextRank": "Armor_187_Head",
+    "IconActorName": "Armor_181_Head",
+    "PrevRank": "Armor_181_Head"
   },
   "Armor_180_Lower": {
     "Name": "Phantom Ganon Greaves",
@@ -1840,13 +2067,16 @@
   "Armor_015_Head_B": {
     "Name": "Armor_001",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_001_Head"
   },
   "Armor_078_Head": {
     "Name": "Stealth Mask",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_079_Head"
+    "NextRank": "Armor_079_Head",
+    "IconActorName": "Armor_012_Head",
+    "PrevRank": "Armor_077_Head"
   },
   "Armor_001_Upper": {
     "Name": "Hylian Tunic",
@@ -1857,19 +2087,25 @@
   "Armor_136_Head": {
     "Name": "Opal Earrings",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Obj_Head_028",
+    "PrevRank": "Armor_135_Head"
   },
   "Armor_060_Lower": {
     "Name": "Trousers of the Wild",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_061_Lower"
+    "NextRank": "Armor_061_Lower",
+    "IconActorName": "Armor_005_Lower",
+    "PrevRank": "Armor_039_Lower"
   },
   "Armor_037_Head": {
     "Name": "Flamebreaker Helm",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_074_Head"
+    "NextRank": "Armor_074_Head",
+    "IconActorName": "Armor_011_Head",
+    "PrevRank": "Armor_011_Head"
   },
   "Armor_230_Upper": {
     "Name": "Tunic of the Hero",
@@ -1881,13 +2117,17 @@
     "Name": "Champion's Tunic",
     "StarNum": 2,
     "Defence": 8,
-    "NextRank": "Armor_149_Upper"
+    "NextRank": "Armor_149_Upper",
+    "IconActorName": "Armor_116_Upper",
+    "PrevRank": "Armor_116_Upper"
   },
   "Armor_062_Head": {
     "Name": "Zora Helm",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_063_Head"
+    "NextRank": "Armor_063_Head",
+    "IconActorName": "Armor_006_Head",
+    "PrevRank": "Armor_007_Head"
   },
   "Armor_179_Head": {
     "Name": "Royal Guard Cap",
@@ -1903,19 +2143,25 @@
     "Name": "Radiant Mask",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_088_Head"
+    "NextRank": "Armor_088_Head",
+    "IconActorName": "Armor_017_Head",
+    "PrevRank": "Armor_017_Head"
   },
   "Armor_211_Head": {
     "Name": "Cap of Twilight",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_212_Head"
+    "NextRank": "Armor_212_Head",
+    "IconActorName": "Armor_210_Head",
+    "PrevRank": "Armor_210_Head"
   },
   "Armor_071_Upper": {
     "Name": "Snowquill Tunic",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_072_Upper"
+    "NextRank": "Armor_072_Upper",
+    "IconActorName": "Armor_009_Upper",
+    "PrevRank": "Armor_036_Upper"
   },
   "Armor_046_Head": {
     "Name": "Rubber Helm",
@@ -1927,7 +2173,9 @@
     "Name": "Stealth Tights",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_078_Lower"
+    "NextRank": "Armor_078_Lower",
+    "IconActorName": "Armor_012_Lower",
+    "PrevRank": "Armor_042_Lower"
   },
   "Armor_012_Head_B": {
     "Name": "Armor_012",
@@ -1939,19 +2187,25 @@
     "Name": "Fierce Deity Armor",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_228_Upper"
+    "NextRank": "Armor_228_Upper",
+    "IconActorName": "Armor_225_Upper",
+    "PrevRank": "Armor_226_Upper"
   },
   "Armor_152_Lower": {
     "Name": "Sand Boots",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_153_Lower"
+    "NextRank": "Armor_153_Lower",
+    "IconActorName": "Armor_049_Lower",
+    "PrevRank": "Armor_049_Lower"
   },
   "Armor_112_Head": {
     "Name": "Barbarian Helm",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_113_Head"
+    "NextRank": "Armor_113_Head",
+    "IconActorName": "Armor_048_Head",
+    "PrevRank": "Armor_111_Head"
   },
   "Armor_009_Head": {
     "Name": "Snowquill Headdress",
@@ -1962,7 +2216,9 @@
   "Armor_159_Lower": {
     "Name": "Snow Boots",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_141_Lower",
+    "PrevRank": "Armor_158_Lower"
   },
   "Armor_043_Upper": {
     "Name": "Old Shirt",
@@ -1972,13 +2228,17 @@
   "Armor_140_Head": {
     "Name": "Amber Earrings",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Obj_Head_029",
+    "PrevRank": "Armor_139_Head"
   },
   "Armor_228_Head": {
     "Name": "Fierce Deity Mask",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_229_Head"
+    "NextRank": "Armor_229_Head",
+    "IconActorName": "Armor_225_Head",
+    "PrevRank": "Armor_227_Head"
   },
   "Armor_115_Head": {
     "Name": "Thunder Helm",
@@ -1995,13 +2255,17 @@
     "Name": "Trousers of the Sky",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_219_Lower"
+    "NextRank": "Armor_219_Lower",
+    "IconActorName": "Armor_215_Lower",
+    "PrevRank": "Armor_217_Lower"
   },
   "Armor_101_Upper": {
     "Name": "Ancient Cuirass",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_102_Upper"
+    "NextRank": "Armor_102_Upper",
+    "IconActorName": "Armor_021_Upper",
+    "PrevRank": "Armor_100_Upper"
   },
   "Armor_160_Lower": {
     "Name": "Dark Trousers",
@@ -2017,7 +2281,9 @@
   "Armor_086_Upper": {
     "Name": "Climbing Gear",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_014_Upper",
+    "PrevRank": "Armor_085_Upper"
   },
   "Armor_014_Head": {
     "Name": "Climber's Bandanna",
@@ -2029,37 +2295,49 @@
     "Name": "Trousers of Twilight",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_214_Lower"
+    "NextRank": "Armor_214_Lower",
+    "IconActorName": "Armor_210_Lower",
+    "PrevRank": "Armor_212_Lower"
   },
   "Armor_232_Head": {
     "Name": "Cap of the Hero",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_233_Head"
+    "NextRank": "Armor_233_Head",
+    "IconActorName": "Armor_230_Head",
+    "PrevRank": "Armor_231_Head"
   },
   "Armor_035_Lower": {
     "Name": "Trousers of the Wild",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_039_Lower"
+    "NextRank": "Armor_039_Lower",
+    "IconActorName": "Armor_005_Lower",
+    "PrevRank": "Armor_005_Lower"
   },
   "Armor_216_Head": {
     "Name": "Cap of the Sky",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_217_Head"
+    "NextRank": "Armor_217_Head",
+    "IconActorName": "Armor_215_Head",
+    "PrevRank": "Armor_215_Head"
   },
   "Armor_065_Head": {
     "Name": "Desert Voe Headband",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_066_Head"
+    "NextRank": "Armor_066_Head",
+    "IconActorName": "Armor_008_Head",
+    "PrevRank": "Armor_040_Head"
   },
   "Armor_202_Upper": {
     "Name": "Tunic of Time",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_203_Upper"
+    "NextRank": "Armor_203_Upper",
+    "IconActorName": "Armor_200_Upper",
+    "PrevRank": "Armor_201_Upper"
   },
   "Armor_181_Head": {
     "Name": "Vah Ruta Divine Helm",
@@ -2071,7 +2349,8 @@
     "Name": "Armor_001",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_003_Head"
+    "NextRank": "Armor_003_Head",
+    "IconActorName": "Armor_001_Head"
   },
   "Armor_116_Upper": {
     "Name": "Champion's Tunic",
@@ -2082,13 +2361,17 @@
   "Armor_209_Upper": {
     "Name": "Tunic of the Wind",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_205_Upper",
+    "PrevRank": "Armor_208_Upper"
   },
   "Armor_131_Head": {
     "Name": "Topaz Earrings",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_132_Head"
+    "NextRank": "Armor_132_Head",
+    "IconActorName": "Obj_Head_027",
+    "PrevRank": "Armor_130_Head"
   },
   "Armor_171_Upper": {
     "Name": "Phantom Armor",
@@ -2098,13 +2381,17 @@
   "Armor_204_Lower": {
     "Name": "Trousers of Time",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_200_Lower",
+    "PrevRank": "Armor_203_Lower"
   },
   "Armor_097_Lower": {
     "Name": "Soldier's Greaves",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_098_Lower"
+    "NextRank": "Armor_098_Lower",
+    "IconActorName": "Armor_020_Lower",
+    "PrevRank": "Armor_096_Lower"
   },
   "Armor_Default_Upper": {
     "Name": "Armor_Default_Upper",
@@ -2115,43 +2402,57 @@
     "Name": "Rubber Armor",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_106_Upper"
+    "NextRank": "Armor_106_Upper",
+    "IconActorName": "Armor_046_Upper",
+    "PrevRank": "Armor_104_Upper"
   },
   "Armor_227_Head": {
     "Name": "Fierce Deity Mask",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_228_Head"
+    "NextRank": "Armor_228_Head",
+    "IconActorName": "Armor_225_Head",
+    "PrevRank": "Armor_226_Head"
   },
   "Armor_211_Upper": {
     "Name": "Tunic of Twilight",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_212_Upper"
+    "NextRank": "Armor_212_Upper",
+    "IconActorName": "Armor_210_Upper",
+    "PrevRank": "Armor_210_Upper"
   },
   "Armor_084_Lower": {
     "Name": "Climbing Boots",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_085_Lower"
+    "NextRank": "Armor_085_Lower",
+    "IconActorName": "Armor_014_Lower",
+    "PrevRank": "Armor_083_Lower"
   },
   "Armor_217_Lower": {
     "Name": "Trousers of the Sky",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_218_Lower"
+    "NextRank": "Armor_218_Lower",
+    "IconActorName": "Armor_215_Lower",
+    "PrevRank": "Armor_216_Lower"
   },
   "Armor_089_Upper": {
     "Name": "Radiant Shirt",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_090_Upper"
+    "NextRank": "Armor_090_Upper",
+    "IconActorName": "Armor_017_Upper",
+    "PrevRank": "Armor_088_Upper"
   },
   "Armor_103_Lower": {
     "Name": "Rubber Tights",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_104_Lower"
+    "NextRank": "Armor_104_Lower",
+    "IconActorName": "Armor_046_Lower",
+    "PrevRank": "Armor_046_Lower"
   },
   "Armor_001_Head": {
     "Name": "Hylian Hood",
@@ -2163,7 +2464,9 @@
     "Name": "Ancient Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_101_Head"
+    "NextRank": "Armor_101_Head",
+    "IconActorName": "Armor_021_Head",
+    "PrevRank": "Armor_099_Head"
   },
   "Armor_020_Upper": {
     "Name": "Soldier's Armor",
@@ -2175,40 +2478,53 @@
     "Name": "Soldier's Armor",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_096_Upper"
+    "NextRank": "Armor_096_Upper",
+    "IconActorName": "Armor_020_Upper",
+    "PrevRank": "Armor_020_Upper"
   },
   "Armor_206_Upper": {
     "Name": "Tunic of the Wind",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_207_Upper"
+    "NextRank": "Armor_207_Upper",
+    "IconActorName": "Armor_205_Upper",
+    "PrevRank": "Armor_205_Upper"
   },
   "Armor_124_Head": {
     "Name": "Ruby Circlet",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Obj_Head_025",
+    "PrevRank": "Armor_123_Head"
   },
   "Armor_098_Lower": {
     "Name": "Soldier's Greaves",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_020_Lower",
+    "PrevRank": "Armor_097_Lower"
   },
   "Armor_112_Upper": {
     "Name": "Barbarian Armor",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_113_Upper"
+    "NextRank": "Armor_113_Upper",
+    "IconActorName": "Armor_048_Upper",
+    "PrevRank": "Armor_111_Upper"
   },
   "Armor_078_Head_B": {
     "Name": "Armor_012",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_079_Head"
+    "NextRank": "Armor_079_Head",
+    "IconActorName": "Armor_012_Head"
   },
   "Armor_114_Lower": {
     "Name": "Barbarian Leg Wraps",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_048_Lower",
+    "PrevRank": "Armor_113_Lower"
   },
   "Armor_171_Head": {
     "Name": "Phantom Helmet",
@@ -2219,7 +2535,9 @@
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_195_Head"
+    "NextRank": "Armor_195_Head",
+    "IconActorName": "Armor_183_Head",
+    "PrevRank": "Armor_183_Head"
   },
   "Armor_175_Upper": {
     "Name": "Island Lobster Shirt",
@@ -2235,31 +2553,40 @@
   "Armor_219_Head": {
     "Name": "Cap of the Sky",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_215_Head",
+    "PrevRank": "Armor_218_Head"
   },
   "Armor_203_Head": {
     "Name": "Cap of Time",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_204_Head"
+    "NextRank": "Armor_204_Head",
+    "IconActorName": "Armor_200_Head",
+    "PrevRank": "Armor_202_Head"
   },
   "Armor_095_Head": {
     "Name": "Soldier's Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_096_Head"
+    "NextRank": "Armor_096_Head",
+    "IconActorName": "Armor_020_Head",
+    "PrevRank": "Armor_020_Head"
   },
   "Armor_037_Upper": {
     "Name": "Flamebreaker Armor",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_074_Upper"
+    "NextRank": "Armor_074_Upper",
+    "IconActorName": "Armor_011_Upper",
+    "PrevRank": "Armor_011_Upper"
   },
   "Armor_025_Head": {
     "Name": "Ruby Circlet",
     "StarNum": 1,
     "Defence": 3,
-    "NextRank": "Armor_121_Head"
+    "NextRank": "Armor_121_Head",
+    "IconActorName": "Obj_Head_025"
   },
   "Armor_500_Upper": {
     "Name": "Armor_500_Upper",
@@ -2269,18 +2596,23 @@
   "Armor_224_Head_B": {
     "Name": "Sheik's Mask",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_220_Head"
   },
   "Armor_189_Head": {
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_181_Head",
+    "PrevRank": "Armor_188_Head"
   },
   "Armor_077_Head": {
     "Name": "Stealth Mask",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_078_Head"
+    "NextRank": "Armor_078_Head",
+    "IconActorName": "Armor_012_Head",
+    "PrevRank": "Armor_042_Head"
   },
   "Armor_141_Lower": {
     "Name": "Snow Boots",
@@ -2291,18 +2623,24 @@
   "Armor_234_Upper": {
     "Name": "Tunic of the Hero",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_230_Upper",
+    "PrevRank": "Armor_233_Upper"
   },
   "Armor_204_Head": {
     "Name": "Cap of Time",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_200_Head",
+    "PrevRank": "Armor_203_Head"
   },
   "Armor_232_Lower": {
     "Name": "Trousers of the Hero",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_233_Lower"
+    "NextRank": "Armor_233_Lower",
+    "IconActorName": "Armor_230_Lower",
+    "PrevRank": "Armor_231_Lower"
   },
   "Armor_022_Head": {
     "Name": "Bokoblin Mask",
@@ -2313,25 +2651,33 @@
     "Name": "Amber Earrings",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_140_Head"
+    "NextRank": "Armor_140_Head",
+    "IconActorName": "Obj_Head_029",
+    "PrevRank": "Armor_138_Head"
   },
   "Armor_003_Lower": {
     "Name": "Hylian Trousers",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_004_Lower"
+    "NextRank": "Armor_004_Lower",
+    "IconActorName": "Armor_001_Lower",
+    "PrevRank": "Armor_002_Lower"
   },
   "Armor_062_Upper": {
     "Name": "Zora Armor",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_063_Upper"
+    "NextRank": "Armor_063_Upper",
+    "IconActorName": "Armor_006_Upper",
+    "PrevRank": "Armor_007_Upper"
   },
   "Armor_123_Head": {
     "Name": "Ruby Circlet",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_124_Head"
+    "NextRank": "Armor_124_Head",
+    "IconActorName": "Obj_Head_025",
+    "PrevRank": "Armor_122_Head"
   },
   "Armor_008_Lower": {
     "Name": "Desert Voe Trousers",
@@ -2353,42 +2699,55 @@
   "Armor_064_Lower": {
     "Name": "Zora Greaves",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_006_Lower",
+    "PrevRank": "Armor_063_Lower"
   },
   "Armor_088_Head": {
     "Name": "Radiant Mask",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_089_Head"
+    "NextRank": "Armor_089_Head",
+    "IconActorName": "Armor_017_Head",
+    "PrevRank": "Armor_087_Head"
   },
   "Armor_193_Head": {
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_182_Head",
+    "PrevRank": "Armor_192_Head"
   },
   "Armor_156_Lower": {
     "Name": "Snow Boots",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_157_Lower"
+    "NextRank": "Armor_157_Lower",
+    "IconActorName": "Armor_141_Lower",
+    "PrevRank": "Armor_141_Lower"
   },
   "Armor_228_Upper": {
     "Name": "Fierce Deity Armor",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_229_Upper"
+    "NextRank": "Armor_229_Upper",
+    "IconActorName": "Armor_225_Upper",
+    "PrevRank": "Armor_227_Upper"
   },
   "Armor_223_Head_B": {
     "Name": "Sheik's Mask",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_224_Head"
+    "NextRank": "Armor_224_Head",
+    "IconActorName": "Armor_220_Head"
   },
   "Armor_150_Upper": {
     "Name": "Champion's Tunic",
     "StarNum": 4,
     "Defence": 22,
-    "NextRank": "Armor_151_Upper"
+    "NextRank": "Armor_151_Upper",
+    "IconActorName": "Armor_116_Upper",
+    "PrevRank": "Armor_149_Upper"
   },
   "Armor_225_Lower": {
     "Name": "Fierce Deity Boots",
@@ -2400,7 +2759,9 @@
     "Name": "Stealth Tights",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_079_Lower"
+    "NextRank": "Armor_079_Lower",
+    "IconActorName": "Armor_012_Lower",
+    "PrevRank": "Armor_077_Lower"
   },
   "Armor_053_Head": {
     "Name": "Gerudo Veil",
@@ -2423,7 +2784,9 @@
     "Name": "Flamebreaker Armor",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_076_Upper"
+    "NextRank": "Armor_076_Upper",
+    "IconActorName": "Armor_011_Upper",
+    "PrevRank": "Armor_074_Upper"
   },
   "Armor_012_Upper": {
     "Name": "Stealth Chest Guard",
@@ -2440,12 +2803,16 @@
   "Armor_073_Lower": {
     "Name": "Snowquill Trousers",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_009_Lower",
+    "PrevRank": "Armor_072_Lower"
   },
   "Armor_234_Head": {
     "Name": "Cap of the Hero",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_230_Head",
+    "PrevRank": "Armor_233_Head"
   },
   "Armor_Default_Head": {
     "Name": "Armor_Default_Head",
@@ -2462,7 +2829,9 @@
     "Name": "Trousers of the Hero",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_232_Lower"
+    "NextRank": "Armor_232_Lower",
+    "IconActorName": "Armor_230_Lower",
+    "PrevRank": "Armor_230_Lower"
   },
   "Armor_008_Head": {
     "Name": "Desert Voe Headband",
@@ -2474,17 +2843,23 @@
     "Name": "Barbarian Helm",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_114_Head"
+    "NextRank": "Armor_114_Head",
+    "IconActorName": "Armor_048_Head",
+    "PrevRank": "Armor_112_Head"
   },
   "Armor_061_Upper": {
     "Name": "Tunic of the Wild",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_005_Upper",
+    "PrevRank": "Armor_060_Upper"
   },
   "Armor_067_Lower": {
     "Name": "Desert Voe Trousers",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_008_Lower",
+    "PrevRank": "Armor_066_Lower"
   },
   "Armor_006_Upper": {
     "Name": "Zora Armor",
@@ -2495,30 +2870,40 @@
   "Armor_155_Lower": {
     "Name": "Sand Boots",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_049_Lower",
+    "PrevRank": "Armor_154_Lower"
   },
   "Armor_137_Head": {
     "Name": "Amber Earrings",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_138_Head"
+    "NextRank": "Armor_138_Head",
+    "IconActorName": "Obj_Head_029",
+    "PrevRank": "Armor_029_Head"
   },
   "Armor_187_Head": {
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_188_Head"
+    "NextRank": "Armor_188_Head",
+    "IconActorName": "Armor_181_Head",
+    "PrevRank": "Armor_186_Head"
   },
   "Armor_079_Head": {
     "Name": "Stealth Mask",
     "StarNum": 5,
-    "Defence": 16
+    "Defence": 16,
+    "IconActorName": "Armor_012_Head",
+    "PrevRank": "Armor_078_Head_B"
   },
   "Armor_226_Lower": {
     "Name": "Fierce Deity Boots",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_227_Lower"
+    "NextRank": "Armor_227_Lower",
+    "IconActorName": "Armor_225_Lower",
+    "PrevRank": "Armor_225_Lower"
   },
   "Armor_210_Head": {
     "Name": "Cap of Twilight",
@@ -2529,7 +2914,9 @@
   "Armor_076_Upper": {
     "Name": "Flamebreaker Armor",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_011_Upper",
+    "PrevRank": "Armor_075_Upper"
   },
   "Armor_017_Lower": {
     "Name": "Radiant Tights",
@@ -2546,18 +2933,24 @@
     "Name": "Zora Helm",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_064_Head"
+    "NextRank": "Armor_064_Head",
+    "IconActorName": "Armor_006_Head",
+    "PrevRank": "Armor_062_Head"
   },
   "Armor_086_Head": {
     "Name": "Climber's Bandanna",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_014_Head",
+    "PrevRank": "Armor_085_Head"
   },
   "Armor_036_Head": {
     "Name": "Snowquill Headdress",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_071_Head"
+    "NextRank": "Armor_071_Head",
+    "IconActorName": "Armor_009_Head",
+    "PrevRank": "Armor_009_Head"
   },
   "Armor_011_Upper": {
     "Name": "Flamebreaker Armor",
@@ -2568,52 +2961,69 @@
   "Armor_064_Head": {
     "Name": "Zora Helm",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_006_Head",
+    "PrevRank": "Armor_063_Head"
   },
   "Armor_003_Head_B": {
     "Name": "Armor_001",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_004_Head"
+    "NextRank": "Armor_004_Head",
+    "IconActorName": "Armor_001_Head"
   },
   "Armor_212_Upper": {
     "Name": "Tunic of Twilight",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_213_Upper"
+    "NextRank": "Armor_213_Upper",
+    "IconActorName": "Armor_210_Upper",
+    "PrevRank": "Armor_211_Upper"
   },
   "Armor_217_Head": {
     "Name": "Cap of the Sky",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_218_Head"
+    "NextRank": "Armor_218_Head",
+    "IconActorName": "Armor_215_Head",
+    "PrevRank": "Armor_216_Head"
   },
   "Armor_106_Upper": {
     "Name": "Rubber Armor",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_046_Upper",
+    "PrevRank": "Armor_105_Upper"
   },
   "Armor_219_Upper": {
     "Name": "Tunic of the Sky",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_215_Upper",
+    "PrevRank": "Armor_218_Upper"
   },
   "Armor_100_Lower": {
     "Name": "Ancient Greaves",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_101_Lower"
+    "NextRank": "Armor_101_Lower",
+    "IconActorName": "Armor_021_Lower",
+    "PrevRank": "Armor_099_Lower"
   },
   "Armor_214_Lower": {
     "Name": "Trousers of Twilight",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_210_Lower",
+    "PrevRank": "Armor_213_Lower"
   },
   "Armor_087_Lower": {
     "Name": "Radiant Tights",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_088_Lower"
+    "NextRank": "Armor_088_Lower",
+    "IconActorName": "Armor_017_Lower",
+    "PrevRank": "Armor_017_Lower"
   },
   "Armor_049_Lower": {
     "Name": "Sand Boots",
@@ -2630,13 +3040,17 @@
     "Name": "Topaz Earrings",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_131_Head"
+    "NextRank": "Armor_131_Head",
+    "IconActorName": "Obj_Head_027",
+    "PrevRank": "Armor_129_Head"
   },
   "Armor_042_Lower": {
     "Name": "Stealth Tights",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_077_Lower"
+    "NextRank": "Armor_077_Lower",
+    "IconActorName": "Armor_012_Lower",
+    "PrevRank": "Armor_012_Lower"
   },
   "Armor_180_Head": {
     "Name": "Phantom Ganon Skull",
@@ -2647,18 +3061,24 @@
     "Name": "Trousers of the Wind",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_209_Lower"
+    "NextRank": "Armor_209_Lower",
+    "IconActorName": "Armor_205_Lower",
+    "PrevRank": "Armor_207_Lower"
   },
   "Armor_111_Upper": {
     "Name": "Barbarian Armor",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_112_Upper"
+    "NextRank": "Armor_112_Upper",
+    "IconActorName": "Armor_048_Upper",
+    "PrevRank": "Armor_048_Upper"
   },
   "Armor_114_Head": {
     "Name": "Barbarian Helm",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_048_Head",
+    "PrevRank": "Armor_113_Head"
   },
   "Armor_205_Upper": {
     "Name": "Tunic of the Wind",
@@ -2670,29 +3090,38 @@
     "Name": "Soldier's Armor",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_097_Upper"
+    "NextRank": "Armor_097_Upper",
+    "IconActorName": "Armor_020_Upper",
+    "PrevRank": "Armor_095_Upper"
   },
   "Armor_004_Head_B": {
     "Name": "Armor_001",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_015_Head"
+    "NextRank": "Armor_015_Head",
+    "IconActorName": "Armor_001_Head"
   },
   "Armor_229_Head": {
     "Name": "Fierce Deity Mask",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_225_Head",
+    "PrevRank": "Armor_228_Head"
   },
   "Armor_203_Lower": {
     "Name": "Trousers of Time",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_204_Lower"
+    "NextRank": "Armor_204_Lower",
+    "IconActorName": "Armor_200_Lower",
+    "PrevRank": "Armor_202_Lower"
   },
   "Armor_090_Lower": {
     "Name": "Radiant Tights",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_017_Lower",
+    "PrevRank": "Armor_089_Lower"
   },
   "Armor_053_Upper": {
     "Name": "Gerudo Top",
@@ -2703,24 +3132,32 @@
     "Name": "Desert Voe Headband",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_065_Head"
+    "NextRank": "Armor_065_Head",
+    "IconActorName": "Armor_008_Head",
+    "PrevRank": "Armor_008_Head"
   },
   "Armor_233_Head": {
     "Name": "Cap of the Hero",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_234_Head"
+    "NextRank": "Armor_234_Head",
+    "IconActorName": "Armor_230_Head",
+    "PrevRank": "Armor_232_Head"
   },
   "Armor_015_Head": {
     "Name": "Hylian Hood",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_001_Head",
+    "PrevRank": "Armor_004_Head"
   },
   "Armor_039_Lower": {
     "Name": "Trousers of the Wild",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_060_Lower"
+    "NextRank": "Armor_060_Lower",
+    "IconActorName": "Armor_005_Lower",
+    "PrevRank": "Armor_035_Lower"
   },
   "Armor_177_Head_B": {
     "Name": "Armor_177_Head_B",
@@ -2730,54 +3167,71 @@
   "Armor_169_Head": {
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_184_Head",
+    "PrevRank": "Armor_168_Head"
   },
   "Armor_072_Head": {
     "Name": "Snowquill Headdress",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_073_Head"
+    "NextRank": "Armor_073_Head",
+    "IconActorName": "Armor_009_Head",
+    "PrevRank": "Armor_071_Head"
   },
   "Armor_097_Head": {
     "Name": "Soldier's Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_098_Head"
+    "NextRank": "Armor_098_Head",
+    "IconActorName": "Armor_020_Head",
+    "PrevRank": "Armor_096_Head"
   },
   "Armor_201_Head": {
     "Name": "Cap of Time",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_202_Head"
+    "NextRank": "Armor_202_Head",
+    "IconActorName": "Armor_200_Head",
+    "PrevRank": "Armor_200_Head"
   },
   "Armor_027_Head": {
     "Name": "Topaz Earrings",
     "StarNum": 1,
     "Defence": 3,
-    "NextRank": "Armor_129_Head"
+    "NextRank": "Armor_129_Head",
+    "IconActorName": "Obj_Head_027"
   },
   "Armor_231_Upper": {
     "Name": "Tunic of the Hero",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_232_Upper"
+    "NextRank": "Armor_232_Upper",
+    "IconActorName": "Armor_230_Upper",
+    "PrevRank": "Armor_230_Upper"
   },
   "Armor_149_Upper": {
     "Name": "Champion's Tunic",
     "StarNum": 3,
     "Defence": 14,
-    "NextRank": "Armor_150_Upper"
+    "NextRank": "Armor_150_Upper",
+    "IconActorName": "Armor_116_Upper",
+    "PrevRank": "Armor_148_Upper"
   },
   "Armor_126_Head": {
     "Name": "Sapphire Circlet",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_127_Head"
+    "NextRank": "Armor_127_Head",
+    "IconActorName": "Obj_Head_026",
+    "PrevRank": "Armor_125_Head"
   },
   "Armor_061_Lower": {
     "Name": "Trousers of the Wild",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_005_Lower",
+    "PrevRank": "Armor_060_Lower"
   },
   "Armor_006_Lower": {
     "Name": "Zora Greaves",
@@ -2788,13 +3242,17 @@
   "Armor_067_Upper": {
     "Name": "Desert Voe Spaulder",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_008_Upper",
+    "PrevRank": "Armor_066_Upper"
   },
   "Armor_196_Head": {
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 4,
     "Defence": 18,
-    "NextRank": "Armor_197_Head"
+    "NextRank": "Armor_197_Head",
+    "IconActorName": "Armor_183_Head",
+    "PrevRank": "Armor_195_Head"
   },
   "Armor_173_Head": {
     "Name": "Midna's Helmet",
@@ -2804,19 +3262,25 @@
   "Armor_102_Head": {
     "Name": "Ancient Helm",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_021_Head",
+    "PrevRank": "Armor_101_Head"
   },
   "Armor_158_Lower": {
     "Name": "Snow Boots",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_159_Lower"
+    "NextRank": "Armor_159_Lower",
+    "IconActorName": "Armor_141_Lower",
+    "PrevRank": "Armor_157_Lower"
   },
   "Armor_226_Upper": {
     "Name": "Fierce Deity Armor",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_227_Upper"
+    "NextRank": "Armor_227_Upper",
+    "IconActorName": "Armor_225_Upper",
+    "PrevRank": "Armor_225_Upper"
   },
   "Armor_501_Head": {
     "Name": "Armor_501_Head",
@@ -2827,7 +3291,9 @@
     "Name": "Sand Boots",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_154_Lower"
+    "NextRank": "Armor_154_Lower",
+    "IconActorName": "Armor_049_Lower",
+    "PrevRank": "Armor_152_Lower"
   },
   "Armor_056_Head": {
     "Name": "Lynel Mask",
@@ -2843,7 +3309,9 @@
   "Armor_076_Lower": {
     "Name": "Flamebreaker Boots",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_011_Lower",
+    "PrevRank": "Armor_075_Lower"
   },
   "Armor_225_Head": {
     "Name": "Fierce Deity Mask",
@@ -2855,13 +3323,17 @@
     "Name": "Hylian Hood",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_004_Head"
+    "NextRank": "Armor_004_Head",
+    "IconActorName": "Armor_001_Head",
+    "PrevRank": "Armor_002_Head_B"
   },
   "Armor_118_Head": {
     "Name": "Diamond Circlet",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_119_Head"
+    "NextRank": "Armor_119_Head",
+    "IconActorName": "Obj_Head_024",
+    "PrevRank": "Armor_117_Head"
   },
   "Armor_011_Lower": {
     "Name": "Flamebreaker Boots",
@@ -2873,82 +3345,109 @@
     "Name": "Sheik's Mask",
     "StarNum": 3,
     "Defence": 6,
-    "NextRank": "Armor_223_Head"
+    "NextRank": "Armor_223_Head",
+    "IconActorName": "Armor_220_Head",
+    "PrevRank": "Armor_221_Head_B"
   },
   "Armor_212_Lower": {
     "Name": "Trousers of Twilight",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_213_Lower"
+    "NextRank": "Armor_213_Lower",
+    "IconActorName": "Armor_210_Lower",
+    "PrevRank": "Armor_211_Lower"
   },
   "Armor_106_Lower": {
     "Name": "Rubber Tights",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_046_Lower",
+    "PrevRank": "Armor_105_Lower"
   },
   "Armor_100_Upper": {
     "Name": "Ancient Cuirass",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_101_Upper"
+    "NextRank": "Armor_101_Upper",
+    "IconActorName": "Armor_021_Upper",
+    "PrevRank": "Armor_099_Upper"
   },
   "Armor_219_Lower": {
     "Name": "Trousers of the Sky",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_215_Lower",
+    "PrevRank": "Armor_218_Lower"
   },
   "Armor_087_Upper": {
     "Name": "Radiant Shirt",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_088_Upper"
+    "NextRank": "Armor_088_Upper",
+    "IconActorName": "Armor_017_Upper",
+    "PrevRank": "Armor_017_Upper"
   },
   "Armor_214_Upper": {
     "Name": "Tunic of Twilight",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_210_Upper",
+    "PrevRank": "Armor_213_Upper"
   },
   "Armor_004_Head": {
     "Name": "Hylian Hood",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_015_Head"
+    "NextRank": "Armor_015_Head",
+    "IconActorName": "Armor_001_Head",
+    "PrevRank": "Armor_003_Head"
   },
   "Armor_105_Head": {
     "Name": "Rubber Helm",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_106_Head"
+    "NextRank": "Armor_106_Head",
+    "IconActorName": "Armor_046_Head",
+    "PrevRank": "Armor_104_Head"
   },
   "Armor_042_Upper": {
     "Name": "Stealth Chest Guard",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_077_Upper"
+    "NextRank": "Armor_077_Upper",
+    "IconActorName": "Armor_012_Upper",
+    "PrevRank": "Armor_012_Upper"
   },
   "Armor_111_Lower": {
     "Name": "Barbarian Leg Wraps",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_112_Lower"
+    "NextRank": "Armor_112_Lower",
+    "IconActorName": "Armor_048_Lower",
+    "PrevRank": "Armor_048_Lower"
   },
   "Armor_121_Head": {
     "Name": "Ruby Circlet",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_122_Head"
+    "NextRank": "Armor_122_Head",
+    "IconActorName": "Obj_Head_025",
+    "PrevRank": "Armor_025_Head"
   },
   "Armor_208_Upper": {
     "Name": "Tunic of the Wind",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_209_Upper"
+    "NextRank": "Armor_209_Upper",
+    "IconActorName": "Armor_205_Upper",
+    "PrevRank": "Armor_207_Upper"
   },
   "Armor_221_Head_B": {
     "Name": "Sheik's Mask",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_222_Head"
+    "NextRank": "Armor_222_Head",
+    "IconActorName": "Armor_220_Head"
   },
   "Armor_170_Upper": {
     "Name": "Nintendo Switch Shirt",
@@ -2959,7 +3458,9 @@
     "Name": "Soldier's Greaves",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_097_Lower"
+    "NextRank": "Armor_097_Lower",
+    "IconActorName": "Armor_020_Lower",
+    "PrevRank": "Armor_095_Lower"
   },
   "Armor_205_Lower": {
     "Name": "Trousers of the Wind",
@@ -2970,19 +3471,25 @@
   "Armor_090_Upper": {
     "Name": "Radiant Shirt",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_017_Upper",
+    "PrevRank": "Armor_089_Upper"
   },
   "Armor_191_Head": {
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_192_Head"
+    "NextRank": "Armor_192_Head",
+    "IconActorName": "Armor_182_Head",
+    "PrevRank": "Armor_190_Head"
   },
   "Armor_203_Upper": {
     "Name": "Tunic of Time",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_204_Upper"
+    "NextRank": "Armor_204_Upper",
+    "IconActorName": "Armor_200_Upper",
+    "PrevRank": "Armor_202_Upper"
   },
   "Armor_174_Head": {
     "Name": "Tingle's Hood",
@@ -2993,7 +3500,9 @@
     "Name": "Cap of the Wind",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_207_Head"
+    "NextRank": "Armor_207_Head",
+    "IconActorName": "Armor_205_Head",
+    "PrevRank": "Armor_205_Head"
   },
   "Armor_053_Lower": {
     "Name": "Gerudo Sirwal",
@@ -3004,18 +3513,24 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_076_Head"
+    "NextRank": "Armor_076_Head",
+    "IconActorName": "Armor_011_Head",
+    "PrevRank": "Armor_074_Head"
   },
   "Armor_090_Head": {
     "Name": "Radiant Mask",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_017_Head",
+    "PrevRank": "Armor_089_Head"
   },
   "Armor_039_Upper": {
     "Name": "Tunic of the Wild",
     "StarNum": 3,
     "Defence": 12,
-    "NextRank": "Armor_060_Upper"
+    "NextRank": "Armor_060_Upper",
+    "IconActorName": "Armor_005_Upper",
+    "PrevRank": "Armor_035_Upper"
   },
   "Armor_020_Head": {
     "Name": "Soldier's Helm",
@@ -3027,66 +3542,88 @@
     "Name": "Climber's Bandanna",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_085_Head"
+    "NextRank": "Armor_085_Head",
+    "IconActorName": "Armor_014_Head",
+    "PrevRank": "Armor_083_Head"
   },
   "Armor_061_Head": {
     "Name": "Cap of the Wild",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_005_Head",
+    "PrevRank": "Armor_060_Head"
   },
   "Armor_105_Lower": {
     "Name": "Rubber Tights",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_106_Lower"
+    "NextRank": "Armor_106_Lower",
+    "IconActorName": "Armor_046_Lower",
+    "PrevRank": "Armor_104_Lower"
   },
   "Armor_211_Lower": {
     "Name": "Trousers of Twilight",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_212_Lower"
+    "NextRank": "Armor_212_Lower",
+    "IconActorName": "Armor_210_Lower",
+    "PrevRank": "Armor_210_Lower"
   },
   "Armor_212_Head": {
     "Name": "Cap of Twilight",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_213_Head"
+    "NextRank": "Armor_213_Head",
+    "IconActorName": "Armor_210_Head",
+    "PrevRank": "Armor_211_Head"
   },
   "Armor_217_Upper": {
     "Name": "Tunic of the Sky",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_218_Upper"
+    "NextRank": "Armor_218_Upper",
+    "IconActorName": "Armor_215_Upper",
+    "PrevRank": "Armor_216_Upper"
   },
   "Armor_084_Upper": {
     "Name": "Climbing Gear",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_085_Upper"
+    "NextRank": "Armor_085_Upper",
+    "IconActorName": "Armor_014_Upper",
+    "PrevRank": "Armor_083_Upper"
   },
   "Armor_089_Lower": {
     "Name": "Radiant Tights",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_090_Lower"
+    "NextRank": "Armor_090_Lower",
+    "IconActorName": "Armor_017_Lower",
+    "PrevRank": "Armor_088_Lower"
   },
   "Armor_103_Upper": {
     "Name": "Rubber Armor",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_104_Upper"
+    "NextRank": "Armor_104_Upper",
+    "IconActorName": "Armor_046_Upper",
+    "PrevRank": "Armor_046_Upper"
   },
   "Armor_135_Head": {
     "Name": "Opal Earrings",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_136_Head"
+    "NextRank": "Armor_136_Head",
+    "IconActorName": "Obj_Head_028",
+    "PrevRank": "Armor_134_Head"
   },
   "Armor_208_Head": {
     "Name": "Cap of the Wind",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_209_Head"
+    "NextRank": "Armor_209_Head",
+    "IconActorName": "Armor_205_Head",
+    "PrevRank": "Armor_207_Head"
   },
   "Armor_160_Head": {
     "Name": "Dark Hood",
@@ -3108,35 +3645,47 @@
     "Name": "Trousers of the Wind",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_207_Lower"
+    "NextRank": "Armor_207_Lower",
+    "IconActorName": "Armor_205_Lower",
+    "PrevRank": "Armor_205_Lower"
   },
   "Armor_095_Lower": {
     "Name": "Soldier's Greaves",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_096_Lower"
+    "NextRank": "Armor_096_Lower",
+    "IconActorName": "Armor_020_Lower",
+    "PrevRank": "Armor_020_Lower"
   },
   "Armor_111_Head": {
     "Name": "Barbarian Helm",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_112_Head"
+    "NextRank": "Armor_112_Head",
+    "IconActorName": "Armor_048_Head",
+    "PrevRank": "Armor_048_Head"
   },
   "Armor_098_Upper": {
     "Name": "Soldier's Armor",
     "StarNum": 5,
-    "Defence": 28
+    "Defence": 28,
+    "IconActorName": "Armor_020_Upper",
+    "PrevRank": "Armor_097_Upper"
   },
   "Armor_112_Lower": {
     "Name": "Barbarian Leg Wraps",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_113_Lower"
+    "NextRank": "Armor_113_Lower",
+    "IconActorName": "Armor_048_Lower",
+    "PrevRank": "Armor_111_Lower"
   },
   "Armor_114_Upper": {
     "Name": "Barbarian Armor",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_048_Upper",
+    "PrevRank": "Armor_113_Upper"
   },
   "Armor_200_Upper": {
     "Name": "Tunic of Time",
@@ -3153,7 +3702,9 @@
     "Name": "Flamebreaker Boots",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_074_Lower"
+    "NextRank": "Armor_074_Lower",
+    "IconActorName": "Armor_011_Lower",
+    "PrevRank": "Armor_011_Lower"
   },
   "Armor_500_Lower": {
     "Name": "Armor_500_Lower",
@@ -3164,24 +3715,32 @@
     "Name": "Cap of the Hero",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_232_Head"
+    "NextRank": "Armor_232_Head",
+    "IconActorName": "Armor_230_Head",
+    "PrevRank": "Armor_230_Head"
   },
   "Armor_234_Lower": {
     "Name": "Trousers of the Hero",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_230_Lower",
+    "PrevRank": "Armor_233_Lower"
   },
   "Armor_042_Head": {
     "Name": "Stealth Mask",
     "StarNum": 2,
     "Defence": 4,
-    "NextRank": "Armor_077_Head"
+    "NextRank": "Armor_077_Head",
+    "IconActorName": "Armor_012_Head",
+    "PrevRank": "Armor_012_Head"
   },
   "Armor_232_Upper": {
     "Name": "Tunic of the Hero",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_233_Upper"
+    "NextRank": "Armor_233_Upper",
+    "IconActorName": "Armor_230_Upper",
+    "PrevRank": "Armor_231_Upper"
   },
   "Armor_001_Head_B": {
     "Name": "Armor_001",
@@ -3199,13 +3758,17 @@
     "Name": "Zora Greaves",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_063_Lower"
+    "NextRank": "Armor_063_Lower",
+    "IconActorName": "Armor_006_Lower",
+    "PrevRank": "Armor_007_Lower"
   },
   "Armor_003_Upper": {
     "Name": "Hylian Tunic",
     "StarNum": 3,
     "Defence": 8,
-    "NextRank": "Armor_004_Upper"
+    "NextRank": "Armor_004_Upper",
+    "IconActorName": "Armor_001_Upper",
+    "PrevRank": "Armor_002_Upper"
   },
   "Armor_008_Upper": {
     "Name": "Desert Voe Spaulder",
@@ -3216,7 +3779,9 @@
   "Armor_064_Upper": {
     "Name": "Zora Armor",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_006_Upper",
+    "PrevRank": "Armor_063_Upper"
   },
   "Armor_005_Lower": {
     "Name": "Trousers of the Wild",
@@ -3228,24 +3793,31 @@
     "Name": "Amber Earrings",
     "StarNum": 1,
     "Defence": 4,
-    "NextRank": "Armor_137_Head"
+    "NextRank": "Armor_137_Head",
+    "IconActorName": "Obj_Head_029"
   },
   "Armor_132_Head": {
     "Name": "Topaz Earrings",
     "StarNum": 5,
-    "Defence": 18
+    "Defence": 18,
+    "IconActorName": "Obj_Head_027",
+    "PrevRank": "Armor_131_Head"
   },
   "Armor_228_Lower": {
     "Name": "Fierce Deity Boots",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_229_Lower"
+    "NextRank": "Armor_229_Lower",
+    "IconActorName": "Armor_225_Lower",
+    "PrevRank": "Armor_227_Lower"
   },
   "Armor_099_Head": {
     "Name": "Ancient Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_100_Head"
+    "NextRank": "Armor_100_Head",
+    "IconActorName": "Armor_021_Head",
+    "PrevRank": "Armor_021_Head"
   },
   "Armor_182_Head": {
     "Name": "Vah Medoh Divine Helm",
@@ -3263,7 +3835,9 @@
     "Name": "Stealth Chest Guard",
     "StarNum": 4,
     "Defence": 9,
-    "NextRank": "Armor_079_Upper"
+    "NextRank": "Armor_079_Upper",
+    "IconActorName": "Armor_012_Upper",
+    "PrevRank": "Armor_077_Upper"
   },
   "Armor_215_Head": {
     "Name": "Cap of the Sky",
@@ -3275,19 +3849,25 @@
     "Name": "Climber's Bandanna",
     "StarNum": 2,
     "Defence": 5,
-    "NextRank": "Armor_084_Head"
+    "NextRank": "Armor_084_Head",
+    "IconActorName": "Armor_014_Head",
+    "PrevRank": "Armor_014_Head"
   },
   "Armor_198_Head": {
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 2,
     "Defence": 7,
-    "NextRank": "Armor_199_Head"
+    "NextRank": "Armor_199_Head",
+    "IconActorName": "Armor_184_Head",
+    "PrevRank": "Armor_184_Head"
   },
   "Armor_075_Lower": {
     "Name": "Flamebreaker Boots",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_076_Lower"
+    "NextRank": "Armor_076_Lower",
+    "IconActorName": "Armor_011_Lower",
+    "PrevRank": "Armor_074_Lower"
   },
   "Armor_014_Upper": {
     "Name": "Climbing Gear",
@@ -3299,12 +3879,16 @@
     "Name": "Desert Voe Headband",
     "StarNum": 4,
     "Defence": 12,
-    "NextRank": "Armor_067_Head"
+    "NextRank": "Armor_067_Head",
+    "IconActorName": "Armor_008_Head",
+    "PrevRank": "Armor_065_Head"
   },
   "Armor_073_Upper": {
     "Name": "Snowquill Tunic",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Armor_009_Upper",
+    "PrevRank": "Armor_072_Upper"
   },
   "Armor_012_Lower": {
     "Name": "Stealth Tights",
@@ -3315,6 +3899,8 @@
   "Armor_128_Head": {
     "Name": "Sapphire Circlet",
     "StarNum": 5,
-    "Defence": 20
+    "Defence": 20,
+    "IconActorName": "Obj_Head_026",
+    "PrevRank": "Armor_127_Head"
   }
 }

@@ -35,7 +35,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
 
     // Determine whether to use an image or plain text for the button
-    std::string thumbPath = Rune::Inventory::getThumbPathFromActorName(inventoryItem.actorName);
+    std::string thumbPath = inventoryItem.thumbPath;
 
     // If the thumbnail path exists, add an image
     if (!thumbPath.empty()){
@@ -156,18 +156,18 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         case (Rune::Inventory::TileType::Add): {
             // Show "+" symbol
             tileBtn->setString("+");
-            tileBtn->onPress([menu, widget](){
+            tileBtn->onPress([menu, inventoryItem, widget](){
                 // Add a new slot
                 // Find the save key
                 Rune::Save::File* saveFile = menu->saveFile();
-                auto it = Rune::Inventory::kSlotKeys.find(menu->menuName());
+                auto it = Rune::Inventory::kSlotKeys.find(inventoryItem.category);
 
                 if (it != Rune::Inventory::kSlotKeys.end()){ // If found, modify
                     std::string slotKey = it->second;
                     Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*saveFile, slotKey);
                     
                     // for bounds checking
-                    auto it = Rune::Inventory::kMaxSlots.find(menu->menuName());
+                    auto it = Rune::Inventory::kMaxSlots.find(inventoryItem.category);
                     int maxSlots = -1;
 
                     if (it != Rune::Inventory::kMaxSlots.end()){

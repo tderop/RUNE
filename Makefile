@@ -69,7 +69,7 @@ OUTPUTDIR  := output
 ROMFS      := romfs
 
 # requires rsync
-ROMFS_FILTER ?= 1
+ROMFS_FILTER ?= 0
 ROMFS_BLACKLIST ?= img/thumb sound
 ROMFS_STAGING := $(TOPDIR)/$(BUILD)/romfs_staging
 

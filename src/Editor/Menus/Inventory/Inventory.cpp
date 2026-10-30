@@ -17,6 +17,8 @@
 #include <map>
 #include <cmath>
 #include <filesystem>
+#include <sstream>
+#include <iomanip>
 
 /**
  * Rune::Inventory::Item Value:
@@ -43,26 +45,81 @@ std::string Rune::Inventory::getNameFromActorName(const std::string& actorName){
     return actorNameEntry->get<std::string>();
 }
 
-std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorName=""){
+std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorName, bool noVerify){
     // Build the full path to the thumbnail asset
     std::string fullPath = THUMB_PATH+actorName+".png";
 
     // Check if there is a file there, and return an empty string if the file does not exist.
-    return (std::filesystem::exists(fullPath)) ? fullPath : "";
+    if (!noVerify){
+        return (std::filesystem::exists(fullPath)) ? fullPath : "";
+    } else {
+        return fullPath;
+    }
+}
+
+
+Rune::Inventory::Category Rune::Inventory::getCategoryFromMenuName(const std::string& menuName){
+    auto it = Rune::Inventory::kMenuNameToCategory.find(menuName);
+    if (it == Rune::Inventory::kMenuNameToCategory.end()){
+        return Rune::Inventory::Category::Unknown;
+    }
+
+    return it->second;
 }
 
 std::string Rune::Inventory::getThumbPathFromInventoryItem(const Rune::Inventory::Item& inventoryItem){
     // Mainly for handling dyed armor/elixirs
+    std::string iconActorName = inventoryItem.iconActorName;
+    if (iconActorName.empty()){
+        iconActorName = inventoryItem.actorName;
+    }
+    int32_t value = inventoryItem.value;
+
+    // Individual category handlers
+    switch (inventoryItem.category){
+        // Armor - dye colours
+        case (Rune::Inventory::Category::Armor): {
+            // Set fileId to actorName, build rest of fileId based on value
+            std::string fileId = iconActorName;
+
+            // Append the dye ID (e.g. .00 for no dye, .01 for dye, don't append anything if undyeable)
+            if (value != -1){
+                std::stringstream dyeIdentifier;
+                dyeIdentifier << "." << std::setfill('0') << std::setw(2) << value;
+
+                // Build the full image path
+                std::string fullPath = THUMB_PATH + fileId + dyeIdentifier.str() + ".png";
+
+                // Return the full path only if exists
+                if (!std::filesystem::exists(fullPath)){
+                    std::string fallbackPath = Rune::Inventory::getThumbPathFromActorName(iconActorName);
+                    // log("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
+                    return fallbackPath;
+                } else {
+                    // log("[Rune::Inventory] - File exists! '"+fullPath+"'", true);
+                    return fullPath;
+                }
+            }
+
+            // Return the original path (not dyeable armor)
+            return Rune::Inventory::getThumbPathFromActorName(iconActorName);
+        }
+
+        default:
+            return Rune::Inventory::getThumbPathFromActorName(iconActorName);
+    }
+
+
     return "";
 }
 
 // Arrows may need to be handled separately
-std::vector<std::string> quantityMenus = {"Materials", "Food", "Key Items"};
 
-std::string formatValue(const std::string& menuName, const Rune::Inventory::Item& inventoryItem){
+
+std::string formatValue(const Rune::Inventory::Item& inventoryItem){
     // Quantity-based
-    for (const std::string& otherMenu : quantityMenus){
-        if (otherMenu == menuName){
+    for (const Rune::Inventory::Category& otherMenu: Rune::Inventory::kQuantityMenus){
+        if (otherMenu == inventoryItem.category){
             return "x"+std::to_string(inventoryItem.value);
         }
     }
@@ -71,7 +128,7 @@ std::string formatValue(const std::string& menuName, const Rune::Inventory::Item
     Rune::Json* equipmentJson;
     Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
 
-    auto it = Rune::Inventory::kLabelValueKeys.find(menuName);
+    auto it = Rune::Inventory::kLabelValueKeys.find(inventoryItem.category);
     if (it != Rune::Inventory::kLabelValueKeys.end()){
         std::string labelValueKey = it->second;
         auto it = equipmentJson->find(inventoryItem.actorName);
@@ -88,7 +145,7 @@ std::string formatValue(const std::string& menuName, const Rune::Inventory::Item
             log("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
         }
     } else {
-        log("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
+        // log("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
     }
     return "";
 }
@@ -140,7 +197,7 @@ void showTilePage(EditorMenu* menu, std::vector<Rune::Inventory::Item> inventory
             true,
             {
                 inventoryItem,
-                formatValue(menu->menuName(), inventoryItem),
+                formatValue(inventoryItem),
                 widgetBtn
             },
             menu->body()
@@ -170,8 +227,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     // Disable right stick navigation
     Aether::SetRightStickNavigation(false);
 
+    // Get the menu category
+    Rune::Inventory::Category menuCategory = Rune::Inventory::getCategoryFromMenuName(menu->menuName());
+
     // Determine if there are inventory keys for the current menu
-    auto prefixEntry = Rune::Inventory::kInventoryPrefixes.find(menu->menuName());
+    auto prefixEntry = Rune::Inventory::kInventoryPrefixes.find(menuCategory);
 
     // Do not proceed if no prefixes
     if (prefixEntry == Rune::Inventory::kInventoryPrefixes.end()){
@@ -183,7 +243,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     std::vector<std::string> prefixes = prefixEntry->second;
 
     // Check for ignores too
-    auto ignoresEntry = Rune::Inventory::kInventoryIgnores.find(menu->menuName());
+    auto ignoresEntry = Rune::Inventory::kInventoryIgnores.find(menuCategory);
     std::vector<std::string> ignores;
 
     if (ignoresEntry != Rune::Inventory::kInventoryIgnores.end()){
@@ -201,8 +261,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     auto itemValues = std::get<std::vector<int32_t>>(valuesEntry->value); 
 
     // Get buffs data
-    auto flagSpKeyEntry  = Rune::Inventory::kFlagSpKeys.find(menu->menuName());
-    auto valueSpKeyEntry = Rune::Inventory::kValueSpKeys.find(menu->menuName());
+    auto flagSpKeyEntry  = Rune::Inventory::kFlagSpKeys.find(menuCategory);
+    auto valueSpKeyEntry = Rune::Inventory::kValueSpKeys.find(menuCategory);
     
     Rune::Save::Entry* flagSpEntry;
     Rune::Save::Entry* valueSpEntry;
@@ -223,7 +283,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     int currentIdx = -1;
     int localIdx = 0; // this index only increments when a valid slot has been found
 
-    auto tileStyleEntry = Rune::Inventory::kLabelTileStyles.find(menu->menuName());
+    auto tileStyleEntry = Rune::Inventory::kLabelTileStyles.find(menuCategory);
     Rune::Inventory::TileStyle tileStyle = Rune::Inventory::TileStyle::NoLabel;
 
     // unpack style pair
@@ -287,25 +347,108 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         if (!valueSp.empty() && static_cast<int>(valueSp.size()) >= localIdx+1){
             itemValueSp = valueSp.at(localIdx);
         }
+
+        // Get other data from the equipment json
+        Rune::Json* equipmentJson;
+        Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+
+        auto itemEntry = equipmentJson->find(actorName);
+
+        // The actor name of the actor to use for this item's icon
+        std::string iconActorName;
+
+        // The next rank (armor only)
+        std::string nextRankActorName;
+
+        // The previous rank (armor only)
+        std::string prevRankActorName;
+
+        int attackDamage=-1;
+        int shieldGuard=-1;
+        int durability=-1;
+        int armorDefence=-1;
+
+        if (itemEntry != equipmentJson->end() && itemEntry->is_object()){
+            // Get the icon name override
+            auto iconActorNameStr = itemEntry->find("IconActorName");
+            if (iconActorNameStr != itemEntry->end() && iconActorNameStr->is_string()){
+                iconActorName = iconActorNameStr->get<std::string>();
+            }
+
+            // Get the next rank (armor only)
+            auto nextRank = itemEntry->find("NextRank");
+            if (nextRank != itemEntry->end() && nextRank->is_string()){
+                nextRankActorName = nextRank->get<std::string>();
+            }
+
+            // Get the previous rank
+            auto prevRank = itemEntry->find("PrevRank");
+            if (prevRank != itemEntry->end() && prevRank->is_string()){
+                prevRankActorName = prevRank->get<std::string>();
+            }
+
+            // Get the attack damage
+            auto atkEntry = itemEntry->find("Attack");
+            if (atkEntry != itemEntry->end() && atkEntry->is_number()){
+                attackDamage = atkEntry->get<int>();
+            }
+
+            // Get the shield guard
+            auto guardEntry = itemEntry->find("Guard");
+            if (guardEntry != itemEntry->end() && guardEntry->is_number()){
+                shieldGuard = guardEntry->get<int>();
+            }
+
+            // Get the equipment durability
+            auto durabilityEntry = itemEntry->find("Durability");
+            if (durabilityEntry != itemEntry->end() && durabilityEntry->is_number()){
+                durability = durabilityEntry->get<int>();
+            }
+
+            // Get the armor defence
+            auto defenceEntry = itemEntry->find("Defence");
+            if (defenceEntry != itemEntry->end() && defenceEntry->is_number()){
+                armorDefence = defenceEntry->get<int>();
+            }
+        }
         
+        // Make a new inventory item object representing the item in Link's pouch
         Rune::Inventory::Item inventoryItem{
             actorName, 
             itemName, 
             itemValue, 
             static_cast<size_t>(currentIdx),
-            menu->menuName(),
+            Rune::Inventory::getCategoryFromMenuName(menu->menuName()),
             itemFlagSp,
             itemValueSp,
             tileStyle
         };
 
+        // Assign extra data
+        inventoryItem.iconActorName     = iconActorName;
+        inventoryItem.nextRankActorName = nextRankActorName;
+        inventoryItem.prevRankActorName = prevRankActorName;
+        inventoryItem.attack     = attackDamage;
+        inventoryItem.guard      = shieldGuard;
+        inventoryItem.durability = durability;
+        inventoryItem.defence    = armorDefence;
+
+        log(itemName+std::to_string(itemValue), true);
+
+        // Assign the thumbnail path
+        inventoryItem.thumbPath = Rune::Inventory
+        ::getThumbPathFromInventoryItem(inventoryItem);
+
+        // Store the inventory item
         inventoryItems.push_back(inventoryItem);
+
+        // Increment the local index as the value was successfully parsed
         localIdx++;
     }
 
     // Pad to fill all available unlocked slots
     // // Show plus button only on this route
-    auto it = Rune::Inventory::kSlotKeys.find(menu->menuName());
+    auto it = Rune::Inventory::kSlotKeys.find(menuCategory);
     if (it != Rune::Inventory::kSlotKeys.end()){
         // Get the slot entry
         Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), it->second);
@@ -322,7 +465,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
 
         // Get absolute max slots
-        auto it = Rune::Inventory::kMaxSlots.find(menu->menuName());
+        auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
         if (it != Rune::Inventory::kMaxSlots.end()){
             size_t maxSlots = it->second;
 
@@ -335,7 +478,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
         
     } else { // Pad to fill all available slots
-        auto it = Rune::Inventory::kMaxSlots.find(menu->menuName());
+        auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
         if (it != Rune::Inventory::kMaxSlots.end()){
             // Get max possible slots
             int maxSlots = it->second;

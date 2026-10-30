@@ -5,86 +5,96 @@
 #include <vector>
 
 // CONFIG
-const std::map<std::string, std::string> Rune::Inventory::kFlagSpKeys = {
-    {"Weapons", "PorchSword_FlagSp"},
-    {"Bows", "PorchBow_FlagSp"},
-    {"Shields", "PorchShield_FlagSp"}
+const std::map<std::string, Rune::Inventory::Category> Rune::Inventory::kMenuNameToCategory = {
+    {"Weapons", Rune::Inventory::Category::Weapons},
+    {"Bows", Rune::Inventory::Category::Bows},
+    {"Shields", Rune::Inventory::Category::Shields},
+    {"Armor", Rune::Inventory::Category::Armor},
+    {"Materials", Rune::Inventory::Category::Materials},
+    {"Food", Rune::Inventory::Category::Food},
+    {"Key Items", Rune::Inventory::Category::KeyItems},
 };
 
-const std::map<std::string, std::string> Rune::Inventory::kSlotKeys = {
-    {"Weapons", "WeaponPorchStockNum"},
-    {"Bows", "BowPorchStockNum"},
-    {"Shields", "ShieldPorchStockNum"}
+const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kFlagSpKeys = {
+    {Rune::Inventory::Category::Weapons, "PorchSword_FlagSp"},
+    {Rune::Inventory::Category::Bows, "PorchBow_FlagSp"},
+    {Rune::Inventory::Category::Shields, "PorchShield_FlagSp"}
 };
 
-const std::map<std::string, std::string> Rune::Inventory::kValueSpKeys = {
-    {"Weapons", "PorchSword_ValueSp"},
-    {"Bows", "PorchBow_ValueSp"},
-    {"Shields", "PorchShield_ValueSp"}
+const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kSlotKeys = {
+    {Rune::Inventory::Category::Weapons, "WeaponPorchStockNum"},
+    {Rune::Inventory::Category::Bows, "BowPorchStockNum"},
+    {Rune::Inventory::Category::Shields, "ShieldPorchStockNum"}
 };
 
-const std::map<std::string, std::string> Rune::Inventory::kLabelValueKeys = {
-    {"Weapons", "Attack"}, // Account for attack up
-    {"Bows", "Attack"}, // Account for attack up & multishot
-    {"Shields", "Guard"}, // Account for guard up
-    {"Armor", "Defence"}
+const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kValueSpKeys = {
+    {Rune::Inventory::Category::Weapons, "PorchSword_ValueSp"},
+    {Rune::Inventory::Category::Bows, "PorchBow_ValueSp"},
+    {Rune::Inventory::Category::Shields, "PorchShield_ValueSp"}
 };
 
-const std::map<std::string, size_t> Rune::Inventory::kMaxSlots = {
-    {"Weapons", 20},
-    {"Bows", 13},
-    {"Shields", 20},
-    {"Armor", 100}, // goof
-    {"Materials", 160},
-    {"Food", 60},
-    {"Key Items", 40},
+const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kLabelValueKeys = {
+    {Rune::Inventory::Category::Weapons, "Attack"}, // Account for attack up
+    {Rune::Inventory::Category::Bows, "Attack"}, // Account for attack up & multishot
+    {Rune::Inventory::Category::Shields, "Guard"}, // Account for guard up
+    {Rune::Inventory::Category::Armor, "Defence"}
 };
 
-const std::map<std::string, std::vector<std::string>> Rune::Inventory::kInventoryPrefixes = {
+const std::map<Rune::Inventory::Category, size_t> Rune::Inventory::kMaxSlots = {
+    {Rune::Inventory::Category::Weapons, 20},
+    {Rune::Inventory::Category::Bows, 13},
+    {Rune::Inventory::Category::Shields, 20},
+    {Rune::Inventory::Category::Armor, 100}, // goof
+    {Rune::Inventory::Category::Materials, 160},
+    {Rune::Inventory::Category::Food, 60},
+    {Rune::Inventory::Category::KeyItems, 40},
+};
+
+const std::map<Rune::Inventory::Category, std::vector<std::string>> Rune::Inventory::kInventoryPrefixes = {
     {
-        "Weapons",
+        Rune::Inventory::Category::Weapons,
         {"Weapon_Sword", "Weapon_Lsword", "Weapon_Spear"}
     },
     {
-        "Bows",
+        Rune::Inventory::Category::Bows,
         {"Weapon_Bow"}
     },
     {
-        "Shields",
+        Rune::Inventory::Category::Shields,
         {"Weapon_Shield"}
     },
     {
-        "Armor",
+        Rune::Inventory::Category::Armor,
         {"Armor_"}
     },
     {
-        "Materials",
+        Rune::Inventory::Category::Materials,
         {"Item_", "BeeHome", "Animal_", "Obj_FireWoodBundle"}
     },
     {
-        "Food",
+        Rune::Inventory::Category::Food,
         {"Item_Cook", "Item_Roast", "Item_Chilled"}
     },
     {
-        "Key Items",
+        Rune::Inventory::Category::KeyItems,
         {"Obj_", "PlayerStole2", "GameRomHorse"}
     }
 }; // Not proud of this way of identifying inventory category. I blame BotW partially here for being abhorrently inconsistent, especially with the materials tab.
 
-const std::map<std::string, std::vector<std::string>> Rune::Inventory::kInventoryIgnores = {
+const std::map<Rune::Inventory::Category, std::vector<std::string>> Rune::Inventory::kInventoryIgnores = {
     {
-        "Materials",
+        Rune::Inventory::Category::Materials,
         {"Item_Cook", "Item_Roast", "Item_Chilled"}
     },
     {
-        "Key Items",
+        Rune::Inventory::Category::KeyItems,
         {"Obj_FireWoodBundle"}
     }
 };
 
-extern const std::map<std::string, Rune::Inventory::TileStyle> Rune::Inventory::kLabelTileStyles = {
-    {"Weapons", Rune::Inventory::TileStyle::Label},
-    {"Bows", Rune::Inventory::TileStyle::Label},
-    {"Shields", Rune::Inventory::TileStyle::Label},
-    {"Armor", Rune::Inventory::TileStyle::Label}
+extern const std::map<Rune::Inventory::Category, Rune::Inventory::TileStyle> Rune::Inventory::kLabelTileStyles = {
+    {Rune::Inventory::Category::Weapons, Rune::Inventory::TileStyle::Label},
+    {Rune::Inventory::Category::Bows, Rune::Inventory::TileStyle::Label},
+    {Rune::Inventory::Category::Shields, Rune::Inventory::TileStyle::Label},
+    {Rune::Inventory::Category::Armor, Rune::Inventory::TileStyle::Label}
 };
