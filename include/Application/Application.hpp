@@ -38,5 +38,11 @@ namespace Rune{
              * @brief Delete the window. Used when ending the program.
              */
             void deleteWindow();
+
+            // Determines whether RUNE is running in my development testing environment or not. (Will not work for you unless you put a file called 'emulator' in the root of your Ryujinx SD card)
+            static inline bool IsEmulator = false;
+
+            // Determines whether to provide extensive logs or only important ones
+            static inline bool IsVerbose = false;
     };
 }

@@ -54,7 +54,8 @@ const std::unordered_map<std::string, std::string> ASSET_PATHS = {
 
 const std::string DEFAULT_EDITOR_TAB = "Stats";
 const std::string BACKUP_PATH = "sdmc:/switch/RUNE/backups/";
-const std::string THUMB_PATH  = "romfs:/img/thumb/";
+const std::string THUMB_PATH  = "sdmc:/switch/RUNE/assets/thumb/";
+const std::string SOUND_PATH  = "sdmc:/switch/RUNE/assets/sound/";
 const std::string PLACEHOLDER_THUMB_PATH = "romfs:/img/placeholder.png";
 
 const std::string RUNE_VERSION = "0.0.0";

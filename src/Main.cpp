@@ -7,6 +7,7 @@
 #include <Save/Save.hpp> // Provides Rune::Save::Metadata functionality and other Rune::Save types for parsing metadata on load
 #include <Application/Application.hpp> // Provides Rune::Application for managing different screens
 #include <Json/Json.hpp> // Provides Rune::Json and Rune::JsonData for handling RUNE's romFS JSON files
+#include <Application/Romfs.hpp> // Handles extracting assets from the local BotW installation
 
 // External libs
 #include <Aether/Aether.hpp> // The main UI library used by RUNE, initially developed by @tallbl0nde, but slightly modified by myself
@@ -62,8 +63,7 @@ Result initApplet(){
     // Check for the presence of an emulator to determine whether log() should print messages to the console or not
     // This is unique to my own emulator development environment, I put an empty file called "emulator" on the virtual SD card
     if (std::filesystem::exists("sdmc:/emulator")){
-        logServiceIsEmulator = true;
-        log("[INIT] - Dev emulator environment detected!");
+        Rune::Application::IsEmulator = true;
     }
 
     log("[INIT] - Initialising RUNE...");
@@ -130,6 +130,9 @@ Result initApplet(){
     }
 
     log("[INIT] - Initialised RomFS");
+
+    // Extract assets from BotW on first launch
+    rc = Rune::Romfs::extractAssets();
 
     // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application(initSuccess);

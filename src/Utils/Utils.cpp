@@ -2,6 +2,7 @@
 #include <Utils/Utils.hpp>
 #include <Config.hpp>
 #include <Aether/Aether.hpp>
+#include <Application/Application.hpp>
 
 // system
 #include <switch.h>
@@ -13,16 +14,15 @@
 #include <functional>
 #include <numbers>
 
-bool logServiceIsEmulator = false;
-bool isVerbose = false;
-
 // functions
 void log(const std::string& msg, bool isImportant){
-    if (!logServiceIsEmulator){
+    // Don't print to console outside of emulator environment
+    if (!Rune::Application::IsEmulator){
         return;
     }
 
-    if (!isImportant && !isVerbose){
+    // Ignore standard logging if not verbose
+    if (!isImportant && !Rune::Application::IsVerbose){
         return;
     }
 
@@ -30,6 +30,7 @@ void log(const std::string& msg, bool isImportant){
     const char* c_str     = msg.c_str();
     const size_t str_size = msg.size();
 
+    // Print the log to the terminal
     svcOutputDebugString(c_str, str_size);
 }
 
