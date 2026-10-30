@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <switch.h>
+
 #define WINDOW_RESOLUTION_X 1280
 #define WINDOW_RESOLUTION_Y 720
 
@@ -31,9 +33,10 @@ const unsigned int MIN_SEPARATOR_X = 30;
 const int TEXT_X_OFFSET = 6;
 const int TEXT_Y_OFFSET = 12;
 
-const int MIN_SPLASH_SCREEN_TIME = 3000; // milliseconds... people won't see my beautiful splash screen :(
+const int MIN_SPLASH_SCREEN_TIME = 2000; // artificial delay for *polish*
+const int STARTUP_DELAY = 2; // seconds, wait for 2 seconds to check if the user has pressed L
 
-const long int BOTW_TITLE_ID = 0x01007EF00011E000;
+const u64 BOTW_TITLE_ID = 0x01007EF00011E000;
 
 const std::unordered_map<std::string, std::string> ASSET_PATHS = {
     {"check",    "romfs:/img/check.png"},

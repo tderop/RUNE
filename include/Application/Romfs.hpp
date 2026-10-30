@@ -1,3 +1,5 @@
+#pragma once
+
 // libnx
 #include <switch.h>
 /**
@@ -10,11 +12,13 @@
  /**
   * Relevant paths:
   * botw:/Sound/Resource/M_UI.bars <-- the audio files
-  * botw:/UI/StockItem/*.sbitemico <-- the item thumbnails
+  * botw:/UI/StockItem/<wildcard>.sbitemico <-- the item thumbnails
   */
 
 namespace Rune{
     namespace Romfs{
+        inline const std::string kSbItemIcoFolder = "botw:/UI/StockItem/";
+        inline const std::string kMenuSoundBars   = "botw:/Sound/Resource/M_UI.bars";
 
         struct Bars{
 
@@ -29,6 +33,11 @@ namespace Rune{
          * @return Error code
          */
         Result extractAssets();
+
+        /**
+         * @brief Decompress a Yaz0-compressed file.
+         */
+        Result decompressYaz0(const std::string& path);
 
         /**
          * @brief Decode a SBITEMICO file

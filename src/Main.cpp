@@ -8,15 +8,20 @@
 #include <Application/Application.hpp> // Provides Rune::Application for managing different screens
 #include <Json/Json.hpp> // Provides Rune::Json and Rune::JsonData for handling RUNE's romFS JSON files
 #include <Application/Romfs.hpp> // Handles extracting assets from the local BotW installation
+#include <Application/Tests.hpp>
+#include <Config.hpp>
 
 // External libs
 #include <Aether/Aether.hpp> // The main UI library used by RUNE, initially developed by @tallbl0nde, but slightly modified by myself
 
 // C++ libs
 #include <filesystem> // Moved an fopen call to std::filesystem::exists to be less evil
+#include <chrono> // used for startup for small delay before running program to check for test execution
 
 // C libs
 #include <cstdlib> // Required for std::exit for early exits (when the application was launched in applet mode instead of with title takeover)
+
+#define DEBUG_MODE true
 
 // Checked every "frame" - determines whether the application should exit or not.
 bool exitQueued = false;
@@ -130,9 +135,77 @@ Result initApplet(){
     }
 
     log("[INIT] - Initialised RomFS");
+    
+    if (DEBUG_MODE){
+        // Initialise console so program begins running ready for input
+        consoleInit(NULL);
+        puts("[RUNE DEBUG] - Press L to run tests");
+
+        // Initialise tests and do not proceed if L is held during launch
+        InputObject testsButton = InputObject(InputType::Gamepad, HidNpadButton_L);
+        inputService.update(); // capture a snapshot of the current input states
+
+        // Before initialising UI, check if the user presses L to begin tests
+        const auto end = std::chrono::steady_clock::now() 
+        + std::chrono::seconds(STARTUP_DELAY);
+
+        bool runTests = false;
+        while (std::chrono::steady_clock::now() < end) {
+            consoleUpdate(NULL);
+            inputService.update();
+            
+            // If L is pressed, break and run tests
+            if (inputService.buttonPressed(testsButton)
+            || inputService.buttonHeld(testsButton)){
+                runTests = true;
+                break;
+            }
+        }
+
+        bool exitRune = false;
+
+        if (runTests){
+            puts("------------");
+            Rune::Tests::Run();
+            puts("------------");
+
+            puts("Press L to continue to RUNE.");
+            puts("Press PLUS (+) to exit RUNE.");
+
+            while (appletMainLoop()){
+                consoleUpdate(NULL);
+                inputService.update();
+
+                // Break and exit if plus is pressed
+                if(inputService.buttonHeld(
+                    InputObject(InputType::Gamepad, HidNpadButton_Plus)
+                )){
+                    exitRune = true;
+                    break;
+                }
+
+                // Just continue if L is held
+                if (inputService.buttonPressed(
+                    testsButton
+                )){
+                    break;
+                }
+            }
+        }
+
+        // exit the console once tests/startup delay end
+        consoleClear();
+        consoleExit(NULL);
+
+        // exit ROMFS and exit program if + was pressed
+        if (exitRune){
+            romfsExit();
+            std::exit(EXIT_SUCCESS);
+        }
+    }
 
     // Extract assets from BotW on first launch
-    rc = Rune::Romfs::extractAssets();
+    // rc = Rune::Romfs::extractAssets();
 
     // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application(initSuccess);
@@ -217,7 +290,9 @@ int main(){
     accountExit();
 
     // Delete the window for full cleanup
-    app->deleteWindow();
+    if (app->window() != nullptr){
+        app->deleteWindow();
+    }
 
     return 0;
 }

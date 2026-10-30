@@ -23,7 +23,7 @@
 /**
  * Rune::Inventory::Item Value:
  * - Weapons (Swords, Shields, Bows): Durability (MAX __INT32_MAX__) * 100 (why x100 I do not know, f32 support without f32 array?)
-* - Materials, Food, Key Items: Quantity (MAX 999)
+ * - Materials, Food, Key Items: Quantity (MAX 999)
  * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
  */
 
@@ -206,7 +206,14 @@ void showTilePage(EditorMenu* menu, std::vector<Rune::Inventory::Item> inventory
 
     // If first button is not null, focus it
     if (firstBtn != nullptr){
-        menu->body()->setFocused(firstBtn);
+        Aether::Element* focus = firstBtn;
+
+        // Iterate through the Aether element heirarchy to ensure correct focussing
+        while (focus != nullptr && focus->parent() != nullptr) {
+            Aether::Element* parent = focus->parent();
+            parent->setFocused(focus);
+            focus = parent;
+        }
     }
 
     // Highlight the right menu dot
@@ -471,6 +478,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
             if (inventoryItems.size() < maxSlots){
                 Rune::Inventory::Item addItem;
+                addItem.category = menuCategory;
                 addItem.type = Rune::Inventory::TileType::Add;
 
                 inventoryItems.push_back(addItem);

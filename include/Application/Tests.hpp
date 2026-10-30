@@ -1,4 +1,5 @@
 #pragma once
+#include <switch.h>
 
 #include <functional>
 #include <string>
@@ -12,14 +13,19 @@ namespace Rune{
         void Run();
 
         /**
-         * @brief Test the save encoder.
+         * @brief Test romfs mounting
          */
-        bool saveCompiler();
+        Result botwRomfsMounting();
+
+        /**
+         * @brief Test romfs extracting
+         */
+        Result botwRomfsExtracting();
 
         /**
          * All the tests.
          */
-        extern std::map<std::string, std::function<bool()>> Tests;
+        extern std::map<std::string, std::function<Result()>> Tests;
     }
 }
 
