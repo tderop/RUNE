@@ -409,6 +409,14 @@ namespace Aether {
 
         // Present the framebuffer and return
         Element::renderer->present();
+
+        // Execute press funcs
+        while (!Element::deferredPressFuncs_.empty()){
+            std::function<void()> callback = Element::deferredPressFuncs_.front();
+            Element::deferredPressFuncs_.pop();
+            callback();
+        }
+
         return this->shouldLoop;
     }
 

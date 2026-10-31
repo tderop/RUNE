@@ -152,3 +152,5 @@ std::string intToHex(u64 i){
 
     return hexFormatted;
 }
+
+void stubbed(const void* _, ...){}

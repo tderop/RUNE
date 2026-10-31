@@ -24,8 +24,27 @@ namespace Rune{
 
         };
 
-        struct SbItemIco{
+        struct BNTX{
+            uint32_t size;
+            uint32_t textureCount;
+            uint32_t textureTblOffset;
+        };
 
+        struct BRTI{
+            uint16_t tileMode;
+            uint16_t mipCount;
+            uint32_t pixelFormat;
+            uint32_t width;
+            uint32_t height;
+            uint32_t depth;
+            uint32_t textureLayout;
+            uint32_t imgDataSize;
+            uint32_t channelSelectors;
+            uint64_t textureNameOffset;
+            uint64_t mipTblOffset;
+            uint64_t imgDataOffset;
+
+            std::string textureName;
         };
 
         /**
@@ -37,23 +56,22 @@ namespace Rune{
         /**
          * @brief Decompress a Yaz0-compressed file.
          */
-        Result decompressYaz0(const std::string& path);
+        Result decompressYaz0(std::vector<uint8_t>& out, const std::string& path);
 
         /**
          * @brief Decode a SBITEMICO file
-         * @param out Where the decoded SBITEMICO data should be stored
          * @param path The path to the SBITEMICO file
          * @return Error code
          */
-        Result decodeSbItemIco(SbItemIco* output, const std::string& path);
+        Result extractSbitemIcon(const std::string& path);
 
-        /**
-         * @brief Get a thumbnail PNG from an SBITEMICO file
-         * @param sbitemico A decoded SBITEMICO file
-         * @param output The output path, where the PNG should be stored
-         * @return Error code
-         */
-        Result getThumb(SbItemIco& sbitemico, const std::string& output);
+        // /**
+        //  * @brief Get a thumbnail PNG from an SBITEMICO file
+        //  * @param sbitemico A decoded SBITEMICO file
+        //  * @param output The output path, where the PNG should be stored
+        //  * @return Error code
+        //  */
+        // Result getThumb(SbItemIco& sbitemico, const std::string& output);
 
         /**
          * @brief Decode a BARS file

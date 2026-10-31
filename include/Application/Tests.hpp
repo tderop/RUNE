@@ -23,6 +23,11 @@ namespace Rune{
         Result botwRomfsExtracting();
 
         /**
+         * @brief Test the sbitemico decoding
+         */
+        Result botwRomfsDecoding();
+
+        /**
          * All the tests.
          */
         extern std::map<std::string, std::function<Result()>> Tests;

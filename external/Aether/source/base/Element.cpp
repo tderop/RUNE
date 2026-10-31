@@ -18,6 +18,7 @@ namespace Aether {
     Renderer * Element::renderer = nullptr;
     Element * Element::hiOwner = nullptr;
     Element * Element::selOwner = nullptr;
+    std::queue<std::function<void()>> Element::deferredPressFuncs_;
     bool Element::isTouch = false;
 
     Element::Element(int x, int y, int w, int h) {
@@ -262,8 +263,8 @@ namespace Aether {
             case EventType::ButtonReleased:
                 if (e->button() == Button::A && this->selected_) {
                     this->setSelected(false);
-                    if (this->onPressFunc_ != nullptr) {
-                        this->onPressFunc_();
+                    if (this->onPressFunc_ != nullptr) { // Changed to make program feel more responsive
+                        Element::deferredPressFuncs_.push(this->onPressFunc_);
                         return true;
                     }
                 }
@@ -291,9 +292,12 @@ namespace Aether {
                     if (this->selectable_) {
                         moveHighlight(this);
                     }
+
                     if (this->onPressFunc_ != nullptr) {
-                        this->onPressFunc_();
+                        Element::deferredPressFuncs_.push(this->onPressFunc_);
+                        return true;
                     }
+
                     return true;
                 }
                 break;

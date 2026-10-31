@@ -4,6 +4,7 @@
 #include "Aether/types/Drawable.hpp"
 #include "Aether/InputEvent.hpp"
 #include <vector>
+#include <queue>
 
 // Forward declare the Window class
 namespace Aether {
@@ -51,6 +52,9 @@ namespace Aether {
             static Element * hiOwner;
             /** @brief Element which "owns" the cached selection texture */
             static Element * selOwner;
+
+            /** @brief A queue of functions that will run the next frame */
+            static std::queue<std::function<void()>> deferredPressFuncs_;
 
         protected:
             /** @brief Background colour if element is highlighted */

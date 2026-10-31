@@ -63,7 +63,8 @@ INCLUDES   := include src \
               libs/byml/include \
               libs/range-v3/include \
               libs/json/include \
-              libs/spdlog/include
+              libs/spdlog/include \
+              libs/stb/include
 
 OUTPUTDIR  := output
 ROMFS      := romfs

@@ -16,4 +16,7 @@ std::string formatUnixTimestamp(int32_t unixTimestamp);
 std::function<Aether::Colour(uint32_t)> highlightFunc();
 std::string intToHex(u64 i);
 
+// If you want to stub out a function call
+void stubbed(const void* _, ...);
+
 void clearLine();
