@@ -1,6 +1,8 @@
 # Non-AI PolyForm Noncommercial License 1.0.0
 
-Derived from [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0):
+Derived from [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
+
+_This license applies retroactively to all versions, branches, and historical commits of this repository._
 
 ## Acceptance
 

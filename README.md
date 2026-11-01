@@ -4,7 +4,7 @@
 </div>
 
 ## Overview
-**RUNE** is an open source, native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
+**RUNE** is a free, source-available native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
 
 ## Installation
 > Note: Atmosphére custom firmware is required to run homebrew software like RUNE on your Nintendo Switch. For information on how to install Atmosphére, please visit [switch.hacks.guide](https://switch.hacks.guide/) and follow the guides.
