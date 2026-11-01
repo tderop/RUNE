@@ -51,7 +51,7 @@ Thanks to:
     - BNTX-Injector source https://github.com/aboood40091/BNTX-Injector ...
     - ... which also directed me to the NVIDIA Tegra X1 Mobile Processor (Technical Reference Manual) page 1215-1240 - Chapter 20: Pixel Memory Format
 - tallbl0nde for the WIP Aether UI library: https://github.com/tallbl0nde/Aether
-- Sean Barrett (nothings) for `stb_image_write.h` for writing PNG files to disk
+- Sean Barrett (@nothings) for `stb_image_write.h` for writing PNG files to disk
 - devkitPro for the devkitA64 toolchain
 - switchbrew for the libnx library: https://github.com/switchbrew/libnx
 - and the Atmosphére team
