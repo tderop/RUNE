@@ -21,7 +21,7 @@
 // C libs
 #include <cstdlib> // Required for std::exit for early exits (when the application was launched in applet mode instead of with title takeover)
 
-#define DEBUG_MODE true
+#define DEBUG_MODE false
 
 // Checked every "frame" - determines whether the application should exit or not.
 bool exitQueued = false;

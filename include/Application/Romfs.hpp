@@ -2,6 +2,10 @@
 
 // libnx
 #include <switch.h>
+
+// C++
+#include <functional>
+
 /**
  * RUNE's RomFS module is designed to prevent the redistribution of assets owned by Nintendo Co., Ltd.
  * Rune::Romfs is designed to extract and decode files from the console's installed copy of Breath of the Wild
@@ -51,7 +55,7 @@ namespace Rune{
          * @brief Extract all the assets from BotW required by RUNE for an improved user experience.
          * @return Error code
          */
-        Result extractAssets();
+        Result extractAssets(std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
 
         /**
          * @brief Decompress a Yaz0-compressed file.

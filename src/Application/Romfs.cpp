@@ -20,7 +20,7 @@
 #include <Utils/Utils.hpp>
 #include <Config.hpp>
 
-Result Rune::Romfs::extractAssets(){
+Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress){
     // If extracted, ignore
     if (std::filesystem::exists(EXTRACTED_MARKER)){
         return 69;
@@ -50,10 +50,19 @@ Result Rune::Romfs::extractAssets(){
         return LibnxError_NotFound;
     }
 
+    size_t currentProgress = 0;
+    size_t maxProgress = std::distance(
+        std::filesystem::directory_iterator(iconDir),
+        std::filesystem::directory_iterator{}
+    ); 
+
     // EXTRACTING ITEM ICONS
 
     // Iterate through every SBITEMICO file in the StockItem dir
     for (const auto& entry : std::filesystem::directory_iterator(iconDir)){
+        // Update completed BEFORE (so already processed files don't get ignored lol)
+        onProgress(++currentProgress, maxProgress);
+
         std::filesystem::path entryPath = entry.path();
         entryPath.replace_extension("");
         std::string actorName = entryPath.filename().string();

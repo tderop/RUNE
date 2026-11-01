@@ -1,5 +1,32 @@
+<div style="text-align: center;">
+    <h1>RUNE - Native NX GUI Save Editor for BotW</h1>
+    <img src="RUNE.jpg">
+</div>
+
 ## Overview
 **RUNE** is an open source, native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
+
+## Installation
+> Note: Atmosphére custom firmware is required to run homebrew software like RUNE on your Nintendo Switch. For information on how to install Atmosphére, please visit [switch.hacks.guide](https://switch.hacks.guide/) and follow the guides.
+1. Download the latest standalone `.nro` release of RUNE
+2. Copy `RUNE.nro` to `sdmc:/switch/RUNE.nro` on your Nintendo Switch's SD card
+3. Boot into Atmosphére
+4. Click on a game to launch it, and hold R whilst you select a user
+5. Continue holding R until the **hbmenu** appears, then select RUNE
+
+You're now running RUNE on your Nintendo Switch!
+
+### Why don't I see icons in RUNE?
+Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB.
+<br>
+
+## Screenshots
+> Note: game screenshots/icon assets have been omitted from these screenshots, RUNE features save slot thumbnails and item icons.
+
+<img src="screenshots/select.png">
+<img src="screenshots/editor1.png">
+<img src="screenshots/editor2.png">
+<img src="screenshots/editor4.png">
 
 ## Credits
 Thanks to:
