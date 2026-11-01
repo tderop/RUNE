@@ -62,7 +62,7 @@ namespace Aether {
     }
 
     bool Texture::ready() {
-        return (this->drawable->type() == Drawable::Type::Texture);
+        return (this->drawable->type() == Drawable::Type::Texture || this->drawable->type() == Drawable::Type::SharedTexture);
     }
 
     void Texture::renderSync() {

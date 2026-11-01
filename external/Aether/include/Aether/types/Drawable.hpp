@@ -27,7 +27,8 @@ namespace Aether {
             enum class Type {
                 None,                       /**< Doesn't store any data that can be rendered */
                 Surface,                    /**< Currently stores a SDL 'surface' */
-                Texture                     /**< Currently stores a SDL 'texture' */
+                Texture,                     /**< Currently stores a SDL 'texture' */
+                SharedTexture               /** < Currently stores a SDL 'texture' that may be cached and reused elsewhere */
             };
 
         private:
@@ -38,6 +39,8 @@ namespace Aether {
                 SDL_Surface * surface;      /**< Pointer to SDL 'surface' */
                 SDL_Texture * texture;      /**< Pointer to SDL 'texture' */
             } data;
+
+            TextureHandle sharedTex_;
 
             Colour colour_;                 /** @brief Colour to tint with */
             Renderer * renderer;            /** @brief Renderer object */
@@ -77,6 +80,14 @@ namespace Aether {
              * @param height Height of given texture (in pixels)
              */
             Drawable(Renderer * renderer, SDL_Texture * tex, const unsigned int width, const unsigned int height);
+
+            /**
+             * @brief Create a Drawable from a TextureHandle
+             * 
+             * @param renderer Renderer to draw/manipulate Drawable with
+             * @param tex TextureHandle to instantiate with
+             */
+            Drawable(Renderer * renderer, TextureHandle tex);
 
             /**
              * @brief Returns the \ref ImageData for the currently stored image.
@@ -119,6 +130,12 @@ namespace Aether {
              * @return true if successful/not a surface, false if conversion failed
              */
             bool convertToTexture();
+
+            /**
+             * @brief Release a texture from the drawable to transfer its ownership to another object.
+             * @return a pointer to the released SDL_Texture
+             */
+            SDL_Texture* releaseTexture();
 
             /**
              * @brief Returns the type of the data stored

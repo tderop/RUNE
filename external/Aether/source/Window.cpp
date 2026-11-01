@@ -59,6 +59,10 @@ namespace Aether {
         log("Created a thread pool with size " + std::to_string(ThreadPool::getInstance()->maxConcurrentJobs()), false);
     }
 
+    Renderer* Window::renderer(){
+        return Element::renderer;
+    }
+
     void Window::performScreenOps() {
         while (!this->screenOps.empty()) {
             std::pair<ScreenOperation, Screen *> item = this->screenOps.front();

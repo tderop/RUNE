@@ -2,6 +2,14 @@
 #define AETHER_RENDERER_HPP
 
 #include "Aether/types/Colour.hpp"
+
+// Forward declaration of TextureResource
+#include <memory>
+namespace Aether {
+    class TextureResource;
+    using TextureHandle = std::shared_ptr<TextureResource>;
+}
+
 #include <atomic>
 #include <functional>
 #include <mutex>
@@ -31,6 +39,7 @@ namespace Aether {
         // Allow access to private members
         friend Drawable;
         friend FontCache;
+        friend class TextureResource;
 
         public:
             /** @brief Function to handle log messages */
@@ -396,6 +405,16 @@ namespace Aether {
              * @return Drawable containing either the rendered ellipse or nothing on an error (Type set as None).
              */
             Drawable * renderFilledRoundRectTexture(const int width, const int height, const unsigned int radius);
+
+            /**
+             * @brief Load an SDL texture
+             * 
+             * @param path File path to the texture
+             * @param width Width of the texture
+             * @param height Height of the texture
+             * @return Pointer to TextureResource (TextureHandle)
+             */
+            TextureHandle loadTexture(const std::string& path, const int width, const int height);
 
             /**
              * @brief Deletes the renderer object, but does not clean up the backend (SDL).

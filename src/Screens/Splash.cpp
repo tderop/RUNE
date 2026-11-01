@@ -10,7 +10,12 @@
 #include <Application/Application.hpp>
 #include <Application/Romfs.hpp>
 
+#include <Editor/Inventory.hpp>
+
 #include <math.h>
+#include <filesystem>
+
+const size_t TEXTURES_PER_FRAME = 16;
 
 SplashScreen::SplashScreen(Rune::Application* app) : app(app) {
     this->_loaded.store(false);
@@ -83,24 +88,37 @@ void SplashScreen::loadRune(void* _self){
         }
     );
 
-    // Step 2: Preload images
-    // Say I'm loading images
-    {
-        std::lock_guard<std::mutex> lock(self->_statusMutex);
-        self->_status = "Preloading images...";
-    }
+    // Step 2: Preload textures
+    rc = Rune::Inventory::PreloadTextures(
+        self->app->window()->renderer(),
 
-    // Load images
+        // Add texture to queue to be rendered
+        [self](const std::string& key, std::unique_ptr<Aether::Drawable> drawable){
+            std::lock_guard<std::mutex> lock(self->_textureMutex);
+            self->_textureQueue.push({
+                key, std::move(drawable)
+            });
+        },
 
-    // Other steps
+        // Show progress
+        [self](size_t completed, size_t max){
+            std::string suffix;
 
-    // I'm loaded (start ticking down timer to open RUNE)
-    {
-        std::lock_guard<std::mutex> lock(self->_statusMutex);
-        self->_status = "Done!";
-    }
+            if (max != 0){ // prevent div by 0
+                suffix = std::to_string(static_cast<int>((static_cast<float>(completed)
+                /static_cast<float>(max))*100))+"%";
+            }
 
-    self->_loaded.store(true);
+            {
+                std::lock_guard<std::mutex> lock(self->_statusMutex);
+                self->_status = "Preloading textures: "+suffix;
+            }
+        }
+    );
+
+    // I'm loaded, run other loading steps
+    self->_workerFinished.store(true);
+
     return;
 }
 
@@ -147,16 +165,14 @@ void SplashScreen::update(unsigned int dt){
         return;
     }
 
-    // calculate transparency based on dt
+    // Calculate transparency of splash logo based on dt
     this->_elapsed += dt;
-    
     float transparency = 255*((sin(static_cast<float>(this->_elapsed) / 500.0f) / 5.0f) + 0.8f);
     int roundedTransparency = static_cast<int>(transparency);
-
     this->_splashImg->setColour(Aether::Colour{255, 255, 255, static_cast<char>(roundedTransparency)});
-
+    
+    // Read status text, and update UI accordingly
     {
-        // Update text
         std::lock_guard<std::mutex> lock(this->_statusMutex);
         if (this->_status != this->_previousStatus 
             && this->_statusText != nullptr){
@@ -167,6 +183,39 @@ void SplashScreen::update(unsigned int dt){
         this->_previousStatus = this->_status;
     }
 
+
+    // Upload on main thread for renderer
+    Aether::Renderer* renderer = this->app->window()->renderer();
+    for (size_t i = 0; i < TEXTURES_PER_FRAME; ++i){
+        PendingTexture pending;
+        {
+            std::lock_guard<std::mutex> lock(this->_textureMutex);
+
+            if (this->_textureQueue.empty()){
+                break;
+            }
+
+            // Pop a texture to be rendered
+            pending = std::move(this->_textureQueue.front());
+            this->_textureQueue.pop();
+        }
+        
+        // Convert the surface to a texture on the main thread
+        auto& drawable = pending.drawable;
+        drawable->convertToTexture();
+    }
+
+    // Check if the texture worker has finished
+    if (this->_workerFinished.load()){
+        std::lock_guard<std::mutex> lock(this->_textureMutex);
+
+        // If the texture queue is empty, set loaded to true
+        if (this->_textureQueue.empty()){
+            this->_loaded.store(true);
+        }
+    }
+
+    // When loaded, close worker thread and fire load complete signal, move to main menu
     if (this->_loaded.load() && this->_elapsed >= MIN_SPLASH_SCREEN_TIME){
         if (this->_threadStarted){
             threadWaitForExit(&this->_loadingThread);
@@ -175,6 +224,9 @@ void SplashScreen::update(unsigned int dt){
             this->_threadStarted = false;
         }
 
+        this->_statusText->setString("Done!");
         this->loadCompleteSignal->fire();
     }
+
+    Aether::Screen::update(dt);
 }

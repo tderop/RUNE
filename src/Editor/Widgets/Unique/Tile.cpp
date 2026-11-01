@@ -39,21 +39,27 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     // If the thumbnail path exists, add an image
     if (!thumbPath.empty()){
-        Aether::Image* thumbImg = new Aether::Image(
-            0,
-            0,
-            thumbPath,
-            Aether::Render::Wait
-        );
-
-        // Set size
+        // Get size
         int thumbSize = static_cast<int>(Rune::Inventory::kTileSize*Rune::Inventory::kThumbScale);
-        thumbImg->setScaleDimensions(
-            thumbSize,
-            thumbSize
+        std::string textureKey = thumbPath+"|"+std::to_string(thumbSize)+"x"+std::to_string(thumbSize);
+
+        // check if there is a cached texture
+        auto textureOpt = Rune::Inventory::IconTextureCache->get<Aether::TextureHandle>(
+            textureKey
         );
 
-        // Render img
+        Aether::TextureHandle texture;
+        Aether::Image* thumbImg;
+
+        // Use cached texture if already exists
+        if (textureOpt != std::nullopt){
+            texture = textureOpt.value();
+            thumbImg = new Aether::Image(0, 0, texture, Aether::Render::Wait);
+        } else {
+            thumbImg = new Aether::Image(0, 0, thumbPath, Aether::Render::Wait);
+        }
+
+        thumbImg->setScaleDimensions(thumbSize, thumbSize);
         thumbImg->renderAsync();
 
         // Reposition img
@@ -91,12 +97,12 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     Aether::Text* labelElm = new Aether::Text(
                         0, 0,
                         labelText,
-                        14
+                        18
                     );
 
                     labelElm->setXY(
-                        tileBtn->x()+tileBtn->w()-labelElm->textureWidth()-8,
-                        tileBtn->y()+tileBtn->h()-labelElm->textureHeight()-10
+                        tileBtn->x()+14,
+                        tileBtn->y()+tileBtn->h()-labelElm->textureHeight()-12
                     );
 
                     labelElm->setColour(TEXT_COLOUR);

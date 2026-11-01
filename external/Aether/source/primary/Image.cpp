@@ -1,4 +1,5 @@
 #include "Aether/primary/Image.hpp"
+#include "Aether/base/TextureResource.hpp"
 
 namespace Aether {
     Image::Image(const int x, const int y, unsigned char * data, const size_t size, const Render type) : Texture(x, y) {
@@ -26,6 +27,14 @@ namespace Aether {
         this->performRender(type);
     }
 
+    Image::Image(const int x, const int y, TextureHandle tex, const Render type) : Texture(x, y) {
+        this->scaleWidth_ = 0;
+        this->scaleHeight_ = 0;
+        this->texture_ = tex;
+        this->type = Type::Cached;
+        this->performRender(type);
+    }
+
     Drawable * Image::renderDrawable() {
         switch (this->type) {
             case Type::File:
@@ -37,9 +46,15 @@ namespace Aether {
                 return this->renderer->renderImageSurface(buf, this->scaleWidth_, this->scaleHeight_);
             }
 
+            case Type::Cached: {
+                return new Drawable(this->renderer, this->texture_);
+            }
+
             case Type::Vector:
                 return this->renderer->renderImageSurface(this->copy, this->scaleWidth_, this->scaleHeight_);
         }
+
+        return new Drawable();
     }
 
     void Image::performRender(const Render type) {

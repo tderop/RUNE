@@ -17,6 +17,8 @@ namespace Aether {
 }
 
 namespace Aether {
+    class Renderer;
+
     /**
      * @brief The Window is the root element, which initializes Aether and contains
      * all of the screens/elements to render. It also handles received events and
@@ -124,6 +126,11 @@ namespace Aether {
              * @param log Handler to log messages (optional)
              */
             Window(const std::string & name, const unsigned int width, const unsigned int height, const LogHandler & log);
+
+            /**
+             * @brief Get the renderer
+             */
+            Renderer* renderer();
 
             /**
              * @brief Set whether debugging information is shown.

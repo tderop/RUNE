@@ -1,10 +1,17 @@
 #pragma once
 
 #include <Aether/Aether.hpp>
+#include <any>
+#include <optional>
+#include <functional>
 #include <string>
 #include <map>
 
 #include <Utils/Cache.hpp>
+#include <Json/Json.hpp>
+
+#include <Editor/MenuBuilder.hpp>
+#include <Editor/EditorMenu.hpp>
 
 namespace Rune{
     namespace Inventory{
@@ -29,7 +36,8 @@ namespace Rune{
         inline const Aether::Colour kDisabledEllipse{255, 255, 255, 75};
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
 
-        static Rune::Cache* iconPathCache = new Rune::Cache(420);
+        inline Rune::Cache* IconPathCache = new Rune::Cache(420);
+        inline Rune::Cache* IconTextureCache = new Rune::Cache(1559);
 
         // Determines which inventory tab an item belongs to
         enum class Category{
@@ -112,6 +120,8 @@ namespace Rune{
             int w=kTileSize;
             int h=kTileSize;
 
+            bool _initialised=false;
+
             Item(
                 std::string _actorName, 
                 std::string _name, 
@@ -133,6 +143,61 @@ namespace Rune{
         std::string GetThumbPathFromInventoryItem(const Item& inventoryItem);
         std::string GetNameFromActorName(const std::string& actorName);
         Category GetCategoryFromMenuName(const std::string& menuName);
+        
+        template <typename T>
+        std::optional<T> GetEquipmentValue(const std::string& actorName, const std::string& key){
+            // Get equipment json
+            Rune::Json* equipmentJson = nullptr;
+            Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+
+            // Find object
+            auto obj = equipmentJson->find(actorName);
+            if (obj == equipmentJson->end() || !obj->is_object()){
+                return std::nullopt;
+            }
+
+            // Find value
+            auto it = obj->find(key);
+            if (it == obj->end()){
+                return std::nullopt;
+            }
+
+            // Return value
+            return it->get<T>();
+        }
+
+        /**
+         * @brief Get the Rune::Json object for equipment from its actor name. Returns an empty object if no object was found.
+         * @param actorName actor name of the equipment
+         */
+        Rune::Json GetEquipmentObject(const std::string& actorName);
+
+        /**
+         * @brief Get a value safely from a JSON object
+         * @param json the JSON to search
+         * @param key the key to look for
+         */
+        template <typename T>
+        std::optional<T> GetEquipmentValueFromObject(const Rune::Json& json, const std::string& key){
+            // Find the value
+            auto it = json.find(key);
+            if (it == json.end()){
+                return std::nullopt;
+            }
+
+            // Return the value
+            return it->get<T>();
+        }
+
+        std::string FormatValue(const Rune::Inventory::Item& inventoryItem);
+        void ShowPage(EditorMenu* menu, std::vector<Rune::Inventory::Item>& inventoryItems, size_t page, std::vector<Aether::Ellipse*>* ellipses=nullptr);
+
+        /**
+         * @brief Render all the icon textures. Fails if no textures exist.
+         * @param progress Function to run for every progress iteration
+         * @return Error code
+         */
+        Result PreloadTextures(Aether::Renderer* renderer, std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
 
     } // namespace Inventory
 } // namespace Rune

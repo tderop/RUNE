@@ -5,6 +5,14 @@
 #include <Application/Application.hpp>
 
 #include <atomic>
+#include <string>
+#include <memory>
+#include <queue>
+
+struct PendingTexture{
+    std::string key;
+    std::unique_ptr<Aether::Drawable> drawable;
+};
 
 class SplashScreen : public Aether::Screen{
     private:
@@ -27,6 +35,10 @@ class SplashScreen : public Aether::Screen{
         Aether::Text* _statusText = nullptr;
 
         std::atomic<size_t> _progress{0};
+
+        std::queue<PendingTexture> _textureQueue;
+        std::mutex _textureMutex;
+        std::atomic<bool> _workerFinished=false;
 
     public:
         Signal<>* loadCompleteSignal = new Signal<>();

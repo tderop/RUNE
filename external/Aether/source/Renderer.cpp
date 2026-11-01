@@ -3,6 +3,7 @@
 #include "Aether/types/ImageData.hpp"
 #include "Aether/utils/FontCache.hpp"
 #include "Aether/utils/Image.hpp"
+#include "Aether/base/TextureResource.hpp"
 #include "Aether/utils/SDL2_gfx_ext.hpp"
 #include "Aether/utils/Utils.hpp"
 #include <cstring>
@@ -974,6 +975,32 @@ namespace Aether {
         });
 
         return new Drawable(this, tex, width, height);
+    }
+
+    TextureHandle Renderer::loadTexture(const std::string& path, const int width, const int height){
+        // Create the drawable and render the texture
+        std::unique_ptr<Drawable> drawable(this->renderImageSurface(path, width, height));
+
+        // Ensure surface was created
+        if (drawable->type() != Drawable::Type::Surface){
+            return nullptr;
+        }
+
+        // Create texture
+        bool success = drawable->convertToTexture();
+
+        // Ensure texture was created
+        if (!success || drawable->type() != Drawable::Type::Texture){
+            return nullptr;
+        }
+
+        TextureHandle textureHandle = std::make_shared<TextureResource>(
+            this, 
+            drawable->releaseTexture(), 
+            drawable->width(), drawable->height()
+        );
+
+        return textureHandle;
     }
 
     Renderer::~Renderer() {

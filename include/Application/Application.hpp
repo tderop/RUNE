@@ -47,7 +47,7 @@ namespace Rune{
             static inline bool IsEmulator = false;
 
             // Determines whether to provide extensive logs or only important ones
-            static inline bool IsVerbose = true;
+            static inline bool IsVerbose = false;
 
             static inline bool TestsRunning = false;
     };

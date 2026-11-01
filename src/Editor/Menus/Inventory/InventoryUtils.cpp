@@ -1,0 +1,314 @@
+#include <Editor/MenuBuilder.hpp>
+#include <Editor/EditorMenu.hpp>
+#include <Editor/Inventory.hpp>
+
+#include <Json/Json.hpp>
+#include <Utils/Utils.hpp>
+#include <Config.hpp>
+
+#include <filesystem>
+#include <functional>
+
+std::string Rune::Inventory::GetNameFromActorName(const std::string& actorName){
+    // get json obj
+    Rune::Json* actorNameJson;
+    Result rc = Rune::JsonData::GetJsonById(actorNameJson, "ActorNames");
+    if (R_FAILED(rc)){
+        return actorName;
+    }
+
+    // find json entry for in ActorNames for actorName
+    auto actorNameEntry = actorNameJson->find(actorName);
+    if (actorNameEntry == actorNameJson->end() || !actorNameEntry->is_string()){
+        return actorName;
+    }
+
+    // get the readable name
+    return actorNameEntry->get<std::string>();
+}
+
+std::string Rune::Inventory::GetThumbPathFromActorName(const std::string& actorName, bool noVerify){
+    // Check cache first
+    auto path = Rune::Inventory::IconPathCache->get<std::string>(actorName);
+
+    // If path exists, return it
+    if (path != std::nullopt){
+        return path.value();
+    }
+
+    // Build the full path to the thumbnail asset
+    std::string fullPath = THUMB_PATH+actorName+".png";
+
+    // Check if there is a file there, and return an empty string if the file does not exist.
+    if (!noVerify){
+        if (std::filesystem::exists(fullPath)){
+            // Cache the location
+            Rune::Inventory::IconPathCache->put(actorName, fullPath);
+            return fullPath;
+        }
+        
+        // Return an empty string if path does not exist
+        return "";
+    } else {
+        // Return the generated full path without verification
+        return fullPath;
+    }
+}
+
+
+Rune::Inventory::Category Rune::Inventory::GetCategoryFromMenuName(const std::string& menuName){
+    auto it = Rune::Inventory::kMenuNameToCategory.find(menuName);
+    if (it == Rune::Inventory::kMenuNameToCategory.end()){
+        return Rune::Inventory::Category::Unknown;
+    }
+
+    return it->second;
+}
+
+std::string Rune::Inventory::GetThumbPathFromInventoryItem(const Rune::Inventory::Item& inventoryItem){
+    // Mainly for handling dyed armor/elixirs
+    std::string iconActorName = inventoryItem.iconActorName;
+    if (iconActorName.empty()){
+        iconActorName = inventoryItem.actorName;
+    }
+    int32_t value = inventoryItem.value;
+
+    // Individual category handlers
+    switch (inventoryItem.category){
+        // Armor - dye colours
+        case (Rune::Inventory::Category::Armor): {
+            // Set fileId to actorName, build rest of fileId based on value
+            std::string fileId = iconActorName;
+
+            // Append the dye ID (e.g. .00 for no dye, .01 for dye, don't append anything if undyeable)
+            if (value != -1){
+                std::stringstream dyeIdentifier;
+                dyeIdentifier << "." << std::setfill('0') << std::setw(2) << value;
+
+                // Build the full image path
+                std::string fullPath = THUMB_PATH + fileId + dyeIdentifier.str() + ".png";
+
+                // Return the full path only if exists
+                if (!std::filesystem::exists(fullPath)){
+                    std::string fallbackPath = Rune::Inventory::GetThumbPathFromActorName(iconActorName);
+                    // log("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
+                    return fallbackPath;
+                } else {
+                    // log("[Rune::Inventory] - File exists! '"+fullPath+"'", true);
+                    return fullPath;
+                }
+            }
+
+            // Return the original path (not dyeable armor)
+            return Rune::Inventory::GetThumbPathFromActorName(iconActorName);
+        }
+
+        default:
+            return Rune::Inventory::GetThumbPathFromActorName(iconActorName);
+    }
+
+
+    return "";
+}
+
+Rune::Json Rune::Inventory::GetEquipmentObject(const std::string& actorName){
+    // Get equipment JSON
+    Rune::Json* equipmentJson = nullptr;
+    Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+
+    // Search for object in JSON
+    auto obj = equipmentJson->find(actorName);
+    if (obj == equipmentJson->end() || !obj->is_object()){
+        return Rune::Json{};
+    }
+
+    return obj.value();
+}
+
+std::string Rune::Inventory::FormatValue(const Rune::Inventory::Item& inventoryItem){
+    // Quantity-based
+    for (const Rune::Inventory::Category& otherMenu: Rune::Inventory::kQuantityMenus){
+        if (otherMenu == inventoryItem.category){
+            return "x"+std::to_string(inventoryItem.value);
+        }
+    }
+
+    // Equipment
+    Rune::Json* equipmentJson;
+    Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+
+    auto it = Rune::Inventory::kLabelValueKeys.find(inventoryItem.category);
+    if (it != Rune::Inventory::kLabelValueKeys.end()){
+        std::string labelValueKey = it->second;
+        auto it = equipmentJson->find(inventoryItem.actorName);
+
+        if (it != equipmentJson->end() && it->is_object()){
+            auto labelValue = it->find(labelValueKey);
+
+            if (labelValue->is_number()){
+                return std::to_string(labelValue->get<int>());
+            } else {
+                log("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
+            }
+        } else {
+            log("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
+        }
+    } else {
+        // log("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
+    }
+    return "";
+}
+
+void Rune::Inventory::ShowPage(
+    EditorMenu* menu, 
+    std::vector<Rune::Inventory::Item>& inventoryItems,
+    size_t page, 
+    std::vector<Aether::Ellipse*>* ellipses){
+
+    // Clear all current widgets
+    menu->clearAllWidgets();
+
+    // The menu body, used for positioning tiles
+    Aether::Container* menuBody = menu->body();
+
+    int startX = menuBody->x() + Rune::Inventory::kXStartOffset;
+    int startY = menuBody->y() + Rune::Inventory::kYStartOffset;
+
+    size_t cursorStart = page*Rune::Inventory::kTilesPerPage;
+    size_t cursorEnd   = static_cast<size_t>(
+        std::min(
+            static_cast<int>(cursorStart+Rune::Inventory::kTilesPerPage),
+            static_cast<int>(inventoryItems.size())
+        )
+    );
+
+    // Aether::BorderButton* firstBtn = nullptr;
+
+    for (size_t i = cursorStart; i < cursorEnd; ++i){
+        // Get the inventory item
+        Rune::Inventory::Item& inventoryItem = inventoryItems.at(i);
+
+        // Calculate position of the new tile
+        int tileX = startX + (Rune::Inventory::kTileSize+Rune::Inventory::kTilePadding)*((i-cursorStart)%Rune::Inventory::kTilesPerRow);
+        int tileY = startY + ((i-cursorStart)/Rune::Inventory::kTilesPerRow)*(Rune::Inventory::kTileSize+Rune::Inventory::kTilePadding);
+
+        // Determine which tile type to use
+        inventoryItem.x = tileX;
+        inventoryItem.y = tileY;
+
+        // Resolve data only for visible page
+        // Load data only if uninitialised
+        if (!inventoryItem._initialised){
+            Rune::Json jsonObj = Rune::Inventory::GetEquipmentObject(inventoryItem.actorName);
+
+            // using lambdas now because it was getting out of control
+            auto getString = [&](const std::string& key){
+                return Rune::Inventory::GetEquipmentValueFromObject<std::string>(jsonObj, key).value_or("");
+            };
+
+            auto getInt = [&](const std::string& key){
+                return Rune::Inventory::GetEquipmentValueFromObject<int>(jsonObj, key).value_or(-1);
+            };
+
+            inventoryItem.iconActorName = getString("IconActorName");
+            inventoryItem.nextRankActorName = getString("NextRank");
+            inventoryItem.prevRankActorName = getString("PrevRank");
+            inventoryItem.attack = getInt("Attack");
+            inventoryItem.guard = getInt("Guard");
+            inventoryItem.durability = getInt("Durability");
+            inventoryItem.defence = getInt("Defence");
+
+            // Set thumbnail
+            inventoryItem.thumbPath = Rune::Inventory::GetThumbPathFromInventoryItem(inventoryItem);
+
+            // Data is stored, initialisation is no longer necessary
+            inventoryItem._initialised = true;
+        }
+
+        // Make inventory tile (use widgets)
+
+        // Assign tile a border button, store it for later if first
+        Aether::BorderButton* widgetBtn = new Aether::BorderButton(-1, -1, 1, 1, 4, "", 24, [](){});
+        // if (firstBtn == nullptr){
+        //     firstBtn = widgetBtn;
+        // }
+
+        // Build the new tile widget
+        Rune::MenuBuilder::AddWidgetFromSaveKey(
+            menu,
+            Rune::Inventory::kInventoryKey,
+            true,
+            {
+                inventoryItem,
+                Rune::Inventory::FormatValue(inventoryItem),
+                widgetBtn
+            },
+            menu->body()
+        );
+    }
+
+    // If first button is not null, focus it
+    // if (firstBtn != nullptr){
+    //     Aether::Element* focus = firstBtn;
+
+    //     // Iterate through the Aether element heirarchy to ensure correct focussing
+    //     while (focus != nullptr && focus->parent() != nullptr) {
+    //         Aether::Element* parent = focus->parent();
+    //         parent->setFocused(focus);
+    //         focus = parent;
+    //     }
+    // }
+
+    // Highlight the right menu dot
+    if (ellipses != nullptr){
+        for (size_t i = 0; i < ellipses->size(); ++i){
+            if (i != page){
+                ellipses->at(i)->setColour(Rune::Inventory::kDisabledEllipse);
+            } else {
+                ellipses->at(i)->setColour(Rune::Inventory::kEnabledEllipse);
+            }
+        }
+    }
+}
+
+Result Rune::Inventory::PreloadTextures(
+    Aether::Renderer* renderer, 
+    std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, 
+    std::function<void(size_t, size_t)> onProgress){
+
+    // Return if directory does not exist
+    if (!std::filesystem::exists(THUMB_PATH)){
+        return LibnxError_NotFound;
+    }
+
+    // Iterate through and cache textures
+    size_t progress = 0;
+    size_t maxProgress = std::distance(
+        std::filesystem::directory_iterator(THUMB_PATH),
+        std::filesystem::directory_iterator{}
+    ); 
+
+    int thumbSize = static_cast<int>(Rune::Inventory::kTileSize*Rune::Inventory::kThumbScale);
+    std::string suffix = "|"+std::to_string(thumbSize)+"x"+std::to_string(thumbSize);
+
+    for (const auto& entry : std::filesystem::directory_iterator(THUMB_PATH)){
+        // Progress
+        onProgress(++progress, maxProgress);
+        
+        const std::string path = entry.path().string();
+        const std::string key = path+suffix;
+
+        // Get the drawable after rendering the image surface
+        std::unique_ptr<Aether::Drawable> drawable(renderer->renderImageSurface(path, thumbSize, thumbSize));
+
+        // If bad drawable, return
+        if (!drawable || drawable->type() != Aether::Drawable::Type::Surface){
+            return LibnxError_IoError;
+        }
+
+        // On decoded, hand graphics work to main thread
+        onDecoded(key, std::move(drawable));
+    }
+
+    return 0;
+}

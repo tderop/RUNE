@@ -2,6 +2,7 @@
 #define AETHER_IMAGE_HPP
 
 #include "Aether/base/Texture.hpp"
+#include "Aether/base/TextureResource.hpp"
 
 namespace Aether {
     /**
@@ -18,6 +19,7 @@ namespace Aether {
                 File,               /**< Read from file */
                 Pointer,            /**< Read from raw memory */
                 Vector,             /**< Read from copied vector */
+                Cached
             };
 
             /**
@@ -33,6 +35,8 @@ namespace Aether {
 
             size_t scaleWidth_;                 /** @brief Width to scale to in pixels */
             size_t scaleHeight_;                /** @brief Height to scale to in pixels */
+
+            TextureHandle texture_;
 
             /**
              * @brief Overrides Texture's method to render the image.
@@ -78,6 +82,16 @@ namespace Aether {
              * @param type \ref Render Type of rendering to perform
              */
             Image(const int x, const int y, const std::vector<unsigned char> & data, const Render type = Render::Sync);
+
+            /**
+             * @brief Constructs a new Image element using a shared texture resource
+             *
+             * @param x Top-left x coordinate
+             * @param y Top-left y coordinate
+             * @param tex TextureHandle resource
+             * @param type \ref Render Type of rendering to perform
+             */
+            Image(const int x, const int y, TextureHandle tex, const Render type = Render::Sync);
 
             /**
              * @brief Sets the dimensions to *scale* the image to when rendered. Scaling produces a better
