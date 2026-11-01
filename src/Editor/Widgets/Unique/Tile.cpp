@@ -36,6 +36,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     // Determine whether to use an image or plain text for the button
     std::string thumbPath = inventoryItem.thumbPath;
+    Aether::Image* thumbImg = nullptr;
 
     // If the thumbnail path exists, add an image
     if (!thumbPath.empty()){
@@ -49,7 +50,6 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         );
 
         Aether::TextureHandle texture;
-        Aether::Image* thumbImg;
 
         // Use cached texture if already exists
         if (textureOpt != std::nullopt){
@@ -60,7 +60,6 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         }
 
         thumbImg->setScaleDimensions(thumbSize, thumbSize);
-        thumbImg->renderAsync();
 
         // Reposition img
         thumbImg->setXY(
@@ -69,7 +68,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         );
 
         // Add img
-        widget->addToElements(thumbImg);
+        tileBtn->addElement(thumbImg);
 
     } else { // Otherwise, just show the name of the item
         tileBtn->setString(itemName);
@@ -84,7 +83,17 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     // Set the colour and add it to the widget
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
+    
     widget->addToElements(tileBtn);
+
+    if (thumbImg != nullptr){
+        tileBtn->setHidden(true);
+        thumbImg->onRenderDone([tileBtn](){
+            tileBtn->setHidden(false);
+        });
+
+        thumbImg->renderAsync();
+    }
 
     // Embedded switch for handling different types of tiles, and then their styles
     switch (inventoryItem.type){
@@ -94,20 +103,19 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
             switch (inventoryItem.style){
                 case (Rune::Inventory::TileStyle::NoLabel):{
                     // Make new text
-                    Aether::Text* labelElm = new Aether::Text(
+                    Aether::Text* valueText = new Aether::Text(
                         0, 0,
                         labelText,
                         18
                     );
 
-                    labelElm->setXY(
+                    valueText->setXY(
                         tileBtn->x()+14,
-                        tileBtn->y()+tileBtn->h()-labelElm->textureHeight()-12
+                        tileBtn->y()+tileBtn->h()-valueText->textureHeight()-12
                     );
 
-                    labelElm->setColour(TEXT_COLOUR);
-                    widget->addToElements(labelElm);
-
+                    valueText->setColour(TEXT_COLOUR);
+                    tileBtn->addElement(valueText);
                     break;
                 }
 
@@ -142,8 +150,8 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     textElm->setColour(TEXT_COLOUR);
 
                     // Add everything to the widget
-                    widget->addToElements(labelBg);
-                    widget->addToElements(textElm);
+                    tileBtn->addElement(labelBg);
+                    tileBtn->addElement(textElm);
 
                     break;
                 }

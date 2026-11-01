@@ -182,12 +182,12 @@ namespace Aether {
         this->children.clear();
     }
 
-    bool Element::isVisible() {
-        if (this->hidden_ || this->x() > 1280 || this->x() + this->w() < 0 || this->y() > 720 || this->y() + this->h() < 0) {
-            return false;
-        }
+    bool Element::isOnScreen() {
+        return !(this->x() > 1280 || this->x() + this->w() < 0 || this->y() > 720 || this->y() + this->h() < 0);
+    }
 
-        return true;
+    bool Element::isVisible() {
+        return !(this->hidden_ || !this->isOnScreen());
     }
 
     bool Element::hidden() {
@@ -307,8 +307,8 @@ namespace Aether {
     }
 
     void Element::update(unsigned int dt) {
-        // Do nothing if hidden or off-screen
-        if (!this->isVisible()) {
+        // Do nothing if off-screen
+        if (!this->isOnScreen()) {
             return;
         }
 

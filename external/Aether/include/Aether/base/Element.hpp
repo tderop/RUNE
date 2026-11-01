@@ -247,6 +247,14 @@ namespace Aether {
             virtual void returnAllElements();
 
             /**
+             * @brief Check if current element is within the bounds of the screen
+             * 
+             * @return true if element is on screen
+             * @return false if element is not on screen
+             */
+            bool isOnScreen();
+
+            /**
              * @brief Check if current element is visible on-screen
              *
              * @return true if element is visible

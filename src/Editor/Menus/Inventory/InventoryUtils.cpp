@@ -276,6 +276,8 @@ Result Rune::Inventory::PreloadTextures(
     std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, 
     std::function<void(size_t, size_t)> onProgress){
 
+    // return 0;
+
     // Return if directory does not exist
     if (!std::filesystem::exists(THUMB_PATH)){
         return LibnxError_NotFound;
