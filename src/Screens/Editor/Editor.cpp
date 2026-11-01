@@ -287,6 +287,8 @@ void EditorScreen::buildScreen(){
         (WINDOW_RESOLUTION_Y-topPanel->h())-(WINDOW_RESOLUTION_Y-bottomSeparator->y()) // overlap bug fix
     );
 
+    editorScroll->setScrollBarColour(SEPARATOR_COLOUR);
+
     // the control bar
     Aether::ControlBar* controlBar = new Aether::ControlBar();
     controlBar->addControl(Aether::Button::PLUS, "Save");
