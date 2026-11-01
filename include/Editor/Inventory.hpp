@@ -125,10 +125,10 @@ namespace Rune{
             Item() = default;
         };
 
-        std::string getThumbPathFromActorName(const std::string& actorName, bool noVerify=false);
-        std::string getThumbPathFromInventoryItem(const Item& inventoryItem);
-        std::string getNameFromActorName(const std::string& actorName);
-        Category getCategoryFromMenuName(const std::string& menuName);
+        std::string GetThumbPathFromActorName(const std::string& actorName, bool noVerify=false);
+        std::string GetThumbPathFromInventoryItem(const Item& inventoryItem);
+        std::string GetNameFromActorName(const std::string& actorName);
+        Category GetCategoryFromMenuName(const std::string& menuName);
 
     } // namespace Inventory
 } // namespace Rune

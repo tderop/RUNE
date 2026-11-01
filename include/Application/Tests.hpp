@@ -15,17 +15,17 @@ namespace Rune{
         /**
          * @brief Test romfs mounting
          */
-        Result botwRomfsMounting();
+        Result BotwRomfsMounting();
 
         /**
          * @brief Test romfs extracting
          */
-        Result botwRomfsExtracting();
+        Result BotwRomfsExtracting();
 
         /**
          * @brief Test the sbitemico decoding
          */
-        Result botwRomfsDecoding();
+        Result BotwRomfsDecoding();
 
         /**
          * All the tests.

@@ -55,19 +55,19 @@ namespace Rune{
          * @brief Extract all the assets from BotW required by RUNE for an improved user experience.
          * @return Error code
          */
-        Result extractAssets(std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
+        Result ExtractAssets(std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
 
         /**
          * @brief Decompress a Yaz0-compressed file.
          */
-        Result decompressYaz0(std::vector<uint8_t>& out, const std::string& path);
+        Result DecompressYaz0(std::vector<uint8_t>& out, const std::string& path);
 
         /**
          * @brief Decode a SBITEMICO file
          * @param path The path to the SBITEMICO file
          * @return Error code
          */
-        Result extractSbitemIcon(const std::string& path);
+        Result ExtractSbitemIcon(const std::string& path);
 
         // /**
         //  * @brief Get a thumbnail PNG from an SBITEMICO file
@@ -83,7 +83,7 @@ namespace Rune{
          * @param path The path to the BARS file
          * @return Error code
          */
-        Result decodeBars(Bars* out, const std::string& path);
+        Result DecodeBars(Bars* out, const std::string& path);
 
         /**
          * @brief Get a WAV from a path within a .bars archive
@@ -92,19 +92,19 @@ namespace Rune{
          * @param output The path where the WAV should be stored
          * @return Error code
          */
-        Result getAudio(Bars& bars, const std::string& barsPath, const std::string& output);
+        Result GetAudio(Bars& bars, const std::string& barsPath, const std::string& output);
 
         /**
          * @brief Mount BotW's RomFS data at botw:/
          * @return Error code
          */
-        Result mountBotwRomfs();
+        Result MountBotwRomfs();
 
         /**
          * @brief Unmount BotW's RomFS data
          * @return Error code
          */
-        Result unmountBotwRomfs();
+        Result UnmountBotwRomfs();
 
         // Constants
         inline const std::string kExtractedPath = "sdmc:/switch/RUNE/extracted/";

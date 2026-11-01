@@ -67,7 +67,7 @@ void SplashScreen::loadRune(void* _self){
 
     // Step 1: Extract Assets
     // Extract assets and report progress
-    Result rc = Rune::Romfs::extractAssets(
+    Result rc = Rune::Romfs::ExtractAssets(
         [self](size_t completed, size_t max){
             std::string suffix;
 

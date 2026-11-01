@@ -205,7 +205,7 @@ Result initApplet(){
     }
 
     // Extract assets from BotW on first launch
-    // rc = Rune::Romfs::extractAssets();
+    // rc = Rune::Romfs::ExtractAssets();
 
     // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application(initSuccess);

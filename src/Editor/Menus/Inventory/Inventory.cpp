@@ -27,7 +27,7 @@
  * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
  */
 
-std::string Rune::Inventory::getNameFromActorName(const std::string& actorName){
+std::string Rune::Inventory::GetNameFromActorName(const std::string& actorName){
     // get json obj
     Rune::Json* actorNameJson;
     Result rc = Rune::JsonData::GetJsonById(actorNameJson, "ActorNames");
@@ -45,7 +45,7 @@ std::string Rune::Inventory::getNameFromActorName(const std::string& actorName){
     return actorNameEntry->get<std::string>();
 }
 
-std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorName, bool noVerify){
+std::string Rune::Inventory::GetThumbPathFromActorName(const std::string& actorName, bool noVerify){
     // Build the full path to the thumbnail asset
     std::string fullPath = THUMB_PATH+actorName+".png";
 
@@ -58,7 +58,7 @@ std::string Rune::Inventory::getThumbPathFromActorName(const std::string& actorN
 }
 
 
-Rune::Inventory::Category Rune::Inventory::getCategoryFromMenuName(const std::string& menuName){
+Rune::Inventory::Category Rune::Inventory::GetCategoryFromMenuName(const std::string& menuName){
     auto it = Rune::Inventory::kMenuNameToCategory.find(menuName);
     if (it == Rune::Inventory::kMenuNameToCategory.end()){
         return Rune::Inventory::Category::Unknown;
@@ -67,7 +67,7 @@ Rune::Inventory::Category Rune::Inventory::getCategoryFromMenuName(const std::st
     return it->second;
 }
 
-std::string Rune::Inventory::getThumbPathFromInventoryItem(const Rune::Inventory::Item& inventoryItem){
+std::string Rune::Inventory::GetThumbPathFromInventoryItem(const Rune::Inventory::Item& inventoryItem){
     // Mainly for handling dyed armor/elixirs
     std::string iconActorName = inventoryItem.iconActorName;
     if (iconActorName.empty()){
@@ -92,7 +92,7 @@ std::string Rune::Inventory::getThumbPathFromInventoryItem(const Rune::Inventory
 
                 // Return the full path only if exists
                 if (!std::filesystem::exists(fullPath)){
-                    std::string fallbackPath = Rune::Inventory::getThumbPathFromActorName(iconActorName);
+                    std::string fallbackPath = Rune::Inventory::GetThumbPathFromActorName(iconActorName);
                     // log("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
                     return fallbackPath;
                 } else {
@@ -102,11 +102,11 @@ std::string Rune::Inventory::getThumbPathFromInventoryItem(const Rune::Inventory
             }
 
             // Return the original path (not dyeable armor)
-            return Rune::Inventory::getThumbPathFromActorName(iconActorName);
+            return Rune::Inventory::GetThumbPathFromActorName(iconActorName);
         }
 
         default:
-            return Rune::Inventory::getThumbPathFromActorName(iconActorName);
+            return Rune::Inventory::GetThumbPathFromActorName(iconActorName);
     }
 
 
@@ -235,7 +235,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Aether::SetRightStickNavigation(false);
 
     // Get the menu category
-    Rune::Inventory::Category menuCategory = Rune::Inventory::getCategoryFromMenuName(menu->menuName());
+    Rune::Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
 
     // Determine if there are inventory keys for the current menu
     auto prefixEntry = Rune::Inventory::kInventoryPrefixes.find(menuCategory);
@@ -339,7 +339,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
 
         // A valid item, process and make inventory object
-        std::string itemName = Rune::Inventory::getNameFromActorName(actorName);
+        std::string itemName = Rune::Inventory::GetNameFromActorName(actorName);
         int32_t itemValue = itemValues.at(currentIdx);
 
         // Get buffs
@@ -425,7 +425,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             itemName, 
             itemValue, 
             static_cast<size_t>(currentIdx),
-            Rune::Inventory::getCategoryFromMenuName(menu->menuName()),
+            Rune::Inventory::GetCategoryFromMenuName(menu->menuName()),
             itemFlagSp,
             itemValueSp,
             tileStyle
@@ -444,7 +444,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
         // Assign the thumbnail path
         inventoryItem.thumbPath = Rune::Inventory
-        ::getThumbPathFromInventoryItem(inventoryItem);
+        ::GetThumbPathFromInventoryItem(inventoryItem);
 
         // Store the inventory item
         inventoryItems.push_back(inventoryItem);

@@ -13,34 +13,34 @@
 // Tested modules
 #include <Save/Save.hpp>
 
-Result Rune::Tests::botwRomfsMounting(){
+Result Rune::Tests::BotwRomfsMounting(){
     // Test mounting
-    Result rc = Rune::Romfs::mountBotwRomfs();
+    Result rc = Rune::Romfs::MountBotwRomfs();
     if (R_FAILED(rc)){
-        puts("\tmountBotwRomfs() failed.");
+        puts("\tMountBotwRomfs() failed.");
         return rc;
     }
 
     // Unmount
-    rc = Rune::Romfs::unmountBotwRomfs();
+    rc = Rune::Romfs::UnmountBotwRomfs();
     if (R_FAILED(rc)){
-        puts("\tunmountBotwRomfs() failed.");
+        puts("\tUnmountBotwRomfs() failed.");
         return rc;
     }
 
     return 0;
 }
 
-Result Rune::Tests::botwRomfsExtracting(){
-    Result rc = Rune::Romfs::extractAssets();
+Result Rune::Tests::BotwRomfsExtracting(){
+    Result rc = Rune::Romfs::ExtractAssets();
     return rc;
 }
 
-Result Rune::Tests::botwRomfsDecoding(){
+Result Rune::Tests::BotwRomfsDecoding(){
     std::filesystem::path testIcoPath = "sdmc:/TestIco";
 
     for (const auto& entry : std::filesystem::directory_iterator(testIcoPath)){
-        Result rc = Rune::Romfs::extractSbitemIcon(entry.path());
+        Result rc = Rune::Romfs::ExtractSbitemIcon(entry.path());
         if (R_FAILED(rc)){
             return rc;
         }
@@ -53,9 +53,9 @@ Result Rune::Tests::botwRomfsDecoding(){
 namespace Rune{
     namespace Tests{
         std::map<std::string, std::function<Result()>> Tests = {
-            {"Game RomFS Mounting", Rune::Tests::botwRomfsMounting},
-            {"Game RomFS Extracting", Rune::Tests::botwRomfsExtracting}
-            // {"Yaz0/BFRES Decoding", Rune::Tests::botwRomfsDecoding}
+            {"Game RomFS Mounting", Rune::Tests::BotwRomfsMounting},
+            {"Game RomFS Extracting", Rune::Tests::BotwRomfsExtracting}
+            // {"Yaz0/BFRES Decoding", Rune::Tests::BotwRomfsDecoding}
         };
     }
 }

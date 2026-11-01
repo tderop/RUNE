@@ -315,6 +315,12 @@ namespace Rune
          * @brief Get a description from an internal dataName
          */
         std::string GetKeyDescription(std::string& saveKey);
+
+        /**
+         * @brief Get the readable location name from an internal location name
+         * (e.g. HopesPlateau -> Great Plateau)
+         */
+        std::string GetReadableLocationName(const std::string& locationId);
     }
 }
 

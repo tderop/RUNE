@@ -20,14 +20,14 @@
 #include <Utils/Utils.hpp>
 #include <Config.hpp>
 
-Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress){
+Result Rune::Romfs::ExtractAssets(std::function<void(size_t, size_t)> onProgress){
     // If extracted, ignore
     if (std::filesystem::exists(EXTRACTED_MARKER)){
         return 69;
     }
 
     // Attempt to mount BotW RomFS
-    Result rc = Rune::Romfs::mountBotwRomfs();
+    Result rc = Rune::Romfs::MountBotwRomfs();
     if (R_FAILED(rc)){
         return rc;
     }
@@ -38,7 +38,7 @@ Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress
     std::filesystem::path iconDir = Rune::Romfs::kSbItemIcoFolder;
     if (!std::filesystem::exists(iconDir) || !std::filesystem::is_directory(iconDir)){
         // Icons not found, different game may have been launched
-        stubbed("[Rune::Romfs::extractAssets] - Folder %s not found.\n", iconDir.c_str());
+        stubbed("[Rune::Romfs::ExtractAssets] - Folder %s not found.\n", iconDir.c_str());
         return LibnxError_NotFound;
     }
 
@@ -46,7 +46,7 @@ Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress
     std::filesystem::path menuBars = Rune::Romfs::kMenuSoundBars;
     if (!std::filesystem::exists(menuBars)){
         // Sounds not found, different game may have been launched
-        stubbed("[Rune::Romfs::extractAssets] - File %s not found.\n", menuBars.c_str());
+        stubbed("[Rune::Romfs::ExtractAssets] - File %s not found.\n", menuBars.c_str());
         return LibnxError_NotFound;
     }
 
@@ -73,15 +73,15 @@ Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress
         }
 
         // Extract the thumbnail
-        rc = Rune::Romfs::extractSbitemIcon(entry.path());
+        rc = Rune::Romfs::ExtractSbitemIcon(entry.path());
         if (R_FAILED(rc)){
-            stubbed("[Rune::Romfs::extractAssets] - Failed to extract icon: %08X\n", rc);
+            stubbed("[Rune::Romfs::ExtractAssets] - Failed to extract icon: %08X\n", rc);
             break;
         }
     }
 
     // All is done, unmount BotW RomFS
-    rc = Rune::Romfs::unmountBotwRomfs();
+    rc = Rune::Romfs::UnmountBotwRomfs();
 
     // Create a file to indicate that all files were extracted
     std::ofstream marker(EXTRACTED_MARKER);
@@ -98,37 +98,37 @@ Result Rune::Romfs::extractAssets(std::function<void(size_t, size_t)> onProgress
 /**
  * Make it store in a span/pre-allocated area in memory/pointer thingy for decoding (struct) I am tired goodbye
  */
-Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::string& path){
+Result Rune::Romfs::DecompressYaz0(std::vector<uint8_t>& output, const std::string& path){
     // Check that the path exists
     if (!std::filesystem::exists(path)){
-        stubbed("[Rune::Romfs::decompressYaz0] - Path doesn't exist: '%s'", path.c_str());
+        stubbed("[Rune::Romfs::DecompressYaz0] - Path doesn't exist: '%s'", path.c_str());
         return LibnxError_NotFound;
     }
 
     // Open the file
     std::ifstream yaz0(path, std::ios::binary);
     if (!yaz0){
-        stubbed("[Rune::Romfs::decompressYaz0] - Failed to open yaz0 file: '%s'", path.c_str());
+        stubbed("[Rune::Romfs::DecompressYaz0] - Failed to open yaz0 file: '%s'", path.c_str());
         return LibnxError_IoError;
     }
     
     // Verify yaz0 integrity
     char buf[4];
     if (!yaz0.read(buf, sizeof(buf))){
-        stubbed("[Rune::Romfs::decompressYaz0] - Failed to read Yaz0 magic.");
+        stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read Yaz0 magic.");
         return LibnxError_IoError;
     }
 
     // Compare bytes with Yaz0
     if (std::memcmp(buf, "Yaz0", sizeof(buf)) != 0){
-        stubbed("[Rune::Romfs::decompressYaz0] - Failed to verify integrity: '%s'", path.c_str());
+        stubbed("[Rune::Romfs::DecompressYaz0] - Failed to verify integrity: '%s'", path.c_str());
         return LibnxError_BadInput;
     }
 
     // Get the decompressed size
     char sizeBuf[4];
     if (!yaz0.read(sizeBuf, sizeof(sizeBuf))){
-        stubbed("[Rune::Romfs::decompressYaz0] - Failed to read decompressed yaz0 size: '%s'", path.c_str());
+        stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read decompressed yaz0 size: '%s'", path.c_str());
         return LibnxError_BadInput;
     }
 
@@ -153,7 +153,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
         // Read a byte
         char buf[1];
         if (!yaz0.read(buf, sizeof(buf))){
-            stubbed("[Rune::Romfs::decompressYaz0] - Failed to read byte at position %s: '%s'", 
+            stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read byte at position %s: '%s'", 
                 intToHex(cursor).c_str(),
                 path.c_str()
             );
@@ -172,7 +172,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
                 char nextByte[1];
                 // Check the read succeeded
                 if (!yaz0.read(nextByte, sizeof(nextByte))){
-                    stubbed("[Rune::Romfs::decompressYaz0] - Failed to read byte at position %s: '%s'", 
+                    stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read byte at position %s: '%s'", 
                         intToHex(cursor).c_str(),
                         path.c_str()
                     );
@@ -191,7 +191,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
 
                 // Check the read succeeded
                 if (!yaz0.read(nextBytes, sizeof(nextBytes))){
-                    stubbed("[Rune::Romfs::decompressYaz0] - Failed to read byte pair at position %s: '%s'", 
+                    stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read byte pair at position %s: '%s'", 
                         intToHex(cursor).c_str(),
                         path.c_str()
                     );
@@ -215,7 +215,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
                     // Read an additional byte
                     char extraByte[1];
                     if (!yaz0.read(extraByte, sizeof(extraByte))){
-                        stubbed("[Rune::Romfs::decompressYaz0] - Failed to read byte pair at position %s: '%s'", 
+                        stubbed("[Rune::Romfs::DecompressYaz0] - Failed to read byte pair at position %s: '%s'", 
                             intToHex(cursor).c_str(),
                             path.c_str()
                         );
@@ -230,7 +230,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
 
                 // Validate distance
                 if (distance > cursor){
-                    stubbed("[Rune::Romfs::decompressYaz0] - Back-reference distance cannot be greater than cursor position.\n\tCursor: %s\n\tDistance: %s\n", 
+                    stubbed("[Rune::Romfs::DecompressYaz0] - Back-reference distance cannot be greater than cursor position.\n\tCursor: %s\n\tDistance: %s\n", 
                         intToHex(cursor).c_str(), intToHex(distance).c_str()
                     );
                     return LibnxError_BadInput;
@@ -239,7 +239,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
                 // Validate length
                 size_t remainingSpace = decompressedSize-cursor;
                 if (length > remainingSpace){
-                    stubbed("[Rune::Romfs::decompressYaz0] - Data length cannot be greater than remaining file space.\n\tCursor: %s\n\tRemaining Space: %s\n", 
+                    stubbed("[Rune::Romfs::DecompressYaz0] - Data length cannot be greater than remaining file space.\n\tCursor: %s\n\tRemaining Space: %s\n", 
                         intToHex(cursor).c_str(), intToHex(remainingSpace).c_str()
                     );
                     return LibnxError_BadInput;
@@ -266,7 +266,7 @@ Result Rune::Romfs::decompressYaz0(std::vector<uint8_t>& output, const std::stri
     return 0;
 }
 
-Result Rune::Romfs::extractSbitemIcon(const std::string& path){
+Result Rune::Romfs::ExtractSbitemIcon(const std::string& path){
     stubbed("Decoding BFRES '%s'\n", path.c_str());
 
     // For result
@@ -276,7 +276,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
     std::vector<uint8_t> bfres;
 
     // Decompress the sbitemico yaz0 archive
-    Result rc = Rune::Romfs::decompressYaz0(bfres, path);
+    Result rc = Rune::Romfs::DecompressYaz0(bfres, path);
     if (R_FAILED(rc)){
         return rc;
     }
@@ -287,13 +287,13 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
     // Check the buffer contains at least 32 bytes
     size_t bfresSize = bfres.size();
     if (bfresSize < 0xCA){
-        stubbed("[Rune::Romfs::extractSbitemIcon] - BFRES size cannot be smaller than 0xCA bytes.");
+        stubbed("[Rune::Romfs::ExtractSbitemIcon] - BFRES size cannot be smaller than 0xCA bytes.");
         return LibnxError_BadInput;
     }
 
     // Check for magic
     if (std::memcmp(&bfres.at(0), "FRES    ", 8) != 0){
-        stubbed("[Rune::Romfs::extractSbitemIcon] - Failed to verify file integrity: '%s'", path.c_str());
+        stubbed("[Rune::Romfs::ExtractSbitemIcon] - Failed to verify file integrity: '%s'", path.c_str());
         return LibnxError_BadInput;
     }
 
@@ -303,7 +303,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
 
     if (byteOrder != 0xFFFE){
         // Only allow little-endian input
-        stubbed("[Rune::Romfs::extractSbitemIcon] - BFRES must be in little endian format!\n\tGot: %s\n",
+        stubbed("[Rune::Romfs::ExtractSbitemIcon] - BFRES must be in little endian format!\n\tGot: %s\n",
             intToHex(byteOrder).c_str());
 
         return LibnxError_BadInput;
@@ -332,7 +332,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
     stubbed("\tActual size: %s\n", intToHex(bfresSize).c_str());
 
     if (bfresSize != declaredSize){
-        puts("[Rune::Romfs::extractSbitemIcon] - Actual BFRES size does not match declared size.");
+        puts("[Rune::Romfs::ExtractSbitemIcon] - Actual BFRES size does not match declared size.");
         return LibnxError_BadInput;
     }
 
@@ -407,7 +407,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
         // Verify BNTX
         if (std::memcmp(&magicBuf, &bntxMagic, sizeof(magicBuf)) != 0){
             // Magic doesn't match
-            stubbed("[Rune::Romfs::extractSbitemIcon] - Failed to verify BNTX integrity:\n\tGot: %s\n", 
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - Failed to verify BNTX integrity:\n\tGot: %s\n", 
                 intToHex(magicBuf).c_str()
             );
 
@@ -427,7 +427,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
         
         if (bntxByteOrder != 0xFFFE){
             // Only allow little-endian input
-            stubbed("[Rune::Romfs::extractSbitemIcon] - BNTX must be in little endian format!\n\tGot: %s\n",
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - BNTX must be in little endian format!\n\tGot: %s\n",
                 intToHex(bntxByteOrder).c_str());
 
             continue; // just ignore the file and try to look for the next valid BNTX
@@ -505,7 +505,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
 
         std::memcpy(&brtiMagicBuf, &bfres.at(fileOffset+brtiOffsetInBntx), sizeof(brtiMagicBuf));
         if (std::memcmp(&brtiMagicBuf, &brtiMagic, sizeof(brtiMagicBuf)) != 0){
-            stubbed("[Rune::Romfs::extractSbitemIcon] - Failed to verify BRTI integrity.\n\tGot: %s\n", 
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - Failed to verify BRTI integrity.\n\tGot: %s\n", 
                 intToHex(brtiMagicBuf).c_str()
             );
 
@@ -545,19 +545,19 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
 
         // Require pixel format 0x0B06 and tile mode 0 for inventory icons
         if (brti.pixelFormat != 0x0B06 || brti.tileMode != 0){
-            stubbed("[Rune::Romfs::extractSbitemIcon] - Pixel format / tile mode are not supported.\n");
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - Pixel format / tile mode are not supported.\n");
             continue;
         }
 
         // Check that textureNameOffset is within the bounds of the BNTX data
         if (brti.textureNameOffset > bntx.size){
-            stubbed("[Rune::Romfs::extractSbitemIcon] - Texture Name Offset is outside of valid bounds.\n");
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - Texture Name Offset is outside of valid bounds.\n");
             return LibnxError_BadInput;
         }
 
         // Check that at least 2 bytes remain
         if (bntx.size - brti.textureNameOffset < 2){
-            stubbed("[Rune::Romfs::extractSbitemIcon] - Not enough space in BNTX.\n");
+            stubbed("[Rune::Romfs::ExtractSbitemIcon] - Not enough space in BNTX.\n");
             return LibnxError_BadInput;
         }
 
@@ -682,7 +682,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
 
                 // before reading, validate
                 if (sourceOffset >= imgData.size()){
-                    stubbed("[Rune::Romfs::extractSbitemIcon] - BRTI image data is malformed or invalid (0)\n");
+                    stubbed("[Rune::Romfs::ExtractSbitemIcon] - BRTI image data is malformed or invalid (0)\n");
                     return LibnxError_BadInput;
                 }
 
@@ -691,7 +691,7 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
 
                 // validate
                 if (destinationOffset >= decodedIcon.size()){
-                    stubbed("[Rune::Romfs::extractSbitemIcon] - BRTI image data is malformed or invalid (1)\n");
+                    stubbed("[Rune::Romfs::ExtractSbitemIcon] - BRTI image data is malformed or invalid (1)\n");
                     return LibnxError_BadInput;
                 }
 
@@ -728,42 +728,42 @@ Result Rune::Romfs::extractSbitemIcon(const std::string& path){
     return (isIconDecoded) ? 0 : LibnxError_NotFound;
 }
 
-Result Rune::Romfs::decodeBars(Rune::Romfs::Bars* out, const std::string& path){
+Result Rune::Romfs::DecodeBars(Rune::Romfs::Bars* out, const std::string& path){
 
     return 0;
 }
 
-Result Rune::Romfs::getAudio(Rune::Romfs::Bars& bars, const std::string& barsPath, const std::string& output){
+Result Rune::Romfs::GetAudio(Rune::Romfs::Bars& bars, const std::string& barsPath, const std::string& output){
 
     return 0;
 }
 
 
-Result Rune::Romfs::mountBotwRomfs(){
+Result Rune::Romfs::MountBotwRomfs(){
     if (Rune::Application::IsEmulator){
-        puts("[Rune::Romfs::mountBotwRomfs] - Game data mount failed! romsMountFromCurrentProcess is not implenented in Ryujinx.");
+        puts("[Rune::Romfs::MountBotwRomfs] - Game data mount failed! romsMountFromCurrentProcess is not implenented in Ryujinx.");
         return LibnxError_IoError; // lol closest thing
     }
 
     Result rc = romfsMountFromCurrentProcess("botw");
     if (R_FAILED(rc)){
-        puts("[Rune::Romfs::mountBotwRomfs] - romfsMountFromCurrentProcess() failed.");
+        puts("[Rune::Romfs::MountBotwRomfs] - romfsMountFromCurrentProcess() failed.");
     }
     return rc;
 }
 
-Result Rune::Romfs::unmountBotwRomfs(){
+Result Rune::Romfs::UnmountBotwRomfs(){
     Result rc = romfsUnmount("botw");
     return rc;
 }
 
 /**
- * @brief An old implementation of mountBotwRomfs(), which attempts to allow asset extraction
+ * @brief An old implementation of MountBotwRomfs(), which attempts to allow asset extraction
  * from any execution context. Unfortunately, fsOpenDataStorageByProgramId() does not agree with me or my choices.
  */
-Result mountBotwRomfsOld(){
+Result MountBotwRomfsOld(){
     if (Rune::Application::IsEmulator){
-        stubbed("[Rune::Romfs::mountBotwRomfs] - Game data mount failed! fsOpenDataStorageByProgramId is not implenented in Ryujinx.\n");
+        stubbed("[Rune::Romfs::MountBotwRomfs] - Game data mount failed! fsOpenDataStorageByProgramId is not implenented in Ryujinx.\n");
         return LibnxError_IoError; // lol closest thing
     }
 
@@ -774,7 +774,7 @@ Result mountBotwRomfsOld(){
     Result rc = fsOpenDataStorageByProgramId(&botwStorage, titleId);
 
     if (R_FAILED(rc)){
-        stubbed("[Rune::Romfs::mountBotwRomfs] - Failed to open BotW storage.\n\tTitle ID: %s\n", 
+        stubbed("[Rune::Romfs::MountBotwRomfs] - Failed to open BotW storage.\n\tTitle ID: %s\n", 
             intToHex(titleId).c_str()
         );
 
@@ -784,7 +784,7 @@ Result mountBotwRomfsOld(){
     // Use FsStorage item to open BotW RomFS at botw:/
     rc = romfsMountFromStorage(botwStorage, 0, "botw");
     if (R_FAILED(rc)){
-        stubbed("[Rune::Romfs::mountBotwRomfs] - Failed to mount BotW storage.\n");
+        stubbed("[Rune::Romfs::MountBotwRomfs] - Failed to mount BotW storage.\n");
         fsStorageClose(&botwStorage);
 
         return rc;

@@ -21,6 +21,10 @@ namespace Rune{
             {
                 "EquipmentData",
                 "romfs:/json/equipment_data.json"
+            },
+            {
+                "LocationNames",
+                "romfs:/json/location_names.json"
             }
         };
 
