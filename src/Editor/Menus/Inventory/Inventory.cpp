@@ -46,13 +46,29 @@ std::string Rune::Inventory::GetNameFromActorName(const std::string& actorName){
 }
 
 std::string Rune::Inventory::GetThumbPathFromActorName(const std::string& actorName, bool noVerify){
+    // Check cache first
+    auto path = Rune::Inventory::iconPathCache->get<std::string>(actorName);
+
+    // If path exists, return it
+    if (path != std::nullopt){
+        return path.value();
+    }
+
     // Build the full path to the thumbnail asset
     std::string fullPath = THUMB_PATH+actorName+".png";
 
     // Check if there is a file there, and return an empty string if the file does not exist.
     if (!noVerify){
-        return (std::filesystem::exists(fullPath)) ? fullPath : "";
+        if (std::filesystem::exists(fullPath)){
+            // Cache the location
+            Rune::Inventory::iconPathCache->put(actorName, fullPath);
+            return fullPath;
+        }
+        
+        // Return an empty string if path does not exist
+        return "";
     } else {
+        // Return the generated full path without verification
         return fullPath;
     }
 }

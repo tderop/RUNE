@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+#include <Utils/Cache.hpp>
+
 namespace Rune{
     namespace Inventory{
         // UI Configurations
@@ -26,6 +28,8 @@ namespace Rune{
 
         inline const Aether::Colour kDisabledEllipse{255, 255, 255, 75};
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
+
+        static Rune::Cache* iconPathCache = new Rune::Cache(420);
 
         // Determines which inventory tab an item belongs to
         enum class Category{
