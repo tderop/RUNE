@@ -1239,3 +1239,18 @@ std::string Rune::Save::GetKeyDescription(std::string& saveKey){
 
     return "";
 }
+
+std::string Rune::Save::GetReadableLocationName(const std::string& locationId){
+    // Get json
+    Rune::Json* locationJson;
+    Rune::JsonData::GetJsonById(locationJson, "LocationNames");
+
+    // Search json
+    auto entry = locationJson->find(locationId);
+    if (entry != locationJson->end() && entry->is_string()){
+        return entry->get<std::string>();
+    }
+
+    // Default to input if no location name was found
+    return locationId;
+}

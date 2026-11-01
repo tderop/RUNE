@@ -245,7 +245,9 @@ void MenuScreen::showSaveSelect(){
             Aether::Text* locationText = new Aether::Text(
                 slotButton->x()+(size_offset)+captionImg->w()+TEXT_X_OFFSET,
                 slotButton->y()+(slotButton->h()/2),
-                Rune::Save::ValueToString(saveLocationEntry->value, false),
+                Rune::Save::GetReadableLocationName(
+                    Rune::Save::ValueToString(saveLocationEntry->value, false)
+                ),
                 20
             );
 

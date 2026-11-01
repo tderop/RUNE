@@ -21,7 +21,7 @@ Because of copyright law, RUNE is not allowed to redistribute content owned by N
 <br>
 
 ## Screenshots
-> Note: game screenshots/icon assets have been omitted from these screenshots, RUNE features save slot thumbnails and item icons.
+> Note: game screenshots/icon assets have been omitted/pixelated in these screenshots. RUNE features support for full resolution save slot thumbnails and item icons.
 
 <img src="screenshots/select.png">
 <img src="screenshots/editor1.png">
