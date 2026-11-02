@@ -173,9 +173,7 @@ void Rune::Inventory::ShowPage(
     std::vector<Aether::Ellipse*>* ellipses){
 
     // Clear all current widgets
-
-    
-    menu->clearAllWidgets();
+    Logger::Importantf( "Time taken: %dns", timeCode([menu](){menu->clearAllWidgets();}));
 
     // The menu body, used for positioning tiles
     Aether::Container* menuBody = menu->body();

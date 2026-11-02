@@ -55,7 +55,7 @@ void clearLine();
 /**
  * @brief Time how long a function takes to run
  * @param f Function to run
- * @return Time elapsed in milliseconds
+ * @return Time elapsed in nanoseconds
  */
 uint64_t timeCode(std::function<void()> f);
 
