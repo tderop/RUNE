@@ -7,6 +7,7 @@
 #include <Save/Save.hpp>
 
 #include <Utils/Trove.hpp>
+#include <Utils/Logger.hpp>
 
 #include <string>
 
@@ -111,7 +112,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
             // If the number spinner value is greater than the current number of hearts, generate more hearts
             if (value > (int)hearts->size()){
                 // Create the number of hearts equal to the difference between hearts.size() and value
-                // log("[Hearts] - Generating "+std::to_string(value-hearts->size())+" hearts.");
+                // Logger::Write("[Hearts] - Generating "+std::to_string(value-hearts->size())+" hearts.");
 
                 size_t toGenerate = value-(hearts->size());
                 for (size_t i = 0; i < toGenerate; ++i){
@@ -209,7 +210,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
                 if (R_SUCCEEDED(rc)){
                     numSpinner->setValue((int)outFloat);
                 } else {
-                    log("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
+                    Logger::Write("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
                 }
             }
         );
@@ -236,7 +237,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
                 // And after rigorously overcommenting my code instead of actually developing, I found a bug I didn't even intend to find
                 // This was originally concatenating a string with an int (""+numSpinner->value())
                 // I shall go and fix this in the stamina editor too since this is an edited copy-paste widget of that one but with (arguably) 'better' comments
-                log("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
+                Logger::Write("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
                     +std::to_string(numSpinner->value()));
                 
                 // Calculate what the value should really be in save data (multiply value by 4 as save stores it in quarters)

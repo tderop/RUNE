@@ -2,7 +2,7 @@
 #include <Aether/Aether.hpp>
 #include <Config.hpp>
 
-#include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Utils/Trove.hpp>
 
 #include <Events/Signal.hpp>
@@ -16,15 +16,16 @@
 #include <filesystem>
 
 const size_t TEXTURES_PER_FRAME = 16;
+const bool PRELOAD_ICON_TEXTURES = false;
 
 SplashScreen::SplashScreen(Rune::Application* app) : app(app) {
     this->_loaded.store(false);
-    log("[SPLASH] - Successfully initialised splash screen!");
+    Logger::Write("[SPLASH] - Successfully initialised splash screen!");
 }
 
 void SplashScreen::buildScreen(){
     // show the splash image
-    log("[SPLASH] - Making splash image...");
+    Logger::Write("[SPLASH] - Making splash image...");
     this->_splashImg = new Aether::Image(
         994,
         640,
@@ -33,16 +34,16 @@ void SplashScreen::buildScreen(){
     );
 
     // resize
-    log("[SPLASH] - Rendering splash image...");
+    Logger::Write("[SPLASH] - Rendering splash image...");
 
     this->_splashImg->setScaleDimensions(270, 64);
-    log("[SPLASH] - Set image scale dimensions.");
+    Logger::Write("[SPLASH] - Set image scale dimensions.");
 
     this->_splashImg->renderSync(); // render image
-    log("[SPLASH] - Image rendered successfully.");
+    Logger::Write("[SPLASH] - Image rendered successfully.");
 
     this->addElement(this->_splashImg);
-    log("[SPLASH] - Splash image element added to screen.");
+    Logger::Write("[SPLASH] - Splash image element added to screen.");
 
     // Make status text
     int statusTextSize = 20;
@@ -62,7 +63,7 @@ void SplashScreen::buildScreen(){
 
     this->addElement(this->_statusText);
 
-    log("[SPLASH] - Screen built.");
+    Logger::Write("[SPLASH] - Screen built.");
 }
 
 void SplashScreen::loadRune(void* _self){
@@ -89,32 +90,34 @@ void SplashScreen::loadRune(void* _self){
     );
 
     // Step 2: Preload textures
-    rc = Rune::Inventory::PreloadTextures(
-        self->app->window()->renderer(),
+    if (PRELOAD_ICON_TEXTURES){
+        rc = Rune::Inventory::PreloadTextures(
+            self->app->window()->renderer(),
 
-        // Add texture to queue to be rendered
-        [self](const std::string& key, std::unique_ptr<Aether::Drawable> drawable){
-            std::lock_guard<std::mutex> lock(self->_textureMutex);
-            self->_textureQueue.push({
-                key, std::move(drawable)
-            });
-        },
+            // Add texture to queue to be rendered
+            [self](const std::string& key, std::unique_ptr<Aether::Drawable> drawable){
+                std::lock_guard<std::mutex> lock(self->_textureMutex);
+                self->_textureQueue.push({
+                    key, std::move(drawable)
+                });
+            },
 
-        // Show progress
-        [self](size_t completed, size_t max){
-            std::string suffix;
+            // Show progress
+            [self](size_t completed, size_t max){
+                std::string suffix;
 
-            if (max != 0){ // prevent div by 0
-                suffix = std::to_string(static_cast<int>((static_cast<float>(completed)
-                /static_cast<float>(max))*100))+"%";
+                if (max != 0){ // prevent div by 0
+                    suffix = std::to_string(static_cast<int>((static_cast<float>(completed)
+                    /static_cast<float>(max))*100))+"%";
+                }
+
+                {
+                    std::lock_guard<std::mutex> lock(self->_statusMutex);
+                    self->_status = "Preloading textures: "+suffix;
+                }
             }
-
-            {
-                std::lock_guard<std::mutex> lock(self->_statusMutex);
-                self->_status = "Preloading textures: "+suffix;
-            }
-        }
-    );
+        );
+    }
 
     // I'm loaded, run other loading steps
     self->_workerFinished.store(true);
@@ -157,7 +160,7 @@ void SplashScreen::onUnload(){
     // delete the image and set alive status
     this->_alive = false;
     this->_elapsed = 0;
-    log("[SPLASH] - Screen killed.");
+    Logger::Write("[SPLASH] - Screen killed.");
 }
 
 void SplashScreen::update(unsigned int dt){

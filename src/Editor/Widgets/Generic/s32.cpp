@@ -3,6 +3,7 @@
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
 #include <Application/Keyboard.hpp>
+#include <Utils/Logger.hpp>
 
 /**
  * @brief Constructor for signed32 values.
@@ -11,7 +12,7 @@
 void Rune::WidgetBuilder::Int(EditorWidget* widget){
     Rune::Save::Entry* saveEntry  = widget->getSaveEntry();
     
-    log("[WIDGET] - Creating int widget.");
+    Logger::Write("[WIDGET] - Creating int widget.");
 
     // Create the button
     widget->addEditButton(Rune::Save::GetReadableKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
@@ -58,7 +59,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
 
             if (isSave){
                 // update value
-                log("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
+                Logger::Write("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
                     +std::to_string(numSpinner->value()));
 
                 int value = numSpinner->value();

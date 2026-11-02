@@ -5,6 +5,7 @@
 #include <Application/Keyboard.hpp>
 
 #include <Save/Save.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 #include <string>
@@ -52,7 +53,7 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
 
             if (isSave){
                 std::string value = editBtn->value();
-                log("[Rune::WidgetBuilder::String] - Inner edit button value: '"+value+"'");
+                Logger::Write("[Rune::WidgetBuilder::String] - Inner edit button value: '"+value+"'");
                 
                 widget->getEditButton()->setValue(value);
                 widget->getSaveEntry()->value = value;

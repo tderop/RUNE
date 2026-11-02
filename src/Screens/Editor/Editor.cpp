@@ -8,6 +8,7 @@
 #include <Screens/Editor.hpp>
 #include <Config.hpp>
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Input/Input.hpp>
 #include <Save/Save.hpp>
 
@@ -97,7 +98,7 @@ void EditorScreen::prevMenu(InputSystem& inputService, InputState state){
 
 void EditorScreen::buildScreen(){
     // make the background frame
-    log("[EDITOR] - Making sidebar frame...");
+    Logger::Write("[EDITOR] - Making sidebar frame...");
     Aether::Rectangle* sidebarFrame = new Aether::Rectangle(
         0,
         0,
@@ -108,7 +109,7 @@ void EditorScreen::buildScreen(){
     sidebarFrame->setColour(EDITOR_SIDEBAR_COLOUR);
 
     // logo image (UNscrapped?????)
-    log("[EDITOR] - Making logo image...");
+    Logger::Write("[EDITOR] - Making logo image...");
     Aether::Image* logoImg = new Aether::Image(
         0,
         0,
@@ -120,7 +121,7 @@ void EditorScreen::buildScreen(){
     logoImg->renderSync();
 
     // logo text
-    log("[EDITOR] - Making logo text...");
+    Logger::Write("[EDITOR] - Making logo text...");
     Aether::Text* logoText = new Aether::Text(
         0,
         0,
@@ -131,7 +132,7 @@ void EditorScreen::buildScreen(){
     logoText->setColour(TEXT_COLOUR);
 
     // RUNE logo separator
-    log("[EDITOR] - Making logo separator...");
+    Logger::Write("[EDITOR] - Making logo separator...");
     int logoSeparatorWidth = static_cast<int>(sidebarFrame->w()*(3.0/4.0));
     Aether::Rectangle* logoSeparator = new Aether::Rectangle(
         0,
@@ -143,7 +144,7 @@ void EditorScreen::buildScreen(){
     logoSeparator->setColour(SEPARATOR_COLOUR);
 
     // background
-    log("[EDITOR] - Making background...");
+    Logger::Write("[EDITOR] - Making background...");
     Aether::Rectangle* background = new Aether::Rectangle(
         0,
         0,
@@ -154,7 +155,7 @@ void EditorScreen::buildScreen(){
     background->setColour(BACKGROUND_COLOUR);
 
     // top panel
-    log("[EDITOR] - Making top panel...");
+    Logger::Write("[EDITOR] - Making top panel...");
     topPanel = new Aether::Rectangle(
         sidebarFrame->w(),
         0,
@@ -165,7 +166,7 @@ void EditorScreen::buildScreen(){
     topPanel->setColour(MUTED_BACKGROUND_COLOUR);
 
     // separators
-    log("[EDITOR] - Making top separator...");
+    Logger::Write("[EDITOR] - Making top separator...");
     Aether::Rectangle* topSeparator = new Aether::Rectangle(
         topPanel->x(),
         topPanel->y()+topPanel->h(),
@@ -173,7 +174,7 @@ void EditorScreen::buildScreen(){
         1
     );
 
-    log("[EDITOR] - Making bottom separator...");
+    Logger::Write("[EDITOR] - Making bottom separator...");
     Aether::Rectangle* bottomSeparator = new Aether::Rectangle(
         topPanel->x(),
         BOTTOM_SEPARATOR_Y,
@@ -185,7 +186,7 @@ void EditorScreen::buildScreen(){
     bottomSeparator->setColour(SEPARATOR_COLOUR);
 
     // align everything
-    log("[EDITOR] - Aligning elements...");
+    Logger::Write("[EDITOR] - Aligning elements...");
     logoSeparator->setX(
         sidebarFrame->x()+(sidebarFrame->w()/2)
         -(logoSeparator->w()/2)
@@ -199,7 +200,7 @@ void EditorScreen::buildScreen(){
     logoImg->setY(logoText->y());
 
     // copyright text
-    log("[EDITOR] - Making copyright text...");
+    Logger::Write("[EDITOR] - Making copyright text...");
     Aether::Text* copyrightAndDisclaimer = new Aether::Text(
         logoSeparator->x(),
         sidebarFrame->h(),
@@ -211,7 +212,7 @@ void EditorScreen::buildScreen(){
     copyrightAndDisclaimer->setColour(MUTED_TEXT_COLOR);
 
     // build tab buttons
-    log("[EDITOR] - Making tab button container...");
+    Logger::Write("[EDITOR] - Making tab button container...");
     Aether::Container* tabButtonList = new Aether::Container(
         logoSeparator->x(),
         logoSeparator->y()+36,
@@ -223,7 +224,7 @@ void EditorScreen::buildScreen(){
     // tabButtonList->setShowScrollBar(false);
 
     // create tab buttons
-    log("[EDITOR] - Making tab buttons...");
+    Logger::Write("[EDITOR] - Making tab buttons...");
     this->tabLabelSelIndicator = new Aether::Rectangle(0, 0, 3, 1);
     this->tabLabelSelIndicator->setColour(TOP_R);
 
@@ -235,7 +236,7 @@ void EditorScreen::buildScreen(){
         tabButton = new Aether::ListButton(
             tabName,
             [this, tabName, tabIdx](){
-                log(tabName+" was selected");
+                Logger::Write(tabName+" was selected");
                 this->showTab(tabName);
             }
         );
@@ -255,10 +256,10 @@ void EditorScreen::buildScreen(){
     }
 
     // reposition select indicator
-    log("[EDITOR] - Positioning select indicator and showing tab...");
+    Logger::Write("[EDITOR] - Positioning select indicator and showing tab...");
 
     // adjust height of list accordingly
-    log("[EDITOR] - Adjusting height of tab button container...");
+    Logger::Write("[EDITOR] - Adjusting height of tab button container...");
     int listHeight = tabButtons.at(0)->h();
     for (Aether::ListButton* button : tabButtons){
         int buttonHeight = button->h();
@@ -336,7 +337,7 @@ void EditorScreen::buildScreen(){
         [this, confirmBox, messageBox]{
 
         Aether::Window* window = this->app->window();
-        log("[EDITOR] - Plus pressed, requesting save...");
+        Logger::Write("[EDITOR] - Plus pressed, requesting save...");
 
         confirmBox->setString("Save changes? This will modify this save slot.");
         confirmBox->leftButton()->onPress([this, window, confirmBox, messageBox](){
@@ -372,7 +373,7 @@ void EditorScreen::buildScreen(){
     });
 
     // add all elements
-    log("[EDITOR] - Adding elements...");
+    Logger::Write("[EDITOR] - Adding elements...");
     this->addElement(background);
     this->addElement(controlBar);
 
@@ -405,20 +406,20 @@ void EditorScreen::buildScreen(){
 
     this->widgetOverlay = new WidgetOverlay();
     
-    log("[EDITOR] - Screen built successfully");
+    Logger::Write("[EDITOR] - Screen built successfully");
 }
 
 void EditorScreen::showTab(std::string tabName){
     // if new tab is old tab, ignore
     if (this->selectedTab == tabName){
-        log("[EDITOR] - Already selected tab '"+tabName+"'! Ignoring...");
+        Logger::Write("[EDITOR] - Already selected tab '"+tabName+"'! Ignoring...");
         return;
     }
 
-    log("[EDITOR] - Cleaning temporary elements...");
+    Logger::Write("[EDITOR] - Cleaning temporary elements...");
     this->pageTrove->clear();
 
-    log("[EDITOR] - Resetting selected menu, setting selected tab, and clearing menu labels...");
+    Logger::Write("[EDITOR] - Resetting selected menu, setting selected tab, and clearing menu labels...");
     this->selectedMenu = 0;
     this->selectedTab = tabName;
     this->menuLabels.clear();
@@ -428,12 +429,12 @@ void EditorScreen::showTab(std::string tabName){
     int totalMenus = tabMeta.menus.size();
     int totalTextureLength = 0;
 
-    log("[EDITOR] - Initialisaing local menuLabels...");
+    Logger::Write("[EDITOR] - Initialisaing local menuLabels...");
     std::vector<Aether::BorderButton*> menuLabels;
     int idx = 0;
     int textPadding = TEXT_X_OFFSET*3;
 
-    log("[EDITOR] - Building menu labels...");
+    Logger::Write("[EDITOR] - Building menu labels...");
     for (std::string menuName : tabMeta.menus){
         // std::string fullMenuName = menuName;
         Aether::BorderButton* menuText = new Aether::BorderButton(0, 0, 196, 48, 1, menuName, 18, [this, idx](){
@@ -465,8 +466,8 @@ void EditorScreen::showTab(std::string tabName){
 
     Aether::BorderButton* centerLabel = menuLabels.at(middleIdx);
 
-    log("[EDITOR] - Middle Index: "+std::to_string(middleIdx));
-    log("[EDITOR] - Calculating X offset...");
+    Logger::Write("[EDITOR] - Middle Index: "+std::to_string(middleIdx));
+    Logger::Write("[EDITOR] - Calculating X offset...");
 
     if (isOdd){
         xOffset = topPanelCenterX-(centerLabel->x())-(centerLabel->w()/2);
@@ -480,7 +481,7 @@ void EditorScreen::showTab(std::string tabName){
     int topPanelCenterY = (this->topPanel->y())+(this->topPanel->h()/2);
     int menuLabelY = topPanelCenterY-(menuLabels.at(0)->h()/2);
 
-    log("[EDITOR] - Repositioning menu labels...");
+    Logger::Write("[EDITOR] - Repositioning menu labels...");
     for (Aether::BorderButton* menuLabel : menuLabels){
         menuLabel->setXY(
             menuLabel->x()+xOffset,
@@ -490,14 +491,14 @@ void EditorScreen::showTab(std::string tabName){
         menuLabel->setTextColour(TEXT_COLOUR);
         menuLabel->setBorderColour(Aether::Colour{0, 0, 0, 0});
         
-        log("[EDITOR] - Adding element to trove...");
+        Logger::Write("[EDITOR] - Adding element to trove...");
         this->pageTrove->addElement(menuLabel);
         this->menuLabels.push_back(menuLabel);
 
         this->addElement(menuLabel);
     }
 
-    log("[EDITOR] - Successfully repositioned all menu labels.");
+    Logger::Write("[EDITOR] - Successfully repositioned all menu labels.");
 
     this->showMenu(0);
 
@@ -511,8 +512,8 @@ void EditorScreen::showTab(std::string tabName){
         tabIdx++;
     }
 
-    log("[EDITOR] - Tab shown successfully!");
-    log("==========================================================");
+    Logger::Write("[EDITOR] - Tab shown successfully!");
+    Logger::Write("==========================================================");
 }
 
 void EditorScreen::showMenu(int menuIdx){
@@ -526,19 +527,19 @@ void EditorScreen::showMenu(int menuIdx){
         menuIdx = (this->menuLabels.size())-1;
     }
 
-    log("[EDITOR] - Preparing to show menu at index "+std::to_string(menuIdx));
+    Logger::Write("[EDITOR] - Preparing to show menu at index "+std::to_string(menuIdx));
     this->selectedMenu = menuIdx;
 
     if (this->menuLabelSelIndicator == nullptr){
-        log("[EDITOR] - Creating menu label select indicator...");
+        Logger::Write("[EDITOR] - Creating menu label select indicator...");
         this->menuLabelSelIndicator = new Aether::Rectangle(0, 0, 60, 2);
         this->menuLabelSelIndicator->setColour(TOP_R);
 
         this->addElement(menuLabelSelIndicator);
-        log("[EDITOR] - Menu label select indicator created!");
+        Logger::Write("[EDITOR] - Menu label select indicator created!");
     }
 
-    log("[EDITOR] - Finding selected button...");
+    Logger::Write("[EDITOR] - Finding selected button...");
     Aether::BorderButton* selectedBtn = this->menuLabels.at(menuIdx);
 
     // reposition the select indicator
@@ -548,7 +549,7 @@ void EditorScreen::showMenu(int menuIdx){
     );
 
     // recolor text
-    log("[EDITOR] - Recolouring text...");
+    Logger::Write("[EDITOR] - Recolouring text...");
     for (Aether::BorderButton* otherBtn : this->menuLabels){
         if (otherBtn != selectedBtn){
             otherBtn->setTextColour(TEXT_COLOUR);
@@ -559,11 +560,11 @@ void EditorScreen::showMenu(int menuIdx){
     }
 
     // get more menu data
-    log("[EDITOR] - Getting menu data...");
+    Logger::Write("[EDITOR] - Getting menu data...");
 
     EditorTab& thisTabData = Rune::Editor::TabData.at(this->selectedTab);
     const std::string& menuName = thisTabData.menus.at(menuIdx);
-    log("[EDITOR] - Got menu name and selected tab data: '"+menuName+"'");
+    Logger::Write("[EDITOR] - Got menu name and selected tab data: '"+menuName+"'");
 
     // Get this menu's builder
     auto buildPair = thisTabData.menuBuilders.find(menuName);
@@ -611,8 +612,8 @@ void EditorScreen::showMenu(int menuIdx){
     // Set current menu
     this->currentMenu = menu;
 
-    log("[EDITOR] - Menu shown successfully!");
-    log("----------------------------------");
+    Logger::Write("[EDITOR] - Menu shown successfully!");
+    Logger::Write("----------------------------------");
 }
 
 Aether::PopupList* EditorScreen::getPopupList(){
@@ -649,36 +650,36 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
     std::string saveFileDataPath = saveSlot->gameDataPath;
     Result rc = Rune::Save::GetSaveRawFile(&rawSaveFile, saveFileDataPath);
     if (R_FAILED(rc)){
-        log("[EDITOR] - Failed to get raw save file for slot "+std::to_string(saveSlot->index)+"!");
+        Logger::Write("[EDITOR] - Failed to get raw save file for slot "+std::to_string(saveSlot->index)+"!");
         return;
     }
 
     // Decode the raw save file
-    log("[EDITOR] - Decoding raw save file...");
+    Logger::Write("[EDITOR] - Decoding raw save file...");
     rc = Rune::Save::Decode(this->saveFile, rawSaveFile, *runeMetadata);
     if (R_FAILED(rc)){
-        log("[EDITOR] - Failed to decode save file for slot "+std::to_string(saveSlot->index)+"!");
+        Logger::Write("[EDITOR] - Failed to decode save file for slot "+std::to_string(saveSlot->index)+"!");
     }
 
-    log("[EDITOR] - Raw save file decoded successfully!");
+    Logger::Write("[EDITOR] - Raw save file decoded successfully!");
 
     // Get the raw caption file
-    log("[EDITOR] - Getting raw caption file...");
+    Logger::Write("[EDITOR] - Getting raw caption file...");
     Rune::Save::RawFile rawCaptionFile;
     std::string captionFileDataPath = saveSlot->captionDataPath;
     rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, captionFileDataPath);
     if (R_FAILED(rc)){
-        log("[EDITOR] - Failed to get raw caption file for slot "+std::to_string(saveSlot->index)+"!");
+        Logger::Write("[EDITOR] - Failed to get raw caption file for slot "+std::to_string(saveSlot->index)+"!");
     }
 
     // Decode the raw caption file
-    log("[EDITOR] - Decoding raw caption file...");
+    Logger::Write("[EDITOR] - Decoding raw caption file...");
     rc = Rune::Save::Decode(this->captionFile, rawCaptionFile, *runeMetadata);
     if (R_FAILED(rc)){
-        log("[EDITOR] - Failed to decode caption file for slot "+std::to_string(saveSlot->index)+"!");
+        Logger::Write("[EDITOR] - Failed to decode caption file for slot "+std::to_string(saveSlot->index)+"!");
     }
 
-    log("[EDITOR] - Raw caption file decoded successfully!");
+    Logger::Write("[EDITOR] - Raw caption file decoded successfully!");
 
     // Load the caption image
     // Get the last tab button for alignment
@@ -820,7 +821,7 @@ void EditorScreen::onUnload(){
     // Edit null
     this->editSaveSlot(nullptr);
 
-    log("============== [EDITOR] - Screen successfully unloaded. ==============");
+    Logger::Write("============== [EDITOR] - Screen successfully unloaded. ==============");
 }
 
 void EditorScreen::update(unsigned int dt){

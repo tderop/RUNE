@@ -4,6 +4,7 @@
 #include <Events/Signal.hpp>
 #include <Application/Keyboard.hpp>
 #include <Config.hpp>
+#include <Utils/Logger.hpp>
 
 #include <string>
 
@@ -14,7 +15,7 @@
 void Rune::WidgetBuilder::Float(EditorWidget* widget){
     Rune::Save::Entry* saveEntry  = widget->getSaveEntry();
     
-    log("[WIDGET] - Creating float widget.");
+    Logger::Write("[WIDGET] - Creating float widget.");
 
     // Create the button
     widget->addEditButton(Rune::Save::GetReadableKeyName(saveEntry->dataName), Rune::Save::ValueToString(saveEntry->value, false));
@@ -51,7 +52,7 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
                 if (R_SUCCEEDED(rc)){
                     editBtn->setValue(std::to_string(outFloat));
                 } else {
-                    log("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
+                    Logger::Write("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
                 }
             }
         );
@@ -70,7 +71,7 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
 
             if (isSave){
                 // update value
-                log("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
+                Logger::Write("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
                     +editBtn->value());
 
                 float value = std::stof(editBtn->value());

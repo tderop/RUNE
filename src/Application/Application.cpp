@@ -10,7 +10,7 @@
 #include <Screens/Editor.hpp>
 #include <Screens/Splash.hpp>
 
-#include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 #include <math.h>
@@ -40,36 +40,36 @@ namespace Rune{
 
             [](const std::string message, const bool important){
             if (important){
-                log("[!! AETHER !!] - "+message);
+                Logger::Write("[!! AETHER !!] - "+message);
             } else {
-                log("[AETHER] - "+message);
+                Logger::Write("[AETHER] - "+message);
             }
         });
 
         this->_window->setHighlightAnimation(highlightFunc());
-        log("[APPLICATION] - Successfully loaded Aether window!");
+        Logger::Write("[APPLICATION] - Successfully loaded Aether window!");
 
         this->_window->setFadeIn(true);
         this->_window->setFadeOut(true);
 
         // create the screens
-        log("[Rune::Application] - Initialising screens.");
+        Logger::Write("[Rune::Application] - Initialising screens.");
 
         SplashScreen* splashScreen = new SplashScreen(this);
         MenuScreen* menuScreen = new MenuScreen(this);
         EditorScreen* editorScreen = new EditorScreen(this);
 
-        log("[Rune::Application] - Screens initialised.");
+        Logger::Write("[Rune::Application] - Screens initialised.");
 
         // build the basic screen elements
         splashScreen->buildScreen();
-        log("[Rune::Application] - Built SplashScreen.");
+        Logger::Write("[Rune::Application] - Built SplashScreen.");
 
         menuScreen->buildScreen();
-        log("[Rune::Application] - Built MenuScreen.");
+        Logger::Write("[Rune::Application] - Built MenuScreen.");
 
         editorScreen->buildScreen();
-        log("[Rune::Application] - Built EditorScreen.");
+        Logger::Write("[Rune::Application] - Built EditorScreen.");
 
         this->screens = {
             {
@@ -86,7 +86,7 @@ namespace Rune{
             }
         };
 
-        log("[Rune::Application] - Screen setup complete.");
+        Logger::Write("[Rune::Application] - Screen setup complete.");
         InputSystem& inputService = InputSystem::getService();
 
         // show the initial splash screen
@@ -114,7 +114,7 @@ namespace Rune{
         });
 
         this->showScreen("Splash");
-        log("[Rune::Application] - Successfully showed splash screen!");
+        Logger::Write("[Rune::Application] - Successfully showed splash screen!");
     }
 
     Aether::Window* Application::window(){
@@ -131,7 +131,7 @@ namespace Rune{
         Aether::Screen* screen = this->screens.at(screenName);
     
         if (screen != nullptr){
-            log("[Rune::Application] - Showing screen '"+screenName+"'...");
+            Logger::Write("[Rune::Application] - Showing screen '"+screenName+"'...");
             
             // full opacity initially
             float rectOpacity = 0.0f;
@@ -143,7 +143,7 @@ namespace Rune{
                 fadeOutRect = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0);
                 fadeOutRect->setColour(Aether::Colour{0, 0, 0, 0});
 
-                log("[Rune::Application] - Current screen is not null. Fading out screen.");
+                Logger::Write("[Rune::Application] - Current screen is not null. Fading out screen.");
                 this->_currentScreen->addElement(fadeOutRect); // add rect to current screen
 
                 // fade IN the rectangle
@@ -152,12 +152,12 @@ namespace Rune{
 
                     fadeOutRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::min(roundedOpacity, 255))});
                     rectOpacity += 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
-                    log(std::to_string(roundedOpacity));
+                    Logger::Write(std::to_string(roundedOpacity));
 
                     usleep(TWEEN_UPDATE_TIME);
                 } while (rectOpacity < 255.0f);
 
-                log("[Rune::Application] - Fade out complete.");
+                Logger::Write("[Rune::Application] - Fade out complete.");
             }
 
             // store old screen
@@ -167,14 +167,14 @@ namespace Rune{
             Aether::Rectangle* fadeInRect = nullptr;
 
             if (this->_fadeScreens){
-                log("[Rune::Application] - Adding fade rect to new screen...");
+                Logger::Write("[Rune::Application] - Adding fade rect to new screen...");
                 fadeInRect = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0);
                 fadeInRect->setColour(Aether::Colour{0, 0, 0, 255});
                 screen->addElement(fadeInRect);
             }
 
             // show new screen
-            log("[Rune::Application] - Showing new screen.");
+            Logger::Write("[Rune::Application] - Showing new screen.");
             this->_window->showScreen(screen);
             this->_currentScreen = screen;
             this->_currentScreenName = screenName;
@@ -186,25 +186,25 @@ namespace Rune{
                 }
 
                 // fade in new screen
-                log("[Rune::Application] - Fading in new screen.");
+                Logger::Write("[Rune::Application] - Fading in new screen.");
                 do {
                     roundedOpacity = rectOpacity;
 
                     fadeInRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::max(roundedOpacity, 0))});
                     rectOpacity -= 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
-                    log(std::to_string(roundedOpacity));
+                    Logger::Write(std::to_string(roundedOpacity));
 
                     usleep(TWEEN_UPDATE_TIME);
                 } while (rectOpacity > 0.0f);
-                log("[Rune::Application] - Fade in complete.");
+                Logger::Write("[Rune::Application] - Fade in complete.");
 
                 // remove rect from new screen
-                log("[Rune::Application] - Removing rect from new screen...");
+                Logger::Write("[Rune::Application] - Removing rect from new screen...");
                 this->_currentScreen->removeElement(fadeInRect);
             }
 
         } else {
-            log("[Rune::Application] - Screen is nullptr. Ignoring.");
+            Logger::Write("[Rune::Application] - Screen is nullptr. Ignoring.");
         }
 
         return screen;

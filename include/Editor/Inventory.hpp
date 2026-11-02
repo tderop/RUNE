@@ -199,5 +199,10 @@ namespace Rune{
          */
         Result PreloadTextures(Aether::Renderer* renderer, std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
 
+        /**
+         * @brief Load all actorname icon paths. 
+         * @return Error code
+         */
+        Result CacheIconPaths();
     } // namespace Inventory
 } // namespace Rune

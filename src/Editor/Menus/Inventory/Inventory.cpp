@@ -5,6 +5,7 @@
 #include <Editor/EditorWidget.hpp>
 
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Save/Save.hpp>
 #include <Json/Json.hpp>
 #include <Config.hpp>
@@ -27,7 +28,7 @@
  * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
  */
 void Rune::MenuBuilder::Inventory(EditorMenu* menu){
-    log("[Rune::MenuBuilder::Inventory] - Running menu builder...");
+    Logger::Write("[Rune::MenuBuilder::Inventory] - Running menu builder...");
 
     // Disable right stick navigation
     Aether::SetRightStickNavigation(false);
@@ -43,7 +44,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         return;
     }
 
-    log("[Rune::MenuBuilder::Inventory] - Got prefix entry!");
+    Logger::Write("[Rune::MenuBuilder::Inventory] - Got prefix entry!");
 
     std::vector<std::string> prefixes = prefixEntry->second;
 
@@ -165,7 +166,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             tileStyle
         };
 
-        // log(itemName+std::to_string(itemValue), true);
+        // Logger::Write(itemName+std::to_string(itemValue), true);
 
         // Store the inventory item
         inventoryItems->push_back(inventoryItem);

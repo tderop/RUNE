@@ -6,6 +6,7 @@
 
 #include <Save/Save.hpp>
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 #include <switch.h>
@@ -300,20 +301,20 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
         char buf[17];
         strftime(buf, sizeof(buf), "%d.%m.%Y_%H.%M", localTime);
         std::string destPath = BACKUP_PATH+"game_data.sav."+"BAK_"+std::string(buf);
-        log("[Rune::Save::CompileTo] - Destination path: "+destPath);
+        Logger::Write("[Rune::Save::CompileTo] - Destination path: "+destPath);
 
-        log("[Rune::Save::CompileTo] - Creating directories...");
+        Logger::Write("[Rune::Save::CompileTo] - Creating directories...");
         std::filesystem::create_directories(BACKUP_PATH);
 
-        log("[Rune::Save::CompileTo] - Provided output path: "+outputPath);
+        Logger::Write("[Rune::Save::CompileTo] - Provided output path: "+outputPath);
 
         // move the file across from the original save path to the backup path
-        log("[Rune::Save::CompileTo] - Copying file from original path to backup path...");
+        Logger::Write("[Rune::Save::CompileTo] - Copying file from original path to backup path...");
         std::ifstream src(outputPath, std::ios::binary);
         std::ofstream dst(destPath, std::ios::binary | std::ios::trunc);
 
         if (!src.is_open() || !dst.is_open()){
-            log("[Rune::Save::CompileTo] - Failed to open files!");
+            Logger::Write("[Rune::Save::CompileTo] - Failed to open files!");
             return LibnxError_IoError;
         }
 
@@ -321,49 +322,49 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
         dst.flush();
 
         if (!dst){
-            log("[Rune::Save::CompileTo] - Failed to write backup!");
+            Logger::Write("[Rune::Save::CompileTo] - Failed to write backup!");
             return LibnxError_IoError;
         }
 
-        // log("[Rune::Save::CompileTo] - Backup moved! Removing original file...");
+        // Logger::Write("[Rune::Save::CompileTo] - Backup moved! Removing original file...");
         // std::filesystem::remove(outputPath);
     }
 
     // Step 2: Build a new save file
-    log("[Rune::Save::CompileTo] - Opening new save file...");
+    Logger::Write("[Rune::Save::CompileTo] - Opening new save file...");
     std::ofstream sav;
     sav.open(outputPath, std::ofstream::binary);
 
     if (!sav.is_open()){
-        log("[Rune::Save::CompileTo] - Failed to open new save file!");
+        Logger::Write("[Rune::Save::CompileTo] - Failed to open new save file!");
         return LibnxError_IoError;
     }
 
     // Everything is written in 4-byte chunks
 
     // Write the header
-    log("[Rune::Save::CompileTo] - Writing header...");
+    Logger::Write("[Rune::Save::CompileTo] - Writing header...");
     Rune::Save::Header header = rawSaveFile->header;
 
-    log("[Rune::Save::CompileTo] - Header details: "+std::to_string(header.version)+", "+std::to_string(header.marker)+", "+std::to_string(header.formatVersion));
+    Logger::Write("[Rune::Save::CompileTo] - Header details: "+std::to_string(header.version)+", "+std::to_string(header.marker)+", "+std::to_string(header.formatVersion));
     sav.write(reinterpret_cast<const char*>(&header.version), sizeof(header.version));
     sav.write(reinterpret_cast<const char*>(&header.marker), sizeof(header.marker));
     sav.write(reinterpret_cast<const char*>(&header.formatVersion), sizeof(header.formatVersion));
 
     // Write the entires
-    log("[Rune::Save::CompileTo] - Writing entries...");
+    Logger::Write("[Rune::Save::CompileTo] - Writing entries...");
     for (const auto& rawEntry : rawSaveFile->entries){
         sav.write(reinterpret_cast<const char*>(&rawEntry.id), sizeof(rawEntry.id));
         sav.write(reinterpret_cast<const char*>(&rawEntry.value), sizeof(rawEntry.value));
     }
 
     // Write the padding bytes
-    log("[Rune::Save::CompileTo] - Writing padding...");
+    Logger::Write("[Rune::Save::CompileTo] - Writing padding...");
     uint32_t padding = 0xFFFFFFFF;
     sav.write(reinterpret_cast<const char*>(&padding), sizeof(uint32_t));
 
     // Close the file
-    log("[Rune::Save::CompileTo] - Closing new file...");
+    Logger::Write("[Rune::Save::CompileTo] - Closing new file...");
     sav.close();
 
     // COMMIT CHANGES
@@ -373,6 +374,6 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
     }
 
     // All is well
-    log("[Rune::Save::CompileTo] - All is well.");
+    Logger::Write("[Rune::Save::CompileTo] - All is well.");
     return 0;
 }

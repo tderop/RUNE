@@ -2,6 +2,7 @@
 #include <Editor/MenuBuilder.hpp>
 
 #include <Save/Save.hpp>
+#include <Utils/Logger.hpp>
 #include <string>
 
 const int ENTRIES_PER_PAGE = 50;
@@ -13,7 +14,7 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
     size_t totalEntries = 0;
     for (const auto& entry : menu->saveFile()->entries){
         if (entry.dataName.find("Porch") != std::string::npos){
-            log(
+            Logger::Write(
                 "["+entry.dataName+"] - "+Rune::Save::ValueToString(entry.value), 
                 false
             );

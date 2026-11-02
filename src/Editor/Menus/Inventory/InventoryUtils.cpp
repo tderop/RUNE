@@ -3,7 +3,7 @@
 #include <Editor/Inventory.hpp>
 
 #include <Json/Json.hpp>
-#include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 #include <filesystem>
@@ -71,6 +71,13 @@ std::string Rune::Inventory::GetThumbPathFromInventoryItem(const Rune::Inventory
     if (iconActorName.empty()){
         iconActorName = inventoryItem.actorName;
     }
+
+    // Check if path is cached
+    auto path = Rune::Inventory::IconPathCache->get<std::string>(iconActorName);
+    if (path != std::nullopt){
+        return path.value();
+    }
+
     int32_t value = inventoryItem.value;
 
     // Individual category handlers
@@ -91,10 +98,10 @@ std::string Rune::Inventory::GetThumbPathFromInventoryItem(const Rune::Inventory
                 // Return the full path only if exists
                 if (!std::filesystem::exists(fullPath)){
                     std::string fallbackPath = Rune::Inventory::GetThumbPathFromActorName(iconActorName);
-                    // log("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
+                    // Logger::Write("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
                     return fallbackPath;
                 } else {
-                    // log("[Rune::Inventory] - File exists! '"+fullPath+"'", true);
+                    // Logger::Write("[Rune::Inventory] - File exists! '"+fullPath+"'", true);
                     return fullPath;
                 }
             }
@@ -148,13 +155,13 @@ std::string Rune::Inventory::FormatValue(const Rune::Inventory::Item& inventoryI
             if (labelValue->is_number()){
                 return std::to_string(labelValue->get<int>());
             } else {
-                log("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
+                Logger::Write("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
             }
         } else {
-            log("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
+            Logger::Write("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
         }
     } else {
-        // log("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
+        // Logger::Write("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
     }
     return "";
 }
@@ -166,6 +173,8 @@ void Rune::Inventory::ShowPage(
     std::vector<Aether::Ellipse*>* ellipses){
 
     // Clear all current widgets
+
+    
     menu->clearAllWidgets();
 
     // The menu body, used for positioning tiles
@@ -311,6 +320,12 @@ Result Rune::Inventory::PreloadTextures(
         // On decoded, hand graphics work to main thread
         onDecoded(key, std::move(drawable));
     }
+
+    return 0;
+}
+
+Result Rune::Inventory::CacheIconPaths(){
+    Rune::Json actorNameJson;
 
     return 0;
 }

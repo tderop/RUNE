@@ -3,7 +3,7 @@
 
 // Source libs
 #include <Input/Input.hpp> // Provides my own InputService
-#include <Utils/Utils.hpp> // Provides various utility functions (mainly log())
+#include <Utils/Logger.hpp> // Provides my own logging service
 #include <Save/Save.hpp> // Provides Rune::Save::Metadata functionality and other Rune::Save types for parsing metadata on load
 #include <Application/Application.hpp> // Provides Rune::Application for managing different screens
 #include <Json/Json.hpp> // Provides Rune::Json and Rune::JsonData for handling RUNE's romFS JSON files
@@ -65,13 +65,13 @@ void exitApplet(InputSystem& inputService, InputState state){
  * @return Result
  */
 Result initApplet(){
-    // Check for the presence of an emulator to determine whether log() should print messages to the console or not
+    // Check for the presence of an emulator to determine whether Logger::Write() should print messages to the console or not
     // This is unique to my own emulator development environment, I put an empty file called "emulator" on the virtual SD card
     if (std::filesystem::exists("sdmc:/emulator")){
         Rune::Application::IsEmulator = true;
     }
 
-    log("[INIT] - Initialising RUNE...");
+    Logger::Write("[INIT] - Initialising RUNE...");
 
     // Determine the applet type
     // This is in order to prevent launching RUNE in applet mode; it will crash without a selected user and may not have enough
@@ -80,7 +80,7 @@ Result initApplet(){
 
     // Initialise InputService
     inputService.init();
-    log("[INIT] - Initialised InputService");
+    Logger::Write("[INIT] - Initialised InputService");
     
     // Bind the exit keybind
     inputService.bind("Exit", InputObject(InputType::Gamepad, HidNpadButton_Plus));
@@ -129,12 +129,12 @@ Result initApplet(){
     // initialise romFS for accessing RUNE assets
     Result rc = romfsInit();
     if (R_FAILED(rc)){
-        log("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
+        Logger::Write("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
         return -3; // These arbitrary negative values just specify what type of error ocurred during applet initialisation.
         // Currently, they don't do anything, but this value may get used in the future, that is why I assigned each failure route with a unique error code.
     }
 
-    log("[INIT] - Initialised RomFS");
+    Logger::Write("[INIT] - Initialised RomFS");
     
     if (DEBUG_MODE){
         // Initialise console so program begins running ready for input
@@ -209,11 +209,11 @@ Result initApplet(){
 
     // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application(initSuccess);
-    log("[Rune::Application] - Successfully loaded application manager.");
+    Logger::Write("[Rune::Application] - Successfully loaded application manager.");
 
     // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
     Rune::JsonData::Init();
-    log("[INIT] - Initialised Rune::Json");
+    Logger::Write("[INIT] - Initialised Rune::Json");
 
     /**
      * Parse the save metadata. The save metadata contains basically all of the information required to decode save files, including (but not limited to):
@@ -226,12 +226,12 @@ Result initApplet(){
      */
     rc = Rune::Save::LoadMetadata(&saveMetadata);
     if (R_FAILED(rc)){
-        log("Failed to parse BotW .bgsvdata metadata.");
+        Logger::Write("Failed to parse BotW .bgsvdata metadata.");
         exitApplet(inputService, InputState::Begin);
         return -2;
     }
 
-    log("[INIT] - Parsed save metadata files");
+    Logger::Write("[INIT] - Parsed save metadata files");
 
     // Initialise the account service. This is used for knowing which user's save file should be accessed.
     rc = accountInitialize(AccountServiceType_Application);
@@ -239,26 +239,26 @@ Result initApplet(){
         return -1;
     }
 
-    log("[INIT] - Initialised AccountService");
+    Logger::Write("[INIT] - Initialised AccountService");
 
     // Mount the BotW Save Data. This mounts the save data as an accessible filesystem on save:/
     // Making changes to this filesystem without using fsdevCommitDevice("save:/") will not save changes (as I learned the hard way)
     rc = Rune::Save::MountSaveData();
     if (R_FAILED(rc)){
-        log("[INIT] - Failed to mount BotW save data.");
+        Logger::Write("[INIT] - Failed to mount BotW save data.");
         mountSuccess = false;
     }
     else {
-        log("[INIT] - Mounted BotW save data");
+        Logger::Write("[INIT] - Mounted BotW save data");
     }
 
 
     // The application initialised successfully
     if (mountSuccess){
-        log("[INIT] - Initialised RUNE successfully!");
+        Logger::Write("[INIT] - Initialised RUNE successfully!");
     }
     else { // Allow launch with failures for now, mainly for testing purposes
-        log("[INIT] - Initialised RUNE, but with problems.");
+        Logger::Write("[INIT] - Initialised RUNE, but with problems.");
     }
 
     return 0;
@@ -278,12 +278,12 @@ int main(){
         inputService.update();
     }
 
-    log("[MAIN] - Exiting RUNE...");
+    Logger::Write("[MAIN] - Exiting RUNE...");
 
     // Exit romFS (the path used to access RUNE's assets such as images and JSON files)
     Result rc = romfsExit();
     if (R_FAILED(rc)){
-        log("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
+        Logger::Write("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
     }
 
     // Exit the account service

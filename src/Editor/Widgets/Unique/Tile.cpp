@@ -2,16 +2,19 @@
 #include <Editor/EditorWidget.hpp>
 
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 #include <Editor/Inventory.hpp>
 
 #include <any>
 
+const bool SHOW_AFTER_RENDER = false;
+
 void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     // Check if meta was provided
     if (widget->getMeta().empty()){
-        log("[Rune::WidgetBuilder::Tile] - No widget metadata provided!");
+        Logger::Write("[Rune::WidgetBuilder::Tile] - No widget metadata provided!");
         return;
     }
 
@@ -53,9 +56,11 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
         // Use cached texture if already exists
         if (textureOpt != std::nullopt){
+            Logger::Write("[Rune::WidgetBuilder::Tile] - Found cached texture for '"+textureKey+"'");
             texture = textureOpt.value();
             thumbImg = new Aether::Image(0, 0, texture, Aether::Render::Wait);
         } else {
+            Logger::Write("[Rune::WidgetBuilder::Tile] - Failed to find cached texture '"+textureKey+"'");
             thumbImg = new Aether::Image(0, 0, thumbPath, Aether::Render::Wait);
         }
 
@@ -68,7 +73,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         );
 
         // Add img
-        tileBtn->addElement(thumbImg);
+        widget->addToElements(thumbImg);
 
     } else { // Otherwise, just show the name of the item
         tileBtn->setString(itemName);
@@ -76,7 +81,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     }
 
     tileBtn->onPress([inventoryItem](){
-        log(inventoryItem.actorName+
+        Logger::Write(inventoryItem.actorName+
             ", flagSp: "+intToHex(inventoryItem.flagSp)+
             ", valueSp: "+intToHex(inventoryItem.valueSp));
     });
@@ -86,12 +91,14 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     
     widget->addToElements(tileBtn);
 
-    if (thumbImg != nullptr){
+    if (thumbImg != nullptr && SHOW_AFTER_RENDER){
         tileBtn->setHidden(true);
         thumbImg->onRenderDone([tileBtn](){
             tileBtn->setHidden(false);
         });
 
+        thumbImg->renderAsync();
+    } else if (thumbImg != nullptr) {
         thumbImg->renderAsync();
     }
 
@@ -115,7 +122,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     );
 
                     valueText->setColour(TEXT_COLOUR);
-                    tileBtn->addElement(valueText);
+                    widget->addToElements(valueText);
                     break;
                 }
 
@@ -150,8 +157,8 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     textElm->setColour(TEXT_COLOUR);
 
                     // Add everything to the widget
-                    tileBtn->addElement(labelBg);
-                    tileBtn->addElement(textElm);
+                    widget->addToElements(labelBg);
+                    widget->addToElements(textElm);
 
                     break;
                 }

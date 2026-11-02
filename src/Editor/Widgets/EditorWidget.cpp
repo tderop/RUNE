@@ -1,5 +1,5 @@
 #include <Config.hpp>
-#include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Json/Json.hpp>
 
 #include <Editor/EditorWidget.hpp>
@@ -20,43 +20,43 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, EditorMenu* menu, bool 
     this->window = this->menu->window();
 
     if (saveEntry == nullptr){
-        log("[!! EDITOR WIDGET !!] - Cannot build widget for a missing save entry.");
+        Logger::Write("[!! EDITOR WIDGET !!] - Cannot build widget for a missing save entry.");
         return;
     }
 
     this->trove = new Trove();
-    log("[EditorWidget] - Trove created!");
+    Logger::Write("[EditorWidget] - Trove created!");
 
     // find the widget builder for this datatype
-    log("[EditorWidget] - Finding widget builder for dataType '"
+    Logger::Write("[EditorWidget] - Finding widget builder for dataType '"
         +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
     "'");
 
     // find the meta entry
-    log("[EditorWidget] - Getting meta entry for '"+saveEntry->dataName+"'...");
+    Logger::Write("[EditorWidget] - Getting meta entry for '"+saveEntry->dataName+"'...");
 
     Rune::Save::MetaEntry metaEntry;
     Result rc = Rune::Save::GetMetaEntry(*runeMetadata, saveEntry->id, &metaEntry);
     if (R_FAILED(rc)){
-        log("[EditorWidget] - Failed to get meta entry for '"+saveEntry->dataName+"'!");
+        Logger::Write("[EditorWidget] - Failed to get meta entry for '"+saveEntry->dataName+"'!");
         return; // failed to get meta entry
     }
 
     // Search for the widget builder
     // First, check editor override
-    log("[EditorWidget] - Initialising widget builder func...");
+    Logger::Write("[EditorWidget] - Initialising widget builder func...");
     WidgetBuilderFunc widgetBuilder = nullptr;
 
     if (!metaEntry.editor.empty()){
-        log("[EditorWidget] - Meta entry shows unique editor! Searching for editor...");
+        Logger::Write("[EditorWidget] - Meta entry shows unique editor! Searching for editor...");
         auto it = UNIQUE_WIDGET_BUILDERS.find(metaEntry.editor);
         if (it != UNIQUE_WIDGET_BUILDERS.end()){
             // builder found
-            log("[EditorWidget] - Builder found! Assigning function.");
+            Logger::Write("[EditorWidget] - Builder found! Assigning function.");
             widgetBuilder = it->second;
         }
 
-        log("[EditorWidget] - Unique builder not found.");
+        Logger::Write("[EditorWidget] - Unique builder not found.");
     }
 
     // Fallback to generic editor if no unique editor was found
@@ -65,43 +65,43 @@ EditorWidget::EditorWidget(Rune::Save::Entry* saveEntry, EditorMenu* menu, bool 
 
         // don't build widget if type doesn't exist
         if (it == WIDGET_BUILDERS.end()){
-            log("[EditorWidget] - Builder not found for '"
+            Logger::Write("[EditorWidget] - Builder not found for '"
                 +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
             "'!");
             return;
         }
 
-        log("[EditorWidget] - Widget builder found for dataType '"
+        Logger::Write("[EditorWidget] - Widget builder found for dataType '"
             +std::string(Rune::Save::DataTypeName(saveEntry->dataType))+
         "'!");
         
-        log("[EditorWidget] - Assigning function value...");
+        Logger::Write("[EditorWidget] - Assigning function value...");
         widgetBuilder = it->second;
 
-        log("[EditorWidget] - Function value assigned!");
+        Logger::Write("[EditorWidget] - Function value assigned!");
     }
 
     this->metaEntry = metaEntry;
-    log("[EditorWidget] - Found and set meta entry for '"+saveEntry->dataName+"'!");
-    log("[EditorWidget] - Running widget builder for '"+saveEntry->dataName+"'...");
+    Logger::Write("[EditorWidget] - Found and set meta entry for '"+saveEntry->dataName+"'!");
+    Logger::Write("[EditorWidget] - Running widget builder for '"+saveEntry->dataName+"'...");
     (*widgetBuilder)(this);
 
     this->_isLoaded = true;
-    log("[WIDGET "+saveEntry->dataName+"] - Completed widget build function. Widget now successfully loaded.");
+    Logger::Write("[WIDGET "+saveEntry->dataName+"] - Completed widget build function. Widget now successfully loaded.");
 }
 
 void EditorWidget::clearTrove(){
     if (!this->_isLoaded){
-        log("[EditorWidget::clearTrove] - Not loaded, not clearing.");
+        Logger::Write("[EditorWidget::clearTrove] - Not loaded, not clearing.");
         return;
     }
 
     if (this->trove == nullptr){
-        log("[EditorWidget::clearTrove] - No trove initialised, not clearing.");
+        Logger::Write("[EditorWidget::clearTrove] - No trove initialised, not clearing.");
         return;
     }
 
-    log("[WIDGET "+this->saveEntry->dataName+"] - Clearing trove.");
+    Logger::Write("[WIDGET "+this->saveEntry->dataName+"] - Clearing trove.");
     this->trove->clear();
 
     // clear keyed elements
@@ -113,7 +113,7 @@ std::vector<AetherElement> EditorWidget::getAllElements(){
 }
 
 void EditorWidget::addAllElements(Aether::Element*  parentElement){
-    log("[WIDGET "+this->saveEntry->dataName+"] - Adding all elements to screen...");
+    Logger::Write("[WIDGET "+this->saveEntry->dataName+"] - Adding all elements to screen...");
     
     for (AetherElement elm : this->elements){
         std::visit([parentElement](auto&& arg){
@@ -123,7 +123,7 @@ void EditorWidget::addAllElements(Aether::Element*  parentElement){
         }, elm);
     }
 
-    log("[WIDGET "+this->saveEntry->dataName+"] - Successfully added all widget elements!");
+    Logger::Write("[WIDGET "+this->saveEntry->dataName+"] - Successfully added all widget elements!");
     // clear queued elements
     // this->elements.clear();
 }
@@ -139,10 +139,10 @@ EditorWidget::~EditorWidget(){
 }
 
 void EditorWidget::addToElements(AetherElement element){
-    log("[EditorWidget] - Adding element to vector...");
+    Logger::Write("[EditorWidget] - Adding element to vector...");
     this->elements.push_back(element);
 
-    log("[EditorWidget] - Adding element to trove...");
+    Logger::Write("[EditorWidget] - Adding element to trove...");
     this->trove->addElement(element); // why?
 }
 
@@ -163,10 +163,10 @@ void EditorWidget::addEditButton(const std::string &name, std::string value){
 }
 
 void EditorWidget::setEditButton(Aether::ListOption* editButton){
-    log("[EditorWidget] - Setting edit button...");
+    Logger::Write("[EditorWidget] - Setting edit button...");
     this->editButton = editButton;
 
-    log("[EditorWidget] - Adding edit button to elements...");
+    Logger::Write("[EditorWidget] - Adding edit button to elements...");
     this->addToElements(AetherElement(editButton));
 }
 

@@ -3,6 +3,7 @@
 #include <Config.hpp>
 #include <Aether/Aether.hpp>
 #include <Application/Application.hpp>
+#include <Utils/Logger.hpp>
 
 // system
 #include <switch.h>
@@ -13,40 +14,21 @@
 #include <sstream>
 #include <functional>
 #include <numbers>
-
-// functions
-void log(const std::string& msg, bool isImportant){
-    // Don't print to console outside of emulator environment
-    if (!Rune::Application::IsEmulator){
-        return;
-    }
-
-    // Ignore standard logging if not verbose
-    if (!isImportant && !Rune::Application::IsVerbose){
-        return;
-    }
-
-    // get the char string and buffer size
-    const char* c_str     = msg.c_str();
-    const size_t str_size = msg.size();
-
-    // Print the log to the terminal
-    svcOutputDebugString(c_str, str_size);
-}
+#include <chrono>
 
 Result getUserID(AccountUid* out){
     // get the uid of the preselected user
     Result rc = accountGetPreselectedUser(out);
 
     if (R_FAILED(rc)){
-        log("accountGetPreselectedUser() failed, using pselShowUserSelector...");
+        Logger::Write("accountGetPreselectedUser() failed, using pselShowUserSelector...");
 
         // initialise player selector UI
         PselUserSelectionSettings settings{};
         rc = pselShowUserSelector(out, &settings);
 
         if (R_FAILED(rc)){
-            log("pselShowUserSelector() failed\n");
+            Logger::Write("pselShowUserSelector() failed\n");
             return rc;
         }
     }
@@ -74,13 +56,13 @@ std::string getUserNickname(){
     rc = accountGetProfile(&profile, userID);
 
     if (R_FAILED(rc)){
-        log("accountGetProfile() failed\n");
+        Logger::Write("accountGetProfile() failed\n");
     }
     else if (R_SUCCEEDED(rc)){
         rc = accountProfileGet(&profile, &userData, &profileBase);
 
         if (R_FAILED(rc)) {
-            log("accountProfileGet() failed\n");
+            Logger::Write("accountProfileGet() failed\n");
         }
         else if (R_SUCCEEDED(rc)){
             std::strncpy(nickname, profileBase.nickname, sizeof(nickname)-1); // obtain the null-terminated nickname
@@ -98,7 +80,7 @@ std::string getDeviceNickname(){
     // unpack the nickname
     Result rc = setGetDeviceNickname(&nickname);
     if (R_FAILED(rc)){
-        log("[UTILS] - getDeviceNickname() failed.");
+        Logger::Write("[UTILS] - getDeviceNickname() failed.");
         return "NX";
     }
 
@@ -129,8 +111,6 @@ std::function<Aether::Colour(uint32_t)> highlightFunc() {
     Aether::Colour h2 = BOTTOM_R;
     return [h1, h2](uint32_t t) {
         Aether::Colour col;
-        // log("colchange");
-
         col.setR(h1.r() + ((h2.r() - h1.r()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
         col.setG(h1.g() + ((h2.g() - h1.g()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
         col.setB(h1.b() + ((h2.b() - h1.b()) * (0.5 * sin(1.8 * 3.14 * (t/1000.0)) + 0.5)));
@@ -154,3 +134,13 @@ std::string intToHex(u64 i){
 }
 
 void stubbed(const void* _, ...){}
+
+uint64_t timeCode(std::function<void()> f){
+    auto start = std::chrono::steady_clock::now();
+    f();
+    auto end = std::chrono::steady_clock::now();
+
+    return std::chrono::duration_cast<
+        std::chrono::milliseconds
+    >(end-start).count();
+}

@@ -5,6 +5,7 @@
 #include <Config.hpp>
 #include <Save/Save.hpp>
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 
 #include <Screens/Editor.hpp>
 #include <Utils/Trove.hpp>
@@ -38,7 +39,7 @@ void MenuScreen::showSaveSelect(){
     Rune::Save::GetSaveSlots(&runeSaveSlots);
 
     if (runeSaveSlots.size() == 0){
-        log("[MENU] - No save slots found!");
+        Logger::Write("[MENU] - No save slots found!");
         return;
     }
 
@@ -57,7 +58,7 @@ void MenuScreen::showSaveSelect(){
     Result gotRawCaption = Rune::Save::GetSaveRawFile(&rawFirstCaption, firstSaveSlot.captionDataPath);
 
     if (R_FAILED(gotRawCaption)){
-        log("[INIT] - Failed to get save version! (1)");
+        Logger::Write("[INIT] - Failed to get save version! (1)");
         return;
     }
 
@@ -103,7 +104,7 @@ void MenuScreen::showSaveSelect(){
     std::vector<SortedSaveBundle> bundles;
 
     // Prepare bundles
-    log("[Menu] - Preparing save bundles for insertion sort...");
+    Logger::Write("[Menu] - Preparing save bundles for insertion sort...");
     for (const auto& saveSlot : runeSaveSlots){
         Rune::Save::RawFile rawCaptionFile;
         Result rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, saveSlot.captionDataPath);
@@ -124,25 +125,25 @@ void MenuScreen::showSaveSelect(){
     }
 
     // Sort the slots with insertion sort
-    log("[Menu] - Insertion sort ready");
+    Logger::Write("[Menu] - Insertion sort ready");
     for (size_t i = 1; i < bundles.size(); i++){
-        log("[Menu] - Moving bundle");
+        Logger::Write("[Menu] - Moving bundle");
         SortedSaveBundle bundle = std::move(bundles.at(i));
         int j = (int)i - 1;
 
         // Shift all slots with timestamps less than bundles.at(j).timestamp to the right
-        log("[Menu] = Shifting slots");
+        Logger::Write("[Menu] = Shifting slots");
         while (j >= 0 && bundles.at(j).timestamp < bundle.timestamp){
             bundles[j + 1] = std::move(bundles.at(j));
             j--;
         }
 
         // Insert bundle
-        log("[Menu] - Inserting bundle");
+        Logger::Write("[Menu] - Inserting bundle");
         bundles[j + 1] = std::move(bundle);
     }
 
-    log("[Menu] - Insertion sort complete!");
+    Logger::Write("[Menu] - Insertion sort complete!");
     for (const SortedSaveBundle& saveBundle : bundles){
         // Get caption file and save slot
         Rune::Save::File captionFile = std::move(saveBundle.file);
@@ -152,7 +153,7 @@ void MenuScreen::showSaveSelect(){
         Aether::ListButton* slotButton = new Aether::ListButton(
             "",
             [saveSlot, this]() mutable{   
-                log("[MENU] - Save slot "+std::to_string(saveSlot.index)+" was selected.");
+                Logger::Write("[MENU] - Save slot "+std::to_string(saveSlot.index)+" was selected.");
                 // New logic: give save SLOT to editor instead of save file, so the editor can access caption.sav
                 // and some other stuff too, not exclusively game_data.sav
 
@@ -162,7 +163,7 @@ void MenuScreen::showSaveSelect(){
                 // Although I shouldn't make the editor dependent on other data
                 // This is initially for supporting showing the thumbnail and timestamp in the editor to remind the user which save they are editing,
                 // but it may be useful for other changes later on!
-                log("[MENU] - Showing editor screen...");
+                Logger::Write("[MENU] - Showing editor screen...");
                 EditorScreen* editor = static_cast<EditorScreen*>(this->app->showScreen("Editor")); // Yes, I still hate this
 
                 // Pass the selected save slot to the editor
@@ -290,19 +291,19 @@ void MenuScreen::showSaveSelect(){
 
         if (gameClearEntry != nullptr && timeText != nullptr){
             if (std::get<bool>(gameClearEntry->value)){
-                // log("Testing RomFS...");
+                // Logger::Write("Testing RomFS...");
 
                 // FILE* testFile = fopen("romfs:/assets/star.png", "rb");
 
                 // if (testFile == nullptr) {
-                //     log("FAILED to open star.png");
+                //     Logger::Write("FAILED to open star.png");
                 // } else {
-                //     log("Successfully opened star.png!");
+                //     Logger::Write("Successfully opened star.png!");
                 //     fclose(testFile);
                 // }
 
                 // make star
-                // log("Making star...");
+                // Logger::Write("Making star...");
 
                 starIcon = new Aether::Image(
                     0,
@@ -311,14 +312,14 @@ void MenuScreen::showSaveSelect(){
                     Aether::Render::Wait
                 );
 
-                // log("Star constructed!");
+                // Logger::Write("Star constructed!");
 
                 // scale
                 starIcon->setScaleDimensions(SAVE_ICON_SIZE, SAVE_ICON_SIZE);
 
                 // render
                 starIcon->renderSync();
-                // log("Star rendered!");
+                // Logger::Write("Star rendered!");
 
                 // reposition
                 starIcon->setXY(
@@ -329,7 +330,7 @@ void MenuScreen::showSaveSelect(){
                 // parent
                 slotButton->addElement(starIcon);
 
-                // log("Star created and added!");
+                // Logger::Write("Star created and added!");
             }
         }
 
@@ -414,7 +415,7 @@ void MenuScreen::showSaveSelect(){
     }
 
     // finally fixed not scrolling with controller, for some reason had to manually call update
-    // log("canScroll="+std::to_string(scrollable->canScroll())+
+    // Logger::Write("canScroll="+std::to_string(scrollable->canScroll())+
     // " isTouch="+std::to_string(scrollable->isTouch)+
     // " maxScroll="+std::to_string(scrollable->maxScrollPos())+
     // " focusedNull="+std::to_string(scrollable->focused()==nullptr));
@@ -424,7 +425,7 @@ void MenuScreen::showSaveSelect(){
  * @brief Add all key elements to the Menu screen.
  */
 void MenuScreen::buildScreen(){
-    log("[MENU] - Building screen...");
+    Logger::Write("[MENU] - Building screen...");
 
     // add the background
     Aether::Rectangle* background = new Aether::Rectangle(
@@ -553,7 +554,7 @@ void MenuScreen::onLoad(){
  */
 void MenuScreen::onUnload(){
     this->trove->clear();
-    log("============== [MENU] - Screen successfully unloaded. ==============");
+    Logger::Write("============== [MENU] - Screen successfully unloaded. ==============");
 }
 
 // do vector decoding

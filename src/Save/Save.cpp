@@ -8,6 +8,7 @@
 
 #include <Save/Save.hpp>
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 #include <byml/byml.h>
 
@@ -138,7 +139,7 @@ Result Rune::Save::GetSaveSlots(std::vector<Rune::Save::Slot>* out){
 
     if (dir == nullptr){
         // return LibnxError_NotFound;
-        log("[Rune::Save::GetSlots] - Failed to mount save data! Mounting test save; may be emulation development environment.");
+        Logger::Write("[Rune::Save::GetSlots] - Failed to mount save data! Mounting test save; may be emulation development environment.");
         dir = opendir(testSavePath);
         thisPath = testSavePath;
     }
@@ -176,7 +177,7 @@ Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string filePath
     std::ifstream saveFile(filePath, std::ios::binary);
     
     if (!saveFile.is_open()){
-        log("Failed to open save file path. ('"+filePath+"')");
+        Logger::Write("Failed to open save file path. ('"+filePath+"')");
         return LibnxError_NotFound;
     }
 
@@ -186,7 +187,7 @@ Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string filePath
     Rune::Save::Header header;
     Result rc = Rune::Save::GetSaveHeader(&header, filePath);
     if (R_FAILED(rc)){
-        log("Failed to get save header.");
+        Logger::Write("Failed to get save header.");
         return rc;
     }
 
@@ -202,7 +203,7 @@ Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string filePath
 
         // usually 4 bytes off the end, last 4 bytes are always 0xFF 0xFF 0xFF 0xFF
         if (!saveFile.read(reinterpret_cast<char*>(&entry), 8)){
-            log("[SAVE] - Raw read finished, cursor stopped at position: "+std::to_string(pos));
+            Logger::Write("[SAVE] - Raw read finished, cursor stopped at position: "+std::to_string(pos));
             break;
         }
         
@@ -239,7 +240,7 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
         // get the meta entry
         auto it = metadata.find(entry.id);
         if (it == metadata.end()){
-            log(
+            Logger::Write(
                 "[DECODE] - Unknown ID: " +
                 std::to_string(rawEntry.id) +
                 " Value: " +
@@ -710,7 +711,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
     std::unordered_map<std::string, uint32_t> dataNameToId; 
 
     for (size_t i = 0; i < sizeof(bgsvFiles) / sizeof(bgsvFiles[0]); i++){
-        // log("Parsing bgsvdata file " + std::to_string(i));
+        // Logger::Write("Parsing bgsvdata file " + std::to_string(i));
         const Rune::Save::BgsvData& file = bgsvFiles[i];
 
         byml::Reader reader{
@@ -718,37 +719,37 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
         };
 
         if (!reader.isValid()){
-            log("bgsvdata " + std::to_string(i) + ": reader invalid");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": reader invalid");
             return LibnxError_BadInput;
         }
 
         auto root = reader.getHash();
         if (!root){
-            log("bgsvdata " + std::to_string(i) + ": no root hash");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": no root hash");
             return LibnxError_BadInput;
         }
 
         auto fileListItem = root->getByKey("file_list");
         if (!fileListItem){
-            log("bgsvdata " + std::to_string(i) + ": no file list");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": no file list");
             return LibnxError_BadInput;
         }
 
         auto fileList = fileListItem->getArray();
         if (!fileList){
-            log("bgsvdata " + std::to_string(i) + ": file list is not an array");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": file list is not an array");
             return LibnxError_BadInput;
         }
 
         auto mappingsItem = fileList->getByIndex(1);
         if (!mappingsItem){
-            log("bgsvdata " + std::to_string(i) + ": file_list[1] does not exist");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": file_list[1] does not exist");
             return LibnxError_BadInput;
         }
 
         auto mappings = mappingsItem->getArray();
         if (!mappings){
-            log("bgsvdata " + std::to_string(i) + ": file_list[1] is not an array");
+            Logger::Write("bgsvdata " + std::to_string(i) + ": file_list[1] is not an array");
             return LibnxError_BadInput;
         }
 
@@ -762,7 +763,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto hashValueItem = mapping->getByKey("HashValue");
 
             if (!dataNameItem || !hashValueItem){
-                log("[Rune::Save::LoadMetadata] - No dataName item or hashValue item found in BYAML!");
+                Logger::Write("[Rune::Save::LoadMetadata] - No dataName item or hashValue item found in BYAML!");
                 return LibnxError_BadInput;
             }
 
@@ -771,11 +772,11 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
 
             // debug
             if (*hashValue == 276498232) {
-                log("[META] FOUND 276498232 -> " + std::string(dataName));
+                Logger::Write("[META] FOUND 276498232 -> " + std::string(dataName));
             }
 
             if (!dataName){
-                log("[Rune::Save::LoadMetadata] - No dataName found!");
+                Logger::Write("[Rune::Save::LoadMetadata] - No dataName found!");
                 return LibnxError_BadInput;
             }
 
@@ -806,45 +807,45 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
         
         // get datatype
         if (!reader.isValid()){
-            log("bgdata: ["+std::string(dataTypeName)+"] is invalid");
+            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] is invalid");
             return LibnxError_BadInput;
         }
 
         auto root = reader.getHash();
         if (!root){
-            log("bgdata: ["+std::string(dataTypeName)+"] no root hash");
+            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no root hash");
             return LibnxError_BadInput;
         }
 
         auto dataTypeListItem = root->getByKey(dataTypeName);
         if (!dataTypeListItem){
-            log("bgdata: ["+std::string(dataTypeName)+"] no data type list item");
+            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no data type list item");
             return LibnxError_BadInput;
         }
 
         // get hashvalue
         auto dataTypeList = dataTypeListItem->getArray();
         if (!dataTypeList){
-            log("bgdata: ["+std::string(dataTypeName)+"] no data type list array");
+            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no data type list array");
             return LibnxError_BadInput;
         }
 
         for (const auto& item : *dataTypeList){
             auto mapping = item.getHash();
             if (!mapping){
-                log("[Rune::Save::LoadMetadata] - No mapping!");
+                Logger::Write("[Rune::Save::LoadMetadata] - No mapping!");
                 return LibnxError_BadInput;
             }
 
             auto hashValueItem = mapping->getByKey("HashValue");
             if (!hashValueItem){
-                log("[Rune::Save::LoadMetadata] - No hashValue item!");
+                Logger::Write("[Rune::Save::LoadMetadata] - No hashValue item!");
                 return LibnxError_BadInput;
             }
 
             auto hashValue = hashValueItem->getInt();
             if (!hashValue){
-                log("[Rune::Save::LoadMetadata] - No hashValue!");
+                Logger::Write("[Rune::Save::LoadMetadata] - No hashValue!");
                 return LibnxError_BadInput;
             }
 
@@ -870,7 +871,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto defaultValueItem = mapping->getByKey("InitValue");
 
             if (!maxValueItem || !minValueItem || !defaultValueItem){
-                log("[Rune::Save::LoadMetadata] - No max, min, or default value items found in BYML.");
+                Logger::Write("[Rune::Save::LoadMetadata] - No max, min, or default value items found in BYML.");
                 return LibnxError_BadInput;
             }
             
@@ -891,13 +892,13 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
 
                     case RuneF32: {
                         auto value = item.getFloat();
-                        log("[Rune::Save::LoadMetadata] - Getting float value...");
+                        Logger::Write("[Rune::Save::LoadMetadata] - Getting float value...");
                         if (!value) {
-                            log("[Rune::Save::LoadMetadata] - Failed to get float value: no value!");
+                            Logger::Write("[Rune::Save::LoadMetadata] - Failed to get float value: no value!");
                             return std::nullopt;
                         }
                         
-                        log("[Rune::Save::LoadMetadata] - Successfully obtained float value! ("+key+" "+cat+": "+std::to_string(std::get<float>(Rune::Save::SaveValue{*value}))+")");
+                        Logger::Write("[Rune::Save::LoadMetadata] - Successfully obtained float value! ("+key+" "+cat+": "+std::to_string(std::get<float>(Rune::Save::SaveValue{*value}))+")");
                         return Rune::Save::SaveValue{*value};
                     }
 
@@ -1074,7 +1075,7 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
             auto initValue = readSaveValue(*defaultValueItem, entry->dataName, "INIT");
             if (!maxValue || !minValue || !initValue){
                 if (dataType == RuneVector2f || dataType == RuneVector3f || dataType == RuneVector4f){
-                    log("[Rune::Save::LoadMetadata] - Failed to decode bounds/default values for '"
+                    Logger::Write("[Rune::Save::LoadMetadata] - Failed to decode bounds/default values for '"
                         +entry->dataName+"' ("+std::string(dataTypeName)+").");
                 }
                 continue;
@@ -1096,21 +1097,21 @@ Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
  * It's recommended to initialise your out MetaEntry to nullptr in the case that the entry is not found, guards can be developed.
  */
 Result Rune::Save::GetMetaEntry(const Rune::Save::Metadata& metadata, uint32_t id, MetaEntry* outMetaEntry){
-    log("[Rune::Save::GetMetaEntry] - Getting hashValue from ID...");
+    Logger::Write("[Rune::Save::GetMetaEntry] - Getting hashValue from ID...");
     int32_t hashValue = static_cast<int32_t>(id);
 
-    log("[Rune::Save::GetMetaEntry] - Finding ID in metadata...");
+    Logger::Write("[Rune::Save::GetMetaEntry] - Finding ID in metadata...");
     auto it = metadata.find(id);
 
     if (it == metadata.end()){
-        log("[Rune::Save::GetMetaEntry] - ID "+std::to_string(id)+" does not exist in metadata!");
+        Logger::Write("[Rune::Save::GetMetaEntry] - ID "+std::to_string(id)+" does not exist in metadata!");
         return LibnxError_NotFound;
     }
 
-    log("[Rune::Save::GetMetaEntry] - Setting out value...");
+    Logger::Write("[Rune::Save::GetMetaEntry] - Setting out value...");
     *outMetaEntry = it->second;
 
-    log("[Rune::Save::GetMetaEntry] - Retrieved entry successfully.");
+    Logger::Write("[Rune::Save::GetMetaEntry] - Retrieved entry successfully.");
     return 0;
 }
 
@@ -1163,49 +1164,49 @@ const char* Rune::Save::DataTypeName(Rune::Save::DataType type) {
  * @brief Get a Rune::Save::Entry from a Rune::Save::File by the entry's DataName
  */
 Rune::Save::Entry* Rune::Save::GetEntryFromDataName(Rune::Save::File& saveFile, const std::string& dataName){
-    // log("[Rune::Save] - Getting entry from dataName '"+dataName+"'...");
+    // Logger::Write("[Rune::Save] - Getting entry from dataName '"+dataName+"'...");
 
 
     for (Rune::Save::Entry& saveEntry : saveFile.entries){
         if (saveEntry.dataName == dataName){
-            // log("[Rune::Save] - Entry found for key '"+dataName+"'! Returning entry.");
+            // Logger::Write("[Rune::Save] - Entry found for key '"+dataName+"'! Returning entry.");
             return &saveEntry;
         }
     }
 
-    log("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null.");
+    Logger::Write("[Rune::Save] - No value in save data found for key '"+dataName+"'. Returning null.");
     return nullptr;
 }
 
 std::string Rune::Save::GetReadableKeyName(std::string& saveKey){
-    log("[Rune::Save::GetReadableKeyName] - Getting JSON data...");
+    Logger::Write("[Rune::Save::GetReadableKeyName] - Getting JSON data...");
     Rune::Json* editorDataJson = nullptr;
     if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
-        log("[Rune::Save::GetReadableKeyName] - Failed to load EditorData JSON.");
+        Logger::Write("[Rune::Save::GetReadableKeyName] - Failed to load EditorData JSON.");
         return saveKey;
     }
 
     if (editorDataJson == nullptr){
-        log("[Rune::Save::GetReadableKeyName] - EditorData JSON is nullptr.");
+        Logger::Write("[Rune::Save::GetReadableKeyName] - EditorData JSON is nullptr.");
         return saveKey;
     }
 
-    log("[Rune::Save::GetReadableKeyName] - Got EditorData JSON!");
+    Logger::Write("[Rune::Save::GetReadableKeyName] - Got EditorData JSON!");
 
     auto it = editorDataJson->find(saveKey);
     if (it == editorDataJson->end()){
-        log("[Rune::Save::GetReadableKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
+        Logger::Write("[Rune::Save::GetReadableKeyName] - Failed to find save key '"+saveKey+"' in EditorData!");
         return saveKey;
     }
 
     if (!it->is_object()){
-        log("[Rune::Save::GetReadableKeyName] - Entry in EditorData for '"+saveKey+"' is not an object!");
+        Logger::Write("[Rune::Save::GetReadableKeyName] - Entry in EditorData for '"+saveKey+"' is not an object!");
         return saveKey;
     }
 
     auto readableName = it->find("Readable");
     if (readableName != it->end() && readableName->is_string()){
-        log("[Rune::Save::GetReadableKeyName] - Found readable name for '"+saveKey+"'!");
+        Logger::Write("[Rune::Save::GetReadableKeyName] - Found readable name for '"+saveKey+"'!");
         return readableName->get<std::string>();
     }
 

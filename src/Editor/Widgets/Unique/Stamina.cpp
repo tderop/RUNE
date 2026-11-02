@@ -6,6 +6,7 @@
 #include <Config.hpp>
 
 #include <Utils/Trove.hpp>
+#include <Utils/Logger.hpp>
 
 #include <string>
 
@@ -65,23 +66,23 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
         /** */
 
         // Show stamina wheels when num spinner value is changed
-        log("[Stamina] - Making stamina trove...");
+        Logger::Write("[Stamina] - Making stamina trove...");
         Trove* staminaTrove = new Trove();
 
         numSpinner->onValueChange([numSpinner, editOverlay, staminaTrove](){
-            // log("[Stamina] - Clearing stamina trove...");
+            // Logger::Write("[Stamina] - Clearing stamina trove...");
             staminaTrove->clear();
 
-            // log("[Stamina] - Getting numSpinner value...");
+            // Logger::Write("[Stamina] - Getting numSpinner value...");
             int value = numSpinner->value();
 
             if (!value){
-                // log("[Stamina] - Value is zero, ignoring");
+                // Logger::Write("[Stamina] - Value is zero, ignoring");
                 return;
             }
 
             // Turn stamina vessels into full wheels
-            // log("[Stamina] - Calculating segments for images");
+            // Logger::Write("[Stamina] - Calculating segments for images");
             int fullWheels = value / UPGRADES_PER_WHEEL;
             int remainingSegments = value % UPGRADES_PER_WHEEL;
 
@@ -89,7 +90,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
             int segmentOffset = numSpinner->x()+numSpinner->w()+36;
             if (fullWheels){
                 // create full wheel
-                // log("[Stamina] - Making full wheel image");
+                // Logger::Write("[Stamina] - Making full wheel image");
                 Aether::Image* fullImg = new Aether::Image(
                     segmentOffset,
                     numSpinner->y(),
@@ -110,7 +111,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                 segmentOffset += fullImg->textureWidth() + 6;
 
                 // add the quantity number
-                // log("[Stamina] - Making full quantity image");
+                // Logger::Write("[Stamina] - Making full quantity image");
                 Aether::Text* fullQuantity = new Aether::Text(
                     segmentOffset,
                     fullImg->y(),
@@ -130,11 +131,11 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
             }
 
             if (remainingSegments){
-                // log("[Stamina] - Finding stamina wheel asset");
+                // Logger::Write("[Stamina] - Finding stamina wheel asset");
                 const std::string& assetPath = ASSET_PATHS.at("staminawheel_"+std::to_string(remainingSegments));
 
                 // show segment image
-                // log("[Stamina] - Making segment image");
+                // Logger::Write("[Stamina] - Making segment image");
                 Aether::Image* segmentImg = new Aether::Image(
                     segmentOffset,
                     numSpinner->y(),
@@ -155,13 +156,13 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
 
         });
 
-        log("[Stamina] - Assigned onValueChange for numSpinner");
+        Logger::Write("[Stamina] - Assigned onValueChange for numSpinner");
         numSpinner->setLabel("Stamina Vessels");
 
-        log("[Stamina] - Setting numSpinner value...");
+        Logger::Write("[Stamina] - Setting numSpinner value...");
         numSpinner->setValue((int)(std::get<float>(saveEntry->value)/(UPGRADE_VALUE)));
         
-        log("[Stamina] - onValueChange value set successfully!");
+        Logger::Write("[Stamina] - onValueChange value set successfully!");
 
         Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
         int maxUpgrades = std::get<float>(metaEntry->maxValue)/UPGRADE_VALUE;
@@ -213,7 +214,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                 if (R_SUCCEEDED(rc)){
                     numSpinner->setValue((int)outFloat);
                 } else {
-                    log("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
+                    Logger::Write("[WidgetBuilder::Float] - An error ocurred when taking number value input: "+std::to_string(rc));
                 }
             }
         );
@@ -233,7 +234,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
 
             if (isSave){
                 // update value
-                log("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
+                Logger::Write("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
                     +numSpinner->value());
 
                 int upgrades = numSpinner->value();

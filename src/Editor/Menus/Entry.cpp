@@ -3,6 +3,7 @@
 
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
+#include <Utils/Logger.hpp>
 
 const std::string PADDING_KEY = "<PAD>";
 
@@ -48,31 +49,31 @@ void Rune::MenuBuilder::Entry(EditorMenu* menu){
 
     // No entires, return
     if (menuEntries.empty()){
-        log("[Rune::MenuBuilder::Entry] - No menu entries provided for menu "+menu->menuName()+"!");
+        Logger::Write("[Rune::MenuBuilder::Entry] - No menu entries provided for menu "+menu->menuName()+"!");
         return;
     }
 
     // No save file, return
     if (menu->saveFile() == nullptr){
-        log("[Rune::MenuBuilder::Entry] - No save file provided!");
+        Logger::Write("[Rune::MenuBuilder::Entry] - No save file provided!");
         return;
     }
 
     // No list, return
     if (menu->list() == nullptr){
-        log("[Rune::MenuBuilder::Entry] - No Editor Aether::List provided!");
+        Logger::Write("[Rune::MenuBuilder::Entry] - No Editor Aether::List provided!");
         return;
     }
 
     // No popupList, return (probably getting removed later)
     if (menu->popupList() == nullptr){
-        log("[Rune::MenuBuilder::Entry] - No Editor Aether::PopupList provided!");
+        Logger::Write("[Rune::MenuBuilder::Entry] - No Editor Aether::PopupList provided!");
         return;
     }   
 
     // No widgetOverlay, return
     if (menu->widgetOverlay() == nullptr){
-        log("[Rune::MenuBuilder::Entry] - No Editor WidgetOverlay provided!");
+        Logger::Write("[Rune::MenuBuilder::Entry] - No Editor WidgetOverlay provided!");
         return;
     }  
 

@@ -8,6 +8,7 @@
 #include <Config.hpp>
 
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 
 #include <string>
 
@@ -49,11 +50,11 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                 [widget, editBtn, i](){
                     float outFloat;
 
-                    log("[Rune::WidgetBuilder::Vector] - Getting metadata...");
+                    Logger::Write("[Rune::WidgetBuilder::Vector] - Getting metadata...");
                     Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
 
-                    log("[Rune::WidgetBuilder::Vector] - Got metadata, getting bounds...");
-                    log("[Rune::WidgetBuilder::Vector] - minValue: '"
+                    Logger::Write("[Rune::WidgetBuilder::Vector] - Got metadata, getting bounds...");
+                    Logger::Write("[Rune::WidgetBuilder::Vector] - minValue: '"
                         +Rune::Save::ValueToString(metaEntry->minValue)+"' | maxValue: '"
                         +Rune::Save::ValueToString(metaEntry->maxValue)+"' | initValue: '"
                         +Rune::Save::ValueToString(metaEntry->initValue)+"'");
@@ -64,18 +65,18 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                     if (!minValues || !maxValues ||
                         i >= minValues->size() || i >= maxValues->size()){
 
-                        log("[Rune::WidgetBuilder::Vector] - Invalid component bounds in metadata.");
+                        Logger::Write("[Rune::WidgetBuilder::Vector] - Invalid component bounds in metadata.");
                         return;
                     }
 
                     float minValue = minValues->at(i);
                     float maxValue = maxValues->at(i);
 
-                    log("[Rune::WidgetBuilder::Vector] - Got bounds, showing keyboard...");
+                    Logger::Write("[Rune::WidgetBuilder::Vector] - Got bounds, showing keyboard...");
                     Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", minValue, maxValue, true);
 
                     if (R_SUCCEEDED(rc)){
-                        log("[Rune::WidgetBuilder::Vector] - Success, setting value");
+                        Logger::Write("[Rune::WidgetBuilder::Vector] - Success, setting value");
                         editBtn->setValue(std::to_string(outFloat));
                     }
                 }
@@ -106,7 +107,7 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                     newValue.push_back(std::stof(editBtn->value()));
                 }
 
-                log("[Rune::WidgetBuilder::String] - Inner edit button value: '"+Rune::Save::ValueToString(newValue)+"'");
+                Logger::Write("[Rune::WidgetBuilder::String] - Inner edit button value: '"+Rune::Save::ValueToString(newValue)+"'");
 
                 widget->getEditButton()->setValue(Rune::Save::ValueToString(newValue));
                 widget->getSaveEntry()->value = newValue;

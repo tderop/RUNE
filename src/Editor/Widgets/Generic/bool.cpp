@@ -2,6 +2,7 @@
 #include <Editor/EditorWidget.hpp>
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
+#include <Utils/Logger.hpp>
 
 /**
  * @brief Constructor for boolean values.
@@ -16,30 +17,30 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
 
     // set click callback
     widget->getEditButton()->onPress([widget, saveEntry](){
-        log("[WIDGET " + saveEntry->dataName + "] - Bool widget clicked!");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Bool widget clicked!");
 
         // get the popup list
-        log("[WIDGET " + saveEntry->dataName + "] - Getting popup list...");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Getting popup list...");
         Aether::PopupList *popupList = widget->getPopupList();
     
         // clear its entries
         // widget->removePopupListEntries();
-        log("[WIDGET " + saveEntry->dataName + "] - Removing all popup list entries...");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Removing all popup list entries...");
         popupList->removeEntries();
 
         // update its title
-        log("[WIDGET " + saveEntry->dataName + "] - Getting readable save key name...");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Getting readable save key name...");
         std::string readableSaveKey = Rune::Save::GetReadableKeyName(saveEntry->dataName);
         popupList->setTitleLabel("Edit Value - " + readableSaveKey); // kinda looks ugly`
 
         // add true/false options
-        log("[WIDGET " + saveEntry->dataName + "] - Adding popup list entries...");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Adding popup list entries...");
         bool boolSaveValue = std::get<bool>(saveEntry->value);
 
         widget->addPopupListEntry(std::string("true"), [widget, saveEntry]() { // set entry to true
             Aether::ListOption* editBtn = widget->getEditButton();
             if (editBtn == nullptr){
-                log("[WIDGET " + saveEntry->dataName + "] - No edit button!");
+                Logger::Write("[WIDGET " + saveEntry->dataName + "] - No edit button!");
                 return;
             }
 
@@ -52,7 +53,7 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
             Aether::ListOption* editBtn = widget->getEditButton();
 
             if (editBtn == nullptr){
-                log("[WIDGET " + saveEntry->dataName + "] - No edit button!");
+                Logger::Write("[WIDGET " + saveEntry->dataName + "] - No edit button!");
                 return;
             }
 
@@ -61,12 +62,12 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
         }, (boolSaveValue == false));
 
         // show the popup list
-        log("[WIDGET " + saveEntry->dataName + "] - Showing popup list...");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Showing popup list...");
         widget->getWindow()->addOverlay(popupList);
 
-        log("[WIDGET " + saveEntry->dataName + "] - Popup list shown successfully!");
-        log("*******************************************************");
+        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Popup list shown successfully!");
+        Logger::Write("*******************************************************");
     });
 
-    log("[WIDGET " + saveEntry->dataName + "] - Created bool widget successfully!");
+    Logger::Write("[WIDGET " + saveEntry->dataName + "] - Created bool widget successfully!");
 }

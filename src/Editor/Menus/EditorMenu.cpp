@@ -1,5 +1,6 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
+#include <Utils/Logger.hpp>
 
 #include <functional>
 
@@ -13,7 +14,7 @@ EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Scr
 
     // default reload func - just recreate
     this->onReload([this](){
-        log("=============== [RELOADING: "+_menuName+"...] ===============", true);
+        Logger::Write("=============== [RELOADING: "+_menuName+"...] ===============", true);
 
         this->onDelete();
         this->_trove = new Trove();

@@ -1,5 +1,6 @@
 #include <Json/Json.hpp>
 #include <Utils/Utils.hpp>
+#include <Utils/Logger.hpp>
 
 #include <fstream>
 #include <string>
@@ -37,27 +38,27 @@ void Rune::JsonData::Init(){
     for (auto [dataId, jsonPath] : Rune::JsonData::JsonPaths){
         std::ifstream file(jsonPath);
         if (!file.is_open()){
-            log("[Rune::JsonData::Init] - Failed to open JSON file! JSON ID: '"+dataId+"', JSON PATH: '"+jsonPath+"'");
+            Logger::Write("[Rune::JsonData::Init] - Failed to open JSON file! JSON ID: '"+dataId+"', JSON PATH: '"+jsonPath+"'");
             continue;
         }
 
-        log("[Rune::JsonData::Init] - Loading JSON ID: '"+dataId+"', JSON PATH: '"+jsonPath+"'");
+        Logger::Write("[Rune::JsonData::Init] - Loading JSON ID: '"+dataId+"', JSON PATH: '"+jsonPath+"'");
         Rune::JsonData::JsonObjects[dataId] = Rune::Json::parse(file, nullptr, false, true);        
     }
 }
 
 Result Rune::JsonData::GetJsonById(Rune::Json*& out, const std::string &id){
-    log("[Rune::JsonData::GetJsonById] - Getting JSON by ID: '"+id+"'");
+    Logger::Write("[Rune::JsonData::GetJsonById] - Getting JSON by ID: '"+id+"'");
     auto editDataJsonEntry = Rune::JsonData::JsonObjects.find(id);
 
     if (editDataJsonEntry == Rune::JsonData::JsonObjects.end()){
-        log("[Rune::JsonData::GetJsonById] - Failed to find JSON data for '"+id+"'!");
+        Logger::Write("[Rune::JsonData::GetJsonById] - Failed to find JSON data for '"+id+"'!");
         return LibnxError_NotFound;
     }
 
-    log("[Rune::JsonData::GetJsonById] - Found JSON data for ID: '"+id+"'! Setting out pointer.");
+    Logger::Write("[Rune::JsonData::GetJsonById] - Found JSON data for ID: '"+id+"'! Setting out pointer.");
     out = &(Rune::JsonData::JsonObjects.find(id)->second); // set pointer
 
-    log("[Rune::JsonData::GetJsonById] - Pointer set. Returning success.");
+    Logger::Write("[Rune::JsonData::GetJsonById] - Pointer set. Returning success.");
     return 0;
 }
