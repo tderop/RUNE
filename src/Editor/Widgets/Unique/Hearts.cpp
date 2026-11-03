@@ -165,37 +165,11 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         numSpinner->setMin(0);
 
         // Some extra info about the health value
-        Aether::TextBlock* helperText = new Aether::TextBlock(
-            editOverlay->panel()->x()+36,
-            editOverlay->panel()->y()+72+36,
+        editOverlay->setDeveloperNote(
             "Health is an integer value which ranges from 12 (1 heart) to 120 (30 hearts), with each Heart Container worth 4 units.\n\n"
             "The spinner adjusts health by 4 per step. The game caps your maximum health to 30 hearts, and prevents you from having less than 3. You cannot go above 30 hearts, but you can go below 3!\n\n"
-            "Setting this to zero makes you die every time you load this file.",
-            14,
-            480
+            "Setting this to zero makes you die every time you load this file."
         );
-        helperText->setColour(MUTED_TEXT_COLOR);
-        editOverlay->addTempElement(helperText);
-
-        // A rectangle to make things look a little cleaner
-        Aether::Rectangle* textSeparator = new Aether::Rectangle(
-            helperText->x(),
-            helperText->y()+helperText->textureHeight()+6,
-            320,
-            4,
-            0
-        );
-        textSeparator->setColour(SEPARATOR_COLOUR);
-        editOverlay->addTempElement(textSeparator);
-
-        // A small alt text descriptor of why the text exists
-        Aether::Text* devNoteText = new Aether::Text(
-            helperText->x(),
-            textSeparator->y()+textSeparator->h()+12,
-            "Developer Note",
-            16
-        );
-        editOverlay->addTempElement(devNoteText);
 
         // When the number spinner is pressed, show a keyboard and ask for a number input
         numSpinner->onPress(

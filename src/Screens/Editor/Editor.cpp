@@ -201,15 +201,24 @@ void EditorScreen::buildScreen(){
 
     // copyright text
     Logger::Write("[EDITOR] - Making copyright text...");
-    Aether::Text* copyrightAndDisclaimer = new Aether::Text(
+    Aether::TextBlock* copyrightAndDisclaimer = new Aether::TextBlock(
         logoSeparator->x(),
         sidebarFrame->h(),
-        "RUNE © 2026 tderop",
-        12
+        "RUNE v"+RUNE_VERSION+"\n© 2026 tderop",
+        12,
+        240
     );
 
     copyrightAndDisclaimer->setY(sidebarFrame->h()-copyrightAndDisclaimer->textureHeight()-TEXT_Y_OFFSET);
     copyrightAndDisclaimer->setColour(MUTED_TEXT_COLOR);
+
+    // Separator
+    Aether::Rectangle* copyrightSeparator = new Aether::Rectangle(
+        logoSeparator->x(), copyrightAndDisclaimer->y()-12,
+        logoSeparatorWidth, 2
+    );
+
+    copyrightSeparator->setColour(SEPARATOR_COLOUR);
 
     // build tab buttons
     Logger::Write("[EDITOR] - Making tab button container...");
@@ -391,6 +400,7 @@ void EditorScreen::buildScreen(){
     this->addElement(bottomSeparator);
 
     this->addElement(copyrightAndDisclaimer);
+    this->addElement(copyrightSeparator);
 
     this->addElement(editorScroll);
     this->editorScroll = editorScroll;
@@ -720,34 +730,39 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
         )
     );
 
+    bool isAutosave = std::get<bool>(
+        Rune::Save::GetEntryFromDataName(*this->captionFile, IS_AUTOSAVE_KEY)->value
+    );
+
+    std::string locationId = std::get<std::string>(
+        Rune::Save::GetEntryFromDataName(*this->captionFile, SAVE_LOCATION_KEY)->value
+    );
+
     // Make the caption timestamp text
-    Aether::Text* captionImgTimestamp = new Aether::Text(
-        0,
-        0,
-        timestamp,
-        14
+    Aether::TextBlock* captionImgTimestamp = new Aether::TextBlock(
+        captionImg->x(), 0,
+        "Save Time: "+timestamp+
+        "\nSave Type: "+((isAutosave) ? "Autosave" : "Manual")+
+        "\nLocation: "+Rune::Save::GetReadableLocationName(locationId),
+        14,
+        240
     );
 
     // Reposition the timestamp text
     captionImgTimestamp->setXY(
-        captionImg->x()+(captionImg->scaleWidth()/2)-(captionImgTimestamp->textureWidth()/2),
-        captionImg->y()+captionImg->scaleHeight()+6
+        captionImg->x(),
+        captionImg->y()+captionImg->scaleHeight()+12
     );
 
     // Set the text colour
-    captionImgTimestamp->setColour(TEXT_COLOUR);
+    captionImgTimestamp->setColour(Aether::Colour{255, 255, 255, 200});
 
     // Add the text to the screen and its trove
     this->screenTrove->addElement(captionImgTimestamp);
     this->addElement(captionImgTimestamp);
 
     // Add autosave lavel
-    if (std::get<bool>(
-        Rune::Save::GetEntryFromDataName(
-            *this->captionFile, IS_AUTOSAVE_KEY)
-            ->value
-        )
-    ){
+    if (isAutosave){
         Aether::Text* autosaveText = new Aether::Text(
             0,
             0,
@@ -772,7 +787,7 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
         );
 
         // Make the label darker than the background
-        autosaveRect->setColour(MUTED_BACKGROUND_COLOUR);
+        autosaveRect->setColour(Aether::Colour{0, 0, 0, 150});
 
         // Add background to the screen
         this->screenTrove->addElement(autosaveRect);

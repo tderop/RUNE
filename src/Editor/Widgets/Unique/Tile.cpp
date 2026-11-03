@@ -43,11 +43,11 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     // If the thumbnail path exists, add an image
     if (!thumbPath.empty()){
-        // Get size
+        // Get the thumbnail size and generate the key to lookup in the texture cache
         int thumbSize = static_cast<int>(Rune::Inventory::kTileSize*Rune::Inventory::kThumbScale);
         std::string textureKey = thumbPath+"|"+std::to_string(thumbSize)+"x"+std::to_string(thumbSize);
 
-        // check if there is a cached texture
+        // Check if there is a cached texture
         auto textureOpt = Rune::Inventory::IconTextureCache->get<Aether::TextureHandle>(
             textureKey
         );
@@ -59,20 +59,21 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
             Logger::Write("[Rune::WidgetBuilder::Tile] - Found cached texture for '"+textureKey+"'");
             texture = textureOpt.value();
             thumbImg = new Aether::Image(0, 0, texture, Aether::Render::Wait);
-        } else {
+        } // If there is no cached texture, just pass the thumbnail path and generate the texture now 
+        else {
             Logger::Write("[Rune::WidgetBuilder::Tile] - Failed to find cached texture '"+textureKey+"'");
             thumbImg = new Aether::Image(0, 0, thumbPath, Aether::Render::Wait);
         }
 
         thumbImg->setScaleDimensions(thumbSize, thumbSize);
 
-        // Reposition img
+        // Reposition the thumbnail to the center of the button
         thumbImg->setXY(
             tileBtn->x()+tileBtn->w()/2-thumbImg->scaleWidth()/2,
             tileBtn->y()+tileBtn->h()/2-thumbImg->scaleHeight()/2
         );
 
-        // Add img
+        // Add the image to the widget's elements (lifetime controlled by widget)
         widget->addToElements(thumbImg);
 
     } else { // Otherwise, just show the name of the item
@@ -80,17 +81,14 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         tileBtn->setTextColour(TEXT_COLOUR);
     }
 
-    tileBtn->onPress([inventoryItem](){
-        Logger::Write(inventoryItem.actorName+
-            ", flagSp: "+intToHex(inventoryItem.flagSp)+
-            ", valueSp: "+intToHex(inventoryItem.valueSp));
-    });
-
     // Set the colour and add it to the widget
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
     
     widget->addToElements(tileBtn);
 
+    // SHOW_AFTER_RENDER hides the widget until the thumbnail image has been rendered
+    // It was previously a style choice, until I decided it felt somewhat jarring, and 
+    // the standard async rendering was better.
     if (thumbImg != nullptr && SHOW_AFTER_RENDER){
         tileBtn->setHidden(true);
         thumbImg->onRenderDone([tileBtn](){
@@ -210,4 +208,20 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
             });
         }
     }
+
+    // Handle opening the edit overlay when the tile is pressed
+    // Open the widget overlay
+    tileBtn->onPress([widget, inventoryItem](){
+        Logger::Write(inventoryItem.actorName+
+            ", flagSp: "+intToHex(inventoryItem.flagSp)+
+            ", valueSp: "+intToHex(inventoryItem.valueSp));
+
+        // // Build the overlay
+        // Get the widget overlay and set the title to show what we are editing
+        WidgetOverlay* ovl = widget->getWidgetOverlay();
+        ovl->setTitleLabel("Edit Item - "+inventoryItem.name);
+        
+        // Show the widget overlay
+        widget->getWindow()->addOverlay(ovl);
+    });
 }

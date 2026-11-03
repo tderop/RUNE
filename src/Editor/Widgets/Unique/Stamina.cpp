@@ -171,36 +171,11 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
         numSpinner->setMin(0);
 
         // some extra help
-        Aether::TextBlock* helperText = new Aether::TextBlock(
-            editOverlay->panel()->x()+36,
-            editOverlay->panel()->y()+72+36,
+        editOverlay->setDeveloperNote(
             "Stamina is a float value which ranges from 1000 (1 wheel) to 3000 (3 wheels), with each Stamina Vessel worth 200 units.\n\n"
             "The spinner adjusts stamina by 200 per step. Normally, you can only obtain up to 10 upgrades, but the spinner supports up to 327 (65,535 units), allowing stamina to exceed the visual maximum!\n\n"
-            "Setting this to zero - alike hearts - doesn't corrupt your save... but it does cause some weirdness.",
-            14,
-            480
+            "Setting this to zero - alike hearts - doesn't corrupt your save... but it does cause some weirdness."
         );
-        helperText->setColour(MUTED_TEXT_COLOR);
-        editOverlay->addTempElement(helperText);
-
-        // Separator rectangle
-        Aether::Rectangle* textSeparator = new Aether::Rectangle(
-            helperText->x(),
-            helperText->y()+helperText->textureHeight()+6,
-            320,
-            4,
-            0
-        );
-        textSeparator->setColour(SEPARATOR_COLOUR);
-        editOverlay->addTempElement(textSeparator);
-
-        Aether::Text* devNoteText = new Aether::Text(
-            helperText->x(),
-            textSeparator->y()+textSeparator->h()+12,
-            "Developer Note",
-            16
-        );
-        editOverlay->addTempElement(devNoteText);
 
         numSpinner->onPress(
             [widget, numSpinner](){

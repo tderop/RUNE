@@ -18,7 +18,13 @@ class WidgetOverlay : public Aether::Overlay{
         Aether::Rectangle* _panel = nullptr;
         Aether::List* _list = nullptr;
 
-        // std::function<void()> _onSave;
+        Aether::HelpButton* _infoButton = nullptr;
+        Aether::TextBlock* _devNoteText = nullptr;
+        Aether::Rectangle* _devNoteRect = nullptr;
+
+        bool _hintVisible = false;
+
+        void setHintVisible(bool hintVisible);
 
     public:
         Signal<bool>* onCloseSignal = nullptr;
@@ -60,4 +66,16 @@ class WidgetOverlay : public Aether::Overlay{
          * @brief Set the title text content of the widget overlay.
          */
         void setTitleLabel(const std::string &title);
+
+        /**
+         * @brief Set the "developer note"
+         * @param note The note string
+         */
+        void setDeveloperNote(const std::string& note);
+
+        /**
+         * @brief Check if the hint is visible
+         * @return Whether the hint is visible or not
+         */
+        bool hintVisible();
 };

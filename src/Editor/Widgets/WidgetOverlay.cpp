@@ -33,12 +33,43 @@ void WidgetOverlay::setTitleLabel(const std::string &title){
 void WidgetOverlay::closeWidgetOverlay(bool isSave){
     this->onCloseSignal->fire(isSave);
 
+    this->setDeveloperNote("");
     this->clearTrove();
     this->close();
 }
 
 Aether::Rectangle* WidgetOverlay::panel(){
     return this->_panel;
+}
+
+void WidgetOverlay::setHintVisible(bool hintVisible){
+    this->_hintVisible = hintVisible;
+    this->_devNoteRect->setHidden(!this->_hintVisible);
+    this->_devNoteText->setHidden(!this->_hintVisible);
+}
+
+bool WidgetOverlay::hintVisible(){
+    return this->_hintVisible;
+}
+
+void WidgetOverlay::setDeveloperNote(const std::string& note){
+    if (note.empty()){
+        // Hide the info button and the hint text&separator if no note 
+        this->_infoButton->setHidden(true);
+        this->setHintVisible(false);
+
+        return;
+    } 
+    else {
+        // Show the info button since there is now a hint available
+        this->_infoButton->setHidden(false);
+    }
+
+    // Set the text
+    this->_devNoteText->setString(note);
+
+    // Reposition the separator
+    this->_devNoteRect->setY(this->_devNoteText->y()+this->_devNoteText->textureHeight()+8);
 }
 
 WidgetOverlay::WidgetOverlay(const std::string &title){
@@ -67,6 +98,39 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
 
     this->_titleLabel = titleLabel;
     this->addElement(titleLabel);
+
+    // the info button
+    this->_infoButton = new Aether::HelpButton(
+        this->_titleLabel->x() - 30 - 12, this->_titleLabel->y() - 2,
+        30, [](){}
+    );
+
+    // hide by default
+    this->_infoButton->setColour(Aether::Colour{255, 255, 255, 150});
+    this->_infoButton->setHidden(true);
+
+    this->addElement(this->_infoButton);
+
+    // dev text and separator rect
+    this->_devNoteText = new Aether::TextBlock(
+        36,
+        this->_panel->y()+72+36,
+        "",
+        14,
+        480
+    );
+
+    this->_devNoteRect = new Aether::Rectangle(
+        36, 0,
+        320, 2
+    );
+
+    this->_devNoteText->setColour(MUTED_TEXT_COLOR);
+    this->_devNoteRect->setColour(SEPARATOR_COLOUR);
+    this->_devNoteText->setHidden(true);
+    this->_devNoteRect->setHidden(true);
+    this->addElement(this->_devNoteRect);
+    this->addElement(this->_devNoteText);
 
     // the top separator
     Aether::Rectangle* topSeparator = new Aether::Rectangle(
@@ -109,6 +173,13 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
      */
     this->onButtonPress(Aether::Button::B, [this](){
         this->closeWidgetOverlay(false);
+    });
+
+    /**
+     * Show/hide hint when question mark is pressed
+     */
+    this->_infoButton->onPress([this](){
+        this->setHintVisible(!this->hintVisible());
     });
 }
 

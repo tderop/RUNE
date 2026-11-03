@@ -63,4 +63,4 @@ const std::string SOUND_PATH  = RUNE_PATH+"assets/sound/";
 const std::string EXTRACTED_MARKER = RUNE_PATH+"assets/extracted.done";
 const std::string PLACEHOLDER_THUMB_PATH = "romfs:/img/placeholder.png";
 
-const std::string RUNE_VERSION = "0.0.0";
+const std::string RUNE_VERSION = "0.0.0 (indev)";

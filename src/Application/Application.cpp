@@ -46,6 +46,9 @@ namespace Rune{
             }
         });
 
+        // Set font spacing (why)
+        this->_window->setFontSpacing(1.25);
+
         this->_window->setHighlightAnimation(highlightFunc());
         Logger::Write("[APPLICATION] - Successfully loaded Aether window!");
 
