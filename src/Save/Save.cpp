@@ -1213,6 +1213,33 @@ std::string Rune::Save::GetReadableKeyName(std::string& saveKey){
     return saveKey;
 }
 
+std::string Rune::Save::GetKeyDevNote(std::string& saveKey){
+    Rune::Json* editorDataJson = nullptr;
+    if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
+        return "";
+    }
+
+    if (editorDataJson == nullptr){
+        return "";
+    }
+
+    auto it = editorDataJson->find(saveKey);
+    if (it == editorDataJson->end()){
+        return "";
+    }
+
+    if (!it->is_object()){
+        return "";
+    }
+
+    auto devNoteEntry = it->find("DevNote");
+    if (devNoteEntry != it->end() && devNoteEntry->is_string()){
+        return devNoteEntry->get<std::string>();
+    }
+
+    return "";
+}
+
 std::string Rune::Save::GetKeyDescription(std::string& saveKey){
     Rune::Json* editorDataJson = nullptr;
     if (R_FAILED(Rune::JsonData::GetJsonById(editorDataJson, "EditorData"))){
@@ -1221,7 +1248,7 @@ std::string Rune::Save::GetKeyDescription(std::string& saveKey){
     }
 
     if (editorDataJson == nullptr){
-        return saveKey;
+        return "";
     }
 
     auto it = editorDataJson->find(saveKey);

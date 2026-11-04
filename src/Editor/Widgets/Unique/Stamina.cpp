@@ -60,7 +60,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
 
         // anchor to centre
         numSpinner->setXY(
-            numSpinner->x() - numSpinner->w()/2 + 36,
+            numSpinner->x() - numSpinner->w()/2,
             numSpinner->y() - numSpinner->h()/2
         );
         /** */
@@ -171,11 +171,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
         numSpinner->setMin(0);
 
         // some extra help
-        editOverlay->setDeveloperNote(
-            "Stamina is a float value which ranges from 1000 (1 wheel) to 3000 (3 wheels), with each Stamina Vessel worth 200 units.\n\n"
-            "The spinner adjusts stamina by 200 per step. Normally, you can only obtain up to 10 upgrades, but the spinner supports up to 327 (65,535 units), allowing stamina to exceed the visual maximum!\n\n"
-            "Setting this to zero - alike hearts - doesn't corrupt your save... but it does cause some weirdness."
-        );
+        editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
 
         numSpinner->onPress(
             [widget, numSpinner](){

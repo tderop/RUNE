@@ -28,7 +28,8 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
 
         std::string readableName  = Rune::Save::GetReadableKeyName(saveEntry->dataName);
         std::string readableValue = Rune::Save::ValueToString(saveEntry->value);
-        ovl->setTitleLabel(readableName);
+        ovl->setTitleLabel("Edit Value - " + readableName);
+        ovl->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
         
         Aether::ListOption* editBtn = new Aether::ListOption(readableName, readableValue, [](){});
 

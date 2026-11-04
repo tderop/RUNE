@@ -9,12 +9,16 @@
 
 #include <any>
 
+// Tile-specific constants
 const bool SHOW_AFTER_RENDER = false;
 
-void Rune::WidgetBuilder::Tile(EditorWidget* widget){
+// I'm fed up of writing Rune:: icl
+using namespace Rune;
+
+void WidgetBuilder::Tile(EditorWidget* widget){
     // Check if meta was provided
     if (widget->getMeta().empty()){
-        Logger::Write("[Rune::WidgetBuilder::Tile] - No widget metadata provided!");
+        Logger::Write("[WidgetBuilder::Tile] - No widget metadata provided!");
         return;
     }
 
@@ -22,7 +26,7 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
     // Unpack the meta
     std::vector<std::any> widgetMeta = widget->getMeta();
-    Rune::Inventory::Item inventoryItem = std::any_cast<Rune::Inventory::Item>(widgetMeta.at(0));
+    Inventory::Item inventoryItem = std::any_cast<Inventory::Item>(widgetMeta.at(0));
 
     int buttonX = inventoryItem.x;
     int buttonY = inventoryItem.y;
@@ -44,11 +48,11 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
     // If the thumbnail path exists, add an image
     if (!thumbPath.empty()){
         // Get the thumbnail size and generate the key to lookup in the texture cache
-        int thumbSize = static_cast<int>(Rune::Inventory::kTileSize*Rune::Inventory::kThumbScale);
+        int thumbSize = static_cast<int>(Inventory::kTileSize*Inventory::kThumbScale);
         std::string textureKey = thumbPath+"|"+std::to_string(thumbSize)+"x"+std::to_string(thumbSize);
 
         // Check if there is a cached texture
-        auto textureOpt = Rune::Inventory::IconTextureCache->get<Aether::TextureHandle>(
+        auto textureOpt = Inventory::IconTextureCache->get<Aether::TextureHandle>(
             textureKey
         );
 
@@ -56,12 +60,12 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
 
         // Use cached texture if already exists
         if (textureOpt != std::nullopt){
-            Logger::Write("[Rune::WidgetBuilder::Tile] - Found cached texture for '"+textureKey+"'");
+            Logger::Write("[WidgetBuilder::Tile] - Found cached texture for '"+textureKey+"'");
             texture = textureOpt.value();
             thumbImg = new Aether::Image(0, 0, texture, Aether::Render::Wait);
         } // If there is no cached texture, just pass the thumbnail path and generate the texture now 
         else {
-            Logger::Write("[Rune::WidgetBuilder::Tile] - Failed to find cached texture '"+textureKey+"'");
+            Logger::Write("[WidgetBuilder::Tile] - Failed to find cached texture '"+textureKey+"'");
             thumbImg = new Aether::Image(0, 0, thumbPath, Aether::Render::Wait);
         }
 
@@ -100,13 +104,31 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         thumbImg->renderAsync();
     }
 
+    // Default tile press behaviour - open editor
+    // Handle opening the edit overlay when the tile is pressed
+    // Open the widget overlay
+    tileBtn->onPress([widget, inventoryItem](){
+        Logger::Write(inventoryItem.actorName+
+            ", flagSp: "+intToHex(inventoryItem.flagSp)+
+            ", valueSp: "+intToHex(inventoryItem.valueSp));
+
+        // // Build the overlay
+        // Get the widget overlay and set the title to show what we are editing
+        WidgetOverlay* ovl = widget->getWidgetOverlay();
+        ovl->setTitleLabel("Edit Item - "+inventoryItem.name);
+        ovl->setDeveloperNote(Save::GetKeyDevNote(widget->getSaveEntry()->dataName));
+
+        // Show the widget overlay
+        widget->getWindow()->addOverlay(ovl);
+    });
+
     // Embedded switch for handling different types of tiles, and then their styles
     switch (inventoryItem.type){
         // Standard filled inventory button assigned to an item in the inventory
-        case (Rune::Inventory::TileType::Standard): {
+        case (Inventory::TileType::Standard): {
             // Style switch
             switch (inventoryItem.style){
-                case (Rune::Inventory::TileStyle::NoLabel):{
+                case (Inventory::TileStyle::NoLabel):{
                     // Make new text
                     Aether::Text* valueText = new Aether::Text(
                         0, 0,
@@ -124,17 +146,17 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
                     break;
                 }
 
-                case (Rune::Inventory::TileStyle::Label): {
+                case (Inventory::TileStyle::Label): {
                     // Make a label
                     Aether::Rectangle* labelBg = new Aether::Rectangle(
                         0, 0,
-                        Rune::Inventory::kTileSize/3,
-                        Rune::Inventory::kTileSize/5,
+                        Inventory::kTileSize/3,
+                        Inventory::kTileSize/5,
                         3
                     );
 
                     labelBg->setXY(
-                        tileBtn->x()+tileBtn->w()-labelBg->w()/2-Rune::Inventory::kTilePadding,
+                        tileBtn->x()+tileBtn->w()-labelBg->w()/2-Inventory::kTilePadding,
                         tileBtn->y()+tileBtn->h()-labelBg->h()/2-6
                     );
 
@@ -166,30 +188,30 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
         }
 
         // An empty slot representing available space
-        case (Rune::Inventory::TileType::Empty): {
+        case (Inventory::TileType::Empty): {
             // Stub
             break;
         }
 
         // An add button showing that an additional slot can be added
-        case (Rune::Inventory::TileType::Add): {
+        case (Inventory::TileType::Add): {
             // Show "+" symbol
             tileBtn->setString("+");
             tileBtn->onPress([menu, inventoryItem, widget](){
                 // Add a new slot
                 // Find the save key
-                Rune::Save::File* saveFile = menu->saveFile();
-                auto it = Rune::Inventory::kSlotKeys.find(inventoryItem.category);
+                Save::File* saveFile = menu->saveFile();
+                auto it = Inventory::kSlotKeys.find(inventoryItem.category);
 
-                if (it != Rune::Inventory::kSlotKeys.end()){ // If found, modify
+                if (it != Inventory::kSlotKeys.end()){ // If found, modify
                     std::string slotKey = it->second;
-                    Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*saveFile, slotKey);
+                    Save::Entry* slotEntry = Save::GetEntryFromDataName(*saveFile, slotKey);
                     
                     // for bounds checking
-                    auto it = Rune::Inventory::kMaxSlots.find(inventoryItem.category);
+                    auto it = Inventory::kMaxSlots.find(inventoryItem.category);
                     int maxSlots = -1;
 
-                    if (it != Rune::Inventory::kMaxSlots.end()){
+                    if (it != Inventory::kMaxSlots.end()){
                         maxSlots = it->second;
                     }
 
@@ -208,20 +230,4 @@ void Rune::WidgetBuilder::Tile(EditorWidget* widget){
             });
         }
     }
-
-    // Handle opening the edit overlay when the tile is pressed
-    // Open the widget overlay
-    tileBtn->onPress([widget, inventoryItem](){
-        Logger::Write(inventoryItem.actorName+
-            ", flagSp: "+intToHex(inventoryItem.flagSp)+
-            ", valueSp: "+intToHex(inventoryItem.valueSp));
-
-        // // Build the overlay
-        // Get the widget overlay and set the title to show what we are editing
-        WidgetOverlay* ovl = widget->getWidgetOverlay();
-        ovl->setTitleLabel("Edit Item - "+inventoryItem.name);
-        
-        // Show the widget overlay
-        widget->getWindow()->addOverlay(ovl);
-    });
 }

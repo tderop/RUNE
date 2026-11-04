@@ -29,9 +29,9 @@
     "MaxHartValue": {
         "Readable": "Max Hearts",
         "Editor": "Hearts",
-        "Description": "Link's current maximum hearts."
+        "Description": "Link's current maximum hearts.",
+        "DevNote": "Health is an integer value which ranges from 12 (1 heart) to 120 (30 hearts), with each Heart Container worth 4 units.\n\nThe spinner adjusts health by 4 per step. The game caps your maximum health to 30 hearts, and prevents you from having less than 3. You cannot go above 30 hearts, but you can go below 3!\n\nSetting this to zero makes you die every time you load this file."
     },
-
     // "KorokNutsNum": {
     //     "Readable": "Korok Seeds",
     //     "Description": "The number of collected Korok Seeds."
@@ -80,7 +80,8 @@
     "StaminaMax": {
         "Readable": "Max Stamina",
         "Editor": "Stamina",
-        "Description": "Link's current maximum stamina."
+        "Description": "Link's current maximum stamina.",
+        "DevNote": "Stamina is a float value which ranges from 1000 (1 wheel) to 3000 (3 wheels), with each Stamina Vessel worth 200 units.\n\nThe spinner adjusts stamina by 200 per step. Normally, you can only obtain up to 10 upgrades, but the spinner supports up to 327 (65,535 units), allowing stamina to exceed the visual maximum!\n\nSetting this to zero - alike hearts - doesn't corrupt your save... but it does cause some weirdness."
 
         // "MaxValue": 3000
     },

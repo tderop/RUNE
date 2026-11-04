@@ -327,3 +327,40 @@ Result Rune::Inventory::CacheIconPaths(){
 
     return 0;
 }
+
+Rune::Inventory::Category Rune::Inventory::GetCategoryFromActorName(const std::string& actorName){
+    for (const auto& [category, prefixes] : Rune::Inventory::kInventoryPrefixes){
+        // Get ignores iterator
+        const auto ignoreIt = Rune::Inventory::kInventoryIgnores.find(category);
+        const bool hasIgnores = (ignoreIt != kInventoryIgnores.end());
+
+        for (const std::string& prefix : prefixes){
+            // Check if the actorName contains the prefix
+            if (actorName.find(prefix) == std::string::npos){
+                continue;
+            }
+
+            // If it contains the prefix, check that it is not in ignores
+            if (hasIgnores){
+                bool foundIgnore = false;
+
+                for (const std::string& ignore : ignoreIt->second){
+                    // If it contains an ignored prefix, break and continue
+                    if (actorName.find(ignore) != std::string::npos){
+                        foundIgnore = true;
+                        break;
+                    }
+                }
+
+                if (foundIgnore){
+                    continue;
+                }
+            }
+
+            // Found the category, return it
+            return category;
+        }
+    }
+
+    return Rune::Inventory::Category::Unknown;
+}

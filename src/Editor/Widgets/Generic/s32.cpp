@@ -26,6 +26,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
         // get min/max/init values
         Rune::Save::MetaEntry* metaEntry = widget->getMetaEntry();
         editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
+        editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
         
         // build popup interaction option
         Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 180);

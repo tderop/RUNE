@@ -321,6 +321,12 @@ namespace Rune
          * (e.g. HopesPlateau -> Great Plateau)
          */
         std::string GetReadableLocationName(const std::string& locationId);
+
+        /**
+         * @brief Get extra readable information about a save entry
+         * @param saveKey The string key of the data in the save file
+         */
+        std::string GetKeyDevNote(std::string& saveKey);
     }
 }
 

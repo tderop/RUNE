@@ -37,6 +37,7 @@ namespace Rune{
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
 
         inline Rune::Cache* IconPathCache = new Rune::Cache(420);
+        inline Rune::Cache* actorCategoryCache = new Rune::Cache(420);
         inline Rune::Cache* IconTextureCache = new Rune::Cache(1559);
 
         // Determines which inventory tab an item belongs to
@@ -204,5 +205,13 @@ namespace Rune{
          * @return Error code
          */
         Result CacheIconPaths();
+
+        /**
+         * @brief Determine an item's category from its actor name
+         * @note About 99.9% accurate
+         * @param actorName The item's actor name
+         * @return The Rune::Inventory::Category of the actor
+         */
+        Category GetCategoryFromActorName(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

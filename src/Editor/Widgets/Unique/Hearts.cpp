@@ -9,6 +9,8 @@
 #include <Utils/Trove.hpp>
 #include <Utils/Logger.hpp>
 
+#include <Json/Json.hpp>
+
 #include <string>
 
 const int UPGRADE_VALUE = 4; // 200 units per upgrade
@@ -80,7 +82,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
         // Anchor the number spinner to the centre of the overlay
         numSpinner->setXY(
-            numSpinner->x() - numSpinner->w()/2 + 36,
+            numSpinner->x() - numSpinner->w()/2 ,
             numSpinner->y() - numSpinner->h()/2
         );
 
@@ -165,11 +167,9 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         numSpinner->setMin(0);
 
         // Some extra info about the health value
-        editOverlay->setDeveloperNote(
-            "Health is an integer value which ranges from 12 (1 heart) to 120 (30 hearts), with each Heart Container worth 4 units.\n\n"
-            "The spinner adjusts health by 4 per step. The game caps your maximum health to 30 hearts, and prevents you from having less than 3. You cannot go above 30 hearts, but you can go below 3!\n\n"
-            "Setting this to zero makes you die every time you load this file."
-        );
+
+        // Set the developer note
+        editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
 
         // When the number spinner is pressed, show a keyboard and ask for a number input
         numSpinner->onPress(

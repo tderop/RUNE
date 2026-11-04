@@ -29,7 +29,8 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
 
         std::string readableName  = Rune::Save::GetReadableKeyName(saveEntry->dataName);
         std::string readableValue = Rune::Save::ValueToString(saveEntry->value);
-        ovl->setTitleLabel(readableName);
+        ovl->setTitleLabel("Edit Value - "+readableName);
+        ovl->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
 
         ovl->addList();
 

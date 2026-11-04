@@ -28,6 +28,7 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
 
         // get min/max/init values
         editOverlay->setTitleLabel("Edit Value - "+Rune::Save::GetReadableKeyName(saveEntry->dataName));
+        editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
         
         // build list option
         Aether::ListOption* editBtn = new Aether::ListOption(
