@@ -70,6 +70,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     auto flagSpKeyEntry  = Rune::Inventory::kFlagSpKeys.find(menuCategory);
     auto valueSpKeyEntry = Rune::Inventory::kValueSpKeys.find(menuCategory);
     
+    std::string flagSpKey;
+    std::string valueSpKey;
+
     Rune::Save::Entry* flagSpEntry;
     Rune::Save::Entry* valueSpEntry;
 
@@ -79,6 +82,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     if (flagSpKeyEntry != Rune::Inventory::kFlagSpKeys.end() 
         && valueSpKeyEntry != Rune::Inventory::kValueSpKeys.end())
     {     
+        flagSpKey  = flagSpKeyEntry->second;
+        valueSpKey = valueSpKeyEntry->second;
+
         flagSpEntry  = Rune::Save::GetEntryFromDataName(*menu->saveFile(), flagSpKeyEntry->second);
         valueSpEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), valueSpKeyEntry->second);
 
@@ -160,13 +166,16 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             itemName, 
             itemValue, 
             static_cast<size_t>(currentIdx),
+            static_cast<size_t>(localIdx),
             Rune::Inventory::GetCategoryFromMenuName(menu->menuName()),
             itemFlagSp,
             itemValueSp,
             tileStyle
         };
 
-        // Logger::Write(itemName+std::to_string(itemValue), true);
+        // Add Sp keys
+        inventoryItem.flagSpKey  = flagSpKey;
+        inventoryItem.valueSpKey = valueSpKey;
 
         // Store the inventory item
         inventoryItems->push_back(inventoryItem);

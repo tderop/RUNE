@@ -171,6 +171,9 @@ void Rune::Inventory::ShowPage(
     std::vector<Rune::Inventory::Item>& inventoryItems,
     size_t page, 
     std::vector<Aether::Ellipse*>* ellipses){
+    
+    // Get menu category from name
+    Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
 
     // Clear all current widgets
     Logger::Importantf( "Time taken: %dns", timeCode([menu](){menu->clearAllWidgets();}));
@@ -188,8 +191,6 @@ void Rune::Inventory::ShowPage(
             static_cast<int>(inventoryItems.size())
         )
     );
-
-    // Aether::BorderButton* firstBtn = nullptr;
 
     for (size_t i = cursorStart; i < cursorEnd; ++i){
         // Get the inventory item
@@ -224,6 +225,9 @@ void Rune::Inventory::ShowPage(
             inventoryItem.guard = getInt("Guard");
             inventoryItem.durability = getInt("Durability");
             inventoryItem.defence = getInt("Defence");
+
+            // Set modifier info
+            inventoryItem.modifier = (Rune::Inventory::Modifier)inventoryItem.flagSp;
 
             // Set thumbnail
             inventoryItem.thumbPath = Rune::Inventory::GetThumbPathFromInventoryItem(inventoryItem);

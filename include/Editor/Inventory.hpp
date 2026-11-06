@@ -53,6 +53,69 @@ namespace Rune{
             Unknown
         };
 
+        inline const uint32_t kEnhancedMask = 0x80000000;
+        enum class Modifier : uint32_t{
+            AttackUp=0x1,
+            DurabilityUp=0x2,
+            CriticalHit=0x4,
+            LongThrow=0x8,
+            MultiShot=0x10,
+            Zoom=0x20,
+            QuickShot=0x40,
+            SurfMaster=0x80,
+
+            // Half of these gold variants I'm psure don't even exist but we'll see
+            AttackUpPlus=AttackUp|kEnhancedMask,
+            DurabilityUpPlus=DurabilityUp|kEnhancedMask,
+            CriticalHitPlus=CriticalHit|kEnhancedMask,
+            LongThrowPlus=LongThrow|kEnhancedMask,
+            MultiShotPlus=MultiShot|kEnhancedMask,
+            ZoomPlus=Zoom|kEnhancedMask,
+            QuickShotPlus=QuickShot|kEnhancedMask,
+            SurfMasterPlus=SurfMaster|kEnhancedMask,
+
+            None=0,
+            Unknown=0xFFFFFFFF
+        };
+
+        struct ModifierInfo {
+            Modifier modifier;
+            const char* name;
+        };
+
+        inline constexpr ModifierInfo modifierNames[] = {
+            {Modifier::AttackUp, "Attack Up"},
+            {Modifier::DurabilityUp, "Durability Up"},
+            {Modifier::CriticalHit, "Critical Hit"},
+            {Modifier::LongThrow, "Long Throw"},
+            {Modifier::MultiShot, "Multi Shot"},
+            {Modifier::Zoom, "Zoom"},
+            {Modifier::QuickShot, "Quick Shot"},
+            {Modifier::SurfMaster, "Surf Master"},
+            {Modifier::None, "None"},
+            {Modifier::Unknown, "Unknown"}
+        };
+
+        /**
+         * @brief Get a modifier's name from its modifier Enum
+         * @param Modifier the modifier Enum to evaluate
+         * @return name string
+         */
+        inline std::string ModifierName(Modifier modifier){
+            // Strip of the enhanced mask to get raw modifier
+            uint32_t rawModifier = static_cast<uint32_t>(modifier) & ~kEnhancedMask;
+
+            for (const auto& info : modifierNames){
+                if (static_cast<uint32_t>(info.modifier) == rawModifier){
+                    // Add 'Plus' to the name if it contains the enhanced mask
+                    return std::string(info.name) 
+                    + ((static_cast<uint32_t>(modifier) & kEnhancedMask) ? "+" : "");
+                }
+            }
+
+            return "unknown";
+        }
+
         // All of the items in Link's pouch are merged into one massive array of max length 420. This is going to be a little annoying.
         inline const std::string kInventoryKey       = "PorchItem";
         inline const std::string kInventoryValueKey  = "PorchItem_Value1";
@@ -101,11 +164,14 @@ namespace Rune{
             std::string name;
             int32_t value;
             size_t index;
+            size_t localIndex;
 
             Category category;
 
             int32_t flagSp=0; // buff
             int32_t valueSp=0; // buff value
+
+            Modifier modifier=Modifier::None;
 
             TileStyle style=TileStyle::NoLabel;
             TileType type=TileType::Standard;
@@ -115,6 +181,9 @@ namespace Rune{
 
             std::string nextRankActorName;
             std::string prevRankActorName;
+
+            std::string flagSpKey;
+            std::string valueSpKey;
 
             int attack=-1; // Attack damage (weapons and bows)
             int guard=-1; // Shield guard (shields only)
@@ -133,13 +202,14 @@ namespace Rune{
                 std::string _name, 
                 int32_t _value, 
                 size_t _index,
+                size_t _localIndex,
                 Category _category,
                 int32_t _flagSp=0,
                 int32_t _valueSp=0,
                 TileStyle _style=TileStyle::NoLabel,
                 TileType _type=TileType::Standard,
                 std::string _thumbPath=""
-            ) : actorName(_actorName), name(_name), value(_value), index(_index), category(_category),
+            ) : actorName(_actorName), name(_name), value(_value), index(_index), localIndex(_localIndex), category(_category),
                 flagSp(_flagSp), valueSp(_valueSp), style(_style), type(_type), thumbPath(_thumbPath) {}
 
             Item() = default;

@@ -163,7 +163,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
         Aether::Rectangle* propertiesBox = new Aether::Rectangle(
             propertiesX, propertiesText->y()+propertiesText->textureHeight()+16,
-            496, 239,
+            496, 190,
             6
         );
         propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
@@ -173,9 +173,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         int propertyElmX = propertiesX+16;
         int propertyElmY = propertiesBox->y()+12;
 
-        Aether::Stepper* primaryValueStepper = new Aether::Stepper(
-            propertyElmX, propertyElmY
-        );
+        Aether::Stepper* primaryValueStepper = new Aether::Stepper(propertyElmX, propertyElmY);
+        Aether::Stepper* secondaryValueStepper = nullptr;
 
         // Determine how values are filled based on item type
         switch (inventoryItem.category){
@@ -185,6 +184,41 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 primaryValueStepper->setString("Durability");
                 primaryValueStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
                 primaryValueStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
+
+                // Dropdown filler
+                Aether::Text* buffTestText = new Aether::Text(
+                    propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+24,
+                    "Modifier        "+Inventory::ModifierName(inventoryItem.modifier),
+                    20
+                );
+                ovl->addTempElement(buffTestText);
+
+                // Stepper for setting the value of the modifier
+                secondaryValueStepper = new Aether::Stepper(
+                    primaryValueStepper->x(),
+                    buffTestText->y()+buffTestText->textureHeight()+24,
+                    "Mod. Value"
+                );
+                secondaryValueStepper->setMax(__INT16_MAX__);
+                secondaryValueStepper->setValue(inventoryItem.valueSp);
+                ovl->addTempElement(secondaryValueStepper);
+
+                secondaryValueStepper->onPress([secondaryValueStepper](){
+                    float outFloat;
+                    Result rc = Keyboard::getNumberInput(
+                        &outFloat, 
+                        "Enter a number... ("+std::to_string(secondaryValueStepper->min())+" - "+std::to_string(secondaryValueStepper->max())+")", 
+                        secondaryValueStepper->min(),
+                        secondaryValueStepper->max(),
+                        false,
+                        (secondaryValueStepper->min() < 0)
+                    );
+
+                    if (R_SUCCEEDED(rc)){
+                        secondaryValueStepper->setValue(static_cast<int>(outFloat));
+                    }
+                });
+
                 break;
             }
 
@@ -209,27 +243,24 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             }
         }
 
-        // Add the stepper to the overlay if not null
-        if (primaryValueStepper != nullptr){
-            // Set the press function
-            primaryValueStepper->onPress([primaryValueStepper](){
-                float outFloat;
-                Result rc = Keyboard::getNumberInput(
-                    &outFloat, 
-                    "Enter a number... ("+std::to_string(primaryValueStepper->min())+" - "+std::to_string(primaryValueStepper->max())+")", 
-                    primaryValueStepper->min(),
-                    primaryValueStepper->max(),
-                    false,
-                    (primaryValueStepper->min() < 0)
-                );
+        // Set the press function
+        primaryValueStepper->onPress([primaryValueStepper](){
+            float outFloat;
+            Result rc = Keyboard::getNumberInput(
+                &outFloat, 
+                "Enter a number... ("+std::to_string(primaryValueStepper->min())+" - "+std::to_string(primaryValueStepper->max())+")", 
+                primaryValueStepper->min(),
+                primaryValueStepper->max(),
+                false,
+                (primaryValueStepper->min() < 0)
+            );
 
-                if (R_SUCCEEDED(rc)){
-                    primaryValueStepper->setValue(static_cast<int>(outFloat));
-                }
-            });
+            if (R_SUCCEEDED(rc)){
+                primaryValueStepper->setValue(static_cast<int>(outFloat));
+            }
+        });
 
-            ovl->addTempElement(primaryValueStepper);
-        }
+        ovl->addTempElement(primaryValueStepper);
 
         Trove* ovlTrove = new Trove();
 
@@ -265,6 +296,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 0, 0,
                 (inventoryItem.name.empty() ? "Unassigned" : inventoryItem.name), 20
             );
+
             bigName->setXY(
                 imgFrame->x()+(imgFrame->w()/2)-(bigName->textureWidth()/2),
                 imgFrame->y()+imgFrame->h()-bigName->textureHeight()-16
@@ -282,7 +314,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         updateOvl();
 
         // For handling close
-        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, primaryValueStepper](size_t connId, bool isSave){
+        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, 
+            primaryValueStepper, secondaryValueStepper](size_t connId, bool isSave){
             // Memory management
             widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
             delete ovlTrove;
@@ -292,7 +325,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 // Get the porch item primary value
                 Save::File* saveFile = widget->getMenu()->saveFile();
                 Save::Entry* porchItemPrimaryValueEntry = Save::GetEntryFromDataName(*saveFile, Inventory::kInventoryValueKey);
-                auto& porchItemPrimaryValue = std::get<std::vector<int>>(porchItemPrimaryValueEntry->value);
+                auto& porchItemPrimaryValue = std::get<std::vector<int32_t>>(porchItemPrimaryValueEntry->value);
 
                 // Update the data
                 int newPrimaryValue = primaryValueStepper->value();
@@ -314,6 +347,23 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
                 // Modify save file
                 porchItemPrimaryValue[inventoryItem.index] = newPrimaryValue;
+
+                // Manage secondary value (valueSp)
+                if (secondaryValueStepper != nullptr){
+                    Logger::Importantf("Getting secondary value entry... %s", inventoryItem.valueSpKey.c_str());
+                    Save::Entry* porchItemSecondaryValueEntry = Save::GetEntryFromDataName(
+                        *saveFile, 
+                        inventoryItem.valueSpKey
+                    );
+
+                    Logger::Important("Getting the porch item secondary value...");
+                    auto& porchItemSecondaryValue = std::get<std::vector<int32_t>>(porchItemSecondaryValueEntry->value);
+
+                    Logger::Important("Updating value...");
+                    porchItemSecondaryValue[inventoryItem.localIndex] = secondaryValueStepper->value();
+
+                    Logger::Important("Done.");
+                }
 
                 // Reload to update inventory item data
                 widget->getMenu()->requestReload();
