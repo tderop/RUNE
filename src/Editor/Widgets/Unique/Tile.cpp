@@ -1,3 +1,5 @@
+#include <Aether/Aether.hpp>
+
 #include <Editor/EditorMenu.hpp>
 #include <Editor/EditorWidget.hpp>
 
@@ -107,7 +109,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
     // Default tile press behaviour - open editor
     // Handle opening the edit overlay when the tile is pressed
     // Open the widget overlay
-    tileBtn->onPress([widget, inventoryItem](){
+    tileBtn->onPress([widget, inventoryItem]() {
         Logger::Write(inventoryItem.actorName+
             ", flagSp: "+intToHex(inventoryItem.flagSp)+
             ", valueSp: "+intToHex(inventoryItem.valueSp));
@@ -120,6 +122,94 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
         // Show the widget overlay
         widget->getWindow()->addOverlay(ovl);
+
+            /**
+             * HERE
+             * WORK FROM HERE
+             * WORK ON THE WEAPON EDITOR UI
+             * MAKE A SWITCH FOR DIFFERENT CATEGORIES OF ITEMS
+             */
+
+        // A background frame for the item image
+        Aether::Rectangle* imgFrame = new Aether::Rectangle(
+            60, 0,
+            280, 280,
+            6
+        );
+        imgFrame->setY((ovl->panel()->y())+(ovl->panel()->h()/2)-(imgFrame->h()/2));
+        imgFrame->setColour(MUTED_BACKGROUND_COLOUR);
+        ovl->addTempElement(imgFrame);
+
+        // A separator between the image and the properties
+        Aether::Rectangle* imgSeparator = new Aether::Rectangle(
+            imgFrame->x()+imgFrame->w()+24, imgFrame->y(),
+            1, imgFrame->h()
+        );
+        imgSeparator->setColour(LIGHT_SEPARATOR_COLOUR);
+        ovl->addTempElement(imgSeparator);
+
+        // An example stepper
+        Aether::Stepper* stepper = new Aether::Stepper(
+            0, 0, "Durability"
+        );
+        ovl->addTempElement(stepper);
+
+        Trove* ovlTrove = new Trove();
+
+        // The lambda to run when any values have been updated
+        std::function<void()> updateOvl = [
+            widget, inventoryItem, ovl, ovlTrove, // Data and pointers
+            imgFrame // Other UI elements for relative sizing/positioning
+        ](){
+            // Clear the ovlTrove
+            ovlTrove->clear();
+
+            // Get the thumbnail path, if none found, then use placeholder thumbnail
+            std::string thumbPath = Inventory::GetThumbPathFromInventoryItem(inventoryItem);
+            if (thumbPath.empty()){
+                thumbPath = PLACEHOLDER_THUMB_PATH;
+            }
+
+            // Create the image, resize and render it
+            Aether::Image* bigThumbnail = new Aether::Image(
+                0, 0,
+                thumbPath,
+                Aether::Render::Wait
+            );
+            bigThumbnail->setScaleDimensions(210, 210);
+            bigThumbnail->renderAsync();
+            bigThumbnail->setXY(
+                imgFrame->x()+(imgFrame->w()/2)-(bigThumbnail->scaleWidth()/2),
+                imgFrame->y()+10
+            );
+
+            // Create the text and reposition it
+            Aether::Text* bigName = new Aether::Text(
+                0, 0,
+                inventoryItem.name, 20
+            );
+            bigName->setXY(
+                imgFrame->x()+(imgFrame->w()/2)-(bigName->textureWidth()/2),
+                imgFrame->y()+imgFrame->h()-bigName->textureHeight()-16
+            );
+
+            // Add everything to the overlay and the per-update trove
+            ovl->addTempElement(bigThumbnail);
+            ovlTrove->addElement(bigThumbnail);
+
+            ovl->addTempElement(bigName);
+            ovlTrove->addElement(bigName);
+        };
+
+        // update the UI
+        updateOvl();
+
+        // For handling close
+        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove](size_t connId, bool isSave){
+            // Memory management
+            widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
+            delete ovlTrove;
+        });
     });
 
     // Embedded switch for handling different types of tiles, and then their styles

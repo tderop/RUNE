@@ -36,9 +36,9 @@ namespace Rune{
         inline const Aether::Colour kDisabledEllipse{255, 255, 255, 75};
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
 
-        inline Rune::Cache* IconPathCache = new Rune::Cache(420);
-        inline Rune::Cache* actorCategoryCache = new Rune::Cache(420);
-        inline Rune::Cache* IconTextureCache = new Rune::Cache(1559);
+        inline Cache* IconPathCache = new Cache(420);
+        inline Cache* actorCategoryCache = new Cache(420);
+        inline Cache* IconTextureCache = new Cache(1559);
 
         // Determines which inventory tab an item belongs to
         enum class Category{

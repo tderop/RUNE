@@ -8,6 +8,9 @@
 namespace Aether {
     BorderButton::BorderButton(int x, int y, int w, int h, unsigned int b, std::string t, unsigned int s, std::function<void()> f) : Element(x, y, w, h) {
         this->box = new Box(this->x(), this->y(), this->w(), this->h(), b, CORNER_RAD);
+        this->fill = new Rectangle(this->x(), this->y(), this->w(), this->h(), CORNER_RAD);
+        this->fill->setColour(Aether::Colour{0, 0, 0, 0}); // Transparent by default
+        this->addElement(fill);
         this->addElement(this->box);
 
         this->textSize = s;
@@ -23,8 +26,12 @@ namespace Aether {
         this->onPress(f);
     }
 
+    void BorderButton::setFillColour(Colour c){
+        this->fill->setColour(c);
+    }
+
     void BorderButton::resizeText(){
-        unsigned int fontSize = this->textSize += 1;
+        unsigned int fontSize = this->textSize + 1;
 
         std::pair<int, int> size;
         do {

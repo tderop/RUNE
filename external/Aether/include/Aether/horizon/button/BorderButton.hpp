@@ -3,6 +3,7 @@
 
 #include "Aether/base/Element.hpp"
 #include "Aether/primary/Box.hpp"
+#include "Aether/primary/Rectangle.hpp"
 #include "Aether/primary/Text.hpp"
 
 namespace Aether {
@@ -14,6 +15,7 @@ namespace Aether {
         private:
             Box * box;          /** @brief The box associated with the button */
             Text * text;        /** @brief The text in the button */
+            Rectangle * fill; /** @brief The filled rect inside the button */
             unsigned int textSize;
             std::string textContent;
 
@@ -36,6 +38,12 @@ namespace Aether {
              * @param f function to invoke on button press
              */
             BorderButton(int x, int y, int w, int h, unsigned int b, std::string t, unsigned int s, std::function<void()> f);
+
+            /**
+             * @brief Set the fill colour of the border button
+             * @param c Colour to set the fill to
+             */
+            void setFillColour(Colour c);
 
             /**
              * @brief Get the colour of the border

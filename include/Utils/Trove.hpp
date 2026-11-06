@@ -25,6 +25,7 @@ using AetherElement = std::variant<
     Aether::ControlBar*,
     Aether::ListHeadingHelp*,
     Aether::Spinner*,
+    Aether::Stepper*,
     Aether::Screen*,
     Aether::Overlay*,
     Aether::DateTime*,

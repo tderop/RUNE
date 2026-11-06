@@ -5,15 +5,15 @@
 #include <mutex>
 #include <any>
 
-Rune::Cache::Cache(size_t capacity){
+Cache::Cache(size_t capacity){
     this->_capacity = capacity;
 }
 
-Rune::Cache::~Cache(){
+Cache::~Cache(){
     this->clear();
 }
 
-void Rune::Cache::put(const std::string& key, std::any data){
+void Cache::put(const std::string& key, std::any data){
     std::lock_guard<std::mutex> lock(this->_mutex);
 
     auto it = this->_cache.find(key);
@@ -47,7 +47,7 @@ void Rune::Cache::put(const std::string& key, std::any data){
     this->_cache[key] = {data, _usageOrder.begin()};
 }
 
-void Rune::Cache::clear(){
+void Cache::clear(){
     // Empty the cache
     this->_cache.clear();
 
@@ -55,6 +55,6 @@ void Rune::Cache::clear(){
     this->_usageOrder.clear();
 }
 
-void Rune::Cache::setCapacity(size_t capacity){
+void Cache::setCapacity(size_t capacity){
     this->_capacity = capacity;
 }
