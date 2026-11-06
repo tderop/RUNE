@@ -118,28 +118,28 @@ namespace Aether {
              *
              * @return int x-coordinate of element
              */
-            int x();
+            virtual int x();
 
             /**
              * @brief Returns y-coordinate of element
              *
              * @return int y-coordinate of element
              */
-            int y();
+            virtual int y();
 
             /**
              * @brief Returns width of element
              *
              * @return int width of element
              */
-            int w();
+            virtual int w();
 
             /**
              * @brief Returns height of element
              *
              * @return int height of element
              */
-            int h();
+            virtual int h();
 
             /**
              * @brief Set x-coordinate of element

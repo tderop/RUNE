@@ -1,3 +1,4 @@
 {
-    "C_Cpp.default.compilerPath": "C:/devkitPro/devkitA64/bin/aarch64-none-elf-g++.exe"
+    "C_Cpp.default.compilerPath": "C:/devkitPro/devkitA64/bin/aarch64-none-elf-g++.exe",
+    "C_Cpp.errorSquiggles": "enabled"
 }

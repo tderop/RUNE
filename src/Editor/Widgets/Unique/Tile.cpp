@@ -1,3 +1,4 @@
+#include <switch.h>
 #include <Aether/Aether.hpp>
 
 #include <Editor/EditorMenu.hpp>
@@ -8,6 +9,7 @@
 #include <Config.hpp>
 
 #include <Editor/Inventory.hpp>
+#include <Application/Keyboard.hpp>
 
 #include <any>
 
@@ -117,7 +119,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         // // Build the overlay
         // Get the widget overlay and set the title to show what we are editing
         WidgetOverlay* ovl = widget->getWidgetOverlay();
-        ovl->setTitleLabel("Edit Item - "+inventoryItem.name);
+        ovl->setTitleLabel("Edit Item - "+(inventoryItem.name.empty() ? "Unassigned" : inventoryItem.name));
         ovl->setDeveloperNote(Save::GetKeyDevNote(widget->getSaveEntry()->dataName));
 
         // Show the widget overlay
@@ -168,28 +170,65 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         ovl->addTempElement(propertiesBox);
 
         // Declarations
-        Aether::Stepper* durabilityStepper;
+        int propertyElmX = propertiesX+16;
+        int propertyElmY = propertiesBox->y()+12;
+
+        Aether::Stepper* primaryValueStepper = new Aether::Stepper(
+            propertyElmX, propertyElmY
+        );
 
         // Determine how values are filled based on item type
         switch (inventoryItem.category){
             case Inventory::Category::Weapons:
             case Inventory::Category::Bows:
             case Inventory::Category::Shields: {
-                // Durability stepper
-                durabilityStepper = new Aether::Stepper(
-                    propertiesBox->x()+16, propertiesBox->y()+12,
-                    "Durability"
-                );
-                durabilityStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
-                durabilityStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
+                primaryValueStepper->setString("Durability");
+                primaryValueStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
+                primaryValueStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
+                break;
+            }
 
-                ovl->addTempElement(durabilityStepper);
+            case Inventory::Category::Arrows:
+            case Inventory::Category::Materials:
+            case Inventory::Category::KeyItems: {
+                primaryValueStepper->setString("Quantity");
+                primaryValueStepper->setMax(Inventory::kMaxInventoryQuantity);
+                primaryValueStepper->setValue(inventoryItem.value);
+                break;
+            }
+
+            case Inventory::Category::Armor: {
+                primaryValueStepper->setString("Dye Colour");
+                primaryValueStepper->setMax(Inventory::kMaxDyeColour);
+                primaryValueStepper->setValue(inventoryItem.value);
                 break;
             }
 
             default: {
                 break;
             }
+        }
+
+        // Add the stepper to the overlay if not null
+        if (primaryValueStepper != nullptr){
+            // Set the press function
+            primaryValueStepper->onPress([primaryValueStepper](){
+                float outFloat;
+                Result rc = Keyboard::getNumberInput(
+                    &outFloat, 
+                    "Enter a number... ("+std::to_string(primaryValueStepper->min())+" - "+std::to_string(primaryValueStepper->max())+")", 
+                    primaryValueStepper->min(),
+                    primaryValueStepper->max(),
+                    false,
+                    (primaryValueStepper->min() < 0)
+                );
+
+                if (R_SUCCEEDED(rc)){
+                    primaryValueStepper->setValue(static_cast<int>(outFloat));
+                }
+            });
+
+            ovl->addTempElement(primaryValueStepper);
         }
 
         Trove* ovlTrove = new Trove();
@@ -224,7 +263,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             // Create the text and reposition it
             Aether::Text* bigName = new Aether::Text(
                 0, 0,
-                inventoryItem.name, 20
+                (inventoryItem.name.empty() ? "Unassigned" : inventoryItem.name), 20
             );
             bigName->setXY(
                 imgFrame->x()+(imgFrame->w()/2)-(bigName->textureWidth()/2),
@@ -243,18 +282,40 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         updateOvl();
 
         // For handling close
-        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, durabilityStepper](size_t connId, bool isSave){
+        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, primaryValueStepper](size_t connId, bool isSave){
             // Memory management
             widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
             delete ovlTrove;
 
             // Save handling (TEMPORARY FOR TESTING)
             if (isSave){
-                // Update porchValue
-                Save::Entry* valueEntry = Save::GetEntryFromDataName(*widget->getMenu()->saveFile(), Inventory::kInventoryValueKey);
-                auto& porchValue = std::get<std::vector<int>>(valueEntry->value);
-                porchValue[inventoryItem.index] = durabilityStepper->value()*Inventory::kDurabilityMultiplier;
+                // Get the porch item primary value
+                Save::File* saveFile = widget->getMenu()->saveFile();
+                Save::Entry* porchItemPrimaryValueEntry = Save::GetEntryFromDataName(*saveFile, Inventory::kInventoryValueKey);
+                auto& porchItemPrimaryValue = std::get<std::vector<int>>(porchItemPrimaryValueEntry->value);
 
+                // Update the data
+                int newPrimaryValue = primaryValueStepper->value();
+
+                // Validate/reform data on a per-item basis
+                switch (inventoryItem.category){
+                    case Inventory::Category::Weapons:
+                    case Inventory::Category::Bows:
+                    case Inventory::Category::Shields: {
+                        // Apply multiplier
+                        newPrimaryValue *= Inventory::kDurabilityMultiplier;
+                        break;
+                    }
+
+                    default: {
+                        break;
+                    }
+                }
+
+                // Modify save file
+                porchItemPrimaryValue[inventoryItem.index] = newPrimaryValue;
+
+                // Reload to update inventory item data
                 widget->getMenu()->requestReload();
             }
         });

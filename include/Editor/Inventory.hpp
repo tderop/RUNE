@@ -60,6 +60,8 @@ namespace Rune{
 
         // The value by which durability is multiplied by when it is saved
         inline const int kDurabilityMultiplier = 100;
+        inline const int kMaxInventoryQuantity = 999;
+        inline const int kMaxDyeColour = 15;
 
         // For elixirs
         inline const std::string kElixirPrefix = "Item_Cook_C_17"; // other effects are like Item_Cook_C_17_DefenseUp for example
