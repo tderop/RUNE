@@ -95,6 +95,12 @@ namespace Aether {
             * @param f The function to run
             */
            void onValueChange(std::function<void()> f);
+
+           /**
+            * @brief Get the current value of the stepper
+            * @return The integer value of the stepper
+            */
+           int value();
     };
 };
 

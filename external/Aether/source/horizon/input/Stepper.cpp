@@ -6,10 +6,11 @@
 
 #define ELEMENT_SPACING 24
 #define BORDER_COLOUR Aether::Colour{96, 96, 96, 150}
+#define BACKGROUND_COLOUR Aether::Colour{35, 35, 35, 255}
 #define MUTED_BACKGROUND Aether::Colour{20, 20, 20, 200}
 #define TRANSPARENT Aether::Colour{0, 0, 0, 0}
 
-#define TEXT_SIZE 24
+#define TEXT_SIZE 20
 
 #include <string>
 #include <algorithm>
@@ -37,7 +38,7 @@ namespace Aether {
         this->label = new Text(x, y, s, TEXT_SIZE);
         this->valueBtn = new BorderButton(x, y, w, VALUE_CONTAINER_HEIGHT, BORDER_WIDTH, "", 24, [](){});
         if (!s.empty()){
-            this->valueBtn->setX(x+this->label->textureWidth()+(ELEMENT_SPACING*2));
+        this->valueBtn->setX(x+this->label->textureWidth()+(ELEMENT_SPACING*2));
             this->label->setY(y+this->valueBtn->h()/2-this->label->textureHeight()/2);
         }
 
@@ -69,7 +70,7 @@ namespace Aether {
             this->stepBtnBorder->w(), this->stepBtnBorder->h(),
             BORDER_RADIUS
         );
-        this->stepBtnBorderBackground->setColour(MUTED_BACKGROUND);
+        this->stepBtnBorderBackground->setColour(BACKGROUND_COLOUR);
         this->valueBtn->setFillColour(MUTED_BACKGROUND);
 
         this->valueBtn->setBorderColour(BORDER_COLOUR);
@@ -108,4 +109,7 @@ namespace Aether {
         this->onValueChangeFunc = f;
     }
 
+    int Stepper::value(){
+        return this->value_;
+    }
 }

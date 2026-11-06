@@ -148,11 +148,49 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         imgSeparator->setColour(LIGHT_SEPARATOR_COLOUR);
         ovl->addTempElement(imgSeparator);
 
-        // An example stepper
-        Aether::Stepper* stepper = new Aether::Stepper(
-            0, 0, "Durability"
+        // Item properties
+        int propertiesX = imgSeparator->x()+24;
+
+        Aether::Text* propertiesText = new Aether::Text(
+            propertiesX, imgSeparator->y(),
+            "Item Properties",
+            22  
         );
-        ovl->addTempElement(stepper);
+        propertiesText->setColour(TEXT_COLOUR);
+        ovl->addTempElement(propertiesText);
+
+        Aether::Rectangle* propertiesBox = new Aether::Rectangle(
+            propertiesX, propertiesText->y()+propertiesText->textureHeight()+16,
+            496, 239,
+            6
+        );
+        propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
+        ovl->addTempElement(propertiesBox);
+
+        // Declarations
+        Aether::Stepper* durabilityStepper;
+
+        // Determine how values are filled based on item type
+        switch (inventoryItem.category){
+            case Inventory::Category::Weapons:
+            case Inventory::Category::Bows:
+            case Inventory::Category::Shields: {
+                // Durability stepper
+                durabilityStepper = new Aether::Stepper(
+                    propertiesBox->x()+16, propertiesBox->y()+12,
+                    "Durability"
+                );
+                durabilityStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
+                durabilityStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
+
+                ovl->addTempElement(durabilityStepper);
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
 
         Trove* ovlTrove = new Trove();
 
@@ -205,10 +243,20 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         updateOvl();
 
         // For handling close
-        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove](size_t connId, bool isSave){
+        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, durabilityStepper](size_t connId, bool isSave){
             // Memory management
             widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
             delete ovlTrove;
+
+            // Save handling (TEMPORARY FOR TESTING)
+            if (isSave){
+                // Update porchValue
+                Save::Entry* valueEntry = Save::GetEntryFromDataName(*widget->getMenu()->saveFile(), Inventory::kInventoryValueKey);
+                auto& porchValue = std::get<std::vector<int>>(valueEntry->value);
+                porchValue[inventoryItem.index] = durabilityStepper->value()*Inventory::kDurabilityMultiplier;
+
+                widget->getMenu()->requestReload();
+            }
         });
     });
 

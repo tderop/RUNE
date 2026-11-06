@@ -58,6 +58,9 @@ namespace Rune{
         inline const std::string kInventoryValueKey  = "PorchItem_Value1";
         inline const std::string kInventoryEquipFlag = "PorchItem_EquipFlag";
 
+        // The value by which durability is multiplied by when it is saved
+        inline const int kDurabilityMultiplier = 100;
+
         // For elixirs
         inline const std::string kElixirPrefix = "Item_Cook_C_17"; // other effects are like Item_Cook_C_17_DefenseUp for example
         // Look into CookEffect0 (vector2f array)
