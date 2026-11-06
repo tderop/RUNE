@@ -163,7 +163,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
         Aether::Rectangle* propertiesBox = new Aether::Rectangle(
             propertiesX, propertiesText->y()+propertiesText->textureHeight()+16,
-            496, 190,
+            496, 200,
             6
         );
         propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
@@ -174,6 +174,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         int propertyElmY = propertiesBox->y()+12;
 
         Aether::Stepper* primaryValueStepper = new Aether::Stepper(propertyElmX, propertyElmY);
+        Aether::Dropdown* secondaryFlagDropdown = nullptr;
         Aether::Stepper* secondaryValueStepper = nullptr;
 
         // Determine how values are filled based on item type
@@ -186,22 +187,35 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 primaryValueStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
 
                 // Dropdown filler
-                Aether::Text* buffTestText = new Aether::Text(
-                    propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+24,
-                    "Modifier        "+Inventory::ModifierName(inventoryItem.modifier),
-                    20
+                secondaryFlagDropdown = new Aether::Dropdown(
+                    propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+16,
+                    "Modifier", 180, 180
                 );
-                ovl->addTempElement(buffTestText);
+                secondaryFlagDropdown->setValue(Inventory::ModifierName((Inventory::Modifier)inventoryItem.flagSp));
+                
+                // Make the dropdown map for this category
+                std::map<std::string, std::any> buffMap;
+                const auto& categoryModifiers = Inventory::kCategoryModifiers.find(inventoryItem.category);
+                if (categoryModifiers != Inventory::kCategoryModifiers.end()){
+                    for (const Inventory::Modifier& modifier : categoryModifiers->second){
+                        buffMap[Inventory::ModifierName(modifier, categoryModifiers->first)] = std::make_any<Inventory::Modifier>(modifier);
+                    }
+                }
+
+                secondaryFlagDropdown->setMap(buffMap);
 
                 // Stepper for setting the value of the modifier
                 secondaryValueStepper = new Aether::Stepper(
                     primaryValueStepper->x(),
-                    buffTestText->y()+buffTestText->textureHeight()+24,
+                    secondaryFlagDropdown->y()+secondaryFlagDropdown->h()+16,
                     "Mod. Value"
                 );
+
                 secondaryValueStepper->setMax(__INT16_MAX__);
                 secondaryValueStepper->setValue(inventoryItem.valueSp);
+
                 ovl->addTempElement(secondaryValueStepper);
+                ovl->addTempElement(secondaryFlagDropdown); // add dropdown after because Z-Index
 
                 secondaryValueStepper->onPress([secondaryValueStepper](){
                     float outFloat;
@@ -315,7 +329,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
         // For handling close
         widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, 
-            primaryValueStepper, secondaryValueStepper](size_t connId, bool isSave){
+            primaryValueStepper, secondaryFlagDropdown, secondaryValueStepper](size_t connId, bool isSave){
             // Memory management
             widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
             delete ovlTrove;
@@ -348,9 +362,30 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 // Modify save file
                 porchItemPrimaryValue[inventoryItem.index] = newPrimaryValue;
 
+                // Manage secondary flag
+                if (secondaryFlagDropdown != nullptr){
+                    Save::Entry* porchItemSecondaryFlagsEntry = Save::GetEntryFromDataName(
+                        *saveFile,
+                        inventoryItem.flagSpKey
+                    );
+
+                    auto& porchItemSecondaryFlags = std::get<std::vector<int32_t>>(
+                        porchItemSecondaryFlagsEntry->value
+                    );
+
+                    uint32_t oldFlag = porchItemSecondaryFlags.at(inventoryItem.localIndex);
+
+                    // Get the data value from the dropdown, specify it is a modifier, use the old flag if nullopt, and cast to int
+                    porchItemSecondaryFlags[inventoryItem.localIndex] 
+                    = static_cast<int32_t>(
+                        secondaryFlagDropdown->getValueData<Inventory::Modifier>()
+                        .value_or((Inventory::Modifier)oldFlag)
+                    );
+                }
+
                 // Manage secondary value (valueSp)
                 if (secondaryValueStepper != nullptr){
-                    Logger::Importantf("Getting secondary value entry... %s", inventoryItem.valueSpKey.c_str());
+                    // Logger::Importantf("Getting secondary value entry... %s", inventoryItem.valueSpKey.c_str());
                     Save::Entry* porchItemSecondaryValueEntry = Save::GetEntryFromDataName(
                         *saveFile, 
                         inventoryItem.valueSpKey

@@ -8,6 +8,7 @@
 #include <map>
 
 #include <Utils/Cache.hpp>
+#include <Utils/Logger.hpp>
 #include <Json/Json.hpp>
 
 #include <Editor/MenuBuilder.hpp>
@@ -53,6 +54,7 @@ namespace Rune{
             Unknown
         };
 
+
         inline const uint32_t kEnhancedMask = 0x80000000;
         enum class Modifier : uint32_t{
             AttackUp=0x1,
@@ -63,6 +65,7 @@ namespace Rune{
             Zoom=0x20,
             QuickShot=0x40,
             SurfMaster=0x80,
+            GuardUp=0x100,
 
             // Half of these gold variants I'm psure don't even exist but we'll see
             AttackUpPlus=AttackUp|kEnhancedMask,
@@ -73,6 +76,7 @@ namespace Rune{
             ZoomPlus=Zoom|kEnhancedMask,
             QuickShotPlus=QuickShot|kEnhancedMask,
             SurfMasterPlus=SurfMaster|kEnhancedMask,
+            GuardUpPlus=GuardUp|kEnhancedMask,
 
             None=0,
             Unknown=0xFFFFFFFF
@@ -92,6 +96,7 @@ namespace Rune{
             {Modifier::Zoom, "Zoom"},
             {Modifier::QuickShot, "Quick Shot"},
             {Modifier::SurfMaster, "Surf Master"},
+            {Modifier::GuardUp, "Guard Up"},
             {Modifier::None, "None"},
             {Modifier::Unknown, "Unknown"}
         };
@@ -101,18 +106,31 @@ namespace Rune{
          * @param Modifier the modifier Enum to evaluate
          * @return name string
          */
-        inline std::string ModifierName(Modifier modifier){
+        inline std::string ModifierName(Modifier modifier, Category category=Category::Unknown){
             // Strip of the enhanced mask to get raw modifier
             uint32_t rawModifier = static_cast<uint32_t>(modifier) & ~kEnhancedMask;
 
             for (const auto& info : modifierNames){
                 if (static_cast<uint32_t>(info.modifier) == rawModifier){
                     // Add 'Plus' to the name if it contains the enhanced mask
-                    return std::string(info.name) 
+                    std::string fullName = std::string(info.name) 
                     + ((static_cast<uint32_t>(modifier) & kEnhancedMask) ? "+" : "");
+
+                    // from a misunderstanding, thinking that attack up would mean guard up for shields
+                    // if (category == Category::Shields){
+                    //     const std::string atkStr = "Attack";
+                    //     size_t atkPos = fullName.find(atkStr);
+
+                    //     if (atkPos != std::string::npos){
+                    //         fullName.replace(atkPos, atkStr.length(), "Guard");
+                    //     }
+                    // }
+
+                    return fullName; 
                 }
             }
 
+            Logger::Importantf("Unknown flag ID: %08X", (uint32_t)modifier);
             return "unknown";
         }
 
@@ -142,6 +160,8 @@ namespace Rune{
 
         extern const std::map<Category, std::string> kLabelValueKeys;
         inline const std::vector<Category> kQuantityMenus = {Category::Materials, Category::Food, Category::KeyItems};
+
+        extern const std::map<Category, std::vector<Modifier>> kCategoryModifiers;
 
         inline constexpr int kMaxMaterialQuantity = 999;
         inline constexpr int kMaxWeaponDurability = __INT32_MAX__;

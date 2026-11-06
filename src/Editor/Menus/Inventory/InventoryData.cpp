@@ -40,6 +40,34 @@ const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kLabelVa
     {Rune::Inventory::Category::Armor, "Defence"}
 };
 
+const std::map<Rune::Inventory::Category, std::vector<Rune::Inventory::Modifier>> Rune::Inventory::kCategoryModifiers = {
+    {
+        Rune::Inventory::Category::Weapons,
+        {
+            Rune::Inventory::Modifier::AttackUp, Rune::Inventory::Modifier::DurabilityUp, 
+            Rune::Inventory::Modifier::CriticalHit, Rune::Inventory::Modifier::LongThrow,
+            Rune::Inventory::Modifier::AttackUpPlus, Rune::Inventory::Modifier::DurabilityUpPlus
+        }
+    },
+    {
+        Rune::Inventory::Category::Bows,
+        {
+            Rune::Inventory::Modifier::AttackUp, Rune::Inventory::Modifier::DurabilityUp,
+            Rune::Inventory::Modifier::MultiShot, Rune::Inventory::Modifier::Zoom,
+            Rune::Inventory::Modifier::QuickShot, Rune::Inventory::Modifier::AttackUpPlus,
+            Rune::Inventory::Modifier::DurabilityUpPlus, Rune::Inventory::Modifier::MultiShotPlus
+        }
+    },
+    {
+        Rune::Inventory::Category::Shields,
+        {
+            Rune::Inventory::Modifier::GuardUp, Rune::Inventory::Modifier::DurabilityUp,
+            Rune::Inventory::Modifier::SurfMaster, Rune::Inventory::Modifier::GuardUpPlus,
+            Rune::Inventory::Modifier::DurabilityUpPlus
+        }
+    }
+};
+
 const std::map<Rune::Inventory::Category, size_t> Rune::Inventory::kMaxSlots = {
     {Rune::Inventory::Category::Weapons, 20},
     {Rune::Inventory::Category::Bows, 13},

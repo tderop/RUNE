@@ -62,6 +62,7 @@ for making RUNE possible!
 - <a href="https://www.flaticon.com/free-icons/foursquare-check-in" title="foursquare check in icons">Foursquare check in icons created by reussy - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Magnific - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/swap" title="swap icons">Swap icons created by bqlqn - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/excellence" title="Excellence icons">Excellence icons created by meaicon - Flaticon</a>
 
 ## Use of AI (Artificial Intelligence)
 **RUNE was generated entirely, 100%, by HI**. <br><small>human intelligence :)</small><br><br>
