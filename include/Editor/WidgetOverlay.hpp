@@ -74,6 +74,20 @@ class WidgetOverlay : public Aether::Overlay{
         void setDeveloperNote(const std::string& note);
 
         /**
+         * @brief Set the x coordinate of the developer note text block
+         * @note This is reset when the widget overlay gets closed
+         * @param x The new x-coordinate of the developer note
+         */
+        void setDeveloperNoteX(int x);
+
+        /**
+         * @brief Set the wrap width of the developer note text block
+         * @note This is reset when the widget overlay gets closed
+         * @param w The new wrap width
+         */
+        void setDeveloperNoteWrap(int w);
+
+        /**
          * @brief Check if the hint is visible
          * @return Whether the hint is visible or not
          */

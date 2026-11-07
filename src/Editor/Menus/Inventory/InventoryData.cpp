@@ -120,9 +120,40 @@ const std::map<Rune::Inventory::Category, std::vector<std::string>> Rune::Invent
     }
 };
 
-extern const std::map<Rune::Inventory::Category, Rune::Inventory::TileStyle> Rune::Inventory::kLabelTileStyles = {
+const std::map<Rune::Inventory::Category, Rune::Inventory::TileStyle> Rune::Inventory::kLabelTileStyles = {
     {Rune::Inventory::Category::Weapons, Rune::Inventory::TileStyle::Label},
     {Rune::Inventory::Category::Bows, Rune::Inventory::TileStyle::Label},
     {Rune::Inventory::Category::Shields, Rune::Inventory::TileStyle::Label},
     {Rune::Inventory::Category::Armor, Rune::Inventory::TileStyle::Label}
+};
+
+const std::map<Rune::Inventory::Category, std::string> Rune::Inventory::kCategoryDevNotes = {
+    {
+        Rune::Inventory::Category::Weapons,
+        "Edit three key values: Durability, Modifier, and Modifier Value\n"
+        "────────────────\n"
+        "• Durability: Remaining hits until the weapon breaks, hard-capped at 65,535.\n\n"
+        "• Modifier: The weapon's buff. Normal and plus versions are purely cosmetic.\n\n"
+        "• Modifier Value: Buff strength, e.g. Attack Up + 25."
+    },
+    {
+        Rune::Inventory::Category::Bows,
+        "Edit three key values: Durability, Modifier, and Modifier Value\n"
+        "────────────────\n"
+        "• Durability: Remaining hits until the bow breaks, hard-capped at 65,535.\n\n"
+        "• Modifier: The bow's buff. Normal and plus versions are purely cosmetic.\n\n"
+        "• Modifier Value: Buff strength, e.g. Multi Shot x3."
+    },
+    {
+        Rune::Inventory::Category::Shields,
+        "Edit three key values: Durability, Modifier, and Modifier Value\n"
+        "────────────────\n"
+        "• Durability: Remaining hits until the shield breaks, hard-capped at 65,535.\n\n"
+        "• Modifier: The shield's buff. Normal and plus versions are purely cosmetic.\n\n"
+        "• Modifier Value: Buff strength, e.g. Guard Up + 25."
+    },
+    {
+        Rune::Inventory::Category::Armor,
+        ""
+    },
 };

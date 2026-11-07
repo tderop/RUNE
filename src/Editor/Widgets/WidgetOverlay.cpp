@@ -2,6 +2,8 @@
 #include <Editor/WidgetOverlay.hpp>
 #include <Config.hpp>
 
+const int DEV_NOTE_WRAP_WIDTH = 480;
+
 void WidgetOverlay::clearTrove(){
     this->_list = nullptr;
     this->_trove->clear();
@@ -34,6 +36,11 @@ void WidgetOverlay::closeWidgetOverlay(bool isSave){
     this->onCloseSignal->fire(isSave);
 
     this->setDeveloperNote("");
+
+    this->_devNoteText->setXY(36, this->_panel->y()+72+36);
+    this->_devNoteText->setWrapWidth(DEV_NOTE_WRAP_WIDTH);
+    this->_devNoteRect->setX(this->_devNoteText->x());
+
     this->clearTrove();
     this->close();
 }
@@ -181,6 +188,15 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_infoButton->onPress([this](){
         this->setHintVisible(!this->hintVisible());
     });
+}
+
+void WidgetOverlay::setDeveloperNoteX(int x){
+    this->_devNoteText->setX(x);
+    this->_devNoteRect->setX(x);
+}
+
+void WidgetOverlay::setDeveloperNoteWrap(int w){
+    this->_devNoteText->setWrapWidth(w);
 }
 
 WidgetOverlay::~WidgetOverlay(){

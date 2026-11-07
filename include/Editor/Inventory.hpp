@@ -54,6 +54,7 @@ namespace Rune{
             Unknown
         };
 
+        extern const std::map<Category, std::string> kCategoryDevNotes;
 
         inline const uint32_t kEnhancedMask = 0x80000000;
         enum class Modifier : uint32_t{
@@ -95,7 +96,7 @@ namespace Rune{
             {Modifier::MultiShot, "Multi Shot"},
             {Modifier::Zoom, "Zoom"},
             {Modifier::QuickShot, "Quick Shot"},
-            {Modifier::SurfMaster, "Surf Master"},
+            {Modifier::SurfMaster, "Shield Surf Up"},
             {Modifier::GuardUp, "Guard Up"},
             {Modifier::None, "None"},
             {Modifier::Unknown, "Unknown"}

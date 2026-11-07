@@ -71,7 +71,7 @@ void EditorMenu::addWidget(EditorWidget* widget){
     this->widgets.push_back(widget);
 }
 
-void EditorMenu::addElement(AetherElement element){
+void EditorMenu::addToTrove(AetherElement element){
     this->_trove->addElement(element);
 }
 
@@ -105,7 +105,7 @@ void EditorMenu::setList(Aether::List* list){
         );
 
         this->_screen->addElement(_body);
-        this->addElement(_body);
+        this->addToTrove(_body);
     }
 
     this->_list = list;

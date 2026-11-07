@@ -30,17 +30,17 @@ namespace Aether {
     void Stepper::reorganiseElements(){
         if (!this->label->string().empty()){
             this->valueBtn->setXY(
-                this->origin->x()+TEXT_SPACING,
-                this->origin->y()
+                this->x()+TEXT_SPACING,
+                this->y()
             );
             this->label->setXY(
-                origin->x(),
+                this->x(),
                 this->valueBtn->y()+this->valueBtn->h()/2-this->label->textureHeight()/2
             );
         } else {
             this->valueBtn->setXY(
-                this->origin->x(),
-                this->origin->y()
+                this->x(),
+                this->y()
             );
         }
 
@@ -71,7 +71,7 @@ namespace Aether {
     }
 
     Stepper::Stepper(int x, int y, std::string s, int w){
-        this->origin = new Container(x, y);
+        this->setXY(x, y);
 
         this->label = new Text(x, y, s, TEXT_SIZE);
         this->valueBtn = new BorderButton(x, y, w, VALUE_CONTAINER_HEIGHT, BORDER_WIDTH, "", 24, [](){});
@@ -117,13 +117,12 @@ namespace Aether {
         this->incrementBtn->setBorderColour(TRANSPARENT);
         this->decrementBtn->setBorderColour(TRANSPARENT);
         
-        this->addElement(origin);
-        this->origin->addElement(this->label);
-        this->origin->addElement(this->valueBtn);
-        this->origin->addElement(this->stepBtnBorderBackground);
-        this->origin->addElement(this->incrementBtn);
-        this->origin->addElement(this->decrementBtn);
-        this->origin->addElement(this->stepBtnBorder);
+        this->addElement(this->label);
+        this->addElement(this->valueBtn);
+        this->addElement(this->stepBtnBorderBackground);
+        this->addElement(this->incrementBtn);
+        this->addElement(this->decrementBtn);
+        this->addElement(this->stepBtnBorder);
 
         this->valueUpdated();
     }
@@ -174,32 +173,12 @@ namespace Aether {
         return this->value_;
     }
 
-    int Stepper::x(){
-        return this->origin->x();
-    }
-
-    int Stepper::y(){
-        return this->origin->y();
-    }
-
     int Stepper::w(){
         return this->valueBtn->w();
     }
 
     int Stepper::h(){
         return this->valueBtn->h();
-    }
-
-    void Stepper::setX(int x){
-        this->origin->setX(x);
-    }
-
-    void Stepper::setY(int y){
-        this->origin->setY(y);
-    }
-
-    void Stepper::setXY(int x, int y){
-        this->origin->setXY(x, y);
     }
 
     void Stepper::setW(int w){

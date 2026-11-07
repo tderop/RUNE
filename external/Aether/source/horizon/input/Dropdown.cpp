@@ -22,7 +22,7 @@ namespace Aether {
         }
 
         this->backgroundRect_ = new Rectangle(
-            this->dropdownBtn_->x(), this->dropdownBtn_->y()+this->dropdownBtn_->h(),
+            this->dropdownBtn_->x(), this->dropdownBtn_->y()+this->dropdownBtn_->h()+BORDER_WIDTH,
             this->dropdownBtn_->w(), this->dropdownH_,
             BORDER_RADIUS
         );

@@ -125,19 +125,12 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         // Show the widget overlay
         widget->getWindow()->addOverlay(ovl);
 
-            /**
-             * HERE
-             * WORK FROM HERE
-             * WORK ON THE WEAPON EDITOR UI
-             * MAKE A SWITCH FOR DIFFERENT CATEGORIES OF ITEMS
-             */
-
         // A background frame for the item image
         Aether::Rectangle* imgFrame = new Aether::Rectangle(
             60, 0,
-            280, 280,
-            6
+            280, 280
         );
+
         imgFrame->setY((ovl->panel()->y())+(ovl->panel()->h()/2)-(imgFrame->h()/2));
         imgFrame->setColour(MUTED_BACKGROUND_COLOUR);
         ovl->addTempElement(imgFrame);
@@ -168,6 +161,14 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         );
         propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
         ovl->addTempElement(propertiesBox);
+
+        // Set developer note properties
+        auto devNoteIt = Inventory::kCategoryDevNotes.find(inventoryItem.category);
+        if (devNoteIt != Inventory::kCategoryDevNotes.end()){
+            ovl->setDeveloperNoteWrap(324);
+            ovl->setDeveloperNote(devNoteIt->second);
+            ovl->setDeveloperNoteX(propertiesBox->x()+propertiesBox->w()+24);
+        }
 
         // Declarations
         int propertyElmX = propertiesX+16;
@@ -208,10 +209,10 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 secondaryValueStepper = new Aether::Stepper(
                     primaryValueStepper->x(),
                     secondaryFlagDropdown->y()+secondaryFlagDropdown->h()+16,
-                    "Mod. Value"
+                    "Modifier Val."
                 );
 
-                secondaryValueStepper->setMax(__INT16_MAX__);
+                secondaryValueStepper->setMax(__UINT16_MAX__);
                 secondaryValueStepper->setValue(inventoryItem.valueSp);
 
                 ovl->addTempElement(secondaryValueStepper);
@@ -221,7 +222,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                     float outFloat;
                     Result rc = Keyboard::getNumberInput(
                         &outFloat, 
-                        "Enter a number... ("+std::to_string(secondaryValueStepper->min())+" - "+std::to_string(secondaryValueStepper->max())+")", 
+                        "Enter a number... ("+std::to_string(secondaryValueStepper->min())+" → "+std::to_string(secondaryValueStepper->max())+")", 
                         secondaryValueStepper->min(),
                         secondaryValueStepper->max(),
                         false,
@@ -238,6 +239,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
             case Inventory::Category::Arrows:
             case Inventory::Category::Materials:
+            case Inventory::Category::Food:
             case Inventory::Category::KeyItems: {
                 primaryValueStepper->setString("Quantity");
                 primaryValueStepper->setMax(Inventory::kMaxInventoryQuantity);
@@ -247,7 +249,15 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
             case Inventory::Category::Armor: {
                 primaryValueStepper->setString("Dye Colour");
-                primaryValueStepper->setMax(Inventory::kMaxDyeColour);
+
+                // Enforce -1 in the case that armor cannot be dyed
+                if (inventoryItem.value >= 0){
+                    primaryValueStepper->setMax(Inventory::kMaxDyeColour);
+                } else {
+                    primaryValueStepper->setMin(-1);
+                    primaryValueStepper->setMax(-1);
+                }
+
                 primaryValueStepper->setValue(inventoryItem.value);
                 break;
             }
@@ -262,7 +272,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             float outFloat;
             Result rc = Keyboard::getNumberInput(
                 &outFloat, 
-                "Enter a number... ("+std::to_string(primaryValueStepper->min())+" - "+std::to_string(primaryValueStepper->max())+")", 
+                "Enter a number... ("+std::to_string(primaryValueStepper->min())+" → "+std::to_string(primaryValueStepper->max())+")", 
                 primaryValueStepper->min(),
                 primaryValueStepper->max(),
                 false,
@@ -373,7 +383,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                         porchItemSecondaryFlagsEntry->value
                     );
 
-                    uint32_t oldFlag = porchItemSecondaryFlags.at(inventoryItem.localIndex);
+                    int32_t oldFlag = porchItemSecondaryFlags.at(inventoryItem.localIndex);
 
                     // Get the data value from the dropdown, specify it is a modifier, use the old flag if nullopt, and cast to int
                     porchItemSecondaryFlags[inventoryItem.localIndex] 

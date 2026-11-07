@@ -3,42 +3,108 @@
 
 #include <Save/Save.hpp>
 #include <Utils/Logger.hpp>
+#include <Utils/Utils.hpp>
+
+#include <Input/Input.hpp>
+
 #include <string>
+#include <memory>
 
-const int ENTRIES_PER_PAGE = 50;
+const int ENTRIES_PER_PAGE = 25;
 
-void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
-    // Iterate through all entries and add a widget for every one
-    // This gonna cause INSANE lag
-
+void showPage(EditorMenu* menu, Aether::Text* pageCount, size_t page){
     size_t totalEntries = 0;
-    for (const auto& entry : menu->saveFile()->entries){
-        if (entry.dataName.find("Porch") != std::string::npos){
-            Logger::Write(
-                "["+entry.dataName+"] - "+Rune::Save::ValueToString(entry.value), 
-                false
-            );
-        }
+    
+    size_t cursorStart = page*ENTRIES_PER_PAGE;
+    size_t cursorEnd = cursorStart+ENTRIES_PER_PAGE;
 
-        if (entry.dataType == Rune::Save::RuneRevivalBool 
-            || entry.dataType == Rune::Save::RuneRevivalS32){
+    menu->clearAllWidgets();
 
-            continue;
-        }
+    std::vector<Rune::Save::Entry>& entries = menu->saveFile()->entries;
+    pageCount->setString(std::to_string(page)+"/"+std::to_string(entries.size()/ENTRIES_PER_PAGE));
 
-        if (entry.dataType != Rune::Save::RuneString64 && 
-            entry.dataType != Rune::Save::RuneString32 &&
-            entry.dataType != Rune::Save::RuneString256){
-            continue;
-        }
-
-        totalEntries++;
-        Rune::MenuBuilder::AddWidgetFromSaveKey(menu, entry.dataName, true);
-
-        if (totalEntries >= ENTRIES_PER_PAGE){
+    for (size_t cursor = cursorStart; cursor < cursorEnd; ++cursor){
+        if (cursor >= entries.size()){
             break;
         }
+
+        Rune::Save::Entry& entry = entries.at(cursor);
+        Rune::MenuBuilder::AddWidgetFromSaveKey(menu, entry.dataName, true);
     }
 
-    // Wow new framework OP only 3 lines of code
+    // Logger::Importantf("Time taken to generate page: %dms", t/1000);
+}
+
+void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
+    size_t* currentPage = new size_t();
+    size_t maxPage = menu->saveFile()->entries.size()/ENTRIES_PER_PAGE;
+
+    int originalY = menu->list()->y();
+    int originalH = menu->list()->h();
+
+    int toShrink = originalH*0.1f;
+    int newH = originalH-toShrink;
+
+    menu->list()->setH(newH);
+    menu->list()->setY(menu->list()->y()+toShrink);
+
+    Aether::Text* pageCount = new Aether::Text(
+        0, 0,
+        "0/0", 18
+    );
+    pageCount->setColour(MUTED_TEXT_COLOR);
+    pageCount->setXY(
+        menu->body()->x()+menu->body()->w()/2-pageCount->textureWidth()/2-12,
+        menu->body()->y()+pageCount->textureHeight()+6
+    );
+
+    InputSystem& inputService = InputSystem::getService();
+    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_StickRRight));
+    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_StickRLeft));
+
+    inputService.connect("NextPage", [menu, currentPage, pageCount, maxPage](InputSystem& svc, InputState state){
+        if (state != InputState::Begin){
+            return;
+        }
+
+        size_t page = *currentPage + 1;
+        if (page > maxPage){
+            page = 0;
+        }
+
+        *currentPage = page;
+        showPage(menu, pageCount, *currentPage);
+    });
+
+    inputService.connect("PrevPage", [menu, currentPage, pageCount, maxPage](InputSystem& svc, InputState state){
+        if (state != InputState::Begin){
+            return;
+        }
+
+        size_t page = *currentPage;
+        if (page <= 0){
+            page = maxPage;
+        } else {
+            page -= 1;
+        }
+
+        *currentPage = page;
+        showPage(menu, pageCount, *currentPage);
+    });
+
+    menu->giveTask([menu, currentPage, originalY, originalH](){
+        InputSystem& inputService = InputSystem::getService();
+        inputService.unbind("NextPage");
+        inputService.unbind("PrevPage");
+
+        menu->list()->setY(originalY);
+        menu->list()->setH(originalH);
+
+        delete currentPage;
+    });
+
+    showPage(menu, pageCount, 0);
+
+    menu->addToTrove(pageCount);
+    menu->body()->addElement(pageCount);
 }

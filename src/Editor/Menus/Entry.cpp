@@ -86,7 +86,7 @@ void Rune::MenuBuilder::Entry(EditorMenu* menu){
             Aether::ListSeparator* pad = new Aether::ListSeparator();
             
             // Hand the element to the menu
-            menu->addElement(pad);
+            menu->addToTrove(pad);
 
             // Show the element in the list
             menu->list()->addElement(pad);

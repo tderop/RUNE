@@ -105,7 +105,13 @@ namespace Aether {
                     return std::nullopt;
                 }
 
-                return std::any_cast<T>(it->second);
+                // return std::any_cast<T>(it->second);
+                auto* valuePtr = std::any_cast<T>(&it->second);
+                if (valuePtr != nullptr) {
+                    return *valuePtr;
+                }
+
+                return std::nullopt;
             }
 
     };

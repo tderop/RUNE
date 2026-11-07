@@ -78,8 +78,8 @@ class EditorMenu {
         /** @brief Add a widget to the menu */
         void addWidget(EditorWidget* newWidget);
 
-        /** @brief Add an element to this menu. Will be destroyed alongside the menu. */
-        void addElement(AetherElement element);
+        /** @brief Add an element to this menu's trove. Will be destroyed alongside the menu. */
+        void addToTrove(AetherElement element);
 
         /** @brief Give the menu a task to run when it is destroyed */
         void giveTask(std::function<void()> task);

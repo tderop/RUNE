@@ -15,9 +15,6 @@ namespace Aether {
             /** @brief The label description of the stepper */
             Text * label;
 
-            /** @brief The element holding the contents of the stepper */
-            Container * origin;
-
             /** @brief The button that shows the value of the stepper */
             BorderButton * valueBtn;
             /** @brief The decrement (-) button */
@@ -133,18 +130,6 @@ namespace Aether {
            int value();
 
            /**
-            * @brief Get the x position of the stepper
-            * @return x-coordinate of stepper
-            */
-           int x() override;
-
-           /**
-            * @brief Get the y position of the stepper
-            * @return y-coordinate of stepper
-            */
-           int y() override;
-
-           /**
             * @brief Get the width of the stepper's text button
             * @return width of stepper
             */
@@ -155,25 +140,6 @@ namespace Aether {
             * @return height of stepper
             */
            int h() override;
-
-           /**
-            * @brief Set the x position of the stepper
-            * @param x new x-coordinate
-            */
-           void setX(int x);
-
-           /**
-            * @brief Set the y position of the stepper
-            * @param y new y-coordinate
-            */
-           void setY(int y);
-
-           /**
-            * @brief Set the 2D coordinates of the stepper
-            * @param x the x-coordinate
-            * @param y the y-coordinate
-            */
-           void setXY(int x, int y);
 
            /**
             * @brief Set the width of the stepper's text button
