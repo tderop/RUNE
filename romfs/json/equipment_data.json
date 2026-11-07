@@ -28,7 +28,8 @@
   "RemoteBomb2": {
     "Name": "RemoteBomb2",
     "Durability": 1,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Spear_038": {
     "Name": "Fishing Harpoon",
@@ -135,7 +136,8 @@
   "RemoteBombCube2": {
     "Name": "RemoteBombCube2",
     "Durability": 1,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Lsword_014": {
     "Name": "Ancient Battle Axe+",
@@ -396,7 +398,8 @@
   "RemoteBombCube": {
     "Name": "RemoteBombCube",
     "Durability": 1,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Lsword_015": {
     "Name": "Ancient Battle Axe++",
@@ -684,7 +687,8 @@
   "RemoteBomb": {
     "Name": "RemoteBomb",
     "Durability": 1,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Shield_033": {
     "Name": "Royal Guard's Shield",
@@ -979,14 +983,14 @@
     "Defence": 5,
     "NextRank": "Armor_003_Head",
     "IconActorName": "Armor_001_Head",
-    "PrevRank": "Armor_001_Head_B"
+    "PrevRank": "Armor_001_Head"
   },
   "Armor_224_Head": {
     "Name": "Sheik's Mask",
     "StarNum": 5,
     "Defence": 16,
     "IconActorName": "Armor_220_Head",
-    "PrevRank": "Armor_223_Head_B"
+    "PrevRank": "Armor_223_Head"
   },
   "Armor_071_Lower": {
     "Name": "Snowquill Trousers",
@@ -1106,7 +1110,8 @@
     "Name": "Sheik's Mask",
     "StarNum": 1,
     "Defence": 2,
-    "NextRank": "Armor_221_Head"
+    "NextRank": "Armor_221_Head",
+    "Hidden": true
   },
   "Armor_160_Upper": {
     "Name": "Dark Tunic",
@@ -1259,11 +1264,13 @@
     "NextRank": "Armor_099_Upper"
   },
   "Armor_042_Head_B": {
-    "Name": "Armor_012",
+    "Name": "Stealth Mask",
     "StarNum": 2,
     "Defence": 4,
     "NextRank": "Armor_077_Head",
-    "IconActorName": "Armor_012_Head"
+    "IconActorName": "Armor_012_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_012_Head"
   },
   "Armor_040_Lower": {
     "Name": "Desert Voe Trousers",
@@ -1694,10 +1701,12 @@
     "PrevRank": "Armor_215_Upper"
   },
   "Armor_079_Head_B": {
-    "Name": "Armor_012",
+    "Name": "Stealth Mask",
     "StarNum": 5,
     "Defence": 16,
-    "IconActorName": "Armor_012_Head"
+    "IconActorName": "Armor_012_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_078_Head"
   },
   "Armor_102_Upper": {
     "Name": "Ancient Cuirass",
@@ -1835,11 +1844,13 @@
     "NextRank": "Armor_111_Head"
   },
   "Armor_077_Head_B": {
-    "Name": "Armor_012",
+    "Name": "Stealth Mask",
     "StarNum": 3,
     "Defence": 6,
     "NextRank": "Armor_078_Head",
-    "IconActorName": "Armor_012_Head"
+    "IconActorName": "Armor_012_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_042_Head"
   },
   "Armor_009_Upper": {
     "Name": "Snowquill Tunic",
@@ -1881,7 +1892,8 @@
   "Armor_022_Head_B": {
     "Name": "Bokoblin Mask",
     "StarNum": 1,
-    "Defence": 3
+    "Defence": 3,
+    "Hidden": true
   },
   "Armor_002_Upper": {
     "Name": "Hylian Tunic",
@@ -1917,7 +1929,9 @@
     "StarNum": 3,
     "Defence": 6,
     "NextRank": "Armor_223_Head",
-    "IconActorName": "Armor_220_Head"
+    "IconActorName": "Armor_220_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_221_Head"
   },
   "Armor_221_Head": {
     "Name": "Sheik's Mask",
@@ -2065,10 +2079,12 @@
     "Defence": 4
   },
   "Armor_015_Head_B": {
-    "Name": "Armor_001",
+    "Name": "Hylian Hood",
     "StarNum": 5,
     "Defence": 20,
-    "IconActorName": "Armor_001_Head"
+    "IconActorName": "Armor_001_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_004_Head"
   },
   "Armor_078_Head": {
     "Name": "Stealth Mask",
@@ -2135,9 +2151,10 @@
     "Defence": 4
   },
   "Armor_178_Head_B": {
-    "Name": "Armor_178_Head_B",
+    "Name": "Zant's Helmet",
     "StarNum": 1,
-    "Defence": 3
+    "Defence": 3,
+    "Hidden": true
   },
   "Armor_087_Head": {
     "Name": "Radiant Mask",
@@ -2178,10 +2195,11 @@
     "PrevRank": "Armor_042_Lower"
   },
   "Armor_012_Head_B": {
-    "Name": "Armor_012",
+    "Name": "Stealth Mask",
     "StarNum": 1,
     "Defence": 2,
-    "NextRank": "Armor_042_Head"
+    "NextRank": "Armor_042_Head",
+    "Hidden": true
   },
   "Armor_227_Upper": {
     "Name": "Fierce Deity Armor",
@@ -2346,11 +2364,13 @@
     "NextRank": "Armor_186_Head"
   },
   "Armor_002_Head_B": {
-    "Name": "Armor_001",
+    "Name": "Hylian Hood",
     "StarNum": 2,
     "Defence": 5,
     "NextRank": "Armor_003_Head",
-    "IconActorName": "Armor_001_Head"
+    "IconActorName": "Armor_001_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_001_Head"
   },
   "Armor_116_Upper": {
     "Name": "Champion's Tunic",
@@ -2513,11 +2533,13 @@
     "PrevRank": "Armor_111_Upper"
   },
   "Armor_078_Head_B": {
-    "Name": "Armor_012",
+    "Name": "Stealth Mask",
     "StarNum": 4,
     "Defence": 9,
     "NextRank": "Armor_079_Head",
-    "IconActorName": "Armor_012_Head"
+    "IconActorName": "Armor_012_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_077_Head"
   },
   "Armor_114_Lower": {
     "Name": "Barbarian Leg Wraps",
@@ -2597,7 +2619,9 @@
     "Name": "Sheik's Mask",
     "StarNum": 5,
     "Defence": 16,
-    "IconActorName": "Armor_220_Head"
+    "IconActorName": "Armor_220_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_223_Head"
   },
   "Armor_189_Head": {
     "Name": "Vah Ruta Divine Helm",
@@ -2739,7 +2763,9 @@
     "StarNum": 4,
     "Defence": 9,
     "NextRank": "Armor_224_Head",
-    "IconActorName": "Armor_220_Head"
+    "IconActorName": "Armor_220_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_222_Head"
   },
   "Armor_150_Upper": {
     "Name": "Champion's Tunic",
@@ -2895,7 +2921,7 @@
     "StarNum": 5,
     "Defence": 16,
     "IconActorName": "Armor_012_Head",
-    "PrevRank": "Armor_078_Head_B"
+    "PrevRank": "Armor_078_Head"
   },
   "Armor_226_Lower": {
     "Name": "Fierce Deity Boots",
@@ -2966,11 +2992,13 @@
     "PrevRank": "Armor_063_Head"
   },
   "Armor_003_Head_B": {
-    "Name": "Armor_001",
+    "Name": "Hylian Hood",
     "StarNum": 3,
     "Defence": 8,
     "NextRank": "Armor_004_Head",
-    "IconActorName": "Armor_001_Head"
+    "IconActorName": "Armor_001_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_002_Head"
   },
   "Armor_212_Upper": {
     "Name": "Tunic of Twilight",
@@ -3095,11 +3123,13 @@
     "PrevRank": "Armor_095_Upper"
   },
   "Armor_004_Head_B": {
-    "Name": "Armor_001",
+    "Name": "Hylian Hood",
     "StarNum": 4,
     "Defence": 12,
     "NextRank": "Armor_015_Head",
-    "IconActorName": "Armor_001_Head"
+    "IconActorName": "Armor_001_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_003_Head"
   },
   "Armor_229_Head": {
     "Name": "Fierce Deity Mask",
@@ -3160,9 +3190,10 @@
     "PrevRank": "Armor_035_Lower"
   },
   "Armor_177_Head_B": {
-    "Name": "Armor_177_Head_B",
+    "Name": "Ravio's Hood",
     "StarNum": 1,
-    "Defence": 2
+    "Defence": 2,
+    "Hidden": true
   },
   "Armor_169_Head": {
     "Name": "Vah Naboris Divine Helm",
@@ -3325,7 +3356,7 @@
     "Defence": 8,
     "NextRank": "Armor_004_Head",
     "IconActorName": "Armor_001_Head",
-    "PrevRank": "Armor_002_Head_B"
+    "PrevRank": "Armor_002_Head"
   },
   "Armor_118_Head": {
     "Name": "Diamond Circlet",
@@ -3347,7 +3378,7 @@
     "Defence": 6,
     "NextRank": "Armor_223_Head",
     "IconActorName": "Armor_220_Head",
-    "PrevRank": "Armor_221_Head_B"
+    "PrevRank": "Armor_221_Head"
   },
   "Armor_212_Lower": {
     "Name": "Trousers of Twilight",
@@ -3447,7 +3478,9 @@
     "StarNum": 2,
     "Defence": 4,
     "NextRank": "Armor_222_Head",
-    "IconActorName": "Armor_220_Head"
+    "IconActorName": "Armor_220_Head",
+    "Hidden": true,
+    "PrevRank": "Armor_220_Head"
   },
   "Armor_170_Upper": {
     "Name": "Nintendo Switch Shirt",
@@ -3743,10 +3776,11 @@
     "PrevRank": "Armor_231_Upper"
   },
   "Armor_001_Head_B": {
-    "Name": "Armor_001",
+    "Name": "Hylian Hood",
     "StarNum": 1,
     "Defence": 3,
-    "NextRank": "Armor_002_Head"
+    "NextRank": "Armor_002_Head",
+    "Hidden": true
   },
   "Armor_017_Head": {
     "Name": "Radiant Mask",

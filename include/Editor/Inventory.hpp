@@ -309,5 +309,34 @@ namespace Rune{
          * @return The Rune::Inventory::Category of the actor
          */
         Category GetCategoryFromActorName(const std::string& actorName);
+
+        /**
+         * @brief Get the next rank from an armor actor name
+         * @param actorName The armor actor name
+         * @return The string actor name of the next rank, empty if none
+         */
+        std::string GetNextArmorRankActorName(const std::string& actorName);
+
+        /**
+         * @brief Get the previous rank from an armor actor name
+         * @param actorName The armor actor name
+         * @return The string actor name of the previous rank, empty if none 
+         */
+        std::string GetPrevArmorRankActorName(const std::string& actorName);
+
+        /**
+         * @brief Check if an armor item is upgradeable from its actor name
+         * @param actorName The armor actor name
+         * @return Whether the armor is upgradeable or not
+         */
+        bool IsArmorUpgradeable(const std::string& actorName);
+
+        /**
+         * @brief Get the star num of the armor actor name
+         * @note Returns 0 if no star number was found
+         * @param actorName The armor actor name
+         * @return The number of stars the armor has (1 for 0 stars, 5 for 4 stars)
+         */
+        int GetArmorStarNum(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

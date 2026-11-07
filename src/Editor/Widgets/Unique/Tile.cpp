@@ -11,10 +11,15 @@
 #include <Editor/Inventory.hpp>
 #include <Application/Keyboard.hpp>
 
+#include <memory>
+#include <string>
 #include <any>
 
 // Tile-specific constants
 const bool SHOW_AFTER_RENDER = false;
+
+const int PROPERTY_EDITOR_SPACING = 16; // 16px between value steppers/dropdowns/inputs etc
+const int ARMOR_STAR_SIZE = 22; // The font size of the armor stars
 
 // I'm fed up of writing Rune:: icl
 using namespace Rune;
@@ -30,14 +35,14 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
     // Unpack the meta
     std::vector<std::any> widgetMeta = widget->getMeta();
-    Inventory::Item inventoryItem = std::any_cast<Inventory::Item>(widgetMeta.at(0));
+    auto inventoryItem = std::make_shared<Inventory::Item>(std::any_cast<Inventory::Item>(widgetMeta.at(0)));
 
-    int buttonX = inventoryItem.x;
-    int buttonY = inventoryItem.y;
-    int buttonH = inventoryItem.h;
-    int buttonW = inventoryItem.w;
+    int buttonX = inventoryItem->x;
+    int buttonY = inventoryItem->y;
+    int buttonH = inventoryItem->h;
+    int buttonW = inventoryItem->w;
 
-    std::string itemName  = inventoryItem.name;
+    std::string itemName  = inventoryItem->name;
     std::string labelText = std::any_cast<std::string>(widgetMeta.at(1));
     Aether::BorderButton* tileBtn = std::any_cast<Aether::BorderButton*>(widgetMeta.at(2));
 
@@ -46,7 +51,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
     tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
 
     // Determine whether to use an image or plain text for the button
-    std::string thumbPath = inventoryItem.thumbPath;
+    std::string thumbPath = inventoryItem->thumbPath;
     Aether::Image* thumbImg = nullptr;
 
     // If the thumbnail path exists, add an image
@@ -112,14 +117,14 @@ void WidgetBuilder::Tile(EditorWidget* widget){
     // Handle opening the edit overlay when the tile is pressed
     // Open the widget overlay
     tileBtn->onPress([widget, inventoryItem]() {
-        Logger::Write(inventoryItem.actorName+
-            ", flagSp: "+intToHex(inventoryItem.flagSp)+
-            ", valueSp: "+intToHex(inventoryItem.valueSp));
+        Logger::Write(inventoryItem->actorName+
+            ", flagSp: "+intToHex(inventoryItem->flagSp)+
+            ", valueSp: "+intToHex(inventoryItem->valueSp));
 
         // // Build the overlay
         // Get the widget overlay and set the title to show what we are editing
         WidgetOverlay* ovl = widget->getWidgetOverlay();
-        ovl->setTitleLabel("Edit Item - "+(inventoryItem.name.empty() ? "Unassigned" : inventoryItem.name));
+        ovl->setTitleLabel("Edit Item - "+(inventoryItem->name.empty() ? "Unassigned" : inventoryItem->name));
         ovl->setDeveloperNote(Save::GetKeyDevNote(widget->getSaveEntry()->dataName));
 
         // Show the widget overlay
@@ -128,7 +133,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         // A background frame for the item image
         Aether::Rectangle* imgFrame = new Aether::Rectangle(
             60, 0,
-            280, 280
+            280, 280,
+            8
         );
 
         imgFrame->setY((ovl->panel()->y())+(ovl->panel()->h()/2)-(imgFrame->h()/2));
@@ -163,7 +169,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         ovl->addTempElement(propertiesBox);
 
         // Set developer note properties
-        auto devNoteIt = Inventory::kCategoryDevNotes.find(inventoryItem.category);
+        auto devNoteIt = Inventory::kCategoryDevNotes.find(inventoryItem->category);
         if (devNoteIt != Inventory::kCategoryDevNotes.end()){
             ovl->setDeveloperNoteWrap(324);
             ovl->setDeveloperNote(devNoteIt->second);
@@ -171,32 +177,32 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         }
 
         // Declarations
-        int propertyElmX = propertiesX+16;
+        int propertyElmX = propertiesX+PROPERTY_EDITOR_SPACING;
         int propertyElmY = propertiesBox->y()+12;
 
         Aether::Stepper* primaryValueStepper = new Aether::Stepper(propertyElmX, propertyElmY);
+
         Aether::Dropdown* secondaryFlagDropdown = nullptr;
         Aether::Stepper* secondaryValueStepper = nullptr;
-
         // Determine how values are filled based on item type
-        switch (inventoryItem.category){
+        switch (inventoryItem->category){
             case Inventory::Category::Weapons:
             case Inventory::Category::Bows:
             case Inventory::Category::Shields: {
                 primaryValueStepper->setString("Durability");
                 primaryValueStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
-                primaryValueStepper->setValue(inventoryItem.value/Inventory::kDurabilityMultiplier);
+                primaryValueStepper->setValue(inventoryItem->value/Inventory::kDurabilityMultiplier);
 
                 // Dropdown filler
                 secondaryFlagDropdown = new Aether::Dropdown(
-                    propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+16,
+                    propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+PROPERTY_EDITOR_SPACING,
                     "Modifier", 180, 180
                 );
-                secondaryFlagDropdown->setValue(Inventory::ModifierName((Inventory::Modifier)inventoryItem.flagSp));
+                secondaryFlagDropdown->setValue(Inventory::ModifierName((Inventory::Modifier)inventoryItem->flagSp));
                 
                 // Make the dropdown map for this category
                 std::map<std::string, std::any> buffMap;
-                const auto& categoryModifiers = Inventory::kCategoryModifiers.find(inventoryItem.category);
+                const auto& categoryModifiers = Inventory::kCategoryModifiers.find(inventoryItem->category);
                 if (categoryModifiers != Inventory::kCategoryModifiers.end()){
                     for (const Inventory::Modifier& modifier : categoryModifiers->second){
                         buffMap[Inventory::ModifierName(modifier, categoryModifiers->first)] = std::make_any<Inventory::Modifier>(modifier);
@@ -213,7 +219,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 );
 
                 secondaryValueStepper->setMax(__UINT16_MAX__);
-                secondaryValueStepper->setValue(inventoryItem.valueSp);
+                secondaryValueStepper->setValue(inventoryItem->valueSp);
 
                 ovl->addTempElement(secondaryValueStepper);
                 ovl->addTempElement(secondaryFlagDropdown); // add dropdown after because Z-Index
@@ -243,7 +249,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             case Inventory::Category::KeyItems: {
                 primaryValueStepper->setString("Quantity");
                 primaryValueStepper->setMax(Inventory::kMaxInventoryQuantity);
-                primaryValueStepper->setValue(inventoryItem.value);
+                primaryValueStepper->setValue(inventoryItem->value);
                 break;
             }
 
@@ -251,14 +257,96 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 primaryValueStepper->setString("Dye Colour");
 
                 // Enforce -1 in the case that armor cannot be dyed
-                if (inventoryItem.value >= 0){
+                if (inventoryItem->value >= 0){
                     primaryValueStepper->setMax(Inventory::kMaxDyeColour);
                 } else {
-                    primaryValueStepper->setMin(-1);
+                    primaryValueStepper->setMin(-1);    
                     primaryValueStepper->setMax(-1);
                 }
 
-                primaryValueStepper->setValue(inventoryItem.value);
+                primaryValueStepper->setValue(inventoryItem->value);
+
+                // If armor is upgradeable, add an upgrade stepper
+                if (Inventory::IsArmorUpgradeable(inventoryItem->actorName)){
+                    // Get the current star value
+                    auto starCount = std::make_shared<int>(
+                        Inventory::GetArmorStarNum(inventoryItem->actorName)
+                    );
+
+                    // Star count must be at least 1 to show
+                    if (*starCount <= 0){
+                        return;
+                    }
+
+                    // Make the star stepper
+                    Aether::Stepper* armorLevelStepper = new Aether::Stepper(
+                        primaryValueStepper->x(),
+                        primaryValueStepper->y()+primaryValueStepper->h()+PROPERTY_EDITOR_SPACING
+                    );
+                    armorLevelStepper->setString("Stars");
+                    armorLevelStepper->setMin(0); // min visual stars is 0
+                    armorLevelStepper->setMax(4); // max visual stars is 4
+
+                    // Make the star text
+                    Aether::Text* stars = new Aether::Text(
+                        0, 0,
+                        "", ARMOR_STAR_SIZE
+                    );
+
+                    // Set the star text
+                    for (int s = 0; s < *starCount-1; s++){
+                        stars->setString(stars->string()+"★");
+                    }
+
+                    stars->setXY(
+                        imgFrame->x()+12, 
+                        (imgFrame->y()+stars->textureHeight()/2)
+                    );
+                    ovl->addTempElement(stars);
+
+                    // Set its value to the current star value
+                    armorLevelStepper->setValue((*starCount) - 1); // Visual is off by one - metadata is 1 for 0 stars, 5 for 4 stars
+                    armorLevelStepper->onValueChange([starCount, armorLevelStepper, inventoryItem, stars](){
+                        // Get the new value
+                        int newStarCount = armorLevelStepper->value() + 1; // Account for visual being off by one
+
+                        // Compare it to the previous star count
+                        int diff = newStarCount - *starCount;
+                        if (diff == 0){
+                            return; // No change, ignore
+                        }
+
+                        std::string newActor;
+                        if (diff > 0) {
+                            // Incremented by at least 1
+                            newActor = Inventory::GetNextArmorRankActorName(inventoryItem->actorName);
+                        } else { 
+                            // Decremented by at least 1
+                            newActor = Inventory::GetPrevArmorRankActorName(inventoryItem->actorName);
+                        }
+
+                        if (newActor.empty()){
+                            return; // Prevent actor name corruption
+                        }
+
+                        Logger::Importantf("Current actorName: %s, New actorName: %s", inventoryItem->actorName.c_str(), newActor.c_str());
+
+                        // Update actor name
+                        inventoryItem->actorName = newActor;
+
+                        // Update starCount
+                        *starCount = newStarCount;
+
+                        // Update star visual
+                        stars->setString("");
+                        for (int s = 0; s < *starCount-1; s++){
+                            stars->setString(stars->string()+"★");
+                        }
+                    });
+
+                    ovl->addTempElement(armorLevelStepper);
+                }
+
                 break;
             }
 
@@ -297,7 +385,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             ovlTrove->clear();
 
             // Get the thumbnail path, if none found, then use placeholder thumbnail
-            std::string thumbPath = Inventory::GetThumbPathFromInventoryItem(inventoryItem);
+            std::string thumbPath = Inventory::GetThumbPathFromInventoryItem(*inventoryItem);
             if (thumbPath.empty()){
                 thumbPath = PLACEHOLDER_THUMB_PATH;
             }
@@ -318,7 +406,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             // Create the text and reposition it
             Aether::Text* bigName = new Aether::Text(
                 0, 0,
-                (inventoryItem.name.empty() ? "Unassigned" : inventoryItem.name), 20
+                (inventoryItem->name.empty() ? "Unassigned" : inventoryItem->name), 20
             );
 
             bigName->setXY(
@@ -346,8 +434,14 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
             // Save handling (TEMPORARY FOR TESTING)
             if (isSave){
-                // Get the porch item primary value
                 Save::File* saveFile = widget->getMenu()->saveFile();
+
+                // Get inventory ID list for updating actorName
+                Save::Entry* porchItemEntry = Save::GetEntryFromDataName(*saveFile, Inventory::kInventoryKey);
+                auto& porchItem = std::get<std::vector<std::string>>(porchItemEntry->value);
+                porchItem[inventoryItem->index] = inventoryItem->actorName;
+
+                // Get the porch item primary value for updating durability/dye colour/quantity etc.
                 Save::Entry* porchItemPrimaryValueEntry = Save::GetEntryFromDataName(*saveFile, Inventory::kInventoryValueKey);
                 auto& porchItemPrimaryValue = std::get<std::vector<int32_t>>(porchItemPrimaryValueEntry->value);
 
@@ -355,7 +449,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 int newPrimaryValue = primaryValueStepper->value();
 
                 // Validate/reform data on a per-item basis
-                switch (inventoryItem.category){
+                switch (inventoryItem->category){
                     case Inventory::Category::Weapons:
                     case Inventory::Category::Bows:
                     case Inventory::Category::Shields: {
@@ -370,42 +464,41 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 }
 
                 // Modify save file
-                porchItemPrimaryValue[inventoryItem.index] = newPrimaryValue;
+                porchItemPrimaryValue[inventoryItem->index] = newPrimaryValue;
 
-                // Manage secondary flag
+                // Manage secondary flag (buff)
                 if (secondaryFlagDropdown != nullptr){
                     Save::Entry* porchItemSecondaryFlagsEntry = Save::GetEntryFromDataName(
                         *saveFile,
-                        inventoryItem.flagSpKey
+                        inventoryItem->flagSpKey
                     );
 
                     auto& porchItemSecondaryFlags = std::get<std::vector<int32_t>>(
                         porchItemSecondaryFlagsEntry->value
                     );
 
-                    int32_t oldFlag = porchItemSecondaryFlags.at(inventoryItem.localIndex);
+                    int32_t oldFlag = porchItemSecondaryFlags.at(inventoryItem->localIndex);
 
                     // Get the data value from the dropdown, specify it is a modifier, use the old flag if nullopt, and cast to int
-                    porchItemSecondaryFlags[inventoryItem.localIndex] 
+                    porchItemSecondaryFlags[inventoryItem->localIndex] 
                     = static_cast<int32_t>(
                         secondaryFlagDropdown->getValueData<Inventory::Modifier>()
                         .value_or((Inventory::Modifier)oldFlag)
                     );
                 }
 
-                // Manage secondary value (valueSp)
+                // Manage secondary value (buff value)
                 if (secondaryValueStepper != nullptr){
-                    // Logger::Importantf("Getting secondary value entry... %s", inventoryItem.valueSpKey.c_str());
                     Save::Entry* porchItemSecondaryValueEntry = Save::GetEntryFromDataName(
                         *saveFile, 
-                        inventoryItem.valueSpKey
+                        inventoryItem->valueSpKey
                     );
 
                     Logger::Important("Getting the porch item secondary value...");
                     auto& porchItemSecondaryValue = std::get<std::vector<int32_t>>(porchItemSecondaryValueEntry->value);
 
                     Logger::Important("Updating value...");
-                    porchItemSecondaryValue[inventoryItem.localIndex] = secondaryValueStepper->value();
+                    porchItemSecondaryValue[inventoryItem->localIndex] = secondaryValueStepper->value();
 
                     Logger::Important("Done.");
                 }
@@ -417,11 +510,11 @@ void WidgetBuilder::Tile(EditorWidget* widget){
     });
 
     // Embedded switch for handling different types of tiles, and then their styles
-    switch (inventoryItem.type){
+    switch (inventoryItem->type){
         // Standard filled inventory button assigned to an item in the inventory
         case (Inventory::TileType::Standard): {
             // Style switch
-            switch (inventoryItem.style){
+            switch (inventoryItem->style){
                 case (Inventory::TileStyle::NoLabel):{
                     // Make new text
                     Aether::Text* valueText = new Aether::Text(
@@ -495,14 +588,14 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 // Add a new slot
                 // Find the save key
                 Save::File* saveFile = menu->saveFile();
-                auto it = Inventory::kSlotKeys.find(inventoryItem.category);
+                auto it = Inventory::kSlotKeys.find(inventoryItem->category);
 
                 if (it != Inventory::kSlotKeys.end()){ // If found, modify
                     std::string slotKey = it->second;
                     Save::Entry* slotEntry = Save::GetEntryFromDataName(*saveFile, slotKey);
                     
                     // for bounds checking
-                    auto it = Inventory::kMaxSlots.find(inventoryItem.category);
+                    auto it = Inventory::kMaxSlots.find(inventoryItem->category);
                     int maxSlots = -1;
 
                     if (it != Inventory::kMaxSlots.end()){

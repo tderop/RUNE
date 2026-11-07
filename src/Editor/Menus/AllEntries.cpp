@@ -10,7 +10,7 @@
 #include <string>
 #include <memory>
 
-const int ENTRIES_PER_PAGE = 25;
+const int ENTRIES_PER_PAGE = 50;
 
 void showPage(EditorMenu* menu, Aether::Text* pageCount, size_t page){
     size_t totalEntries = 0;

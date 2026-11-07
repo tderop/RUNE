@@ -368,3 +368,42 @@ Rune::Inventory::Category Rune::Inventory::GetCategoryFromActorName(const std::s
 
     return Rune::Inventory::Category::Unknown;
 }
+
+std::string Rune::Inventory::GetNextArmorRankActorName(const std::string& actorName){
+    auto nextRank = Rune::Inventory::GetEquipmentValue<std::string>(actorName, "NextRank");
+    if (nextRank == std::nullopt){
+        return "";
+    }
+
+    return nextRank.value_or("");
+}
+
+std::string Rune::Inventory::GetPrevArmorRankActorName(const std::string& actorName){
+    auto prevRank = Rune::Inventory::GetEquipmentValue<std::string>(actorName, "PrevRank");
+    if (prevRank == std::nullopt){
+        return "";
+    }
+
+    return prevRank.value_or("");
+}
+
+bool Rune::Inventory::IsArmorUpgradeable(const std::string& actorName){
+    // Check next rank
+    std::string rankCheck;
+    rankCheck = Rune::Inventory::GetNextArmorRankActorName(actorName);
+    if (rankCheck.empty()){ // Check prev rank if no next rank
+        rankCheck = Rune::Inventory::GetPrevArmorRankActorName(actorName);
+    }
+
+    // If rankCheck is still empty, armor is not upgradeable
+    return !rankCheck.empty();
+}
+
+int Rune::Inventory::GetArmorStarNum(const std::string& actorName){
+    auto starNum = Rune::Inventory::GetEquipmentValue<int>(actorName, "StarNum");
+    if (starNum == std::nullopt){
+        return 0;
+    }
+
+    return starNum.value_or(0);
+}
