@@ -620,11 +620,11 @@ namespace Rune {
             this->tileBtn->setXYWH(buttonX, buttonY, buttonW, buttonH);
             this->tileBtn->setBorderColour(EDITOR_SIDEBAR_COLOUR);
 
-            auto debugTxt = new Aether::Text(
-                tileBtn->x(), tileBtn->y(),
-                std::to_string(inventoryItem.index), 32
-            );
-            tileBtn->addElement(debugTxt);
+            // auto debugTxt = new Aether::Text(
+            //     tileBtn->x(), tileBtn->y(),
+            //     std::to_string(inventoryItem.index), 32
+            // );
+            // tileBtn->addElement(debugTxt);
 
             // Set the tile elements
             this->updateThumbnail(inventoryItem.thumbPath);
@@ -682,7 +682,7 @@ namespace Rune {
                     Logger::Importantf("(PorchItem) Error: Index %d is OOB", inventoryItem.index);
                 } else {
                     std::string oldName = porchItem.at(inventoryItem.index);
-                    porchItem[inventoryItem.index] = "Weapon_Sword_070";
+                    porchItem[inventoryItem.index] = inventoryItem.actorName;
                     Logger::Importantf("Saved ActorName Update (%s -> %s)", oldName.c_str(), inventoryItem.actorName.c_str());
                 }
 
