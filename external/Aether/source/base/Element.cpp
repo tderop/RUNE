@@ -72,6 +72,22 @@ namespace Aether {
         return this->y_;
     }
 
+    int Element::right() {
+        return this->x_+this->w_;
+    }
+
+    int Element::bottom() {
+        return this->y_+this->h_;
+    }
+
+    int Element::centreX() {
+        return this->x_+this->w_/2;
+    }
+
+    int Element::centreY() {
+        return this->y_+this->h_/2;
+    }
+
     int Element::w() {
         return this->w_;
     }

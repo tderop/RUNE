@@ -85,6 +85,22 @@ namespace Aether {
         return this->scaleHeight_;
     }
 
+    int Image::right() {
+        return this->x()+this->scaleWidth();
+    }
+
+    int Image::bottom() {
+        return this->y()+this->scaleHeight();
+    }
+
+    int Image::centreX() {
+        return this->x()+this->scaleWidth()/2;
+    }
+
+    int Image::centreY() {
+        return this->y()+this->scaleHeight()/2;
+    }
+
     Image::~Image() {
 
     }

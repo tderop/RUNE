@@ -106,6 +106,34 @@ namespace Aether {
             bool setScaleDimensions(const size_t width, const size_t height);
 
             /**
+             * @brief Returns the rightmost x-coordinate of element
+             * @note Uses scale dimensions
+             * @return int rightmost x-coordinate of element
+             */
+            int right() override;
+
+            /**
+             * @brief Returns the bottom y-coordinate of element
+             * @note Uses scale dimensions
+             * @return int bottom y-coordinate of element
+             */
+            int bottom() override;
+
+            /**
+             * @brief Returns the centre x-coordinate of the element
+             * @note Uses scale dimensions
+             * @return int centre x-coordinate
+             */
+            int centreX() override;
+
+            /**
+             * @brief Returns the centre y-coordinate of the element
+             * @note Uses scale dimensions
+             * @return int centre y-coordinate
+             */
+            int centreY() override;
+
+            /**
              * @brief Returns the currently set scale width.
              *
              * @return Scale width (in pixels).

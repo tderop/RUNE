@@ -24,6 +24,10 @@ public:
     bool isConnected(){
         return connected;
     }
+
+    size_t getId(){
+        return id;
+    }
 };
 
 // executed when bound to a fired event through a connection
@@ -42,7 +46,7 @@ private:
     std::unordered_map<int, Callback<Args...>> callbacks;
     std::list<Connection<Args...>> connections;
 
-    size_t nextID = 0;
+    size_t nextID = 1;
 
 public:
     Connection<Args...>& connect(std::function<void(Args...)> callback){

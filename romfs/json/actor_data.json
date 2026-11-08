@@ -4358,5 +4358,2007 @@
     "Dyeable": false,
     "IconActorName": "Obj_Head_026",
     "PrevRank": "Armor_127_Head"
+  },
+  "Item_RoastFish_13": {
+    "Name": "Sneaky River Escargot",
+    "CanStack": true
+  },
+  "Item_Cook_J_04": {
+    "Name": "Poultry Curry",
+    "CanStack": false
+  },
+  "Item_PlantGet_M": {
+    "Name": "Swift Carrot",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_M"
+  },
+  "Obj_ProofGolemKiller": {
+    "Name": "Medal of Honor: Talus",
+    "CanStack": false
+  },
+  "Item_Cook_G_12": {
+    "Name": "Mushroom Risotto",
+    "CanStack": false
+  },
+  "Item_Enemy_33": {
+    "Name": "Hinox Tooth",
+    "CanStack": true
+  },
+  "Item_Cook_G_16": {
+    "Name": "Crab Omelet with Rice",
+    "CanStack": false
+  },
+  "Item_PlantGet_I": {
+    "Name": "Blue Nightshade",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_I"
+  },
+  "GameRomHorseSaddle_02": {
+    "Name": "Royal Saddle",
+    "CanStack": false
+  },
+  "Item_Cook_J_08": {
+    "Name": "Gourmet Poultry Curry",
+    "CanStack": false
+  },
+  "Item_Cook_D_02": {
+    "Name": "Salt-Grilled Greens",
+    "CanStack": false
+  },
+  "Item_Cook_I_14": {
+    "Name": "Egg Pudding",
+    "CanStack": false
+  },
+  "Item_Cook_C_05": {
+    "Name": "Item_Cook_C_05",
+    "CanStack": false
+  },
+  "Item_FishGet_L_00": {
+    "Name": "Staminoka Bass",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_Material_07": {
+    "Name": "Tabantha Wheat",
+    "CanStack": true
+  },
+  "Item_PlantGet_A": {
+    "Name": "Hyrule Herb",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_A"
+  },
+  "Obj_Motorcycle": {
+    "Name": "Master Cycle Zero",
+    "CanStack": false
+  },
+  "Item_Cook_C_01": {
+    "Name": "Item_Cook_C_01",
+    "CanStack": false
+  },
+  "Item_PlantGet_E": {
+    "Name": "Cool Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_E"
+  },
+  "Item_Material_03": {
+    "Name": "Hylian Rice",
+    "CanStack": true
+  },
+  "Item_Cook_I_10": {
+    "Name": "Plain Crepe",
+    "CanStack": false
+  },
+  "Obj_AncientArrow_B_01": {
+    "Name": "Ancient Arrow x5",
+    "CanStack": true
+  },
+  "Item_Cook_D_06": {
+    "Name": "Salt-Grilled Gourmet Meat",
+    "CanStack": false
+  },
+  "Item_Cook_N_03": {
+    "Name": "Vegetable Omelet",
+    "CanStack": false
+  },
+  "Obj_Photo_Other": {
+    "Name": "Other Picture",
+    "CanStack": false
+  },
+  "Item_Cook_C_15": {
+    "Name": "Item_Cook_C_15",
+    "CanStack": false
+  },
+  "Item_Roast_32": {
+    "Name": "Toasty Sunshroom",
+    "CanStack": true
+  },
+  "Item_Cook_I_04": {
+    "Name": "Meat Pie",
+    "CanStack": false
+  },
+  "AncientArrow": {
+    "Name": "Ancient Arrow",
+    "CanStack": true
+  },
+  "Item_Roast_36": {
+    "Name": "Toasty Rushroom",
+    "CanStack": true
+  },
+  "Item_Cook_C_11": {
+    "Name": "Item_Cook_C_11",
+    "CanStack": false
+  },
+  "Item_FishGet_K": {
+    "Name": "Hearty Blueshell Snail",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_K"
+  },
+  "Obj_ElectricArrow_A_03": {
+    "Name": "Shock Arrow x5",
+    "CanStack": true
+  },
+  "Animal_Fish_K": {
+    "Name": "Hearty Blueshell Snail",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_K"
+  },
+  "Item_PlantGet_Q": {
+    "Name": "Endura Carrot",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_Q"
+  },
+  "Animal_Insect_AB": {
+    "Name": "Smotherwing Butterfly",
+    "CanStack": true
+  },
+  "Item_Fruit_K": {
+    "Name": "Acorn",
+    "CanStack": true
+  },
+  "Obj_FireArrow_A_01": {
+    "Name": "Fire Arrow",
+    "CanStack": true
+  },
+  "Animal_Fish_C": {
+    "Name": "Chillfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_C"
+  },
+  "Obj_BombArrow_A_03": {
+    "Name": "Bomb Arrow x10",
+    "CanStack": true
+  },
+  "Item_Fruit_C": {
+    "Name": "Voltfruit",
+    "CanStack": true
+  },
+  "Item_RoastFish_03": {
+    "Name": "Roasted Trout",
+    "CanStack": true
+  },
+  "Item_Cook_I_08": {
+    "Name": "Honeyed Apple",
+    "CanStack": false
+  },
+  "Item_Cook_G_02": {
+    "Name": "Seafood Rice Balls",
+    "CanStack": false
+  },
+  "Item_FishGet_C": {
+    "Name": "Chillfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_C"
+  },
+  "Obj_AncientArrow_A_01": {
+    "Name": "Ancient Arrow",
+    "CanStack": true
+  },
+  "Item_Mushroom_N_00": {
+    "Name": "Big Hearty Truffle",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_FishGet_G": {
+    "Name": "Armored Porgy",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_G"
+  },
+  "Item_Enemy_27": {
+    "Name": "Ancient Screw",
+    "CanStack": true
+  },
+  "Item_Cook_G_06": {
+    "Name": "Prime Meat and Rice Bowl",
+    "CanStack": false
+  },
+  "Item_Fruit_G": {
+    "Name": "Palm Fruit",
+    "CanStack": true
+  },
+  "Item_RoastFish_07": {
+    "Name": "Roasted Carp",
+    "CanStack": true
+  },
+  "Item_Cook_B_22": {
+    "Name": "Sautéed Nuts",
+    "CanStack": false
+  },
+  "Animal_Fish_G": {
+    "Name": "Armored Porgy",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_G"
+  },
+  "Obj_StopTimerLv2": {
+    "Name": "Stasis +",
+    "CanStack": false
+  },
+  "Item_Roast_12": {
+    "Name": "Roasted Hydromelon",
+    "CanStack": true
+  },
+  "Item_Cook_K_07": {
+    "Name": "Cream of Vegetable Soup",
+    "CanStack": false
+  },
+  "Item_Enemy_52": {
+    "Name": "Shard of Naydra's Horn",
+    "CanStack": true
+  },
+  "Obj_RemoteBombCube": {
+    "Name": "Remote Bomb",
+    "CanStack": false
+  },
+  "Item_Ore_G": {
+    "Name": "Luminous Stone",
+    "CanStack": true
+  },
+  "Item_Cook_L_04": {
+    "Name": "Monster Rice Balls",
+    "CanStack": false
+  },
+  "Item_Ore_C": {
+    "Name": "Sapphire",
+    "CanStack": true
+  },
+  "Animal_Insect_H": {
+    "Name": "Restless Cricket",
+    "CanStack": true
+  },
+  "Item_Enemy_56": {
+    "Name": "Shard of Farosh's Horn",
+    "CanStack": true
+  },
+  "Item_Plant_O": {
+    "Name": "Swift Violet",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_O"
+  },
+  "Item_Cook_A_12": {
+    "Name": "Glazed Meat",
+    "CanStack": false
+  },
+  "Item_Roast_16": {
+    "Name": "Roasted Lotus Seeds",
+    "CanStack": true
+  },
+  "Obj_SheikSensor": {
+    "Name": "Sheikah Sensor",
+    "CanStack": false
+  },
+  "Item_Cook_K_03": {
+    "Name": "Pumpkin Stew",
+    "CanStack": false
+  },
+  "Obj_ArrowBundle_A_10": {
+    "Name": "Arrow x[NUMBER]",
+    "CanStack": true,
+    "IconActorName": "Obj_ArrowBundle_A_01"
+  },
+  "Item_Enemy_03": {
+    "Name": "Lizalfos Horn",
+    "CanStack": true
+  },
+  "Item_Cook_E_01": {
+    "Name": "Poultry Pilaf",
+    "CanStack": false
+  },
+  "Item_Chilled_06": {
+    "Name": "Frozen Whole Bird",
+    "CanStack": true
+  },
+  "Item_Cook_B_06": {
+    "Name": "Meat Skewer",
+    "CanStack": false
+  },
+  "Item_Plant_G": {
+    "Name": "Mighty Thistle",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_G"
+  },
+  "Item_Plant_C": {
+    "Name": "Big Hearty Radish",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_C"
+  },
+  "Item_Cook_B_02": {
+    "Name": "Simmered Fruit",
+    "CanStack": false
+  },
+  "Item_Chilled_02": {
+    "Name": "Icy Prime Meat",
+    "CanStack": true
+  },
+  "Item_Enemy_07": {
+    "Name": "Moblin Fang",
+    "CanStack": true
+  },
+  "Animal_Insect_T": {
+    "Name": "Warm Darner",
+    "CanStack": true
+  },
+  "Item_ChilledFish_08": {
+    "Name": "Frozen River Snail",
+    "CanStack": true
+  },
+  "Item_Mushroom_C": {
+    "Name": "Sunshroom",
+    "CanStack": true
+  },
+  "Item_Enemy_13": {
+    "Name": "Lynel Hoof",
+    "CanStack": true
+  },
+  "Obj_DungeonClearSeal": {
+    "Name": "Spirit Orb",
+    "CanStack": true
+  },
+  "Item_Roast_53": {
+    "Name": "Toasty Endura Shroom",
+    "CanStack": true
+  },
+  "Obj_Photo_Enemy": {
+    "Name": "Enemy Picture",
+    "CanStack": false
+  },
+  "Item_Cook_B_16": {
+    "Name": "Copious Meat Skewers",
+    "CanStack": false
+  },
+  "Obj_Head_027": {
+    "Name": "Topaz Earrings",
+    "CanStack": false
+  },
+  "Item_Cook_B_12": {
+    "Name": "Copious Simmered Fruit",
+    "CanStack": false
+  },
+  "Item_Cook_H_03": {
+    "Name": "Salmon Meunière",
+    "CanStack": false
+  },
+  "Item_Enemy_17": {
+    "Name": "White Chuchu Jelly",
+    "CanStack": true
+  },
+  "Animal_Insect_P": {
+    "Name": "Rugged Rhino Beetle",
+    "CanStack": true
+  },
+  "Obj_Armor_115_Head": {
+    "Name": "Thunder Helm",
+    "CanStack": false
+  },
+  "Item_Mushroom_O": {
+    "Name": "Endura Shroom",
+    "CanStack": true
+  },
+  "Item_ChilledFish_04": {
+    "Name": "Frozen Carp",
+    "CanStack": true
+  },
+  "Animal_Insect_X": {
+    "Name": "Fireproof Lizard",
+    "CanStack": true
+  },
+  "Item_Roast_02": {
+    "Name": "Roasted Bird Drumstick",
+    "CanStack": true
+  },
+  "Obj_KorokNuts": {
+    "Name": "Korok Seed",
+    "CanStack": true
+  },
+  "Get_TwnObj_DLC_MemorialPicture_A_01": {
+    "Name": "Picture of the Champions",
+    "CanStack": false
+  },
+  "Item_Enemy_42": {
+    "Name": "Icy Lizalfos Tail",
+    "CanStack": true
+  },
+  "Item_Cook_F_01": {
+    "Name": "Creamy Meat Soup",
+    "CanStack": false
+  },
+  "Item_Enemy_46": {
+    "Name": "Ice Keese Wing",
+    "CanStack": true
+  },
+  "Obj_DLC_HeroSoul_Rito": {
+    "Name": "Revali's Gale +",
+    "CanStack": false
+  },
+  "Item_Roast_06": {
+    "Name": "Toasty Hylian Shroom",
+    "CanStack": true
+  },
+  "Item_Cook_P_04": {
+    "Name": "Prime Spiced Meat Skewer",
+    "CanStack": false
+  },
+  "Obj_DLC_HeroSeal_Rito": {
+    "Name": "Medoh's Emblem",
+    "CanStack": true
+  },
+  "Obj_IceArrow_A_02": {
+    "Name": "Ice Arrow x10",
+    "CanStack": true
+  },
+  "Item_Cook_A_02": {
+    "Name": "Steamed Mushrooms",
+    "CanStack": false
+  },
+  "GameRomHorseReins_03": {
+    "Name": "Knight's Bridle",
+    "CanStack": false
+  },
+  "Item_Enemy_16": {
+    "Name": "Yellow Chuchu Jelly",
+    "CanStack": true
+  },
+  "Item_Mushroom_F": {
+    "Name": "Hearty Truffle",
+    "CanStack": true
+  },
+  "Animal_Insect_Q": {
+    "Name": "Summerwing Butterfly",
+    "CanStack": true
+  },
+  "Item_Cook_H_02": {
+    "Name": "Porgy Meunière",
+    "CanStack": false
+  },
+  "Item_Meat_11": {
+    "Name": "Raw Gourmet Meat",
+    "CanStack": true
+  },
+  "Obj_Head_026": {
+    "Name": "Sapphire Circlet",
+    "CanStack": false
+  },
+  "Item_Cook_B_13": {
+    "Name": "Copious Mushroom Skewers",
+    "CanStack": false
+  },
+  "Item_Roast_52": {
+    "Name": "Roasted Tree Nut",
+    "CanStack": true
+  },
+  "Item_Cook_B_17": {
+    "Name": "Meat and Seafood Fry",
+    "CanStack": false
+  },
+  "Item_ChilledFish_09": {
+    "Name": "Icy Hearty Blueshell Snail",
+    "CanStack": true
+  },
+  "Obj_ArrowBundle_A_01": {
+    "Name": "Arrow x5",
+    "CanStack": true
+  },
+  "Item_Mushroom_B": {
+    "Name": "Chillshroom",
+    "CanStack": true
+  },
+  "Item_Enemy_12": {
+    "Name": "Lynel Horn",
+    "CanStack": true
+  },
+  "Item_Cook_O_01": {
+    "Name": "Dubious Food",
+    "CanStack": false
+  },
+  "Obj_IceArrow_A_03": {
+    "Name": "Ice Arrow x5",
+    "CanStack": true
+  },
+  "Item_Cook_A_03": {
+    "Name": "Steamed Fruit",
+    "CanStack": false
+  },
+  "GameRomHorseReins_02": {
+    "Name": "Royal Bridle",
+    "CanStack": false
+  },
+  "Item_Mushroom_J": {
+    "Name": "Silent Shroom",
+    "CanStack": true
+  },
+  "Item_ChilledFish_01": {
+    "Name": "Frozen Bass",
+    "CanStack": true
+  },
+  "Item_Roast_07": {
+    "Name": "Roasted Wildberry",
+    "CanStack": true
+  },
+  "Item_Cook_P_05": {
+    "Name": "Gourmet Spiced Meat Skewer",
+    "CanStack": false
+  },
+  "Item_Enemy_47": {
+    "Name": "Shard of Dinraal's Fang",
+    "CanStack": true
+  },
+  "Item_Cook_F_04": {
+    "Name": "Creamy Heart Soup",
+    "CanStack": false
+  },
+  "Item_Enemy_43": {
+    "Name": "Yellow Lizalfos Tail",
+    "CanStack": true
+  },
+  "Obj_AmiiboItem": {
+    "Name": "amiibo",
+    "CanStack": false
+  },
+  "Obj_DLC_HeroSoul_Zora": {
+    "Name": "Mipha's Grace +",
+    "CanStack": false
+  },
+  "Item_Roast_03": {
+    "Name": "Baked Apple",
+    "CanStack": true
+  },
+  "Item_Cook_P_01": {
+    "Name": "Fragrant Mushroom Sauté",
+    "CanStack": false
+  },
+  "Item_Cook_A_07": {
+    "Name": "Fruit and Mushroom Mix",
+    "CanStack": false
+  },
+  "Item_Mushroom_N": {
+    "Name": "Big Hearty Truffle",
+    "CanStack": true
+  },
+  "Item_ChilledFish_05": {
+    "Name": "Frozen Porgy",
+    "CanStack": true
+  },
+  "Obj_DLC_HeroSeal_Zora": {
+    "Name": "Ruta's Emblem",
+    "CanStack": true
+  },
+  "Obj_IceMaker": {
+    "Name": "Cryonis",
+    "CanStack": false
+  },
+  "Item_Cook_K_02": {
+    "Name": "Prime Meat Stew",
+    "CanStack": false
+  },
+  "Item_Cook_A_13": {
+    "Name": "Glazed Seafood",
+    "CanStack": false
+  },
+  "Obj_DRStone_Get": {
+    "Name": "Sheikah Slate",
+    "CanStack": false
+  },
+  "Obj_ProofGiantKiller": {
+    "Name": "Medal of Honor: Hinox",
+    "CanStack": false
+  },
+  "Animal_Insect_I": {
+    "Name": "Electric Darner",
+    "CanStack": true
+  },
+  "Item_Enemy_57": {
+    "Name": "Octo Balloon",
+    "CanStack": true
+  },
+  "Item_Cook_L_05": {
+    "Name": "Monster Curry",
+    "CanStack": false
+  },
+  "Item_Ore_B": {
+    "Name": "Ruby",
+    "CanStack": true
+  },
+  "Item_Cook_L_01": {
+    "Name": "Monster Stew",
+    "CanStack": false
+  },
+  "Item_Ore_F": {
+    "Name": "Amber",
+    "CanStack": true
+  },
+  "Item_Enemy_53": {
+    "Name": "Farosh's Scale",
+    "CanStack": true
+  },
+  "Animal_Insect_M": {
+    "Name": "Hearty Lizard",
+    "CanStack": true
+  },
+  "Item_Plant_J": {
+    "Name": "Silent Princess",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_J"
+  },
+  "Item_Roast_13": {
+    "Name": "Charred Pepper",
+    "CanStack": true
+  },
+  "Item_Cook_K_06": {
+    "Name": "Cream of Mushroom Soup",
+    "CanStack": false
+  },
+  "Item_Enemy_06": {
+    "Name": "Moblin Horn",
+    "CanStack": true
+  },
+  "Item_Cook_E_04": {
+    "Name": "Fried Egg and Rice",
+    "CanStack": false
+  },
+  "Item_Roast_46": {
+    "Name": "Roasted Whole Bird",
+    "CanStack": true
+  },
+  "Item_Cook_B_03": {
+    "Name": "Item_Cook_B_03",
+    "CanStack": false
+  },
+  "Item_Meat_01": {
+    "Name": "Raw Meat",
+    "CanStack": true
+  },
+  "Item_Chilled_03": {
+    "Name": "Icy Gourmet Meat",
+    "CanStack": true
+  },
+  "Item_Plant_B": {
+    "Name": "Hearty Radish",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_B"
+  },
+  "Animal_Insect_E": {
+    "Name": "Sunset Firefly",
+    "CanStack": true
+  },
+  "Item_Plant_F": {
+    "Name": "Warm Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_F"
+  },
+  "Animal_Insect_A": {
+    "Name": "Hot-Footed Frog",
+    "CanStack": true
+  },
+  "Item_Ore_J": {
+    "Name": "Star Fragment",
+    "CanStack": true
+  },
+  "Item_Enemy_02": {
+    "Name": "Bokoblin Guts",
+    "CanStack": true
+  },
+  "Item_Fruit_J": {
+    "Name": "Fortified Pumpkin",
+    "CanStack": true
+  },
+  "Animal_Fish_J": {
+    "Name": "Sizzlefin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_J"
+  },
+  "Obj_DLC_HeroSeal_Gerudo": {
+    "Name": "Naboris's Emblem",
+    "CanStack": true
+  },
+  "Item_Roast_37": {
+    "Name": "Toasty Razorshroom",
+    "CanStack": true
+  },
+  "Item_FishGet_J": {
+    "Name": "Sizzlefin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_J"
+  },
+  "Obj_ElectricArrow_A_02": {
+    "Name": "Shock Arrow x10",
+    "CanStack": true
+  },
+  "Item_Cook_I_01": {
+    "Name": "Fruit Pie",
+    "CanStack": false
+  },
+  "Item_Cook_I_05": {
+    "Name": "Carrot Cake",
+    "CanStack": false
+  },
+  "Item_Cook_C_14": {
+    "Name": "Item_Cook_C_14",
+    "CanStack": false
+  },
+  "Item_Roast_33": {
+    "Name": "Toasty Zapshroom",
+    "CanStack": true
+  },
+  "Obj_RemoteBombBall": {
+    "Name": "Remote Bomb",
+    "CanStack": false
+  },
+  "Item_Cook_N_02": {
+    "Name": "Fruitcake",
+    "CanStack": false
+  },
+  "Item_Enemy_Put_57": {
+    "Name": "Octo Balloon",
+    "CanStack": true
+  },
+  "Item_Cook_B_23": {
+    "Name": "Seafood Skewer",
+    "CanStack": false
+  },
+  "Animal_Fish_F": {
+    "Name": "Mighty Porgy",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_F"
+  },
+  "Item_Fruit_F": {
+    "Name": "Hydromelon",
+    "CanStack": true
+  },
+  "Item_Enemy_26": {
+    "Name": "Ancient Gear",
+    "CanStack": true
+  },
+  "Item_Cook_G_07": {
+    "Name": "Item_Cook_G_07",
+    "CanStack": false
+  },
+  "Item_FishGet_F": {
+    "Name": "Mighty Porgy",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_F"
+  },
+  "Item_FishGet_B": {
+    "Name": "Hearty Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_B"
+  },
+  "Item_Cook_I_09": {
+    "Name": "Honeyed Fruits",
+    "CanStack": false
+  },
+  "Item_Cook_G_03": {
+    "Name": "Veggie Rice Balls",
+    "CanStack": false
+  },
+  "Item_Fruit_B": {
+    "Name": "Wildberry",
+    "CanStack": true
+  },
+  "IceArrow": {
+    "Name": "Ice Arrow",
+    "CanStack": true
+  },
+  "Item_Ore_A_00": {
+    "Name": "Diamond",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_RoastFish_02": {
+    "Name": "Roasted Hearty Bass",
+    "CanStack": true
+  },
+  "Obj_ArrowNormal_A_01": {
+    "Name": "Arrow",
+    "CanStack": true
+  },
+  "Animal_Fish_B": {
+    "Name": "Hearty Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_B"
+  },
+  "Obj_ProofKorok": {
+    "Name": "Hestu's Gift",
+    "CanStack": false
+  },
+  "Obj_BombArrow_A_02": {
+    "Name": "Bomb Arrow x5",
+    "CanStack": true
+  },
+  "GameRomHorseSaddle_03": {
+    "Name": "Knight's Saddle",
+    "CanStack": false
+  },
+  "Item_Cook_J_01": {
+    "Name": "Curry Rice",
+    "CanStack": false
+  },
+  "Item_PlantGet_H": {
+    "Name": "Armoranth",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_H"
+  },
+  "Item_Cook_G_17": {
+    "Name": "Crab Risotto",
+    "CanStack": false
+  },
+  "Item_Cook_G_13": {
+    "Name": "Vegetable Risotto",
+    "CanStack": false
+  },
+  "Item_Enemy_32": {
+    "Name": "Hinox Toenail",
+    "CanStack": true
+  },
+  "Item_PlantGet_L": {
+    "Name": "Electric Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_L"
+  },
+  "Item_Cook_C_08": {
+    "Name": "Item_Cook_C_08",
+    "CanStack": false
+  },
+  "Item_Cook_J_05": {
+    "Name": "Prime Poultry Curry",
+    "CanStack": false
+  },
+  "FireArrow": {
+    "Name": "Fire Arrow",
+    "CanStack": true
+  },
+  "Item_Cook_D_07": {
+    "Name": "Pepper Steak",
+    "CanStack": false
+  },
+  "Item_Fruit_E_00": {
+    "Name": "Fleet-Lotus Seeds",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_Cook_I_11": {
+    "Name": "Wildberry Crepe",
+    "CanStack": false
+  },
+  "Item_Roast_27": {
+    "Name": "Roasted Mighty Thistle",
+    "CanStack": true
+  },
+  "Item_Material_02": {
+    "Name": "Goron Spice",
+    "CanStack": true
+  },
+  "Animal_Fish_Z": {
+    "Name": "Sanke Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_Z"
+  },
+  "Item_Material_06": {
+    "Name": "Goat Butter",
+    "CanStack": true
+  },
+  "Item_Cook_I_15": {
+    "Name": "Fish Pie",
+    "CanStack": false
+  },
+  "Item_Cook_J_09": {
+    "Name": "Gourmet Meat Curry",
+    "CanStack": false
+  },
+  "Item_Cook_D_03": {
+    "Name": "Salt-Grilled Fish",
+    "CanStack": false
+  },
+  "Item_FishGet_Z": {
+    "Name": "Sanke Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_Z"
+  },
+  "Obj_DLC_HeroSoul_Goron": {
+    "Name": "Daruk's Protection +",
+    "CanStack": false
+  },
+  "Obj_FireArrow_A_02": {
+    "Name": "Fire Arrow x10",
+    "CanStack": true
+  },
+  "Item_Enemy_20": {
+    "Name": "Octorok Tentacle",
+    "CanStack": true
+  },
+  "Obj_DLC_HeroSoul_Gerudo": {
+    "Name": "Urbosa's Fury +",
+    "CanStack": false
+  },
+  "Item_Enemy_24": {
+    "Name": "Molduga Fin",
+    "CanStack": true
+  },
+  "Item_Cook_G_05": {
+    "Name": "Meat and Rice Bowl",
+    "CanStack": false
+  },
+  "Item_Roast_39": {
+    "Name": "Toasty Silent Shroom",
+    "CanStack": true
+  },
+  "Item_FishGet_D": {
+    "Name": "Voltfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_D"
+  },
+  "Item_InsectGet_Z": {
+    "Name": "Bright-Eyed Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_Z"
+  },
+  "Animal_Fish_D": {
+    "Name": "Voltfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_D"
+  },
+  "Obj_BombArrow_A_04": {
+    "Name": "Bomb Arrow x20",
+    "CanStack": true
+  },
+  "Item_Cook_B_21": {
+    "Name": "Sautéed Peppers",
+    "CanStack": false
+  },
+  "Item_Fruit_D": {
+    "Name": "Hearty Durian",
+    "CanStack": true
+  },
+  "Item_RoastFish_04": {
+    "Name": "Roasted Hearty Salmon",
+    "CanStack": true
+  },
+  "Animal_Fish_L": {
+    "Name": "Staminoka Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_L"
+  },
+  "Item_Fruit_L": {
+    "Name": "Chickaloo Tree Nut",
+    "CanStack": true
+  },
+  "Item_Cook_I_07": {
+    "Name": "Hot Buttered Apple",
+    "CanStack": false
+  },
+  "Item_FishGet_L": {
+    "Name": "Staminoka Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_L"
+  },
+  "Item_Cook_C_16": {
+    "Name": "Fairy Tonic",
+    "CanStack": false
+  },
+  "Item_Roast_31": {
+    "Name": "Toasty Chillshroom",
+    "CanStack": true
+  },
+  "Item_Cook_C_17_00": {
+    "Name": "Elixir",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_Cook_C_12": {
+    "Name": "Item_Cook_C_12",
+    "CanStack": false
+  },
+  "Item_FishGet_H": {
+    "Name": "Armored Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_H"
+  },
+  "Item_Cook_I_03": {
+    "Name": "Egg Tart",
+    "CanStack": false
+  },
+  "Item_Cook_G_09": {
+    "Name": "Gourmet Meat and Rice Bowl",
+    "CanStack": false
+  },
+  "Item_Enemy_28": {
+    "Name": "Ancient Spring",
+    "CanStack": true
+  },
+  "Obj_Photo_Animal": {
+    "Name": "Fauna Picture",
+    "CanStack": false
+  },
+  "Item_Cook_N_04": {
+    "Name": "Mushroom Omelet",
+    "CanStack": false
+  },
+  "Obj_Photo_Weapon": {
+    "Name": "Weapon Picture",
+    "CanStack": false
+  },
+  "Animal_Insect_AA": {
+    "Name": "Energetic Rhino Beetle",
+    "CanStack": true
+  },
+  "Item_Fruit_H": {
+    "Name": "Mighty Bananas",
+    "CanStack": true
+  },
+  "Animal_Fish_H": {
+    "Name": "Armored Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_H"
+  },
+  "Obj_HeroSoul_Zora": {
+    "Name": "Mipha's Grace",
+    "CanStack": false
+  },
+  "Item_Cook_D_01": {
+    "Name": "Salt-Grilled Mushrooms",
+    "CanStack": false
+  },
+  "Obj_Photo_Material": {
+    "Name": "Material Picture",
+    "CanStack": false
+  },
+  "Item_FishGet_X": {
+    "Name": "Stealthfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_X"
+  },
+  "Item_Cook_C_06": {
+    "Name": "Item_Cook_C_06",
+    "CanStack": false
+  },
+  "Item_Material_05_00": {
+    "Name": "Fresh Milk",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Animal_Fish_X": {
+    "Name": "Stealthfin Trout",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_X"
+  },
+  "Item_Material_04": {
+    "Name": "Bird Egg",
+    "CanStack": true
+  },
+  "Item_PlantGet_B": {
+    "Name": "Hearty Radish",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_B"
+  },
+  "Item_Cook_I_17": {
+    "Name": "Honey Crepe",
+    "CanStack": false
+  },
+  "Obj_Magnetglove": {
+    "Name": "Magnesis",
+    "CanStack": false
+  },
+  "Item_Enemy_38": {
+    "Name": "Dinraal's Scale",
+    "CanStack": true
+  },
+  "Item_Cook_I_13": {
+    "Name": "Fried Bananas",
+    "CanStack": false
+  },
+  "Item_Cook_C_02": {
+    "Name": "Item_Cook_C_02",
+    "CanStack": false
+  },
+  "ElectricArrow": {
+    "Name": "Shock Arrow",
+    "CanStack": true
+  },
+  "Item_PlantGet_F": {
+    "Name": "Warm Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_F"
+  },
+  "Item_Cook_D_05": {
+    "Name": "Salt-Grilled Prime Meat",
+    "CanStack": false
+  },
+  "Item_Cook_J_07": {
+    "Name": "Prime Meat Curry",
+    "CanStack": false
+  },
+  "GameRomHorseSaddle_05": {
+    "Name": "Extravagant Saddle",
+    "CanStack": false
+  },
+  "Obj_Album": {
+    "Name": "Album",
+    "CanStack": false
+  },
+  "Obj_HeroSoul_Gerudo": {
+    "Name": "Urbosa's Fury",
+    "CanStack": false
+  },
+  "Item_Cook_G_11": {
+    "Name": "Curry Pilaf",
+    "CanStack": false
+  },
+  "Item_Enemy_30": {
+    "Name": "Ancient Core",
+    "CanStack": true
+  },
+  "Item_Material_08": {
+    "Name": "Monster Extract",
+    "CanStack": true
+  },
+  "Item_PlantGet_J": {
+    "Name": "Silent Princess",
+    "CanStack": true
+  },
+  "Item_Cook_G_15": {
+    "Name": "Meaty Rice Balls",
+    "CanStack": false
+  },
+  "Item_Enemy_34": {
+    "Name": "Hinox Guts",
+    "CanStack": true
+  },
+  "GameRomHorseSaddle_01": {
+    "Name": "Traveler's Saddle",
+    "CanStack": false
+  },
+  "Item_Cook_J_03": {
+    "Name": "Seafood Curry",
+    "CanStack": false
+  },
+  "Item_Cook_D_09": {
+    "Name": "Salt-Grilled Crab",
+    "CanStack": false
+  },
+  "Item_Roast_01": {
+    "Name": "Seared Steak",
+    "CanStack": true
+  },
+  "Item_Cook_P_03": {
+    "Name": "Spiced Meat Skewer",
+    "CanStack": false
+  },
+  "GameRomHorseReins_04": {
+    "Name": "Monster Bridle",
+    "CanStack": false
+  },
+  "Item_Cook_A_05": {
+    "Name": "Steamed Meat",
+    "CanStack": false
+  },
+  "Item_Mushroom_L": {
+    "Name": "Razorshroom",
+    "CanStack": true
+  },
+  "Item_ChilledFish_07": {
+    "Name": "Frozen Crab",
+    "CanStack": true
+  },
+  "Item_Enemy_41": {
+    "Name": "Red Lizalfos Tail",
+    "CanStack": true
+  },
+  "Item_Cook_F_02": {
+    "Name": "Creamy Seafood Soup",
+    "CanStack": false
+  },
+  "Item_Cook_B_19": {
+    "Name": "Gourmet Meat and Seafood Fry",
+    "CanStack": false
+  },
+  "Obj_Head_028": {
+    "Name": "Opal Earrings",
+    "CanStack": false
+  },
+  "Obj_PictureBook": {
+    "Name": "Hyrule Compendium",
+    "CanStack": false
+  },
+  "Item_Enemy_45": {
+    "Name": "Electric Keese Wing",
+    "CanStack": true
+  },
+  "Obj_IceArrow_A_01": {
+    "Name": "Ice Arrow",
+    "CanStack": true
+  },
+  "Item_Cook_A_01": {
+    "Name": "Mushroom Skewer",
+    "CanStack": false
+  },
+  "Item_Enemy_18": {
+    "Name": "Keese Wing",
+    "CanStack": true
+  },
+  "Item_Mushroom_H": {
+    "Name": "Zapshroom",
+    "CanStack": true
+  },
+  "Item_ChilledFish_03": {
+    "Name": "Frozen Trout",
+    "CanStack": true
+  },
+  "Item_Roast_05": {
+    "Name": "Toasted Hearty Truffle",
+    "CanStack": true
+  },
+  "PlayerStole2_Vagrant": {
+    "Name": "PlayerStole2_Vagrant",
+    "CanStack": false
+  },
+  "Obj_Maracas": {
+    "Name": "Hestu's Maracas",
+    "CanStack": false
+  },
+  "Item_Cook_A_09": {
+    "Name": "Meat and Mushroom Skewer",
+    "CanStack": false
+  },
+  "Item_Roast_50": {
+    "Name": "Roasted Endura Carrot",
+    "CanStack": true
+  },
+  "Item_Cook_B_15": {
+    "Name": "Copious Seafood Skewers",
+    "CanStack": false
+  },
+  "Item_Enemy_49": {
+    "Name": "Naydra's Scale",
+    "CanStack": true
+  },
+  "Item_Cook_B_11": {
+    "Name": "Copious Fried Wild Greens",
+    "CanStack": false
+  },
+  "Obj_Head_024": {
+    "Name": "Diamond Circlet",
+    "CanStack": false
+  },
+  "Item_Roast_09": {
+    "Name": "Roasted Hearty Durian",
+    "CanStack": true
+  },
+  "Item_Enemy_14": {
+    "Name": "Lynel Guts",
+    "CanStack": true
+  },
+  "Item_Mushroom_D": {
+    "Name": "Rushroom",
+    "CanStack": true
+  },
+  "Animal_Insect_S": {
+    "Name": "Hightail Lizard",
+    "CanStack": true
+  },
+  "Item_Cook_E_02": {
+    "Name": "Prime Poultry Pilaf",
+    "CanStack": false
+  },
+  "Item_Cook_K_08": {
+    "Name": "Carrot Stew",
+    "CanStack": false
+  },
+  "Item_Enemy_00": {
+    "Name": "Bokoblin Horn",
+    "CanStack": true
+  },
+  "Obj_SheikSensorLv2": {
+    "Name": "Sheikah Sensor +",
+    "CanStack": false
+  },
+  "Animal_Insect_C": {
+    "Name": "Cold Darner",
+    "CanStack": true
+  },
+  "Item_Roast_40": {
+    "Name": "Seared Prime Steak",
+    "CanStack": true
+  },
+  "Item_Ore_H": {
+    "Name": "Rock Salt",
+    "CanStack": true
+  },
+  "Item_Chilled_05": {
+    "Name": "Frozen Bird Thigh",
+    "CanStack": true
+  },
+  "Item_Cook_B_05": {
+    "Name": "Fish Skewer",
+    "CanStack": false
+  },
+  "Item_Boiled_01": {
+    "Name": "Hard-Boiled Egg",
+    "CanStack": true
+  },
+  "Item_Meat_07": {
+    "Name": "Raw Bird Thigh",
+    "CanStack": true
+  },
+  "Item_Cook_B_01": {
+    "Name": "Fried Wild Greens",
+    "CanStack": false
+  },
+  "Item_Chilled_01": {
+    "Name": "Icy Meat",
+    "CanStack": true
+  },
+  "Animal_Insect_G": {
+    "Name": "Bladed Rhino Beetle",
+    "CanStack": true
+  },
+  "Item_Enemy_04": {
+    "Name": "Lizalfos Talon",
+    "CanStack": true
+  },
+  "Obj_AncientArrow_C_01": {
+    "Name": "Ancient Arrow x3",
+    "CanStack": true
+  },
+  "Obj_WarpDLC": {
+    "Name": "Travel Medallion",
+    "CanStack": false
+  },
+  "Item_Roast_19": {
+    "Name": "Roasted Big Radish",
+    "CanStack": true
+  },
+  "BeeHome": {
+    "Name": "Courser Bee Honey",
+    "CanStack": true
+  },
+  "Item_Roast_11": {
+    "Name": "Roasted Mighty Bananas",
+    "CanStack": true
+  },
+  "Item_Cook_K_04": {
+    "Name": "Clam Chowder",
+    "CanStack": false
+  },
+  "Item_Cook_L_03": {
+    "Name": "Monster Cake",
+    "CanStack": false
+  },
+  "Item_MushroomGet_D": {
+    "Name": "Rushroom",
+    "CanStack": true
+  },
+  "Item_Ore_D": {
+    "Name": "Topaz",
+    "CanStack": true
+  },
+  "Item_Enemy_51": {
+    "Name": "Shard of Naydra's Fang",
+    "CanStack": true
+  },
+  "Animal_Insect_O": {
+    "Name": "Ironshell Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_O"
+  },
+  "Item_Plant_H": {
+    "Name": "Armoranth",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_H"
+  },
+  "Animal_Insect_K": {
+    "Name": "Razorclaw Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_K"
+  },
+  "Item_Enemy_55": {
+    "Name": "Shard of Farosh's Fang",
+    "CanStack": true
+  },
+  "Item_Plant_L": {
+    "Name": "Electric Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_L"
+  },
+  "Item_Roast_48": {
+    "Name": "Roasted Acorn",
+    "CanStack": true
+  },
+  "Item_Roast_15": {
+    "Name": "Baked Fortified Pumpkin",
+    "CanStack": true
+  },
+  "Item_Cook_A_11": {
+    "Name": "Glazed Mushrooms",
+    "CanStack": false
+  },
+  "GameRomHorseReins_10": {
+    "Name": "Ancient Bridle",
+    "CanStack": false
+  },
+  "Item_Enemy_08": {
+    "Name": "Moblin Guts",
+    "CanStack": true
+  },
+  "Item_Roast_18": {
+    "Name": "Roasted Radish",
+    "CanStack": true
+  },
+  "Obj_DRStone_A_01": {
+    "Name": "Sheikah Slate",
+    "CanStack": false
+  },
+  "Item_Enemy_05": {
+    "Name": "Lizalfos Tail",
+    "CanStack": true
+  },
+  "Item_Plant_A": {
+    "Name": "Hyrule Herb",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_A"
+  },
+  "Animal_Insect_F": {
+    "Name": "Fairy",
+    "CanStack": true
+  },
+  "Obj_RemoteBombBall2": {
+    "Name": "Remote Bomb +",
+    "CanStack": false
+  },
+  "Item_Roast_45": {
+    "Name": "Seared Gourmet Steak",
+    "CanStack": true
+  },
+  "Item_Meat_02": {
+    "Name": "Raw Prime Meat",
+    "CanStack": true
+  },
+  "Item_Roast_41": {
+    "Name": "Roasted Bird Thigh",
+    "CanStack": true
+  },
+  "Item_Ore_I": {
+    "Name": "Flint",
+    "CanStack": true
+  },
+  "Item_Chilled_04": {
+    "Name": "Frozen Bird Drumstick",
+    "CanStack": true
+  },
+  "Item_Cook_B_04": {
+    "Name": "Item_Cook_B_04",
+    "CanStack": false
+  },
+  "Item_Meat_06": {
+    "Name": "Raw Bird Drumstick",
+    "CanStack": true
+  },
+  "Item_Plant_E": {
+    "Name": "Cool Safflina",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_E"
+  },
+  "Animal_Insect_B": {
+    "Name": "Tireless Frog",
+    "CanStack": true
+  },
+  "Item_Enemy_01": {
+    "Name": "Bokoblin Fang",
+    "CanStack": true
+  },
+  "Item_Cook_E_03": {
+    "Name": "Gourmet Poultry Pilaf",
+    "CanStack": false
+  },
+  "Item_Cook_K_09": {
+    "Name": "Milk",
+    "CanStack": false
+  },
+  "Item_Cook_A_10": {
+    "Name": "Omelet",
+    "CanStack": false
+  },
+  "Item_Cook_K_01": {
+    "Name": "Meat Stew",
+    "CanStack": false
+  },
+  "Item_Ore_A": {
+    "Name": "Diamond",
+    "CanStack": true
+  },
+  "Item_Roast_49": {
+    "Name": "Toasted Big Hearty Truffle",
+    "CanStack": true
+  },
+  "Item_Enemy_54": {
+    "Name": "Farosh's Claw",
+    "CanStack": true
+  },
+  "Obj_ProofSandwormKiller": {
+    "Name": "Medal of Honor: Molduga",
+    "CanStack": false
+  },
+  "Item_Plant_M": {
+    "Name": "Swift Carrot",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_M"
+  },
+  "Item_Enemy_50": {
+    "Name": "Naydra's Claw",
+    "CanStack": true
+  },
+  "Animal_Insect_N": {
+    "Name": "Winterwing Butterfly",
+    "CanStack": true
+  },
+  "Item_Plant_I": {
+    "Name": "Blue Nightshade",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_I"
+  },
+  "Item_Cook_L_02": {
+    "Name": "Monster Soup",
+    "CanStack": false
+  },
+  "Item_Ore_E": {
+    "Name": "Opal",
+    "CanStack": true
+  },
+  "Item_Roast_10": {
+    "Name": "Baked Palm Fruit",
+    "CanStack": true
+  },
+  "Item_Cook_K_05": {
+    "Name": "Gourmet Meat Stew",
+    "CanStack": false
+  },
+  "Item_Cook_A_14": {
+    "Name": "Glazed Veggies",
+    "CanStack": false
+  },
+  "Item_Roast_04": {
+    "Name": "Toasty Stamella Shroom",
+    "CanStack": true
+  },
+  "Obj_Photo_BossEnemy": {
+    "Name": "Elite Enemy Picture",
+    "CanStack": false
+  },
+  "GameRomHorseReins_01": {
+    "Name": "Traveler's Bridle",
+    "CanStack": false
+  },
+  "Item_Enemy_19": {
+    "Name": "Keese Eyeball",
+    "CanStack": true
+  },
+  "Item_ChilledFish_02": {
+    "Name": "Frozen Hearty Salmon",
+    "CanStack": true
+  },
+  "Item_Enemy_44": {
+    "Name": "Fire Keese Wing",
+    "CanStack": true
+  },
+  "Obj_Head_029": {
+    "Name": "Amber Earrings",
+    "CanStack": false
+  },
+  "BombArrow_A": {
+    "Name": "Bomb Arrow",
+    "CanStack": true
+  },
+  "Obj_StopTimer": {
+    "Name": "Stasis",
+    "CanStack": false
+  },
+  "Item_Cook_B_18": {
+    "Name": "Prime Meat and Seafood Fry",
+    "CanStack": false
+  },
+  "Item_Enemy_40": {
+    "Name": "Chuchu Jelly",
+    "CanStack": true
+  },
+  "Item_Cook_F_03": {
+    "Name": "Veggie Cream Soup",
+    "CanStack": false
+  },
+  "GameRomHorseReins_05": {
+    "Name": "Extravagant Bridle",
+    "CanStack": false
+  },
+  "Item_Cook_A_04": {
+    "Name": "Steamed Fish",
+    "CanStack": false
+  },
+  "Item_Mushroom_M": {
+    "Name": "Ironshroom",
+    "CanStack": true
+  },
+  "Item_ChilledFish_06": {
+    "Name": "Frozen Hearty Bass",
+    "CanStack": true
+  },
+  "Animal_Insect_Z": {
+    "Name": "Bright-Eyed Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_Z"
+  },
+  "Item_Cook_P_02": {
+    "Name": "Herb Sauté",
+    "CanStack": false
+  },
+  "NormalArrow": {
+    "Name": "Arrow",
+    "CanStack": true
+  },
+  "Item_Enemy_15": {
+    "Name": "Red Chuchu Jelly",
+    "CanStack": true
+  },
+  "Item_Mushroom_E": {
+    "Name": "Hylian Shroom",
+    "CanStack": true
+  },
+  "Animal_Insect_R": {
+    "Name": "Thunderwing Butterfly",
+    "CanStack": true
+  },
+  "Item_Mushroom_F_00": {
+    "Name": "Hearty Truffle",
+    "CanStack": false,
+    "Hidden": true
+  },
+  "Item_Roast_08": {
+    "Name": "Roasted Voltfruit",
+    "CanStack": true
+  },
+  "Item_Meat_12": {
+    "Name": "Raw Whole Bird",
+    "CanStack": true
+  },
+  "Obj_Head_025": {
+    "Name": "Ruby Circlet",
+    "CanStack": false
+  },
+  "Item_Cook_H_01": {
+    "Name": "Seafood Meunière",
+    "CanStack": false
+  },
+  "Item_Enemy_48": {
+    "Name": "Shard of Dinraal's Horn",
+    "CanStack": true
+  },
+  "Obj_RemoteBomb": {
+    "Name": "Remote Bomb",
+    "CanStack": false
+  },
+  "Item_Roast_51": {
+    "Name": "Campfire Egg",
+    "CanStack": true
+  },
+  "Item_Cook_B_14": {
+    "Name": "Item_Cook_B_14",
+    "CanStack": false
+  },
+  "Item_Mushroom_A": {
+    "Name": "Stamella Shroom",
+    "CanStack": true
+  },
+  "Obj_ArrowBundle_A_02": {
+    "Name": "Arrow x10",
+    "CanStack": true,
+    "IconActorName": "Obj_ArrowBundle_A_01"
+  },
+  "Item_Cook_A_08": {
+    "Name": "Fish and Mushroom Skewer",
+    "CanStack": false
+  },
+  "Item_Cook_O_02": {
+    "Name": "Rock-Hard Food",
+    "CanStack": false
+  },
+  "Item_Plant_Q": {
+    "Name": "Endura Carrot",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_Q"
+  },
+  "Obj_HeroSoul_Rito": {
+    "Name": "Revali's Gale",
+    "CanStack": false
+  },
+  "Item_Cook_D_04": {
+    "Name": "Salt-Grilled Meat",
+    "CanStack": false
+  },
+  "Item_Roast_24": {
+    "Name": "Roasted Swift Carrot",
+    "CanStack": true
+  },
+  "Item_PlantGet_G": {
+    "Name": "Mighty Thistle",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_G"
+  },
+  "Item_Material_01": {
+    "Name": "Cane Sugar",
+    "CanStack": true
+  },
+  "Item_Enemy_39": {
+    "Name": "Dinraal's Claw",
+    "CanStack": true
+  },
+  "Item_Cook_I_12": {
+    "Name": "Nutcake",
+    "CanStack": false
+  },
+  "Obj_HeroSoul_Goron": {
+    "Name": "Daruk's Protection",
+    "CanStack": false
+  },
+  "Item_Cook_I_16": {
+    "Name": "Honey Candy",
+    "CanStack": false
+  },
+  "Obj_HeartUtuwa_A_01": {
+    "Name": "Heart Container",
+    "CanStack": false
+  },
+  "Item_Cook_C_07": {
+    "Name": "Item_Cook_C_07",
+    "CanStack": false
+  },
+  "Item_Material_05": {
+    "Name": "Fresh Milk",
+    "CanStack": true
+  },
+  "Item_PlantGet_C": {
+    "Name": "Big Hearty Radish",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_C"
+  },
+  "Obj_Camera": {
+    "Name": "Camera",
+    "CanStack": false
+  },
+  "PlayerStole2": {
+    "Name": "Paraglider",
+    "CanStack": false
+  },
+  "Item_Cook_J_02": {
+    "Name": "Vegetable Curry",
+    "CanStack": false
+  },
+  "Item_Cook_D_08": {
+    "Name": "Pepper Seafood",
+    "CanStack": false
+  },
+  "Obj_ElectricArrow_B_01": {
+    "Name": "Shock Arrow",
+    "CanStack": true
+  },
+  "Item_RoastFish_15": {
+    "Name": "Blackened Crab",
+    "CanStack": true
+  },
+  "Item_Cook_G_14": {
+    "Name": "Salmon Risotto",
+    "CanStack": false
+  },
+  "Item_InsectGet_O": {
+    "Name": "Ironshell Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_O"
+  },
+  "Item_Roast_28": {
+    "Name": "Roasted Armoranth",
+    "CanStack": true
+  },
+  "Item_PlantGet_O": {
+    "Name": "Swift Violet",
+    "CanStack": true,
+    "IconActorName": "Item_PlantGet_O"
+  },
+  "Item_InsectGet_K": {
+    "Name": "Razorclaw Crab",
+    "CanStack": true,
+    "IconActorName": "Item_InsectGet_K"
+  },
+  "Item_Cook_M_01": {
+    "Name": "Wheat Bread",
+    "CanStack": false
+  },
+  "Item_Cook_G_10": {
+    "Name": "Seafood Fried Rice",
+    "CanStack": false
+  },
+  "Item_Enemy_31": {
+    "Name": "Giant Ancient Core",
+    "CanStack": true
+  },
+  "Obj_DLC_HeroSeal_Goron": {
+    "Name": "Rudania's Emblem",
+    "CanStack": true
+  },
+  "Item_RoastFish_11": {
+    "Name": "Blueshell Escargot",
+    "CanStack": true
+  },
+  "Obj_ProofBook": {
+    "Name": "Classified Envelope",
+    "CanStack": false
+  },
+  "Item_Cook_J_06": {
+    "Name": "Meat Curry",
+    "CanStack": false
+  },
+  "GameRomHorseSaddle_04": {
+    "Name": "Monster Saddle",
+    "CanStack": false
+  },
+  "Obj_StaminaUtuwa_A_01": {
+    "Name": "Stamina Vessel",
+    "CanStack": false
+  },
+  "Item_Fruit_E": {
+    "Name": "Fleet-Lotus Seeds",
+    "CanStack": true
+  },
+  "GameRomHorseSaddle_10": {
+    "Name": "Ancient Saddle",
+    "CanStack": false
+  },
+  "Animal_Fish_E": {
+    "Name": "Mighty Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_E"
+  },
+  "Item_Cook_B_20": {
+    "Name": "Meat-Stuffed Pumpkin",
+    "CanStack": false
+  },
+  "Item_Roast_38": {
+    "Name": "Toasty Ironshroom",
+    "CanStack": true
+  },
+  "Item_FishGet_E": {
+    "Name": "Mighty Carp",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_E"
+  },
+  "Item_Enemy_25": {
+    "Name": "Molduga Guts",
+    "CanStack": true
+  },
+  "Item_Cook_G_04": {
+    "Name": "Mushroom Rice Balls",
+    "CanStack": false
+  },
+  "Item_Enemy_21": {
+    "Name": "Octorok Eyeball",
+    "CanStack": true
+  },
+  "Item_FishGet_A": {
+    "Name": "Hyrule Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_A"
+  },
+  "Obj_FireArrow_A_03": {
+    "Name": "Fire Arrow x5",
+    "CanStack": true
+  },
+  "Obj_BombArrow_A_01": {
+    "Name": "Bomb Arrow",
+    "CanStack": true
+  },
+  "Animal_Fish_A": {
+    "Name": "Hyrule Bass",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_A"
+  },
+  "Item_Fruit_A": {
+    "Name": "Apple",
+    "CanStack": true
+  },
+  "Item_RoastFish_01": {
+    "Name": "Roasted Bass",
+    "CanStack": true
+  },
+  "Animal_Fish_I": {
+    "Name": "Hearty Salmon",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_I"
+  },
+  "Item_RoastFish_09": {
+    "Name": "Roasted Porgy",
+    "CanStack": true
+  },
+  "Obj_SheikPadLv2": {
+    "Name": "Sheikah Slate",
+    "CanStack": false
+  },
+  "Item_Fruit_I": {
+    "Name": "Spicy Pepper",
+    "CanStack": true
+  },
+  "Item_Cook_I_02": {
+    "Name": "Apple Pie",
+    "CanStack": false
+  },
+  "Item_Cook_G_08": {
+    "Name": "Item_Cook_G_08",
+    "CanStack": false
+  },
+  "Item_Enemy_29": {
+    "Name": "Ancient Shaft",
+    "CanStack": true
+  },
+  "Item_Cook_C_13": {
+    "Name": "Item_Cook_C_13",
+    "CanStack": false
+  },
+  "Item_FishGet_I": {
+    "Name": "Hearty Salmon",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_I"
+  },
+  "Obj_ElectricArrow_A_01": {
+    "Name": "Shock Arrow",
+    "CanStack": true
+  },
+  "Obj_RemoteBombCube2": {
+    "Name": "Remote Bomb +",
+    "CanStack": false
+  },
+  "Item_FishGet_M": {
+    "Name": "Sneaky River Snail",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_M"
+  },
+  "Item_Cook_C_17": {
+    "Name": "Elixir",
+    "CanStack": false
+  },
+  "Obj_RemoteBombLv2": {
+    "Name": "Remote Bomb +",
+    "CanStack": false
+  },
+  "Item_Cook_I_06": {
+    "Name": "Pumpkin Pie",
+    "CanStack": false
+  },
+  "Item_Cook_N_01": {
+    "Name": "Seafood Paella",
+    "CanStack": false
+  },
+  "Obj_FireWoodBundle": {
+    "Name": "Wood",
+    "CanStack": true
+  },
+  "Animal_Fish_M": {
+    "Name": "Sneaky River Snail",
+    "CanStack": true,
+    "IconActorName": "Item_FishGet_M"
+  },
+  "Item_Cook_D_10": {
+    "Name": "Crab Stir-Fry",
+    "CanStack": false
   }
 }

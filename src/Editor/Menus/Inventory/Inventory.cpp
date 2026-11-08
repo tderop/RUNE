@@ -13,13 +13,10 @@
 
 #include <Editor/Inventory.hpp>
 
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <map>
-#include <cmath>
-#include <filesystem>
-#include <sstream>
-#include <iomanip>
 
 /**
  * Rune::Inventory::Item Value:
@@ -184,27 +181,70 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         localIdx++;
     }
 
+    // An empty inventory slot template for this category
+    Rune::Inventory::Item emptySlot{"", "", 0, 0, 
+        0, menuCategory, 0, 0, tileStyle,
+        Rune::Inventory::TileType::Empty, ""};
+    
+    // If there are available flagSp/valueSp keys, then set them
+    emptySlot.flagSpKey = flagSpKey;
+    emptySlot.valueSpKey = valueSpKey;
+
+    // Find the first empty slot in PorchItem
+    auto emptyIt = std::find_if(inventory.begin(), inventory.end(),
+        [](const std::string& s){ return s.empty(); });
+
+    // Currently, if no value is found, this could be very destructive
+    // Additionally there are no checks to ensure the vector does not go beyond a size of 420 too
+    // so this could result in save file corruption if handled wrong
+    bool foundSafeIdx=false;
+    if (emptyIt != inventory.end()){
+        foundSafeIdx=true;
+        currentIdx = std::distance(inventory.begin(), emptyIt);
+        // Logger::Importantf("Actor name at %d: %s", currentIdx, inventory.at(currentIdx).c_str());
+    }
+
     // Pad to fill all available unlocked slots
     // // Show plus button only on this route
     auto it = Rune::Inventory::kSlotKeys.find(menuCategory);
-    if (it != Rune::Inventory::kSlotKeys.end()){
-        // Get the slot entry
-        Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), it->second);
 
-        // Get the max slots
+    // In this case, the menu is upgradeable
+    if (it != Rune::Inventory::kSlotKeys.end() && foundSafeIdx){
+        // Get the max slots unlocked from the save file
+        Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), it->second);
         int maxUnlockedSlots = std::get<int32_t>(slotEntry->value);
 
-        // Fill with padding slots
-        for (int i = (inventoryItems->size()-1); i < (maxUnlockedSlots-1); ++i){
-            Rune::Inventory::Item newItem;
-            newItem.type = Rune::Inventory::TileType::Empty;
+        // Fill with padding slots up to unlocked max
+        // Break out if no safe index was found to prevent data corruption
+        for (int i = (inventoryItems->size()-1); i < (maxUnlockedSlots-1) && foundSafeIdx; ++i){
+            // Copy the empty slot template and update index values
+            Rune::Inventory::Item newItem = emptySlot;
+            newItem.index = currentIdx;
+            newItem.localIndex = localIdx;
 
             inventoryItems->push_back(newItem);
+
+            // Keep incrementing currentIdx until another valid slot is found
+            foundSafeIdx = false;
+            for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
+                // Safe index to overwrite was found, break
+                if (inventory.at(j).empty()){
+                    currentIdx = j;
+                    foundSafeIdx=true;
+
+                    break;
+                }
+            }
+
+            // Increment local index, guaranteed to be safe due to hard cap on max slots
+            localIdx++;
         }
 
-        // Get absolute max slots
+        // If the number of available slots is not the maximum and safe slots are still available, create an "add"
+        // tile so the user can add another slot
         auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
-        if (it != Rune::Inventory::kMaxSlots.end()){
+
+        if (it != Rune::Inventory::kMaxSlots.end() && foundSafeIdx){
             size_t maxSlots = it->second;
 
             if (inventoryItems->size() < maxSlots){
@@ -218,17 +258,29 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         
     } else { // Pad to fill all available slots
         auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
-        if (it != Rune::Inventory::kMaxSlots.end()){
+        if (it != Rune::Inventory::kMaxSlots.end() && foundSafeIdx){
             // Get max possible slots
             int maxSlots = it->second;
 
             // Add empty slots for every available slot
-            for (int i = (inventoryItems->size()-1); i < maxSlots-1; ++i){
-                Rune::Inventory::Item newItem;
-                newItem.type = Rune::Inventory::TileType::Empty;
-
+            // Do not continue if no more safe slots
+            for (int i = (inventoryItems->size()-1) && foundSafeIdx; i < maxSlots-1; ++i){
+                Rune::Inventory::Item newItem = emptySlot;
+                newItem.index = currentIdx;
                 inventoryItems->push_back(newItem);
+
+                // Search for new valid slot
+                foundSafeIdx = false;
+                for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
+                    if (inventory.at(j).empty()){
+                        currentIdx = j;
+                        foundSafeIdx = true;
+
+                        break;
+                    }
+                }
             }
+
         }
     }
 

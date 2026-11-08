@@ -26,7 +26,7 @@ namespace Logger {
      * @param msg message to format
      * @param ... format parameters
      */
-    void Writef(const std::string& msg, ...);
+    void Writef(std::string msg, ...);
 
     /**
      * @brief Log an important message to the console using svcOutputDebugString
@@ -40,6 +40,6 @@ namespace Logger {
      * @param msg message to format
      * @param ... format parameters
      */
-    void Importantf(const std::string& msg, ...);
+    void Importantf(std::string msg, ...);
 
 } // namespace Logger

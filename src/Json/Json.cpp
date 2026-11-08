@@ -20,8 +20,8 @@ namespace Rune{
                 "romfs:/json/actor_names.json"
             },
             {
-                "EquipmentData",
-                "romfs:/json/equipment_data.json"
+                "ActorData",
+                "romfs:/json/actor_data.json"
             },
             {
                 "LocationNames",

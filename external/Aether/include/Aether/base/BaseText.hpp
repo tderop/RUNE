@@ -52,6 +52,11 @@ namespace Aether {
              * @param size Render font size (in pixels)
              */
             virtual void setFontSize(const unsigned int size);
+
+            int right() override;
+            int bottom() override;
+            int centreX() override;
+            int centreY() override;
     };
 };
 

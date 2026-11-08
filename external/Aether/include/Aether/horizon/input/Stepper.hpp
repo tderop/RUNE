@@ -87,6 +87,8 @@ namespace Aether {
             */
            void setMin(int min);
 
+           void setMinMax(int min, int max);
+
            /**
             * @brief Get the maximum value
             * @return The max value the stepper can hold

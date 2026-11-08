@@ -31,7 +31,7 @@ void Logger::Write(const std::string& msg, bool isImportant) {
     svcOutputDebugString(msg.c_str(), msg.size());
 }
 
-void Logger::Writef(const std::string& msg, ...){
+void Logger::Writef(std::string msg, ...){
     if (!Rune::Application::IsEmulator){
         return;
     }
@@ -48,7 +48,7 @@ void Logger::Writef(const std::string& msg, ...){
     Logger::Write(std::string(logFormat.data(), logFormat.size()));
 }
 
-void Logger::Importantf(const std::string& msg, ...){
+void Logger::Importantf(std::string msg, ...){
     if (!Rune::Application::IsEmulator){
         return;
     }
@@ -61,7 +61,7 @@ void Logger::Importantf(const std::string& msg, ...){
 
     Logger::Format(&logFormat, format, args);
     va_end(args);
-    Logger::Write(std::string(logFormat.data(), logFormat.size()), true);
+    Logger::Write(kImportantPrefix+std::string(logFormat.data(), logFormat.size()), true);
 }
 
 void Logger::Important(const std::string& msg){

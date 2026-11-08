@@ -7,22 +7,12 @@
         "--background-index",
         "-j=4",
         "--header-insertion=never",
-        "--query-driver=C:/devkitPro/devkitA64/bin/aarch64-none-elf-g++.exe",
-        "-I${workspaceFolder}/src",
-        "-I${workspaceFolder}/include",
-        "-I${workspaceFolder}/libs/byml/include",
-        "-I${workspaceFolder}/libs/range-v3/include",
-        "-I${workspaceFolder}/libs/stb/include",
-        "-I${workspaceFolder}/external/Aether/include",
-        "-I${workspaceFolder}/libs/json/include",
-        "-I${workspaceFolder}/build",
-        "-isystemC:/devkitPro/libnx/include",
-        "-isystemC:/devkitPro/portlibs/switch/include",
-        "-D__SWITCH__"
+        "--function-arg-placeholders=false",
+        "--query-driver=C:/devkitPro/devkitA64/bin/aarch64-none-elf-g++.exe"
     ],
 
     "[cpp]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools"
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
     "[c]": {
         "editor.defaultFormatter": "ms-vscode.cpptools"

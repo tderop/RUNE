@@ -33,4 +33,20 @@ namespace Aether {
         this->destroy();
         this->renderSync();
     }
+
+    int BaseText::right() {
+        return this->x()+this->textureWidth();
+    }
+
+    int BaseText::bottom() {
+        return this->y()+this->textureHeight();
+    }
+
+    int BaseText::centreX() {
+        return this->x()+this->textureWidth()/2;
+    }
+
+    int BaseText::centreY() {
+        return this->y()+this->textureHeight()/2;
+    }
 };

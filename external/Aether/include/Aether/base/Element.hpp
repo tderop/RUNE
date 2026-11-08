@@ -128,6 +128,34 @@ namespace Aether {
             virtual int y();
 
             /**
+             * @brief Returns the rightmost x-coordinate of element
+             * 
+             * @return int rightmost x-coordinate of element
+             */
+            virtual int right();
+
+            /**
+             * @brief Returns the bottom y-coordinate of element
+             * 
+             * @return int bottom y-coordinate of element
+             */
+            virtual int bottom();
+
+            /**
+             * @brief Returns the centre x-coordinate of the element
+             * 
+             * @return int centre x-coordinate
+             */
+            virtual int centreX();
+
+            /**
+             * @brief Returns the centre y-coordinate of the element
+             * 
+             * @return int centre y-coordinate
+             */
+            virtual int centreY();
+
+            /**
              * @brief Returns width of element
              *
              * @return int width of element

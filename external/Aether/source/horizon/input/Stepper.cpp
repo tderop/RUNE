@@ -143,6 +143,11 @@ namespace Aether {
         this->minValue = min;
     }
 
+    void Stepper::setMinMax(int min, int max){
+        this->setMin(min);
+        this->setMax(max);
+    }
+
     int Stepper::max(){
         return this->maxValue;
     }

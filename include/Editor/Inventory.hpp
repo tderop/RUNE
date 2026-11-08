@@ -144,6 +144,7 @@ namespace Rune{
         inline const int kDurabilityMultiplier = 100;
         inline const int kMaxInventoryQuantity = 999;
         inline const int kMaxDyeColour = 15;
+        inline const int kInventoryMaxCount = 420;
 
         // For elixirs
         inline const std::string kElixirPrefix = "Item_Cook_C_17"; // other effects are like Item_Cook_C_17_DefenseUp for example
@@ -242,14 +243,14 @@ namespace Rune{
         Category GetCategoryFromMenuName(const std::string& menuName);
         
         template <typename T>
-        std::optional<T> GetEquipmentValue(const std::string& actorName, const std::string& key){
+        std::optional<T> GetActorValue(const std::string& actorName, const std::string& key){
             // Get equipment json
-            Rune::Json* equipmentJson = nullptr;
-            Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+            Rune::Json* actorJson = nullptr;
+            Rune::JsonData::GetJsonById(actorJson, "ActorData");
 
             // Find object
-            auto obj = equipmentJson->find(actorName);
-            if (obj == equipmentJson->end() || !obj->is_object()){
+            auto obj = actorJson->find(actorName);
+            if (obj == actorJson->end() || !obj->is_object()){
                 return std::nullopt;
             }
 
@@ -267,7 +268,7 @@ namespace Rune{
          * @brief Get the Rune::Json object for equipment from its actor name. Returns an empty object if no object was found.
          * @param actorName actor name of the equipment
          */
-        Rune::Json GetEquipmentObject(const std::string& actorName);
+        Rune::Json GetActorObject(const std::string& actorName);
 
         /**
          * @brief Get a value safely from a JSON object
@@ -275,7 +276,7 @@ namespace Rune{
          * @param key the key to look for
          */
         template <typename T>
-        std::optional<T> GetEquipmentValueFromObject(const Rune::Json& json, const std::string& key){
+        std::optional<T> GetActorValueFromObject(const Rune::Json& json, const std::string& key){
             // Find the value
             auto it = json.find(key);
             if (it == json.end()){

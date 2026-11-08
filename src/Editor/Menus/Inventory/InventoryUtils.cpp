@@ -118,14 +118,14 @@ std::string Rune::Inventory::GetThumbPathFromInventoryItem(const Rune::Inventory
     return "";
 }
 
-Rune::Json Rune::Inventory::GetEquipmentObject(const std::string& actorName){
+Rune::Json Rune::Inventory::GetActorObject(const std::string& actorName){
     // Get equipment JSON
-    Rune::Json* equipmentJson = nullptr;
-    Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+    Rune::Json* actorJson = nullptr;
+    Rune::JsonData::GetJsonById(actorJson, "ActorData");
 
     // Search for object in JSON
-    auto obj = equipmentJson->find(actorName);
-    if (obj == equipmentJson->end() || !obj->is_object()){
+    auto obj = actorJson->find(actorName);
+    if (obj == actorJson->end() || !obj->is_object()){
         return Rune::Json{};
     }
 
@@ -141,15 +141,15 @@ std::string Rune::Inventory::FormatValue(const Rune::Inventory::Item& inventoryI
     }
 
     // Equipment
-    Rune::Json* equipmentJson;
-    Rune::JsonData::GetJsonById(equipmentJson, "EquipmentData");
+    Rune::Json* actorJson;
+    Rune::JsonData::GetJsonById(actorJson, "ActorData");
 
     auto it = Rune::Inventory::kLabelValueKeys.find(inventoryItem.category);
     if (it != Rune::Inventory::kLabelValueKeys.end()){
         std::string labelValueKey = it->second;
-        auto it = equipmentJson->find(inventoryItem.actorName);
+        auto it = actorJson->find(inventoryItem.actorName);
 
-        if (it != equipmentJson->end() && it->is_object()){
+        if (it != actorJson->end() && it->is_object()){
             auto labelValue = it->find(labelValueKey);
 
             if (labelValue->is_number()){
@@ -158,7 +158,7 @@ std::string Rune::Inventory::FormatValue(const Rune::Inventory::Item& inventoryI
                 Logger::Write("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
             }
         } else {
-            Logger::Write("[formatValue (Inventory)] - No equipmentJson object found for "+inventoryItem.actorName+"!");
+            Logger::Write("[formatValue (Inventory)] - No actorJson object found for "+inventoryItem.actorName+"!");
         }
     } else {
         // Logger::Write("[formatValue (Inventory)] - No valueLabelKey found for "+menuName+"!");
@@ -207,15 +207,15 @@ void Rune::Inventory::ShowPage(
         // Resolve data only for visible page
         // Load data only if uninitialised
         if (!inventoryItem._initialised){
-            Rune::Json jsonObj = Rune::Inventory::GetEquipmentObject(inventoryItem.actorName);
+            Rune::Json jsonObj = Rune::Inventory::GetActorObject(inventoryItem.actorName);
 
             // using lambdas now because it was getting out of control
             auto getString = [&](const std::string& key){
-                return Rune::Inventory::GetEquipmentValueFromObject<std::string>(jsonObj, key).value_or("");
+                return Rune::Inventory::GetActorValueFromObject<std::string>(jsonObj, key).value_or("");
             };
 
             auto getInt = [&](const std::string& key){
-                return Rune::Inventory::GetEquipmentValueFromObject<int>(jsonObj, key).value_or(-1);
+                return Rune::Inventory::GetActorValueFromObject<int>(jsonObj, key).value_or(-1);
             };
 
             inventoryItem.iconActorName = getString("IconActorName");
@@ -370,7 +370,7 @@ Rune::Inventory::Category Rune::Inventory::GetCategoryFromActorName(const std::s
 }
 
 std::string Rune::Inventory::GetNextArmorRankActorName(const std::string& actorName){
-    auto nextRank = Rune::Inventory::GetEquipmentValue<std::string>(actorName, "NextRank");
+    auto nextRank = Rune::Inventory::GetActorValue<std::string>(actorName, "NextRank");
     if (nextRank == std::nullopt){
         return "";
     }
@@ -379,7 +379,7 @@ std::string Rune::Inventory::GetNextArmorRankActorName(const std::string& actorN
 }
 
 std::string Rune::Inventory::GetPrevArmorRankActorName(const std::string& actorName){
-    auto prevRank = Rune::Inventory::GetEquipmentValue<std::string>(actorName, "PrevRank");
+    auto prevRank = Rune::Inventory::GetActorValue<std::string>(actorName, "PrevRank");
     if (prevRank == std::nullopt){
         return "";
     }
@@ -400,7 +400,7 @@ bool Rune::Inventory::IsArmorUpgradeable(const std::string& actorName){
 }
 
 int Rune::Inventory::GetArmorStarNum(const std::string& actorName){
-    auto starNum = Rune::Inventory::GetEquipmentValue<int>(actorName, "StarNum");
+    auto starNum = Rune::Inventory::GetActorValue<int>(actorName, "StarNum");
     if (starNum == std::nullopt){
         return 0;
     }
@@ -414,7 +414,7 @@ bool Rune::Inventory::IsModifierEnhanced(const Modifier& modifier){
 }
 
 bool Rune::Inventory::IsArmorDyeable(const std::string& actorName){
-    auto prevRank = Rune::Inventory::GetEquipmentValue<bool>(actorName, "Dyeable");
+    auto prevRank = Rune::Inventory::GetActorValue<bool>(actorName, "Dyeable");
     if (prevRank == std::nullopt){
         return false;
     }
