@@ -177,7 +177,43 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         Aether::Rectangle* propertiesBox = new Aether::Rectangle(propertiesX, propertiesText->y()+propertiesText->textureHeight()+16, 496, 200, 6);
         propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
         ovl->addTempElement(propertiesBox);
+        
+        // Create the swap button for swapping the actor
+        // Padding: 26px
+        Aether::BorderButton* swapBtn = new Aether::BorderButton(0, 0, 148, 42, 3, "", 1, [](){});
+        swapBtn->setXY(propertiesBox->x(), propertiesBox->y()+propertiesBox->h()+12);
+        swapBtn->setBorderColour(LIGHT_SEPARATOR_COLOUR);
+        swapBtn->setFillColour(LIGHT_BACKGROUND_COLOUR);
 
+        Aether::Image* swapImg = new Aether::Image(0, 0, ASSET_PATHS.at("swap"), Aether::Render::Wait);
+        swapImg->setScaleDimensions(24, 24);
+        swapImg->renderAsync();
+        swapImg->setXY(swapBtn->x()+32, swapBtn->y()+swapBtn->h()/2-swapImg->scaleHeight()/2);
+
+        Aether::Text* swapText = new Aether::Text(0, 0, "Swap", 18);
+        swapText->setXY(swapImg->x()+swapImg->scaleWidth()+12, swapBtn->y()+swapBtn->h()/2-swapText->textureHeight()/2);
+
+        ovl->addTempElement(swapBtn);
+        swapBtn->addElement(swapImg);
+        swapBtn->addElement(swapText);
+
+        Aether::BorderButton* deleteBtn = new Aether::BorderButton(0, 0, 148, 42, 3, "", 1, [](){});
+        deleteBtn->setXY(swapBtn->x()+swapBtn->w()+26, propertiesBox->y()+propertiesBox->h()+12);
+        deleteBtn->setBorderColour(Aether::Colour{96, 0, 0, 150});
+        deleteBtn->setFillColour(Aether::Colour{180, 0, 0, 255});
+
+        Aether::Image* deleteImg = new Aether::Image(0, 0, ASSET_PATHS.at("bin"), Aether::Render::Wait);
+        deleteImg->setScaleDimensions(24, 24);
+        deleteImg->renderAsync();
+        deleteImg->setXY(deleteBtn->x()+24, deleteBtn->y()+deleteBtn->h()/2-deleteImg->scaleHeight()/2);
+
+        Aether::Text* deleteText = new Aether::Text(0, 0, "Delete", 18);
+        deleteText->setXY(deleteImg->x()+deleteImg->scaleWidth()+12, deleteBtn->y()+deleteBtn->h()/2-deleteText->textureHeight()/2);
+
+        ovl->addTempElement(deleteBtn);
+        deleteBtn->addElement(deleteImg);
+        deleteBtn->addElement(deleteText);
+        
         // Reconfigure dev note if the note exists for this category
         auto devNoteIt = Inventory::kCategoryDevNotes.find(inventoryItem->category);
         if (devNoteIt != Inventory::kCategoryDevNotes.end()){
@@ -487,15 +523,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             );
 
             // Create the text and reposition it
-            Aether::Text* bigName = new Aether::Text(
-                0, 0,
-                (inventoryItem->name.empty() ? "Unassigned" : inventoryItem->name), 20
-            );
-
-            bigName->setXY(
-                imgFrame->x()+(imgFrame->w()/2)-(bigName->textureWidth()/2),
-                imgFrame->y()+imgFrame->h()-bigName->textureHeight()-16
-            );
+            Aether::Text* bigName = new Aether::Text(0, 0, (inventoryItem->name.empty() ? "Unassigned" : inventoryItem->name), 20);
+            bigName->setXY(imgFrame->x()+(imgFrame->w()/2)-(bigName->textureWidth()/2), imgFrame->y()+imgFrame->h()-bigName->textureHeight()-16);
 
             // Add everything to the overlay and the per-update trove
             ovl->addTempElement(bigThumbnail);

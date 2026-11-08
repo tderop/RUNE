@@ -17,6 +17,7 @@ inline const Aether::Colour SELECTED_TEXT_COLOUR{49, 210, 247, 255};
 
 inline const Aether::Colour SEPARATOR_COLOUR{96, 96, 96, 255};
 inline const Aether::Colour LIGHT_SEPARATOR_COLOUR{96, 96, 96, 150};
+inline const Aether::Colour LIGHT_BACKGROUND_COLOUR{55, 55, 55, 255};
 inline const Aether::Colour BACKGROUND_COLOUR{35, 35, 35, 255};
 inline const Aether::Colour MUTED_BACKGROUND_COLOUR{20, 20, 20, 255};
 inline const Aether::Colour DEBUG_COLOUR{5, 5, 10, 255};
@@ -46,6 +47,8 @@ const std::unordered_map<std::string, std::string> ASSET_PATHS = {
     {"splash",   "romfs:/img/splash.png"},
     {"chib",     "romfs:/img/hd/chib.png"},
     {"star_alt", "romfs:/img/star_alt.png"},
+    {"swap",     "romfs:/img/swap.png"},
+    {"bin",      "romfs:/img/bin.png"},
 
     {"staminawheel_1", "romfs:/img/wheel_1.png"},
     {"staminawheel_2", "romfs:/img/wheel_2.png"},
