@@ -32,7 +32,7 @@ namespace Rune{
         inline constexpr int kGridWidth  = (kTileSize+kTilePadding)*kTilesPerRow;
         inline constexpr int kGridHeight = (kTileSize+kTilePadding)*(kTilesPerPage/kTilesPerRow);
         
-        inline constexpr float kThumbScale = 0.85;
+        inline constexpr float kThumbScale = 0.95;
 
         inline const Aether::Colour kDisabledEllipse{255, 255, 255, 75};
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
@@ -338,5 +338,19 @@ namespace Rune{
          * @return The number of stars the armor has (1 for 0 stars, 5 for 4 stars)
          */
         int GetArmorStarNum(const std::string& actorName);
+
+        /**
+         * @brief Check if a modifier is enhanced
+         * @param modifier The modifier to check
+         * @return Whether the modifier is enhanced or not
+         */
+        bool IsModifierEnhanced(const Modifier& modifier);
+
+        /**
+         * @brief Check if an armor item is dyeable or not
+         * @param actorName The armor actor name
+         * @return Whether the armor is dyeable or not
+         */
+        bool IsArmorDyeable(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

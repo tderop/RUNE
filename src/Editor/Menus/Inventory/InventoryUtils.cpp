@@ -407,3 +407,17 @@ int Rune::Inventory::GetArmorStarNum(const std::string& actorName){
 
     return starNum.value_or(0);
 }
+
+bool Rune::Inventory::IsModifierEnhanced(const Modifier& modifier){
+    uint32_t rawValue = static_cast<uint32_t>(modifier);
+    return (rawValue & Rune::Inventory::kEnhancedMask) != 0;
+}
+
+bool Rune::Inventory::IsArmorDyeable(const std::string& actorName){
+    auto prevRank = Rune::Inventory::GetEquipmentValue<bool>(actorName, "Dyeable");
+    if (prevRank == std::nullopt){
+        return false;
+    }
+
+    return prevRank.value_or(false);
+}

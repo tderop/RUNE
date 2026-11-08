@@ -20,6 +20,9 @@ const bool SHOW_AFTER_RENDER = false;
 
 const int PROPERTY_EDITOR_SPACING = 16; // 16px between value steppers/dropdowns/inputs etc
 const int ARMOR_STAR_SIZE = 22; // The font size of the armor stars
+const int BUFF_STAR_SIZE = 18; // The size of the buff indicator star for equipment tiles
+
+const Aether::Colour ENHANCED_COLOUR{255, 255, 0, 255};
 
 // I'm fed up of writing Rune:: icl
 using namespace Rune;
@@ -35,7 +38,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
     // Unpack the meta
     std::vector<std::any> widgetMeta = widget->getMeta();
-    auto inventoryItem = std::make_shared<Inventory::Item>(std::any_cast<Inventory::Item>(widgetMeta.at(0)));
+    Inventory::Item originalItem = std::any_cast<Inventory::Item>(widgetMeta.at(0));
+    auto inventoryItem = std::make_shared<Inventory::Item>(originalItem);
 
     int buttonX = inventoryItem->x;
     int buttonY = inventoryItem->y;
@@ -113,15 +117,38 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         thumbImg->renderAsync();
     }
 
+    // Add a star to the tile if there is a buff
+    if (inventoryItem->modifier != Inventory::Modifier::None){
+        Aether::Image* buffIcon = new Aether::Image(
+            tileBtn->x()+8, tileBtn->y()+8,
+            ASSET_PATHS.at("star_alt"), Aether::Render::Wait
+        );
+
+        // Colour if enhanced
+        if (Inventory::IsModifierEnhanced(inventoryItem->modifier)){
+            buffIcon->setColour(ENHANCED_COLOUR);
+        }
+
+        // Resize and render
+        buffIcon->setScaleDimensions(BUFF_STAR_SIZE, BUFF_STAR_SIZE);
+        buffIcon->renderAsync();
+
+        // Add to tile
+        widget->addToElements(buffIcon);
+    }
+
     // Default tile press behaviour - open editor
     // Handle opening the edit overlay when the tile is pressed
     // Open the widget overlay
-    tileBtn->onPress([widget, inventoryItem]() {
+    /**
+     * Handle showing the edit overlay when the tile is pressed
+     * Most overlay options are handled on a per-category basis
+     */
+    tileBtn->onPress([widget, originalItem, inventoryItem]() {
         Logger::Write(inventoryItem->actorName+
             ", flagSp: "+intToHex(inventoryItem->flagSp)+
             ", valueSp: "+intToHex(inventoryItem->valueSp));
 
-        // // Build the overlay
         // Get the widget overlay and set the title to show what we are editing
         WidgetOverlay* ovl = widget->getWidgetOverlay();
         ovl->setTitleLabel("Edit Item - "+(inventoryItem->name.empty() ? "Unassigned" : inventoryItem->name));
@@ -131,44 +158,27 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         widget->getWindow()->addOverlay(ovl);
 
         // A background frame for the item image
-        Aether::Rectangle* imgFrame = new Aether::Rectangle(
-            60, 0,
-            280, 280,
-            8
-        );
-
+        Aether::Rectangle* imgFrame = new Aether::Rectangle(60, 0, 280, 280, 8);
         imgFrame->setY((ovl->panel()->y())+(ovl->panel()->h()/2)-(imgFrame->h()/2));
         imgFrame->setColour(MUTED_BACKGROUND_COLOUR);
         ovl->addTempElement(imgFrame);
 
-        // A separator between the image and the properties
-        Aether::Rectangle* imgSeparator = new Aether::Rectangle(
-            imgFrame->x()+imgFrame->w()+24, imgFrame->y(),
-            1, imgFrame->h()
-        );
+        // A separator between the image and the rest of the overlay contents
+        Aether::Rectangle* imgSeparator = new Aether::Rectangle(imgFrame->x()+imgFrame->w()+24, imgFrame->y(), 1, imgFrame->h());
         imgSeparator->setColour(LIGHT_SEPARATOR_COLOUR);
         ovl->addTempElement(imgSeparator);
 
-        // Item properties
         int propertiesX = imgSeparator->x()+24;
-
-        Aether::Text* propertiesText = new Aether::Text(
-            propertiesX, imgSeparator->y(),
-            "Item Properties",
-            22  
-        );
+        Aether::Text* propertiesText = new Aether::Text(propertiesX, imgSeparator->y(), "Item Properties", 22  );
         propertiesText->setColour(TEXT_COLOUR);
         ovl->addTempElement(propertiesText);
 
-        Aether::Rectangle* propertiesBox = new Aether::Rectangle(
-            propertiesX, propertiesText->y()+propertiesText->textureHeight()+16,
-            496, 200,
-            6
-        );
+        // The background rectangle for "containing" the property editors
+        Aether::Rectangle* propertiesBox = new Aether::Rectangle(propertiesX, propertiesText->y()+propertiesText->textureHeight()+16, 496, 200, 6);
         propertiesBox->setColour(MUTED_BACKGROUND_COLOUR);
         ovl->addTempElement(propertiesBox);
 
-        // Set developer note properties
+        // Reconfigure dev note if the note exists for this category
         auto devNoteIt = Inventory::kCategoryDevNotes.find(inventoryItem->category);
         if (devNoteIt != Inventory::kCategoryDevNotes.end()){
             ovl->setDeveloperNoteWrap(324);
@@ -176,31 +186,62 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             ovl->setDeveloperNoteX(propertiesBox->x()+propertiesBox->w()+24);
         }
 
-        // Declarations
         int propertyElmX = propertiesX+PROPERTY_EDITOR_SPACING;
         int propertyElmY = propertiesBox->y()+12;
 
+        // PorchItem_Value1
         Aether::Stepper* primaryValueStepper = new Aether::Stepper(propertyElmX, propertyElmY);
+        primaryValueStepper->setString("Primary Val.");
 
+        // PorchItem_FlagSp
         Aether::Dropdown* secondaryFlagDropdown = nullptr;
+        // PorchItem_ValueSp
         Aether::Stepper* secondaryValueStepper = nullptr;
-        // Determine how values are filled based on item type
+
+        // Track how many property editors are visible for the "nothing to edit here" text
+        std::vector<Aether::Element*> visibleEditors;
+
+        /**
+         * Handle various category-specific tile functions for modifying the widget overlay
+         * 
+         * This switch is quite gross because of how much it performs, but I feel like making another
+         * "builder-type" system here is unnecessary and will potentially complicate things more
+         */
         switch (inventoryItem->category){
             case Inventory::Category::Weapons:
             case Inventory::Category::Bows:
             case Inventory::Category::Shields: {
+                /**
+                 * Set the properties of the primary value spinner
+                 * For weapons, this is the durability of the weapon
+                 * The maximum value of durability seems to be the s32 max
+                 * 
+                 * Set the value of the stepper to the value in save data divided by 100
+                 * This is because save data stores durability as 100*remaining.hit.points
+                 */
                 primaryValueStepper->setString("Durability");
                 primaryValueStepper->setMax(__INT32_MAX__/Inventory::kDurabilityMultiplier);
                 primaryValueStepper->setValue(inventoryItem->value/Inventory::kDurabilityMultiplier);
 
-                // Dropdown filler
+                /**
+                 * This is the modifier dropdown, it shows a list - when clicked - of all the available buffs 
+                 * for this item category.
+                 * Currently it feels a bit awkward to use, since B does not close the menu as it closes the whole widget
+                 */
                 secondaryFlagDropdown = new Aether::Dropdown(
                     propertyElmX, primaryValueStepper->y()+primaryValueStepper->h()+PROPERTY_EDITOR_SPACING,
                     "Modifier", 180, 180
                 );
                 secondaryFlagDropdown->setValue(Inventory::ModifierName((Inventory::Modifier)inventoryItem->flagSp));
                 
-                // Make the dropdown map for this category
+                /**
+                 * Build the map of available buffs for the modifier dropdown to use
+                 * 
+                 * The dropdown takes a map with the key being the visual value, and the value being whatever data is stored
+                 * for that visual value
+                 * The actual selected value (in this example, a modifier) can be obtained
+                 * by using dropdown->getValueData<Inventory::Modifier>(); 
+                 */
                 std::map<std::string, std::any> buffMap;
                 const auto& categoryModifiers = Inventory::kCategoryModifiers.find(inventoryItem->category);
                 if (categoryModifiers != Inventory::kCategoryModifiers.end()){
@@ -208,27 +249,36 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                         buffMap[Inventory::ModifierName(modifier, categoryModifiers->first)] = std::make_any<Inventory::Modifier>(modifier);
                     }
                 }
-
                 secondaryFlagDropdown->setMap(buffMap);
+                visibleEditors.push_back(secondaryFlagDropdown);
 
-                // Stepper for setting the value of the modifier
+                /**
+                 * This is a stepper for setting the value of the modifier - for example
+                 * attack up *3* or multi shot x*5*
+                 * 
+                 * The max value of the modifier seems to be 65,535 - the maximum unsigned 16 bit integer value
+                 * which appears to be a rule enforced by the game at runtime, as PorchItem_ValueSp is s32_array_data 
+                 */
                 secondaryValueStepper = new Aether::Stepper(
                     primaryValueStepper->x(),
                     secondaryFlagDropdown->y()+secondaryFlagDropdown->h()+16,
                     "Modifier Val."
                 );
-
                 secondaryValueStepper->setMax(__UINT16_MAX__);
                 secondaryValueStepper->setValue(inventoryItem->valueSp);
+                visibleEditors.push_back(secondaryValueStepper);
 
-                ovl->addTempElement(secondaryValueStepper);
-                ovl->addTempElement(secondaryFlagDropdown); // add dropdown after because Z-Index
-
+                /**
+                 * Make it so the numpad shows when the value stepper's text box is pressed
+                 * for the user to manually input a new value
+                 */
                 secondaryValueStepper->onPress([secondaryValueStepper](){
                     float outFloat;
                     Result rc = Keyboard::getNumberInput(
                         &outFloat, 
-                        "Enter a number... ("+std::to_string(secondaryValueStepper->min())+" → "+std::to_string(secondaryValueStepper->max())+")", 
+                        "Enter a number... ("
+                        +std::to_string(secondaryValueStepper->min())+
+                        " → "+std::to_string(secondaryValueStepper->max())+")", 
                         secondaryValueStepper->min(),
                         secondaryValueStepper->max(),
                         false,
@@ -240,6 +290,8 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                     }
                 });
 
+                ovl->addTempElement(secondaryValueStepper);
+                ovl->addTempElement(secondaryFlagDropdown);
                 break;
             }
 
@@ -247,6 +299,13 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             case Inventory::Category::Materials:
             case Inventory::Category::Food:
             case Inventory::Category::KeyItems: {
+                /**
+                 * All of these inventory categories support a quantity value
+                 * Only a few key items (e.g. Spirit Orbs and Korok Seeds) have a relevant quantity value
+                 * The other key items are editable for the sake of simpler code
+                 * 
+                 * Meal-type foods are not stackable, and editing the quantity value for these has no effect
+                 */
                 primaryValueStepper->setString("Quantity");
                 primaryValueStepper->setMax(Inventory::kMaxInventoryQuantity);
                 primaryValueStepper->setValue(inventoryItem->value);
@@ -254,54 +313,68 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             }
 
             case Inventory::Category::Armor: {
+                /**
+                 * Armor's primary value is dye colour
+                 * The colours are as follows (in order from value 1 to 15):
+                 * - Blue
+                 * - Red
+                 * - Yellow
+                 * - White
+                 * - Black
+                 * - Purple
+                 * - Green
+                 * - Light Blue
+                 * - Orange
+                 * - Navy
+                 * - Peach
+                 * - Crimson
+                 * - Light Yellow
+                 * - Brown
+                 * - Grey
+                 */
                 primaryValueStepper->setString("Dye Colour");
+                primaryValueStepper->setValue(inventoryItem->value);
+                int yCursor = primaryValueStepper->y();
 
-                // Enforce -1 in the case that armor cannot be dyed
-                if (inventoryItem->value >= 0){
+                /**
+                 * Armor with the primary value PorchItem_Value1[localIdx] set to -1 is considered
+                 * undyeable, so a primary value stepper is not needed
+                 * 
+                 * The primary value stepper is not deleted, but it is hidden with maximum and minimum
+                 * values both set to -1 to ensure the value cannot be changed
+                 */
+                if (Inventory::IsArmorDyeable(inventoryItem->actorName)){
                     primaryValueStepper->setMax(Inventory::kMaxDyeColour);
+                    yCursor += primaryValueStepper->h()+PROPERTY_EDITOR_SPACING;
                 } else {
-                    primaryValueStepper->setMin(-1);    
+                    // Prevent editing, hide, and do not increment y cursor
+                    primaryValueStepper->setMin(-1);
                     primaryValueStepper->setMax(-1);
+                    primaryValueStepper->setHidden(true);
                 }
 
-                primaryValueStepper->setValue(inventoryItem->value);
-
-                // If armor is upgradeable, add an upgrade stepper
+                /**
+                 * If the armor is upgradeable (if it has a next rank/previous rank entry in my generated
+                 * equipment_data.json), then a stepper for setting the rank should be made
+                 * 
+                 * The maximum number of stars is 4 and the minimum is 0, however BotW stores armor star numbers
+                 * starting from 1 and ending at 5, meaning there is a 1 offset between the visuals and the backend
+                 */
                 if (Inventory::IsArmorUpgradeable(inventoryItem->actorName)){
-                    // Get the current star value
-                    auto starCount = std::make_shared<int>(
-                        Inventory::GetArmorStarNum(inventoryItem->actorName)
-                    );
+                    auto starCount = std::make_shared<int>(Inventory::GetArmorStarNum(inventoryItem->actorName));
+                    if (*starCount <= 0){ break; }
 
-                    // Star count must be at least 1 to show
-                    if (*starCount <= 0){
-                        return;
-                    }
-
-                    // Make the star stepper
-                    Aether::Stepper* armorLevelStepper = new Aether::Stepper(
-                        primaryValueStepper->x(),
-                        primaryValueStepper->y()+primaryValueStepper->h()+PROPERTY_EDITOR_SPACING
-                    );
+                    Aether::Stepper* armorLevelStepper = new Aether::Stepper(primaryValueStepper->x(), yCursor);
+                    visibleEditors.push_back(armorLevelStepper);
+                    
                     armorLevelStepper->setString("Stars");
                     armorLevelStepper->setMin(0); // min visual stars is 0
                     armorLevelStepper->setMax(4); // max visual stars is 4
 
-                    // Make the star text
-                    Aether::Text* stars = new Aether::Text(
-                        0, 0,
-                        "", ARMOR_STAR_SIZE
-                    );
+                    Aether::Text* stars = new Aether::Text(0, 0, "", ARMOR_STAR_SIZE);
+                    for (int s = 0; s < *starCount-1; s++){ stars->setString(stars->string()+"★"); }
 
-                    // Set the star text
-                    for (int s = 0; s < *starCount-1; s++){
-                        stars->setString(stars->string()+"★");
-                    }
-
-                    stars->setXY(
-                        imgFrame->x()+12, 
-                        (imgFrame->y()+stars->textureHeight()/2)
-                    );
+                    stars->setXY(imgFrame->x()+12, (imgFrame->y()+stars->textureHeight()/2));
                     ovl->addTempElement(stars);
 
                     // Set its value to the current star value
@@ -339,9 +412,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
                         // Update star visual
                         stars->setString("");
-                        for (int s = 0; s < *starCount-1; s++){
-                            stars->setString(stars->string()+"★");
-                        }
+                        for (int s = 0; s < *starCount-1; s++){ stars->setString(stars->string()+"★"); }
                     });
 
                     ovl->addTempElement(armorLevelStepper);
@@ -355,7 +426,7 @@ void WidgetBuilder::Tile(EditorWidget* widget){
             }
         }
 
-        // Set the press function
+        // Make it so pressing the primary value stepper text box opens a numpad for manual entry
         primaryValueStepper->onPress([primaryValueStepper](){
             float outFloat;
             Result rc = Keyboard::getNumberInput(
@@ -371,8 +442,20 @@ void WidgetBuilder::Tile(EditorWidget* widget){
                 primaryValueStepper->setValue(static_cast<int>(outFloat));
             }
         });
-
         ovl->addTempElement(primaryValueStepper);
+
+        // Add to the steppers list
+        if (primaryValueStepper->isVisible()){
+            visibleEditors.push_back(primaryValueStepper);
+        }
+
+        // Show "nothing to edit" confirmation to user if there are no visible editors
+        if (visibleEditors.size() <= 0){
+            Aether::Text* noEditText = new Aether::Text(0, 0, "No editable properties!", 28);
+            noEditText->setXY(propertiesBox->x()+propertiesBox->w()/2-noEditText->textureWidth()/2, propertiesBox->y()+propertiesBox->h()/2-noEditText->textureHeight()/2);
+            noEditText->setColour(MUTED_TEXT_COLOR);
+            ovl->addTempElement(noEditText);
+        }
 
         Trove* ovlTrove = new Trove();
 
@@ -426,8 +509,12 @@ void WidgetBuilder::Tile(EditorWidget* widget){
         updateOvl();
 
         // For handling close
-        widget->getWidgetOverlay()->onCloseSignal->connectWithId([widget, ovlTrove, inventoryItem, 
-            primaryValueStepper, secondaryFlagDropdown, secondaryValueStepper](size_t connId, bool isSave){
+        widget->getWidgetOverlay()->onCloseSignal->connectWithId([
+                widget, ovlTrove, originalItem, 
+                inventoryItem, primaryValueStepper, secondaryFlagDropdown, 
+                secondaryValueStepper
+            ]
+            (size_t connId, bool isSave){
             // Memory management
             widget->getWidgetOverlay()->onCloseSignal->disconnect(connId);
             delete ovlTrove;
@@ -505,6 +592,9 @@ void WidgetBuilder::Tile(EditorWidget* widget){
 
                 // Reload to update inventory item data
                 widget->getMenu()->requestReload();
+            } else {
+                // If it was not saved, reset inventoryItem to the original value and continue
+                *inventoryItem = originalItem;
             }
         });
     });

@@ -45,6 +45,7 @@ const std::unordered_map<std::string, std::string> ASSET_PATHS = {
     {"star",     "romfs:/img/star.png"},
     {"splash",   "romfs:/img/splash.png"},
     {"chib",     "romfs:/img/hd/chib.png"},
+    {"star_alt", "romfs:/img/star_alt.png"},
 
     {"staminawheel_1", "romfs:/img/wheel_1.png"},
     {"staminawheel_2", "romfs:/img/wheel_2.png"},
