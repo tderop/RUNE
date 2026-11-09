@@ -175,6 +175,7 @@ void EditorMenu::reload(){
 bool EditorMenu::reloadQueued(){
     return this->_reloadQueued;
 }
-// Trove* EditorMenu::trove(){
-//     return this->_trove;
-// }
+
+Aether::Screen* EditorMenu::screen(){
+    return this->_screen;
+}

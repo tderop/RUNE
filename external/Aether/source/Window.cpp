@@ -5,6 +5,8 @@
 #include "Aether/utils/Utils.hpp"
 #include "Aether/Window.hpp"
 
+#include <algorithm>
+
 // Font size for debug info
 static constexpr unsigned int debugFontSize = 18;
 
@@ -341,6 +343,18 @@ namespace Aether {
         if (this->overlays.size() > 1) {
             this->overlays[this->overlays.size() - 2]->setInactive();
         }
+    }
+
+    bool Window::removeOverlay(Overlay* ovl){
+        std::vector<Overlay*>::iterator it = std::find(this->overlays.begin(), this->overlays.end(), ovl);
+        if (it != this->overlays.end()){
+            // ovl->close();
+            delete ovl;
+            this->overlays.erase(it);
+            return true;
+        }
+
+        return false;
     }
 
     void Window::pushScreen() {

@@ -120,6 +120,15 @@ namespace Rune{
         Logger::Write("[Rune::Application] - Successfully showed splash screen!");
     }
 
+    void Application::setApplication(Application* application){
+        if (Rune::Application::_app != nullptr) { return; } // Can only be called once
+        Rune::Application::_app = application;
+    }
+
+    Application* Application::getApplication(){
+        return Rune::Application::_app;
+    }
+
     Aether::Window* Application::window(){
         return this->_window;
     }
@@ -216,4 +225,48 @@ namespace Rune{
     std::string Application::currentScreenName(){
         return this->_currentScreenName;
     }
+
+    Aether::MessageBox* Application::showLoading(const std::string& msg, bool showProgress){
+        // Show loading
+        if (this->_loadingMsg == nullptr){
+            this->_loadingMsg = new Aether::MessageBox("Loading...");
+            _loadingMsg->addTopButton("", [](){});
+            _loadingMsg->topButton()->setHidden(true);
+
+            _loadingMsg->setRectangleColour(BACKGROUND_COLOUR);
+            _loadingMsg->setLineColour(Aether::Colour{0, 0, 0, 0});
+            _loadingMsg->setBodySize(770, 320);
+            _loadingMsg->setTextColour(TEXT_COLOUR);
+        }
+
+        if (this->_loadingProgress == nullptr){
+            this->_loadingProgress = new Aether::RoundProgressBar((WINDOW_RESOLUTION_X/2)-(385/2), 400, 385);
+            _loadingProgress->setBackgroundColour(MUTED_BACKGROUND_COLOUR);
+            _loadingProgress->setForegroundColour(TOP_R);
+            _loadingProgress->setValue(0);
+
+            _loadingMsg->addElement(_loadingProgress);
+        }
+
+        _loadingMsg->setString(msg);
+
+        _loadingProgress->setHidden(!showProgress);
+        _loadingProgress->setValue(0.0f);
+        
+        // Add the loading message and force a UI update
+        this->_window->addOverlay(_loadingMsg);
+        this->_window->loop();
+
+        return _loadingMsg;
+    }
+
+    void Application::setLoadingProgress(float progress){
+        if (this->_loadingProgress == nullptr){
+            return;
+        }
+
+        _loadingProgress->setValue(progress*100);
+        this->_window->loop();
+    }
+
 }

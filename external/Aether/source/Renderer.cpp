@@ -150,8 +150,8 @@ namespace Aether {
         SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
 
         // Copy to framebuffer
-        SDL_Rect src = {maskX, maskY, maskW, maskH};
-        SDL_Rect dest = {x, y, width, height};
+        SDL_Rect src = {static_cast<int>(maskX), static_cast<int>(maskY), static_cast<int>(maskW), static_cast<int>(maskH)};
+        SDL_Rect dest = {x, y, static_cast<int>(width), static_cast<int>(height)};
         SDL_RenderCopy(this->renderer, tex, &src, &dest);
     }
 
@@ -378,7 +378,7 @@ namespace Aether {
     void Renderer::setClipArea(const int x1, const int y1, const int x2, const int y2) {
         // Do nothing if the points are not in the correct order
         if (x1 == x2 || y1 == y2 || x2 < x1 || y2 < y1) {
-            SDL_Rect * r = new SDL_Rect{0, 0, this->windowWidth_, this->windowHeight_};
+            SDL_Rect * r = new SDL_Rect{0, 0, static_cast<int>(this->windowWidth_), static_cast<int>(this->windowHeight_)};
             this->clipStack.push(r);
             return;
         }
@@ -529,7 +529,7 @@ namespace Aether {
                 // Update variables regarding positioning
                 lastCharWidth = metrics.width();
                 wordWidth += metrics.width();
-                lineHeight = (metrics.height() > lineHeight ? metrics.height() : lineHeight);
+                lineHeight = (static_cast<unsigned int>(metrics.height()) > lineHeight ? metrics.height() : lineHeight);
                 word += str.substr(oldPos, charSize);
 
                 // Add word to current line if space
@@ -604,18 +604,17 @@ namespace Aether {
         SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
 
         // Read pixels into byte array
-        uint8_t * tmp = new uint8_t[w * h * 4];
+        uint8_t* tmp = new uint8_t[w * h * 4];
         if (SDL_RenderReadPixels(this->renderer, nullptr, SDL_PIXELFORMAT_RGBA32, &pixels[0], w * 4) < 0) {
             this->logMessage("Couldn't read pixels from texture: Unable to read data", true);
             return pixels;
         }
 
         // Convert to Colour
-        for (size_t i = 0; i < w * h; i++) {
+        for (size_t i = 0; i < static_cast<size_t>(w) * h; i++) {
             pixels.push_back(Colour(tmp[i], tmp[i+1], tmp[i+2], tmp[i+3]));
         }
-        delete tmp;
-
+        delete[] tmp;
         return pixels;
     }
 
@@ -735,7 +734,7 @@ namespace Aether {
                     return new Drawable();
                 }
 
-                SDL_Rect r = SDL_Rect{x, 0, tmp->w, tmp->h};
+                SDL_Rect r = SDL_Rect{static_cast<int>(x), 0, tmp->w, tmp->h};
                 SDL_BlitSurface(tmp, NULL, surf, &r);
                 x += tmp->w;
             }
@@ -792,7 +791,7 @@ namespace Aether {
                     return new Drawable();
                 }
 
-                SDL_Rect r = SDL_Rect{x, i * (std::get<2>(dims)/lines.size()), glyph->w, glyph->h};
+                SDL_Rect r = SDL_Rect{x, static_cast<int>(i * (std::get<2>(dims)/lines.size())), glyph->w, glyph->h};
                 x += glyph->w;
                 SDL_BlitSurface(glyph, NULL, surf, &r);
             }
@@ -964,13 +963,13 @@ namespace Aether {
             SDL_Rect r;
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-            r = {0, radius, radius, height - 2*radius};
+            r = {0, static_cast<int>(radius), static_cast<int>(radius), height - 2*static_cast<int>(radius)};
             SDL_RenderFillRect(renderer, &r);
 
-            r = {radius, 0, width - 2*radius, height};
+            r = {static_cast<int>(radius), 0, static_cast<int>(width - 2*radius), static_cast<int>(height)};
             SDL_RenderFillRect(renderer, &r);
 
-            r = {width - radius, radius, radius, height - 2*radius};
+            r = {width - static_cast<int>(radius), static_cast<int>(radius), static_cast<int>(radius), height - static_cast<int>(2*radius)};
             SDL_RenderFillRect(renderer, &r);
         });
 

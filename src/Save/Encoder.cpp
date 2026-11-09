@@ -14,21 +14,24 @@
 /**
  * oh boy
  */
-Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
-    Rune::Save::RawFile* output = new Rune::Save::RawFile();
-
+void Rune::Save::Encode(Rune::Save::RawFile* out, Rune::Save::File* saveFile, std::function<void(size_t cur, size_t max)> onProgress){
     // MOVE HEADER AND PATH
-    output->path   = saveFile->path;
-    output->header = saveFile->header;
+    out->path   = saveFile->path;
+    out->header = saveFile->header;
 
     // MAIN ITERATOR
-    for (Entry entry : saveFile->entries){
+    size_t currentProgress=0;
+    size_t maxProgress=saveFile->entries.size();
+
+    Logger::Importantf("Entries: %d", maxProgress);
+
+    for (const auto& entry : saveFile->entries){
         switch (entry.dataType){
             case RuneBool:
             case RuneRevivalBool: {
                 // convert the bool to uint32_t
                 uint32_t encodedValue = std::get<bool>(entry.value);
-                output->entries.emplace_back(entry.id, encodedValue);
+                out->entries.emplace_back(entry.id, encodedValue);
 
                 break;
             }
@@ -37,7 +40,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
             case RuneRevivalS32: {
                 // convert s32 to uint32_t
                 uint32_t encodedValue = std::get<int32_t>(entry.value);
-                output->entries.emplace_back(entry.id, encodedValue);
+                out->entries.emplace_back(entry.id, encodedValue);
 
                 break;
             }
@@ -50,7 +53,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                 float decodedValue = std::get<float>(entry.value);
                 std::memcpy(&rawEntry.value, &decodedValue, sizeof(decodedValue));
 
-                output->entries.push_back(rawEntry);
+                out->entries.push_back(rawEntry);
                 break;
             }
 
@@ -99,7 +102,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                         rawValue |= static_cast<uint32_t>(static_cast<unsigned char>(c) << (byte * 8));
                     }
 
-                    output->entries.emplace_back(entry.id, rawValue);
+                    out->entries.emplace_back(entry.id, rawValue);
                 }
 
                 break;
@@ -140,7 +143,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                     std::memcpy(&rawEntry.value, &decodedComponent, sizeof(decodedComponent));
 
                     // Add the new component entry to the list of encoded raw entries
-                    output->entries.push_back(rawEntry);
+                    out->entries.push_back(rawEntry);
                 }
 
                 break;
@@ -194,7 +197,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                         }
 
                         // create a new entry for each chunk in the string
-                        output->entries.emplace_back(entry.id, rawValue);
+                        out->entries.emplace_back(entry.id, rawValue);
                     }
                 }
                 
@@ -231,7 +234,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                         rawEntry.id = entry.id;
                         float decodedComponent = toEncode.at(componentIdx);
                         std::memcpy(&rawEntry.value, &decodedComponent, sizeof(decodedComponent));
-                        output->entries.push_back(rawEntry);
+                        out->entries.push_back(rawEntry);
                     }
                 }
 
@@ -243,7 +246,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                     std::get<std::vector<int32_t>>(entry.value);
 
                 for (int32_t toEncode : values){
-                    output->entries.emplace_back(entry.id, 
+                    out->entries.emplace_back(entry.id, 
                         static_cast<uint32_t>(toEncode));
                 }
 
@@ -258,7 +261,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                     RawEntry rawEntry;
                     rawEntry.id = entry.id;
                     std::memcpy(&rawEntry.value, &toEncode, sizeof(toEncode));
-                    output->entries.push_back(rawEntry);
+                    out->entries.push_back(rawEntry);
                 }
                 break;
             }
@@ -268,7 +271,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                     std::get<std::vector<uint8_t>>(entry.value);
 
                 for (uint8_t toEncode : values){
-                    output->entries.emplace_back(
+                    out->entries.emplace_back(
                         entry.id,
                         static_cast<uint32_t>(toEncode)
                     );
@@ -278,7 +281,7 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
             }
 
             default: {
-                // output->entries.emplace_back(
+                // out->entries.emplace_back(
                 //     entry.id,
                 //     static_cast<uint32_t>(entry.value) ich bin stupid
                 // )
@@ -286,13 +289,16 @@ Rune::Save::RawFile* Rune::Save::Encode(Rune::Save::File* saveFile){
                 break;
             }
         }
+
+        currentProgress++;
+        onProgress(currentProgress, maxProgress);
     }
 
-    return output;
+    // return out;
 }
 
 // Also stores a backup
-Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath){
+Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath, std::function<void(size_t cur, size_t max)> onProgress){
     // Step 1: Get the existing file at outputPath
     if (std::filesystem::exists(outputPath)){
         time_t now = time(nullptr);
@@ -353,9 +359,15 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
 
     // Write the entires
     Logger::Write("[Rune::Save::CompileTo] - Writing entries...");
+
+    size_t currentProgress = 0;
+    size_t maxProgress = rawSaveFile->entries.size();
     for (const auto& rawEntry : rawSaveFile->entries){
         sav.write(reinterpret_cast<const char*>(&rawEntry.id), sizeof(rawEntry.id));
         sav.write(reinterpret_cast<const char*>(&rawEntry.value), sizeof(rawEntry.value));
+
+        currentProgress++;
+        onProgress(currentProgress, maxProgress);
     }
 
     // Write the padding bytes

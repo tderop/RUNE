@@ -109,7 +109,7 @@ namespace Aether::Utils {
         }
 
         // Three bytes
-        if (c == 0 & (str.length() - pos) >= 3) {
+        if (c == 0 && (str.length() - pos) >= 3) {
             if ((str[0 + pos] & 0b11110000) == 0b11100000) {
                 c = (str[0 + pos] & 0b00001111) << 12;
                 c = (c | ((str[1 + pos] & 0b00111111) << 6));

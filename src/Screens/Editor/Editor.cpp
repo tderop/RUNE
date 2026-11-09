@@ -350,18 +350,34 @@ void EditorScreen::buildScreen(){
 
         confirmBox->setString("Save changes? This will modify this save slot.");
         confirmBox->leftButton()->onPress([this, window, confirmBox, messageBox](){
+            // remove the confirm box and show loading
+            confirmBox->close();
+            auto loadingMsg = this->app->showLoading("Packing values...", true);
 
             // encode the save file
-            Rune::Save::RawFile* rawFile = Rune::Save::Encode(this->saveFile);
+            Rune::Save::RawFile rawFile;
+            Rune::Save::Encode(&rawFile, this->saveFile, [this](size_t cur, size_t max){
+                if (max == 0) { return; }
+                if (cur % 640 != 0) { return; }
+                this->app->setLoadingProgress(static_cast<float>(cur)/max);
+            });
 
             // compile the save file
-            Result rc = Rune::Save::CompileTo(rawFile, rawFile->path);
+            loadingMsg->setString("Storing backup...");
+            this->app->setLoadingProgress(0);
 
-            // free memory
-            delete rawFile;
+            const std::string& path = rawFile.path;
+            Result rc = Rune::Save::CompileTo(&rawFile, rawFile.path, 
+                [this, loadingMsg, path](size_t cur, size_t max){
+                    if (max == 0) { return; }
+                    if (cur % 640 != 0) { return; }
 
-            // remove the confirm box
-            confirmBox->close();
+                    loadingMsg->setString("Writing to "+path+"...");
+                    this->app->setLoadingProgress(static_cast<float>(cur)/max);
+                }
+            );
+
+            loadingMsg->close();
 
             if (R_SUCCEEDED(rc)){
                 messageBox->setString("Saved! Backups are in the sdcard:/switch/RUNE directory.");
@@ -373,7 +389,7 @@ void EditorScreen::buildScreen(){
             messageBox->setFocused(messageBox->topButton());
         });
 
-        confirmBox->rightButton()->onPress([this, confirmBox]{
+        confirmBox->rightButton()->onPress([confirmBox]{
             confirmBox->close();
         });
 

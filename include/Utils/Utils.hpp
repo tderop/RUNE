@@ -63,3 +63,8 @@ uint64_t timeCode(std::function<void()> f);
  * @note A function I stole from NX-Activity-Log to animate the selection borders.
  */
 std::function<Aether::Colour(uint32_t)> highlightFunc();
+
+/**
+ * @brief Convert a string to lowercase
+ */
+void toLower(std::string& s);

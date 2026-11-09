@@ -38,44 +38,45 @@ void Trove::clear() {
     // Logger::Write("[TROVE] - About to inspect vector...");
     // Logger::Write("[TROVE] - Element count: " + std::to_string(this->elements.size()));
     // Logger::Write("[TROVE] - Vector inspected.");
+    if (!this->elements.empty()){
+        for (AetherElement elm : this->elements) {
+            // Logger::Write("[TROVE] - Entered loop.");
 
-    for (AetherElement elm : this->elements) {
-        // Logger::Write("[TROVE] - Entered loop.");
+            bool isNull = std::visit([](auto&& arg)->bool{
+                return arg == nullptr;
+            }, elm);
 
-        bool isNull = std::visit([](auto&& arg)->bool{
-            return arg == nullptr;
-        }, elm);
+            if (isNull) {
+                // Logger::Write("[TROVE] - nullptr.");
+                continue;
+            }
 
-        if (isNull) {
-            // Logger::Write("[TROVE] - nullptr.");
-            continue;
+            // Logger::Write("[TROVE] - Getting parent...");
+
+            Aether::Element* parent = std::visit([](auto&& arg)->Aether::Element*{
+                return arg->parent();
+            }, elm);
+
+            // Logger::Write("[TROVE] - Got parent.");
+
+            if (parent == nullptr) {
+                // Logger::Write("[TROVE] - No parent.");
+                continue;
+            }
+
+            // Logger::Write("[TROVE] - Removing...");
+            
+            Aether::Element* element = std::visit([](auto&& arg)->Aether::Element*{
+                return arg;
+            }, elm);
+
+            parent->removeElement(element);
+            // Logger::Write("[TROVE] - Removed.");
         }
 
-        // Logger::Write("[TROVE] - Getting parent...");
-
-        Aether::Element* parent = std::visit([](auto&& arg)->Aether::Element*{
-            return arg->parent();
-        }, elm);
-
-        // Logger::Write("[TROVE] - Got parent.");
-
-        if (parent == nullptr) {
-            // Logger::Write("[TROVE] - No parent.");
-            continue;
-        }
-
-        // Logger::Write("[TROVE] - Removing...");
-        
-        Aether::Element* element = std::visit([](auto&& arg)->Aether::Element*{
-            return arg;
-        }, elm);
-
-        parent->removeElement(element);
-        // Logger::Write("[TROVE] - Removed.");
+        // Logger::Write("[TROVE] - Clearing vector...");
+        this->elements.clear();
     }
-
-    // Logger::Write("[TROVE] - Clearing vector...");
-    this->elements.clear();
 
     // Run all tasks
     for (const auto& task : this->tasks){

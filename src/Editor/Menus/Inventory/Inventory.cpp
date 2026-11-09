@@ -264,7 +264,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
             // Add empty slots for every available slot
             // Do not continue if no more safe slots
-            for (int i = (inventoryItems->size()-1) && foundSafeIdx; i < maxSlots-1; ++i){
+            for (int i = (inventoryItems->size()-1); i < maxSlots-1 && foundSafeIdx; ++i){
                 Rune::Inventory::Item newItem = emptySlot;
                 newItem.index = currentIdx;
                 inventoryItems->push_back(newItem);
@@ -328,8 +328,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
     // Bind navigation actions
     InputSystem& inputService = InputSystem::getService();
-    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_StickRRight));
-    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_StickRLeft));
+    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_ZR));
+    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_ZL));
 
     inputService.connect("NextPage", [menu, inventoryItems, currentPage, maxPage, ellipses](InputSystem& svc, InputState state){
         if (state != InputState::Begin || maxPage == 0){

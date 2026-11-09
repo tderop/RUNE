@@ -13,7 +13,7 @@
 #include <iomanip>
 #include <sstream>
 #include <functional>
-#include <numbers>
+#include <algorithm>
 #include <chrono>
 
 Result getUserID(AccountUid* out){
@@ -143,4 +143,10 @@ uint64_t timeCode(std::function<void()> f){
     return std::chrono::duration_cast<
         std::chrono::nanoseconds
     >(end-start).count();
+}
+
+void toLower(std::string& s){
+    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){
+        return std::tolower(c);
+    });
 }

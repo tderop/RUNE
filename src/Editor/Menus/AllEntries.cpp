@@ -59,8 +59,8 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
     );
 
     InputSystem& inputService = InputSystem::getService();
-    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_StickRRight));
-    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_StickRLeft));
+    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_ZR));
+    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_ZL));
 
     inputService.connect("NextPage", [menu, currentPage, pageCount, maxPage](InputSystem& svc, InputState state){
         if (state != InputState::Begin){

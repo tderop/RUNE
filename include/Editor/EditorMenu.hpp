@@ -105,6 +105,9 @@ class EditorMenu {
         /** @brief Access the window */
         Aether::Window* window();
 
+        /** @brief Access the screen */
+        Aether::Screen* screen();
+
         /** @brief Set the popupList */
         void setPopupList(Aether::PopupList* popupList);
 

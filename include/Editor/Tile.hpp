@@ -7,6 +7,7 @@
 #include <Editor/EditorMenu.hpp>
 #include <Editor/WidgetOverlay.hpp>
 
+#include <Application/Application.hpp>
 #include <Save/Save.hpp>
 
 #include <any>
@@ -82,7 +83,9 @@ namespace Rune {
                 // size_t connId=0;
 
                 /** @brief The swap UI trove */
-                Trove* swapTrove=nullptr;
+                // Trove* swapTrove=nullptr;
+                /** @brief The main application (just for easier reference) */
+                Application* app=nullptr;
 
                 /** 
                  * @brief Update the tile format

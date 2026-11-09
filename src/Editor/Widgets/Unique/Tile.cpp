@@ -3,12 +3,13 @@
 
 #include <Aether/Aether.hpp>
 
+#include <Application/Application.hpp>
 #include <Application/Keyboard.hpp>
 
 #include <Editor/Tile.hpp>
 
 #include <Utils/Logger.hpp>
-#include <Utils/Trove.hpp>
+#include <Utils/Utils.hpp>
 #include <Config.hpp>
 
 #include <vector>
@@ -484,8 +485,13 @@ namespace Rune {
                         ovlPrimaryValueStepper->setMax(kMaxInventoryQuantity);
                         ovlPrimaryValueStepper->setValue(inventoryItem.value);
                     } else {
+                        // Set value to 1 by default (0 slots may cause instability)
+                        if (inventoryItem.value == 0){
+                            inventoryItem.value = 1;
+                        }
                         ovlPrimaryValueStepper->setMin(inventoryItem.value);
                         ovlPrimaryValueStepper->setMax(inventoryItem.value);
+                        ovlPrimaryValueStepper->setValue(inventoryItem.value);
                         ovlPrimaryValueStepper->setHidden(true);
                     }
 
@@ -602,7 +608,8 @@ namespace Rune {
             this->widgetMeta = widgetMeta;
             this->widget = widget;
             this->menu = widget->getMenu();
-            this->window = this->menu->window();
+            this->app = Application::getApplication();
+            this->window = this->app->window();
             this->saveFile = this->menu->saveFile();
             this->saveEntry = this->widget->getSaveEntry();
             this->originalInventoryItem = std::any_cast<Item>(widgetMeta.at(0));
@@ -662,22 +669,30 @@ namespace Rune {
                 return;
             }
 
-
             // Disable exiting the overlay temporarily
             this->ovl->setExitEnabled(false);
 
+            // Show loading message
+            Application* app = Application::getApplication();
+            Aether::MessageBox* loadingMsg = app->showLoading("Loading items...", true);
+            
             // Get a list of available actor names
             std::vector<std::string> otherActorNames 
                 = CategoryActors.find(inventoryItem.category)->second;
 
             // Make a main containter
-            Aether::Container* swapCtnr = new Aether::Container(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
-            this->ovl->addElement(swapCtnr);
+            Aether::Overlay* swapOvl = new Aether::Overlay();
 
             // Make a dark background rect
             Aether::Rectangle* swapBg = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
             swapBg->setColour(Aether::Colour{0, 0, 0, 150});
-            swapCtnr->addElement(swapBg);
+            swapOvl->addElement(swapBg);
+
+            // Show other controls
+            Aether::ControlBar* ctrlBar = new Aether::ControlBar();
+            ctrlBar->addControl(Aether::Button::B, "Cancel");
+            ctrlBar->addControl(Aether::Button::X, "Search");
+            swapOvl->addElement(ctrlBar);
 
             // Make a central list frames
             Aether::Rectangle* listFrame = new Aether::Rectangle(0, 0, 960, 540, 6);
@@ -685,43 +700,100 @@ namespace Rune {
             listFrame->setXY(
                 swapBg->centreX()-listFrame->w()/2,
                 swapBg->centreY()-listFrame->h()/2);
-            swapCtnr->addElement(listFrame);
+            swapOvl->addElement(listFrame);
 
             // Make the list
             Aether::List* list = new Aether::List(
                 listFrame->x(), listFrame->y(),
                 listFrame->w(), listFrame->h(),
-                Aether::Padding::None
+                Aether::Padding::FitScrollbar
             );
             list->setScrollBarColour(LIGHT_SEPARATOR_COLOUR);
-            swapCtnr->addElement(list);
+            swapOvl->addElement(list);
 
             // Build the options
             Aether::ListButton* firstOptn = nullptr;
+            auto listBtns = std::make_shared<std::unordered_map<std::string, std::pair<std::string, Aether::ListButton*>>>();
+
+            // Incremented when a list button is generated
+            size_t genProgress = 0;
+
             for (const std::string& otherActor : otherActorNames){
+                std::string fullName = GetNameFromActorName(otherActor);
                 Aether::ListButton* actorOptn = new Aether::ListButton(
-                    GetNameFromActorName(otherActor)+" ("+otherActor+")", [this, swapCtnr, otherActor](){
+                    fullName+" ("+otherActor+")", [this, swapOvl, otherActor](){
                         this->inventoryItem.actorName = otherActor;
 
                         this->updateOvlImg();
                         this->updateOvlText();
+                        this->updatePropertyEditors();
 
-                        this->ovl->removeElement(swapCtnr);
                         this->ovl->setExitEnabled(true);
+                        this->window->removeOverlay(swapOvl);
                     }
                 );
                 actorOptn->setLineColour(LIGHT_SEPARATOR_COLOUR);
                 actorOptn->setTextColour(TOP_R);
 
                 list->addElement(actorOptn);
+                
+                toLower(fullName);
+                (*listBtns)[otherActor] = {fullName, actorOptn};
 
                 if (!firstOptn){
                     firstOptn = actorOptn;
+                    firstOptn->setY(list->y()+12);
+                }
+
+
+                // Update loading bar
+                genProgress++;
+                if (genProgress % 12 == 0){
+                    app->setLoadingProgress(static_cast<float>(genProgress)
+                        /otherActorNames.size());
                 }
             }
 
-            swapCtnr->setFocused(list);
+            swapOvl->onButtonPress(Aether::Button::X, [listBtns, list](){
+                std::string out;
+                if (R_SUCCEEDED(Keyboard::getStringInput(
+                    &out, "Enter a search query..."))){
+                    // lower the search query
+                    toLower(out);
+
+                    // Filter buttons
+                    size_t posOffset=0;
+                    for (const auto& [actorName, nameBtn] : *listBtns){
+                        const auto& [name, btn] = nameBtn;
+
+                        if (name.find(out) == std::string::npos){
+                            btn->setHidden(true); // Hide buttons that don't match
+                        } else {
+                            Logger::Importantf("Showing: %s", name.c_str());
+                            btn->setHidden(false); // Show buttons that do
+                            btn->setY(list->y()+12+(posOffset*btn->h()));
+
+                            if (posOffset == 0){
+                                list->setFocused(btn);
+                            }
+
+                            posOffset+=1;
+                        }
+                    }
+                }
+            });
+
+            swapOvl->onButtonPress(Aether::Button::B, [this, swapOvl](){
+                this->ovl->setExitEnabled(true);
+                this->window->removeOverlay(swapOvl);
+            });
+
+            swapOvl->setFocused(list);
             list->setFocused(firstOptn);
+
+            // Show the select overlay and close the loading overlay
+            this->window->addOverlay(swapOvl);
+            loadingMsg->close();
         }
 
         void Tile::onPress(){
@@ -775,7 +847,7 @@ namespace Rune {
                     Logger::Importantf("(Value1) Error: Index %d is OOB", inventoryItem.index);
                 } else {
                     primaryValue[inventoryItem.index] = newPrimaryValue;
-                    Logger::Important("Saved Value1 Update.");
+                    Logger::Importantf("Saved Value1 Update (%d)", newPrimaryValue);
                 }
 
                 // PorchItem_FlagSp changed
@@ -786,18 +858,19 @@ namespace Rune {
 
                     auto& secondaryFlags = std::get<std::vector<int32_t>>(
                         secondaryFlagEntry->value);
-                    int32_t oldFlag = secondaryFlags.at(
-                        this->inventoryItem.localIndex);
 
                     if (inventoryItem.localIndex >= secondaryFlags.size()){
                         Logger::Importantf("(FlagSp) Error: Index %d is OOB", inventoryItem.localIndex);
                     } else {
-                        secondaryFlags[this->inventoryItem.localIndex]
-                            = static_cast<int32_t>(
-                                this->ovlSecondaryFlagDropdown->getValueData
-                                <Modifier>().value_or((Modifier)oldFlag)
-                            );
-                        Logger::Important("Saved FlagSp Update.");
+                        int32_t oldFlag = secondaryFlags.at(
+                            this->inventoryItem.localIndex);
+
+                        int newSecondaryFlagValue = static_cast<int32_t>(
+                            this->ovlSecondaryFlagDropdown->getValueData<Modifier>()
+                                .value_or((Modifier)oldFlag));
+
+                        secondaryFlags[this->inventoryItem.localIndex]= newSecondaryFlagValue;
+                        Logger::Importantf("Saved FlagSp Update (%d)", newSecondaryFlagValue);
                     }
                 }
 
@@ -812,9 +885,9 @@ namespace Rune {
                     if (inventoryItem.localIndex >= secondaryValues.size()){
                         Logger::Importantf("(ValueSp) Error: Index %d is OOB", inventoryItem.localIndex);
                     } else {
-                        secondaryValues[this->inventoryItem.localIndex] 
-                            = this->ovlSecondaryValueStepper->value();
-                        Logger::Important("Saved ValueSp Update.");
+                        int newSecondaryValue = this->ovlSecondaryValueStepper->value();
+                        secondaryValues[this->inventoryItem.localIndex] = newSecondaryValue;
+                        Logger::Importantf("Saved ValueSp Update (%d)", newSecondaryValue);
                     }
                 }
 

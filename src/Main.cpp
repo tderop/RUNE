@@ -209,6 +209,8 @@ Result initApplet(){
 
     // Initialise the RUNE application manager. This handles screen management.
     app = new Rune::Application(initSuccess);
+    Rune::Application::setApplication(app);
+
     Logger::Write("[Rune::Application] - Successfully loaded application manager.");
 
     // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)

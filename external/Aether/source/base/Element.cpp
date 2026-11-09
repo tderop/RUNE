@@ -330,6 +330,10 @@ namespace Aether {
 
         // Update children
         for (size_t i = 0; i < this->children.size(); i++) {
+            if (this->children[i] == nullptr){
+                continue;
+            }
+
             this->children[i]->update(dt);
         }
     }

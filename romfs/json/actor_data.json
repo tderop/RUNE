@@ -67,6 +67,7 @@
   },
   "Weapon_Sword_502": {
     "Name": "One-Hit Obliterator",
+    "Hidden": true,
     "Durability": 40,
     "Attack": 1
   },
@@ -199,6 +200,7 @@
   },
   "Weapon_Sword_080": {
     "Name": "Master Sword",
+    "Hidden": true,
     "Durability": 100
   },
   "Weapon_Sword_073": {
@@ -328,6 +330,7 @@
   },
   "Weapon_Sword_081": {
     "Name": "Master Sword",
+    "Hidden": true,
     "Durability": 100
   },
   "Weapon_Spear_009": {

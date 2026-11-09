@@ -125,7 +125,8 @@ void SplashScreen::loadRune(void* _self){
     
     {
         std::lock_guard<std::mutex> lock(Rune::Inventory::CategoryActorsMutex);
-        for (const auto&[name, _]: actorData->items()){
+        for (const auto&[name, data]: actorData->items()){
+            if (Rune::Inventory::GetActorValueFromObject<bool>(data, "Hidden")){ continue; } // ignore hidden items
             Rune::Inventory::Category category = Rune::Inventory::GetCategoryFromActorName(name);
             Rune::Inventory::CategoryActors[category].push_back(name);
         }

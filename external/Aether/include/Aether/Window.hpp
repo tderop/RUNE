@@ -4,6 +4,13 @@
 #include <queue>
 #include <stack>
 
+#include <functional>
+#include <string>
+
+#include "Aether/types/Colour.hpp"
+#include "Aether/types/Drawable.hpp"
+#include "Aether/utils/Types.hpp"
+
 // Forward declare the typedef
 namespace {
     typedef std::function<void(const std::string, const bool)> LogHandler;
@@ -229,6 +236,14 @@ namespace Aether {
              * @param ovl Overlay to show
              */
             void addOverlay(Overlay * ovl);
+
+            /**
+             * @brief Remove the overlay from the window.
+             * @note This also deletes the overlay.
+             *
+             * @param ovl Overlay to remove
+             */
+            bool removeOverlay(Overlay* ovl);
 
             /**
              * @brief Push the current screen onto the stack at the next loop

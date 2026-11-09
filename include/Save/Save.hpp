@@ -298,13 +298,13 @@ namespace Rune
         /**
          * @brief Convert a decoded save file to a raw save file.
          */
-        RawFile* Encode(File* saveFile);
+        void Encode(RawFile* out, File* saveFile, std::function<void(size_t cur, size_t max)> onProgress=[](...){});
 
         /**
          * @brief Compile a save file back from RawFile to .sav
          * YOU ARE RESPONSIBLE FOR MANAGING THE MEMORY OF RAWSAVEFILE!!!
          */
-        Result CompileTo(RawFile* rawSaveFile, const std::string &outputPath);
+        Result CompileTo(RawFile* rawSaveFile, const std::string &outputPath, std::function<void(size_t cur, size_t max)> onProgress=[](...){});
 
         /**
          * @brief Get a readable name for an internal dataName
