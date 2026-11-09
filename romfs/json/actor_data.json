@@ -25,12 +25,6 @@
     "Durability": 60,
     "Attack": 50
   },
-  "RemoteBomb2": {
-    "Name": "RemoteBomb2",
-    "Durability": 1,
-    "Attack": 24,
-    "Hidden": true
-  },
   "Weapon_Spear_038": {
     "Name": "Fishing Harpoon",
     "Durability": 12,
@@ -71,16 +65,20 @@
     "Durability": 18,
     "Attack": 24
   },
+  "Weapon_Sword_502": {
+    "Name": "One-Hit Obliterator",
+    "Durability": 40,
+    "Attack": 1
+  },
+  "Weapon_Spear_034": {
+    "Name": "Frostspear",
+    "Durability": 40,
+    "Attack": 20
+  },
   "Weapon_Shield_014": {
     "Name": "Guardian Shield+",
     "Durability": 13,
     "Guard": 30
-  },
-  "Weapon_Bow_080": {
-    "Name": "Weapon_Bow_080",
-    "Durability": 60,
-    "Attack": 28,
-    "ShotCount": 3
   },
   "Weapon_Lsword_041": {
     "Name": "Eightfold Longblade",
@@ -133,12 +131,6 @@
     "Durability": 14,
     "Attack": 48
   },
-  "RemoteBombCube2": {
-    "Name": "RemoteBombCube2",
-    "Durability": 1,
-    "Attack": 24,
-    "Hidden": true
-  },
   "Weapon_Lsword_014": {
     "Name": "Ancient Battle Axe+",
     "Durability": 20,
@@ -175,11 +167,6 @@
     "Durability": 8,
     "Attack": 14
   },
-  "Priest_Boss_Weapon_Bow_029": {
-    "Name": "Phrenic Bow",
-    "Durability": 45,
-    "Attack": 10
-  },
   "Weapon_Shield_030": {
     "Name": "Hylian Shield",
     "Durability": 800,
@@ -200,10 +187,19 @@
     "Durability": 52,
     "Attack": 18
   },
+  "Weapon_Lsword_034": {
+    "Name": "Great Frostblade",
+    "Durability": 40,
+    "Attack": 30
+  },
   "Weapon_Spear_008": {
     "Name": "Enhanced Lizal Spear",
     "Durability": 22,
     "Attack": 12
+  },
+  "Weapon_Sword_080": {
+    "Name": "Master Sword",
+    "Durability": 100
   },
   "Weapon_Sword_073": {
     "Name": "Demon Carver",
@@ -260,9 +256,10 @@
     "Durability": 20,
     "Attack": 12
   },
-  "Weapon_Sword_072": {
-    "Name": "Weapon_Sword_072",
-    "Durability": 100
+  "Weapon_Lsword_074": {
+    "Name": "Windcleaver",
+    "Durability": 25,
+    "Attack": 40
   },
   "Weapon_Shield_021": {
     "Name": "Rusty Shield",
@@ -314,6 +311,11 @@
     "Durability": 30,
     "Attack": 3
   },
+  "Weapon_Sword_033": {
+    "Name": "Flameblade",
+    "Durability": 36,
+    "Attack": 24
+  },
   "Weapon_Lsword_060": {
     "Name": "Fierce Deity Sword",
     "Durability": 35,
@@ -323,6 +325,10 @@
     "Name": "Traveler's Shield",
     "Durability": 12,
     "Guard": 4
+  },
+  "Weapon_Sword_081": {
+    "Name": "Master Sword",
+    "Durability": 100
   },
   "Weapon_Spear_009": {
     "Name": "Forked Lizal Spear",
@@ -334,6 +340,11 @@
     "Durability": 35,
     "Attack": 15,
     "ShotCount": 3
+  },
+  "Weapon_Lsword_035": {
+    "Name": "Great Thunderblade",
+    "Durability": 50,
+    "Attack": 32
   },
   "Weapon_Lsword_031": {
     "Name": "Iron Sledgehammer",
@@ -349,6 +360,11 @@
     "Name": "Lightscale Trident",
     "Durability": 70,
     "Attack": 22
+  },
+  "Weapon_Sword_062": {
+    "Name": "Lightning Rod",
+    "Durability": 14,
+    "Attack": 5
   },
   "Weapon_Lsword_019": {
     "Name": "Moblin Arm",
@@ -395,12 +411,6 @@
     "Durability": 10,
     "Guard": 1
   },
-  "RemoteBombCube": {
-    "Name": "RemoteBombCube",
-    "Durability": 1,
-    "Attack": 12,
-    "Hidden": true
-  },
   "Weapon_Lsword_015": {
     "Name": "Ancient Battle Axe++",
     "Durability": 25,
@@ -421,11 +431,6 @@
     "Durability": 120,
     "Attack": 44
   },
-  "Weapon_Sword_056": {
-    "Name": "Weapon_Sword_056",
-    "Durability": 100,
-    "Attack": 1
-  },
   "Weapon_Sword_052": {
     "Name": "Scimitar of the Seven",
     "Durability": 60,
@@ -445,6 +450,16 @@
     "Name": "Traveler's Claymore",
     "Durability": 20,
     "Attack": 10
+  },
+  "Weapon_Sword_503": {
+    "Name": "Weapon_Sword_503",
+    "Durability": 40,
+    "Attack": 1
+  },
+  "Weapon_Spear_035": {
+    "Name": "Thunderspear",
+    "Durability": 50,
+    "Attack": 22
   },
   "Weapon_Sword_007": {
     "Name": "Lizal Boomerang",
@@ -532,6 +547,11 @@
     "Durability": 10,
     "Guard": 18
   },
+  "Weapon_Sword_048": {
+    "Name": "Meteor Rod",
+    "Durability": 32,
+    "Attack": 10
+  },
   "Weapon_Sword_015": {
     "Name": "Guardian Sword++",
     "Durability": 32,
@@ -551,6 +571,11 @@
     "Name": "Phrenic Bow",
     "Durability": 45,
     "Attack": 10
+  },
+  "Weapon_Spear_033": {
+    "Name": "Flamespear",
+    "Durability": 50,
+    "Attack": 24
   },
   "Weapon_Shield_007": {
     "Name": "Lizal Shield",
@@ -586,6 +611,11 @@
     "Name": "Knight's Claymore",
     "Durability": 30,
     "Attack": 38
+  },
+  "Weapon_Sword_050": {
+    "Name": "Thunderstorm Rod",
+    "Durability": 32,
+    "Attack": 10
   },
   "Weapon_Sword_009": {
     "Name": "Lizal Tri-Boomerang",
@@ -623,6 +653,12 @@
     "Durability": 18,
     "Guard": 30
   },
+  "Weapon_Sword_070": {
+    "Name": "Master Sword",
+    "Durability": 40,
+    "Attack": 30,
+    "TrueFormAttack": 60
+  },
   "Weapon_Lsword_023": {
     "Name": "Ancient Bladesaw",
     "Durability": 50,
@@ -642,6 +678,16 @@
     "Name": "Traveler's Bow",
     "Durability": 22,
     "Attack": 5
+  },
+  "Weapon_Sword_060": {
+    "Name": "Fire Rod",
+    "Durability": 14,
+    "Attack": 5
+  },
+  "Weapon_Lsword_033": {
+    "Name": "Great Flameblade",
+    "Durability": 50,
+    "Attack": 34
   },
   "Weapon_Bow_015": {
     "Name": "Golden Bow",
@@ -673,6 +719,11 @@
     "Durability": 27,
     "Attack": 15
   },
+  "Weapon_Sword_035": {
+    "Name": "Thunderblade",
+    "Durability": 36,
+    "Attack": 22
+  },
   "Weapon_Spear_007": {
     "Name": "Lizal Spear",
     "Durability": 18,
@@ -683,12 +734,6 @@
     "Durability": 18,
     "Attack": 14,
     "ShotCount": 2
-  },
-  "RemoteBomb": {
-    "Name": "RemoteBomb",
-    "Durability": 1,
-    "Attack": 12,
-    "Hidden": true
   },
   "Weapon_Shield_033": {
     "Name": "Royal Guard's Shield",
@@ -710,6 +755,11 @@
     "Durability": 47,
     "Attack": 3
   },
+  "Weapon_Sword_061": {
+    "Name": "Ice Rod",
+    "Durability": 14,
+    "Attack": 5
+  },
   "Weapon_Shield_032": {
     "Name": "Fisherman's Shield",
     "Durability": 10,
@@ -719,6 +769,11 @@
     "Name": "Dragonbone Boko Spear",
     "Durability": 20,
     "Attack": 12
+  },
+  "Weapon_Sword_034": {
+    "Name": "Frostblade",
+    "Durability": 30,
+    "Attack": 20
   },
   "Weapon_Sword_030": {
     "Name": "Moonlight Scimitar",
@@ -750,11 +805,6 @@
     "Durability": 25,
     "Attack": 14
   },
-  "Priest_Boss_Weapon_Sword_015": {
-    "Name": "Guardian Sword++",
-    "Durability": 32,
-    "Attack": 40
-  },
   "Weapon_Spear_012": {
     "Name": "Dragonbone Moblin Spear",
     "Durability": 25,
@@ -780,18 +830,10 @@
     "Durability": 16,
     "Attack": 4
   },
-  "Weapon_Sword_071": {
-    "Name": "Weapon_Sword_071",
-    "Durability": 100
-  },
   "Weapon_Sword_004": {
     "Name": "Boko Club",
     "Durability": 12,
     "Attack": 4
-  },
-  "Weapon_Sword_500": {
-    "Name": "Weapon_Sword_500",
-    "Durability": 100
   },
   "Weapon_Spear_036": {
     "Name": "Wooden Mop",
@@ -844,11 +886,6 @@
     "Durability": 23,
     "Attack": 24
   },
-  "Weapon_Spear_080": {
-    "Name": "Weapon_Spear_080",
-    "Durability": 70,
-    "Attack": 22
-  },
   "Weapon_Sword_051": {
     "Name": "Boomerang",
     "Durability": 18,
@@ -893,6 +930,11 @@
     "Name": "Guardian Sword+",
     "Durability": 26,
     "Attack": 30
+  },
+  "Weapon_Sword_049": {
+    "Name": "Blizzard Rod",
+    "Durability": 32,
+    "Attack": 10
   },
   "Weapon_Lsword_047": {
     "Name": "Royal Guard's Claymore",

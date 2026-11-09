@@ -79,7 +79,10 @@ namespace Rune {
                 /** @brief The save file */
                 Save::File* saveFile=nullptr;
                 /** @brief The connection ID for the overlay closed connection */
-                size_t connId=0;
+                // size_t connId=0;
+
+                /** @brief The swap UI trove */
+                Trove* swapTrove=nullptr;
 
                 /** 
                  * @brief Update the tile format

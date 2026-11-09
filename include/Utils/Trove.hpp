@@ -81,6 +81,11 @@ class Trove{
         void addElement(AetherElement element);
 
         /**
+         * @brief Remove an element fromtr the trove.
+         */
+        void removeElement(Aether::Element* element);
+
+        /**
          * @brief Give the trove a task to complete when it is cleared.
          */
         void giveTask(std::function<void()> task);

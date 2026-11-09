@@ -6,6 +6,7 @@
 #include <functional>
 #include <string>
 #include <map>
+#include <unordered_map>
 
 #include <Utils/Cache.hpp>
 #include <Utils/Logger.hpp>
@@ -38,7 +39,7 @@ namespace Rune{
         inline const Aether::Colour kEnabledEllipse{255, 255, 255, 255};
 
         inline Cache* IconPathCache = new Cache(420);
-        inline Cache* actorCategoryCache = new Cache(420);
+        inline Cache* ActorToCategoryCache = new Cache(420);
         inline Cache* IconTextureCache = new Cache(1559);
 
         // Determines which inventory tab an item belongs to
@@ -54,8 +55,11 @@ namespace Rune{
             Unknown
         };
 
-        extern const std::map<Category, std::string> kCategoryDevNotes;
+        inline std::unordered_map<Category, std::vector<std::string>> CategoryActors;
+        inline std::mutex CategoryActorsMutex;
 
+        extern const std::map<Category, std::string> kCategoryDevNotes;
+        
         inline const uint32_t kEnhancedMask = 0x80000000;
         enum class Modifier : uint32_t{
             AttackUp=0x1,

@@ -8,6 +8,7 @@
 #include <Editor/Tile.hpp>
 
 #include <Utils/Logger.hpp>
+#include <Utils/Trove.hpp>
 #include <Config.hpp>
 
 #include <vector>
@@ -203,7 +204,6 @@ namespace Rune {
             }
             else {
                 this->ovlOpen = false;
-                // this->ovl->closeWidgetOverlay(isSave);
 
                 // nullify property editors
                 this->visiblePropertyEditors.clear();
@@ -211,6 +211,7 @@ namespace Rune {
                 this->ovlSecondaryFlagDropdown = nullptr;
                 this->ovlSecondaryValueStepper = nullptr;
                 this->ovlArmorStarStepper = nullptr;
+                this->ovlImg = nullptr;
             }
         }
 
@@ -342,6 +343,7 @@ namespace Rune {
                 return;
             }
 
+            inventoryItem.name = GetNameFromActorName(inventoryItem.actorName);
             std::string itemName = (!inventoryItem.name.empty()) 
                 ? inventoryItem.name : DUMMY_NAME;
 
@@ -367,15 +369,13 @@ namespace Rune {
                 return;
             }
 
-            if (this->ovlImg != nullptr 
-                && this->ovlImg->parent()){
-                this->ovlImg->parent()
-                ->removeElement(this->ovlImg);
+            if (this->ovlImg != nullptr){
+                this->ovl->removeTempElement(this->ovlImg);
             }
 
             // Update thumbnail path
-            inventoryItem.thumbPath = Inventory
-                ::GetThumbPathFromInventoryItem(inventoryItem);
+            inventoryItem.thumbPath = GetThumbPathFromActorName(GetActorValue<std::string>(inventoryItem.actorName, "IconActorName")
+                .value_or(inventoryItem.actorName));
 
             // Make a new thumbnail and reposition it
             this->ovlImg = new Aether::Image(0, 0, 
@@ -395,11 +395,15 @@ namespace Rune {
                 ovlPrimaryValueStepper, ovlSecondaryFlagDropdown,
                 ovlSecondaryValueStepper, ovlArmorStarStepper
             }){
-                if (editor != nullptr && editor->parent()){
-                    editor->parent()->removeElement(editor);
-                    editor = nullptr;
+                if (editor != nullptr){
+                    this->ovl->removeTempElement(editor);
                 }
             }
+
+            this->ovlPrimaryValueStepper = nullptr;
+            this->ovlSecondaryFlagDropdown = nullptr;
+            this->ovlSecondaryValueStepper = nullptr;
+            this->ovlArmorStarStepper = nullptr;
 
             int cursorX = ovlPropertiesBox->x()+16;
             int cursorY = ovlPropertiesBox->y()+12;
@@ -643,11 +647,81 @@ namespace Rune {
         }
 
         void Tile::onDelete(){
-            
+            this->inventoryItem.actorName = "";
+            this->inventoryItem.value = 0;
+            this->inventoryItem.valueSp = 0;
+            this->inventoryItem.flagSp = 0;
+
+            this->updateOvlImg();
+            this->updateOvlText();
+            this->updatePropertyEditors();
         }
 
         void Tile::onSwap(){
+            if (this->ovl == nullptr){
+                return;
+            }
 
+
+            // Disable exiting the overlay temporarily
+            this->ovl->setExitEnabled(false);
+
+            // Get a list of available actor names
+            std::vector<std::string> otherActorNames 
+                = CategoryActors.find(inventoryItem.category)->second;
+
+            // Make a main containter
+            Aether::Container* swapCtnr = new Aether::Container(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+            this->ovl->addElement(swapCtnr);
+
+            // Make a dark background rect
+            Aether::Rectangle* swapBg = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+            swapBg->setColour(Aether::Colour{0, 0, 0, 150});
+            swapCtnr->addElement(swapBg);
+
+            // Make a central list frames
+            Aether::Rectangle* listFrame = new Aether::Rectangle(0, 0, 960, 540, 6);
+            listFrame->setColour(BACKGROUND_COLOUR);
+            listFrame->setXY(
+                swapBg->centreX()-listFrame->w()/2,
+                swapBg->centreY()-listFrame->h()/2);
+            swapCtnr->addElement(listFrame);
+
+            // Make the list
+            Aether::List* list = new Aether::List(
+                listFrame->x(), listFrame->y(),
+                listFrame->w(), listFrame->h(),
+                Aether::Padding::None
+            );
+            list->setScrollBarColour(LIGHT_SEPARATOR_COLOUR);
+            swapCtnr->addElement(list);
+
+            // Build the options
+            Aether::ListButton* firstOptn = nullptr;
+            for (const std::string& otherActor : otherActorNames){
+                Aether::ListButton* actorOptn = new Aether::ListButton(
+                    GetNameFromActorName(otherActor)+" ("+otherActor+")", [this, swapCtnr, otherActor](){
+                        this->inventoryItem.actorName = otherActor;
+
+                        this->updateOvlImg();
+                        this->updateOvlText();
+
+                        this->ovl->removeElement(swapCtnr);
+                        this->ovl->setExitEnabled(true);
+                    }
+                );
+                actorOptn->setLineColour(LIGHT_SEPARATOR_COLOUR);
+                actorOptn->setTextColour(TOP_R);
+
+                list->addElement(actorOptn);
+
+                if (!firstOptn){
+                    firstOptn = actorOptn;
+                }
+            }
+
+            swapCtnr->setFocused(list);
+            list->setFocused(firstOptn);
         }
 
         void Tile::onPress(){
@@ -656,12 +730,11 @@ namespace Rune {
                 this->ovl = this->widget->getWidgetOverlay();
             }
             
-            if (this->connId == 0){
-                this->connId = this->ovl->onCloseSignal->connect(
-                    [this](bool isSave){
-                    this->onClose(isSave);
-                }).getId();
-            }
+            // Run saving/resetting methods on close
+            this->ovl->onCloseSignal->connectWithId([this](size_t connId, bool isSave){
+                this->onClose(isSave);
+                this->ovl->onCloseSignal->disconnect(connId);
+            });
             
             // Build the core overlay elements and open the overlay
             this->buildOvl();
@@ -758,11 +831,7 @@ namespace Rune {
         }
 
         Tile::~Tile(){
-            // Clean connection to close signal
-            if (this->ovl != nullptr && this->connId != 0){
-                this->ovl->onCloseSignal->disconnect(this->connId);
-                this->connId = 0;
-            }
+            // Do whatever
         }
 
     } // namespace Inventory

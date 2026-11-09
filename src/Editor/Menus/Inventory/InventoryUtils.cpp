@@ -152,10 +152,12 @@ std::string Rune::Inventory::FormatValue(const Rune::Inventory::Item& inventoryI
         if (it != actorJson->end() && it->is_object()){
             auto labelValue = it->find(labelValueKey);
 
-            if (labelValue->is_number()){
-                return std::to_string(labelValue->get<int>());
-            } else {
-                Logger::Write("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
+            if (labelValue != it->end()){
+                if (labelValue->is_number()){
+                    return std::to_string(labelValue->get<int>());
+                } else {
+                    Logger::Write("[formatValue (Inventory)] - labelValue is not a number for "+inventoryItem.actorName+"!");
+                }
             }
         } else {
             Logger::Write("[formatValue (Inventory)] - No actorJson object found for "+inventoryItem.actorName+"!");
@@ -333,6 +335,13 @@ Result Rune::Inventory::CacheIconPaths(){
 }
 
 Rune::Inventory::Category Rune::Inventory::GetCategoryFromActorName(const std::string& actorName){
+    // Do a cache lookup first
+    auto category = ActorToCategoryCache->get<Rune::Inventory::Category>(actorName);
+    if (category.has_value()){
+        return category.value();
+    }
+
+    // Cache miss, find the category manually
     for (const auto& [category, prefixes] : Rune::Inventory::kInventoryPrefixes){
         // Get ignores iterator
         const auto ignoreIt = Rune::Inventory::kInventoryIgnores.find(category);
@@ -361,7 +370,8 @@ Rune::Inventory::Category Rune::Inventory::GetCategoryFromActorName(const std::s
                 }
             }
 
-            // Found the category, return it
+            // Found the category, cache and return it
+            ActorToCategoryCache->put(actorName, category);
             return category;
         }
     }

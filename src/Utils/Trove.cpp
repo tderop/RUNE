@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <algorithm>
 
 #include <Aether/Aether.hpp>
 #include <Utils/Trove.hpp>
@@ -14,6 +15,18 @@ void Trove::addElement(AetherElement element){
     // this->numbers.push_back(1); // try generic push back
 
     // Logger::Write("[TROVE] - Successfully added element to trove!");
+}
+
+void Trove::removeElement(Aether::Element* element){
+    this->elements.erase(
+        std::remove_if(this->elements.begin(), this->elements.end(),
+            [element](const AetherElement& tracked){
+                return std::visit([element](auto* ptr){
+                    return static_cast<Aether::Element*>(ptr) == element;
+                }, tracked);
+            }),
+        this->elements.end()
+    );
 }
 
 void Trove::giveTask(std::function<void()> task){

@@ -14,6 +14,18 @@ void WidgetOverlay::addTempElement(Aether::Element* element){
     this->addElement(element);
 }
 
+void WidgetOverlay::removeTempElement(Aether::Element* element){
+    if (element == nullptr){
+        return;
+    }
+
+    this->_trove->removeElement(element);
+    Aether::Element* parent = element->parent();
+    if (parent != nullptr){
+        parent->removeElement(element);
+    }
+}
+
 void WidgetOverlay::addList(){
     Aether::List* list = new Aether::List(30, 322, 1220, 326);
     this->addTempElement(list);
@@ -172,6 +184,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
      * Handle saving changes
      */
     this->onButtonPress(Aether::Button::PLUS, [this](){
+    if (!this->_exitEnabled) { return; }
         this->closeWidgetOverlay(true);
     });
 
@@ -179,6 +192,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
      * Just close the menu when B is pressed
      */
     this->onButtonPress(Aether::Button::B, [this](){
+        if (!this->_exitEnabled) { return; }
         this->closeWidgetOverlay(false);
     });
 
@@ -197,6 +211,14 @@ void WidgetOverlay::setDeveloperNoteX(int x){
 
 void WidgetOverlay::setDeveloperNoteWrap(int w){
     this->_devNoteText->setWrapWidth(w);
+}
+
+void WidgetOverlay::setExitEnabled(bool exitEnabled){
+    this->_exitEnabled = exitEnabled;
+}
+
+bool WidgetOverlay::exitEnabled(){
+    return this->_exitEnabled;
 }
 
 WidgetOverlay::~WidgetOverlay(){

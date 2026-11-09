@@ -119,9 +119,20 @@ void SplashScreen::loadRune(void* _self){
         );
     }
 
+    // Step 3: Equipment category cache
+    Rune::Json* actorData;
+    Rune::JsonData::GetJsonById(actorData, "ActorData");
+    
+    {
+        std::lock_guard<std::mutex> lock(Rune::Inventory::CategoryActorsMutex);
+        for (const auto&[name, _]: actorData->items()){
+            Rune::Inventory::Category category = Rune::Inventory::GetCategoryFromActorName(name);
+            Rune::Inventory::CategoryActors[category].push_back(name);
+        }
+    }
+
     // I'm loaded, run other loading steps
     self->_workerFinished.store(true);
-
     return;
 }
 

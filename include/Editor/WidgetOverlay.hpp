@@ -23,6 +23,7 @@ class WidgetOverlay : public Aether::Overlay{
         Aether::Rectangle* _devNoteRect = nullptr;
 
         bool _hintVisible = false;
+        bool _exitEnabled = true;
 
         void setHintVisible(bool hintVisible);
 
@@ -51,6 +52,11 @@ class WidgetOverlay : public Aether::Overlay{
          * @brief Add an element that will be deleted when the overlay menu closes.
          */
         void addTempElement(Aether::Element* element);
+
+        /**
+         * @brief Remove an element from the queue to be deleted when the overlay menu closes.
+         */
+        void removeTempElement(Aether::Element* element);
 
         /**
          * @brief Add an Aether::List to the overlay. This is temporary and will be deleted when the overlay is closed.
@@ -92,4 +98,12 @@ class WidgetOverlay : public Aether::Overlay{
          * @return Whether the hint is visible or not
          */
         bool hintVisible();
+
+        /**
+         * @brief Set whether the default B/PLUS controls should
+         * exit the widget overlay or not
+         */
+        void setExitEnabled(bool exitEnabled);
+
+        bool exitEnabled();
 };
