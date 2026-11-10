@@ -40,7 +40,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
         numSpinner->setValue(std::get<int>(saveEntry->value));
 
         numSpinner->setLabel(Rune::Save::GetReadableKeyName(saveEntry->dataName));
-        numSpinner->onPress([widget, editOverlay, numSpinner, metaEntry](){
+        numSpinner->onPress([numSpinner, metaEntry](){
             // get num input
             float outFloat;
             Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", 

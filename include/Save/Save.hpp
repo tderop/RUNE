@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <array>
 #include <variant>
-#include <byml/value.h>
+#include <functional>
 
 // consts
 const std::string SAVE_DISTRICT_KEY = "SaveDistrictName";
@@ -175,7 +175,7 @@ namespace Rune
         >;
 
         struct MetaEntry {
-            uint32_t id;
+            uint32_t id=0;
             std::string dataName;
             std::string editor;
             DataType dataType;
@@ -191,7 +191,7 @@ namespace Rune
         //     std::unordered_map<int32_t, DataType> dataTypes;
         // };
 
-        using Metadata = std::unordered_map<int32_t, MetaEntry>;
+        using Metadata = std::unordered_map<uint32_t, MetaEntry>;
 
         /**
          * @brief An abstraction of a decoded entry in a `.sav` file.

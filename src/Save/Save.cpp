@@ -1,57 +1,20 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wc++20-extensions"
+
 #include <switch.h>
 #include <dirent.h>
 #include <string>
 #include <fstream>
 #include <cstring>
 #include <sstream>
-#include <unordered_map>
+#include <type_traits>
 
 #include <Save/Save.hpp>
 #include <Utils/Utils.hpp>
 #include <Utils/Logger.hpp>
 #include <Config.hpp>
-#include <byml/byml.h>
 
 #include <Json/Json.hpp>
-
-// the save data meta files
-#include "0_bgsvdata.h"
-#include "1_bgsvdata.h"
-#include "2_bgsvdata.h"
-#include "3_bgsvdata.h"
-#include "4_bgsvdata.h"
-#include "5_bgsvdata.h"
-#include "6_bgsvdata.h"
-#include "7_bgsvdata.h"
-
-// files containing information about the datanames
-#include "bool_array_data_0_bgdata.h"
-#include "bool_data_0_bgdata.h"
-#include "bool_data_1_bgdata.h"
-#include "bool_data_2_bgdata.h"
-#include "f32_array_data_0_bgdata.h"
-#include "f32_data_0_bgdata.h"
-#include "revival_bool_data_0_bgdata.h"
-#include "revival_bool_data_1_bgdata.h"
-#include "revival_bool_data_2_bgdata.h"
-#include "revival_bool_data_3_bgdata.h"
-#include "revival_bool_data_4_bgdata.h"
-#include "revival_bool_data_5_bgdata.h"
-#include "revival_bool_data_6_bgdata.h"
-#include "revival_bool_data_7_bgdata.h"
-#include "revival_s32_data_0_bgdata.h"
-#include "s32_array_data_0_bgdata.h"
-#include "s32_data_0_bgdata.h"
-#include "string32_data_0_bgdata.h"
-#include "string64_array_data_0_bgdata.h"
-#include "string64_data_0_bgdata.h"
-#include "string256_array_data_0_bgdata.h"
-#include "string256_data_0_bgdata.h"
-#include "vector2f_array_data_0_bgdata.h"
-#include "vector2f_data_0_bgdata.h"
-#include "vector3f_array_data_0_bgdata.h"
-#include "vector3f_data_0_bgdata.h"
-#include "vector4f_data_0_bgdata.h"
 
 Rune::Save::Metadata* runeMetadata = nullptr;
 const char* testSavePath = "sdmc:/TestSave/";
@@ -653,441 +616,117 @@ std::string Rune::Save::ValueToString(const Rune::Save::SaveValue& value, bool s
 
 /**
  * @brief Unpack save metadata
+ * @note Refactored 10.11.2026 to use my own JSON interpretation
  */
 Result Rune::Save::LoadMetadata(Rune::Save::Metadata* out){
-    // all of the meta files
-    Rune::Save::BgsvData bgsvFiles[] = {
-        {_0_bgsvdata, _0_bgsvdata_size},
-        {_1_bgsvdata, _1_bgsvdata_size},
-        {_2_bgsvdata, _2_bgsvdata_size},
-        {_3_bgsvdata, _3_bgsvdata_size},
-        {_4_bgsvdata, _4_bgsvdata_size},
-        {_5_bgsvdata, _5_bgsvdata_size},
-        {_6_bgsvdata, _6_bgsvdata_size},
-        {_7_bgsvdata, _7_bgsvdata_size}
-    };
+    // Get the meta json
+    Rune::Json* metaJson = nullptr;
+    Rune::JsonData::GetJsonById(metaJson, "Metadata");
 
-    // all of the data type files
-    Rune::Save::BgData bgFiles[] = {
-        {bool_array_data_0_bgdata, bool_array_data_0_bgdata_size, RuneBoolArray},
-        {bool_data_0_bgdata, bool_data_0_bgdata_size, RuneBool},
-        {bool_data_1_bgdata, bool_data_1_bgdata_size, RuneBool},
-        {bool_data_2_bgdata, bool_data_2_bgdata_size, RuneBool},
-
-        {f32_array_data_0_bgdata, f32_array_data_0_bgdata_size, RuneF32Array},
-        {f32_data_0_bgdata, f32_data_0_bgdata_size, RuneF32},
-
-        {revival_bool_data_0_bgdata, revival_bool_data_0_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_1_bgdata, revival_bool_data_1_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_2_bgdata, revival_bool_data_2_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_3_bgdata, revival_bool_data_3_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_4_bgdata, revival_bool_data_4_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_5_bgdata, revival_bool_data_5_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_6_bgdata, revival_bool_data_6_bgdata_size, RuneRevivalBool},
-        {revival_bool_data_7_bgdata, revival_bool_data_7_bgdata_size, RuneRevivalBool},
-
-        {revival_s32_data_0_bgdata, revival_s32_data_0_bgdata_size, RuneRevivalS32},
-        {s32_array_data_0_bgdata, s32_array_data_0_bgdata_size, RuneS32Array},
-        {s32_data_0_bgdata, s32_data_0_bgdata_size, RuneS32},
-
-        {string32_data_0_bgdata, string32_data_0_bgdata_size, RuneString32},
-        {string64_array_data_0_bgdata, string64_array_data_0_bgdata_size, RuneString64Array},
-        {string64_data_0_bgdata, string64_data_0_bgdata_size, RuneString64},
-        {string256_array_data_0_bgdata, string256_array_data_0_bgdata_size, RuneString256Array},
-        {string256_data_0_bgdata, string256_data_0_bgdata_size, RuneString256},
-        {vector2f_array_data_0_bgdata, vector2f_array_data_0_bgdata_size, RuneVector2fArray},
-        {vector2f_data_0_bgdata, vector2f_data_0_bgdata_size, RuneVector2f},
-        {vector3f_array_data_0_bgdata, vector3f_array_data_0_bgdata_size, RuneVector3fArray},
-        {vector3f_data_0_bgdata, vector3f_data_0_bgdata_size, RuneVector3f},
-        {vector4f_data_0_bgdata, vector4f_data_0_bgdata_size, RuneVector4f}
-    };
-
-    // parse JSON data
-    Rune::Json* editorJson;
-    Result rc = Rune::JsonData::GetJsonById(editorJson, "EditorData");
-
-    if (R_FAILED(rc)){
-        return LibnxError_IoError; // :shrug:
+    // If failed, return
+    if (metaJson == nullptr){
+        return -1;
     }
 
-    // for getting ID
-    std::unordered_map<std::string, uint32_t> dataNameToId; 
+    // Iterate through and populate metadata
+    for (const auto&[_, obj] : metaJson->at("entries").items()){
+        Rune::Save::MetaEntry newEntry;
 
-    for (size_t i = 0; i < sizeof(bgsvFiles) / sizeof(bgsvFiles[0]); i++){
-        // Logger::Write("Parsing bgsvdata file " + std::to_string(i));
-        const Rune::Save::BgsvData& file = bgsvFiles[i];
+        // Fill the struct
+        auto nameIt = obj.find("dataName");
+        if (nameIt != obj.end() && nameIt->is_string()){
+            newEntry.dataName = nameIt->get<std::string>();
+        }
 
-        byml::Reader reader{
-            byml::Buffer{file.data, file.size}
+        auto typeIt = obj.find("dataType");
+        if (typeIt != obj.end() && typeIt->is_number()){
+            newEntry.dataType = static_cast<Rune::Save::DataType>(typeIt->get<int32_t>());
+        }
+
+        auto editorIt = obj.find("editor");
+        if (editorIt != obj.end() && editorIt->is_string()){
+            std::string v = editorIt->get<std::string>();
+            if (!v.empty()){
+                newEntry.editor = v;
+            }
+        }
+
+        auto idIt = obj.find("id");
+        if (idIt != obj.end() && idIt->is_number()){
+            newEntry.id = idIt->get<uint32_t>();
+        }
+
+        // Helper for reading init, min, and max values
+        auto readValue = [&obj, type = newEntry.dataType](const char* key)
+            -> std::optional<Rune::Save::SaveValue> {
+            const auto& json = obj.at(key);
+
+            // Check if false (meaning no/empty value)
+            if (json.is_boolean() && json.get<bool>() == false){
+                return false;
+            }
+
+            switch (type) {
+                case RuneBool:
+                case RuneRevivalBool:
+                    return json.get<bool>();
+
+                case RuneS32:
+                case RuneRevivalS32:
+                    return json.get<int32_t>();
+
+                case RuneF32:
+                    return json.get<float>();
+
+                case RuneString32:
+                case RuneString64:
+                case RuneString256:
+                    return json.get<std::string>();
+
+                case RuneBoolArray: {
+                    std::vector<uint8_t> values;
+                    for (const auto& item : json)
+                        values.push_back(item.get<bool>());
+                    return values;
+                }
+
+                case RuneS32Array:
+                    return json.get<std::vector<int32_t>>();
+
+                case RuneF32Array:
+                case RuneVector2f:
+                case RuneVector3f:
+                case RuneVector4f:
+                    return json.get<std::vector<float>>();
+
+                case RuneString64Array:
+                case RuneString256Array:
+                    return json.get<std::vector<std::string>>();
+
+                case RuneVector2fArray:
+                case RuneVector3fArray:
+                    return json.get<std::vector<std::vector<float>>>();
+
+                default:
+                    return std::nullopt;
+            }
         };
 
-        if (!reader.isValid()){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": reader invalid");
+        auto init = readValue("initValue");
+        auto min = readValue("minValue");
+        auto max = readValue("maxValue");
+
+        if (!init.has_value() || !min.has_value() || !max.has_value()){
             return LibnxError_BadInput;
         }
 
-        auto root = reader.getHash();
-        if (!root){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": no root hash");
-            return LibnxError_BadInput;
-        }
+        newEntry.initValue = init.value();
+        newEntry.minValue = min.value();
+        newEntry.maxValue = max.value();
 
-        auto fileListItem = root->getByKey("file_list");
-        if (!fileListItem){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": no file list");
-            return LibnxError_BadInput;
-        }
-
-        auto fileList = fileListItem->getArray();
-        if (!fileList){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": file list is not an array");
-            return LibnxError_BadInput;
-        }
-
-        auto mappingsItem = fileList->getByIndex(1);
-        if (!mappingsItem){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": file_list[1] does not exist");
-            return LibnxError_BadInput;
-        }
-
-        auto mappings = mappingsItem->getArray();
-        if (!mappings){
-            Logger::Write("bgsvdata " + std::to_string(i) + ": file_list[1] is not an array");
-            return LibnxError_BadInput;
-        }
-
-        for (const auto& item : *mappings){
-            auto mapping = item.getHash();
-            if (!mapping){
-                return LibnxError_BadInput;
-            }
-
-            auto dataNameItem = mapping->getByKey("DataName");
-            auto hashValueItem = mapping->getByKey("HashValue");
-
-            if (!dataNameItem || !hashValueItem){
-                Logger::Write("[Rune::Save::LoadMetadata] - No dataName item or hashValue item found in BYAML!");
-                return LibnxError_BadInput;
-            }
-
-            const char* dataName = dataNameItem->getString();
-            auto hashValue = hashValueItem->getInt();
-
-            // debug
-            if (*hashValue == 276498232) {
-                Logger::Write("[META] FOUND 276498232 -> " + std::string(dataName));
-            }
-
-            if (!dataName){
-                Logger::Write("[Rune::Save::LoadMetadata] - No dataName found!");
-                return LibnxError_BadInput;
-            }
-
-            // Find editor metadata
-            auto it = editorJson->find(dataName);
-            if (it != editorJson->end() && it->is_object()){
-                // Assign editor
-                auto editorOverride = it->find("Editor");
-                if (editorOverride != it->end()){
-                    (*out)[*hashValue].editor = editorOverride->get<std::string>();
-                }
-            }
-
-            (*out)[*hashValue].dataName = dataName;
-        }
-    }
-
-     // get the data types
-    for (Rune::Save::BgData bgdata : bgFiles){
-        // parse bgdata file
-        byml::Reader reader(
-            byml::Buffer{bgdata.data, bgdata.size}
-        );
-
-        // output datatype
-        Rune::Save::DataType dataType = bgdata.dataType;
-        const char* dataTypeName = Rune::Save::DataTypeName(dataType);
-        
-        // get datatype
-        if (!reader.isValid()){
-            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] is invalid");
-            return LibnxError_BadInput;
-        }
-
-        auto root = reader.getHash();
-        if (!root){
-            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no root hash");
-            return LibnxError_BadInput;
-        }
-
-        auto dataTypeListItem = root->getByKey(dataTypeName);
-        if (!dataTypeListItem){
-            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no data type list item");
-            return LibnxError_BadInput;
-        }
-
-        // get hashvalue
-        auto dataTypeList = dataTypeListItem->getArray();
-        if (!dataTypeList){
-            Logger::Write("bgdata: ["+std::string(dataTypeName)+"] no data type list array");
-            return LibnxError_BadInput;
-        }
-
-        for (const auto& item : *dataTypeList){
-            auto mapping = item.getHash();
-            if (!mapping){
-                Logger::Write("[Rune::Save::LoadMetadata] - No mapping!");
-                return LibnxError_BadInput;
-            }
-
-            auto hashValueItem = mapping->getByKey("HashValue");
-            if (!hashValueItem){
-                Logger::Write("[Rune::Save::LoadMetadata] - No hashValue item!");
-                return LibnxError_BadInput;
-            }
-
-            auto hashValue = hashValueItem->getInt();
-            if (!hashValue){
-                Logger::Write("[Rune::Save::LoadMetadata] - No hashValue!");
-                return LibnxError_BadInput;
-            }
-
-            // add datatype to metadata
-
-            // find existing metaEntry
-            auto it = out->find(*hashValue);
-            MetaEntry* entry;
-
-            // if found, set
-            bool found = (it != out->end());
-            if (found){
-                it->second.dataType = dataType;
-                entry = &it->second;
-            } else {
-                // otherwise, make new entry
-                entry = &(*out)[*hashValue];
-                entry->dataType = dataType;
-            }
-
-            auto maxValueItem = mapping->getByKey("MaxValue");
-            auto minValueItem = mapping->getByKey("MinValue");
-            auto defaultValueItem = mapping->getByKey("InitValue");
-
-            if (!maxValueItem || !minValueItem || !defaultValueItem){
-                Logger::Write("[Rune::Save::LoadMetadata] - No max, min, or default value items found in BYML.");
-                return LibnxError_BadInput;
-            }
-            
-            /**
-             * @brief Gets additional metadata about the save entries. This is absolutely horrible. Thanks, BYML.
-             */
-            auto readSaveValue = [dataType](const byml::ItemData& item, const std::string &key="", const std::string &cat="") -> std::optional<Rune::Save::SaveValue> {
-                switch (dataType){
-                    case RuneBool:
-                    case RuneRevivalBool: {
-                        auto value = item.getBool();
-                        if (!value) {
-                            return std::nullopt;
-                        }
-
-                        return Rune::Save::SaveValue{*value};
-                    }
-
-                    case RuneF32: {
-                        auto value = item.getFloat();
-                        Logger::Write("[Rune::Save::LoadMetadata] - Getting float value...");
-                        if (!value) {
-                            Logger::Write("[Rune::Save::LoadMetadata] - Failed to get float value: no value!");
-                            return std::nullopt;
-                        }
-                        
-                        Logger::Write("[Rune::Save::LoadMetadata] - Successfully obtained float value! ("+key+" "+cat+": "+std::to_string(std::get<float>(Rune::Save::SaveValue{*value}))+")");
-                        return Rune::Save::SaveValue{*value};
-                    }
-
-                    case RuneS32:
-                    case RuneRevivalS32: {
-                        auto value = item.getInt();
-                        if (!value) {
-                            return std::nullopt;
-                        }
-
-                        return Rune::Save::SaveValue{*value};
-                    }
-
-                    case RuneString32:
-                    case RuneString64:
-                    case RuneString256: {
-                        const char* value = item.getString();
-                        if (!value) {
-                            return std::nullopt;
-                        }
-
-                        return Rune::Save::SaveValue{std::string(value)};
-                    }
-
-                    case RuneBoolArray: {
-                        auto array = item.getArray();
-                        if (!array){
-                            return std::nullopt;
-                        }
-
-                        std::vector<uint8_t> values;
-                        for (const auto& element : *array){
-                            auto value = element.getBool();
-                            if (!value) {
-                                return std::nullopt;
-                            }
-                            values.push_back(*value);
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-
-                    case RuneF32Array: {
-                        auto array = item.getArray();
-                        if (!array){
-                            return std::nullopt;
-                        }
-
-                        std::vector<float> values;
-                        for (const auto& element : *array){
-                            auto value = element.getFloat();
-                            if (!value) {
-                                return std::nullopt;
-                            }
-                            values.push_back(*value);
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-                    case RuneS32Array: {
-                        auto array = item.getArray();
-                        if (!array){
-                            return std::nullopt;
-                        }
-
-                        std::vector<int32_t> values;
-                        for (const auto& element : *array){
-                            auto value = element.getInt();
-                            if (!value) {
-                                return std::nullopt;
-                            }
-                            values.push_back(*value);
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-                    case RuneString64Array:
-                    case RuneString256Array: {
-                        auto array = item.getArray();
-                        if (!array){
-                            return std::nullopt;
-                        }
-
-                        std::vector<std::string> values;
-                        for (const auto& element : *array){
-                            const char* value = element.getString();
-                            if (!value) {
-                                return std::nullopt;
-                            }
-                            values.emplace_back(value);
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-                    case RuneVector2f:
-                    case RuneVector3f:
-                    case RuneVector4f: {
-                        size_t vectorSize;
-                        switch (dataType){
-                            case RuneVector2f:
-                                vectorSize = 2;
-                                break;
-                            case RuneVector3f:
-                                vectorSize = 3;
-                                break;
-                            case RuneVector4f:
-                                vectorSize = 4;
-                                break;
-                            default:
-                                return std::nullopt;
-                        }
-
-                        auto array = item.getArray();
-                        if (!array){
-                            return std::nullopt;
-                        }
-
-                        const byml::Array* vectorArray = &*array;
-                        auto firstElement = array->getByIndex(0);
-                        if (firstElement){
-                            auto nestedArray = firstElement->getArray();
-                            if (nestedArray){
-                                vectorArray = &*nestedArray;
-                            }
-                        }
-
-                        if (vectorArray->numItems() != vectorSize){
-                            return std::nullopt;
-                        }
-
-                        std::vector<float> values;
-                        for (const auto& element : *vectorArray){
-                            auto value = element.getFloat();
-                            if (!value) {
-                                return std::nullopt;
-                            }
-                            values.push_back(*value);
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-                    case RuneVector2fArray:
-                    case RuneVector3fArray: {
-                        auto array = item.getArray();
-                        if (!array) {
-                            return std::nullopt;
-                        }
-
-                        std::vector<std::vector<float>> values;
-
-                        for (const auto& vectorItem : *array){
-                            auto vectorArray = vectorItem.getArray();
-                            if (!vectorArray){
-                                return std::nullopt;
-                            }
-
-                            std::vector<float> vector;
-                            for (const auto& element : *vectorArray){
-                                auto value = element.getFloat();
-                                if (!value){
-                                    return std::nullopt;
-                                }
-
-                                vector.push_back(*value);
-                            }
-
-                            values.push_back(std::move(vector));
-                        }
-                        return Rune::Save::SaveValue{std::move(values)};
-                    }
-
-                    default:
-                        return std::nullopt;
-                }
-            };
-
-            auto maxValue = readSaveValue(*maxValueItem, entry->dataName, "MAX");
-            auto minValue = readSaveValue(*minValueItem, entry->dataName, "MIN");
-            auto initValue = readSaveValue(*defaultValueItem, entry->dataName, "INIT");
-            if (!maxValue || !minValue || !initValue){
-                if (dataType == RuneVector2f || dataType == RuneVector3f || dataType == RuneVector4f){
-                    Logger::Write("[Rune::Save::LoadMetadata] - Failed to decode bounds/default values for '"
-                        +entry->dataName+"' ("+std::string(dataTypeName)+").");
-                }
-                continue;
-            }
-            
-            // cancer ;-;
-            entry->maxValue = std::move(*maxValue);
-            entry->minValue = std::move(*minValue);
-            entry->initValue = std::move(*initValue);
+        // Add the entry to the out
+        if (newEntry.id != 0){
+            (*out)[newEntry.id] = newEntry;
         }
     }
 
@@ -1285,3 +924,5 @@ std::string Rune::Save::GetReadableLocationName(const std::string& locationId){
     // Default to input if no location name was found
     return locationId;
 }
+
+#pragma GCC diagnostic pop

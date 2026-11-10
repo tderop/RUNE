@@ -191,6 +191,29 @@ namespace Rune {
                     break;
                 }  
 
+                case (TileType::Empty): {
+                    this->tileLabelRect->setHidden(true);
+                    this->tileLabelText->setHidden(true);
+
+                    // Make the edit image that shows on selection
+                    Aether::Image* tileEditImg = new Aether::Image(0, 0,
+                        ASSET_PATHS.at("edit"), Aether::Render::Wait);
+                    tileEditImg->setScaleDimensions(tileBtn->w()*0.65, tileBtn->h()*0.65);
+                    tileEditImg->setXY(tileBtn->centreX()-tileEditImg->scaleWidth()/2, 
+                    tileBtn->centreY()-tileEditImg->scaleHeight()/2);
+                    tileEditImg->renderAsync();
+                    tileEditImg->setHidden(!tileBtn->highlighted());
+                    tileEditImg->setColour(Aether::Colour{255, 255, 255, 90});
+
+                    tileBtn->addElement(tileEditImg);
+
+                    // Highlight bind
+                    tileBtn->onHighlight([tileEditImg](bool h){
+                        tileEditImg->setHidden(!h);
+                    });
+                    break;
+                }
+
                 default:
                     this->tileLabelRect->setHidden(true);
                     this->tileLabelText->setHidden(true);

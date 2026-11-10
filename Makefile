@@ -49,8 +49,7 @@ SOURCES    := src \
               src/Editor/Widgets/Generic \
               src/Editor/Widgets/Unique \
               src/Screens/Editor \
-              src/Json \
-              libs/byml/source/byml
+              src/Json
 
 # Preserve source paths so same-named files in different Aether directories stay distinct.
 AETHER_SOURCE_DIR := $(if $(TOPDIR),$(TOPDIR),$(CURDIR))/external/Aether/source
@@ -60,7 +59,6 @@ AETHER_OBJECT_FILES := $(patsubst $(AETHER_SOURCE_DIR)/%.cpp,aether/%.o,$(AETHER
 DATA       := data
 INCLUDES   := include src \
               external/Aether/include \
-              libs/byml/include \
               libs/range-v3/include \
               libs/json/include \
               libs/spdlog/include \
@@ -255,13 +253,13 @@ aether/%.o: $(TOPDIR)/external/Aether/source/%.cpp
 	@echo $(notdir $<)
 	@$(bin2o)
 
-%.bgsvdata.o %_bgsvdata.h : %.bgsvdata
-	@echo $(notdir $<)
-	@$(bin2o)
+# %.bgsvdata.o %_bgsvdata.h : %.bgsvdata
+# 	@echo $(notdir $<)
+# 	@$(bin2o)
 
-%.bgdata.o %_bgdata.h : %.bgdata
-	@echo $(notdir $<)
-	@$(bin2o)
+# %.bgdata.o %_bgdata.h : %.bgdata
+# 	@echo $(notdir $<)
+# 	@$(bin2o)
 
 -include $(DEPENDS)
 

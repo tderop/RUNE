@@ -178,7 +178,7 @@ void Rune::Inventory::ShowPage(
     Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
 
     // Clear all current widgets
-    Logger::Importantf( "Time taken: %dns", timeCode([menu](){menu->clearAllWidgets();}));
+    menu->clearAllWidgets();
 
     // The menu body, used for positioning tiles
     Aether::Container* menuBody = menu->body();

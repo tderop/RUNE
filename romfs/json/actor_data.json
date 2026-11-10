@@ -456,7 +456,6 @@
   },
   "Weapon_Sword_503": {
     "Name": "Weapon_Sword_503",
-    "Hidden": true,
     "Durability": 40,
     "Attack": 1
   },
@@ -981,7 +980,6 @@
   },
   "Armor_500_Head": {
     "Name": "Armor_500_Head",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -1263,14 +1261,12 @@
   },
   "Armor_Default_Extra_01": {
     "Name": "Armor_Default_Extra_01",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
   },
   "Armor_502_Upper": {
     "Name": "Armor_502_Upper",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -1343,7 +1339,6 @@
   },
   "Armor_Default_Lower": {
     "Name": "Armor_Default_Lower",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -1365,12 +1360,12 @@
   },
   "Armor_042_Head_B": {
     "Name": "Stealth Mask",
-    "Hidden": true,
     "StarNum": 2,
     "Defence": 4,
     "NextRank": "Armor_077_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
+    "Hidden": true,
     "PrevRank": "Armor_012_Head"
   },
   "Armor_040_Lower": {
@@ -1476,7 +1471,6 @@
   },
   "Armor_501_Upper": {
     "Name": "Armor_501_Upper",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -1863,11 +1857,11 @@
   },
   "Armor_079_Head_B": {
     "Name": "Stealth Mask",
-    "Hidden": true,
     "StarNum": 5,
     "Defence": 16,
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
+    "Hidden": true,
     "PrevRank": "Armor_078_Head"
   },
   "Armor_102_Upper": {
@@ -1941,7 +1935,6 @@
   },
   "Armor_501_Lower": {
     "Name": "Armor_501_Lower",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -2027,12 +2020,12 @@
   },
   "Armor_077_Head_B": {
     "Name": "Stealth Mask",
-    "Hidden": true,
     "StarNum": 3,
     "Defence": 6,
     "NextRank": "Armor_078_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
+    "Hidden": true,
     "PrevRank": "Armor_042_Head"
   },
   "Armor_009_Upper": {
@@ -2264,7 +2257,6 @@
   },
   "Armor_Default_Extra_00": {
     "Name": "Armor_Default_Extra_00",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -2295,11 +2287,11 @@
   },
   "Armor_015_Head_B": {
     "Name": "Hylian Hood",
-    "Hidden": true,
     "StarNum": 5,
     "Defence": 20,
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
+    "Hidden": true,
     "PrevRank": "Armor_004_Head"
   },
   "Armor_078_Head": {
@@ -2377,10 +2369,10 @@
   },
   "Armor_178_Head_B": {
     "Name": "Zant's Helmet",
-    "Hidden": true,
     "StarNum": 1,
     "Defence": 3,
-    "Dyeable": false
+    "Dyeable": false,
+    "Hidden": true
   },
   "Armor_087_Head": {
     "Name": "Radiant Mask",
@@ -2427,11 +2419,11 @@
   },
   "Armor_012_Head_B": {
     "Name": "Stealth Mask",
-    "Hidden": true,
     "StarNum": 1,
     "Defence": 2,
     "NextRank": "Armor_042_Head",
-    "Dyeable": true
+    "Dyeable": true,
+    "Hidden": true
   },
   "Armor_227_Upper": {
     "Name": "Fierce Deity Armor",
@@ -2620,12 +2612,12 @@
   },
   "Armor_002_Head_B": {
     "Name": "Hylian Hood",
-    "Hidden": true,
     "StarNum": 2,
     "Defence": 5,
     "NextRank": "Armor_003_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
+    "Hidden": true,
     "PrevRank": "Armor_001_Head"
   },
   "Armor_116_Upper": {
@@ -2677,7 +2669,6 @@
   },
   "Armor_Default_Upper": {
     "Name": "Armor_Default_Upper",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -2813,12 +2804,12 @@
   },
   "Armor_078_Head_B": {
     "Name": "Stealth Mask",
-    "Hidden": true,
     "StarNum": 4,
     "Defence": 9,
     "NextRank": "Armor_079_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
+    "Hidden": true,
     "PrevRank": "Armor_077_Head"
   },
   "Armor_114_Lower": {
@@ -2902,7 +2893,6 @@
   },
   "Armor_500_Upper": {
     "Name": "Armor_500_Upper",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -3166,7 +3156,6 @@
   },
   "Armor_Default_Head": {
     "Name": "Armor_Default_Head",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -3340,12 +3329,12 @@
   },
   "Armor_003_Head_B": {
     "Name": "Hylian Hood",
-    "Hidden": true,
     "StarNum": 3,
     "Defence": 8,
     "NextRank": "Armor_004_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
+    "Hidden": true,
     "PrevRank": "Armor_002_Head"
   },
   "Armor_212_Upper": {
@@ -3489,12 +3478,12 @@
   },
   "Armor_004_Head_B": {
     "Name": "Hylian Hood",
-    "Hidden": true,
     "StarNum": 4,
     "Defence": 12,
     "NextRank": "Armor_015_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
+    "Hidden": true,
     "PrevRank": "Armor_003_Head"
   },
   "Armor_229_Head": {
@@ -3565,10 +3554,10 @@
   },
   "Armor_177_Head_B": {
     "Name": "Ravio's Hood",
-    "Hidden": true,
     "StarNum": 1,
     "Defence": 2,
-    "Dyeable": false
+    "Dyeable": false,
+    "Hidden": true
   },
   "Armor_169_Head": {
     "Name": "Vah Naboris Divine Helm",
@@ -3706,7 +3695,6 @@
   },
   "Armor_501_Head": {
     "Name": "Armor_501_Head",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -4192,7 +4180,6 @@
   },
   "Armor_500_Lower": {
     "Name": "Armor_500_Lower",
-    "Hidden": true,
     "StarNum": 0,
     "Defence": 1,
     "Dyeable": false
@@ -4234,11 +4221,11 @@
   },
   "Armor_001_Head_B": {
     "Name": "Hylian Hood",
-    "Hidden": true,
     "StarNum": 1,
     "Defence": 3,
     "NextRank": "Armor_002_Head",
-    "Dyeable": true
+    "Dyeable": true,
+    "Hidden": true
   },
   "Armor_017_Head": {
     "Name": "Radiant Mask",
@@ -4469,7 +4456,8 @@
   },
   "Item_Cook_C_05": {
     "Name": "Item_Cook_C_05",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_L_00": {
     "Name": "Staminoka Bass",
@@ -4491,7 +4479,8 @@
   },
   "Item_Cook_C_01": {
     "Name": "Item_Cook_C_01",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_PlantGet_E": {
     "Name": "Cool Safflina",
@@ -4524,7 +4513,8 @@
   },
   "Item_Cook_C_15": {
     "Name": "Item_Cook_C_15",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_32": {
     "Name": "Toasty Sunshroom",
@@ -4544,7 +4534,8 @@
   },
   "Item_Cook_C_11": {
     "Name": "Item_Cook_C_11",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_K": {
     "Name": "Hearty Blueshell Snail",
@@ -5077,7 +5068,8 @@
   },
   "Item_Cook_B_03": {
     "Name": "Item_Cook_B_03",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Meat_01": {
     "Name": "Raw Meat",
@@ -5149,7 +5141,8 @@
   },
   "Item_Cook_C_14": {
     "Name": "Item_Cook_C_14",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_33": {
     "Name": "Toasty Zapshroom",
@@ -5186,7 +5179,8 @@
   },
   "Item_Cook_G_07": {
     "Name": "Item_Cook_G_07",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_F": {
     "Name": "Mighty Porgy",
@@ -5272,7 +5266,8 @@
   },
   "Item_Cook_C_08": {
     "Name": "Item_Cook_C_08",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_J_05": {
     "Name": "Prime Poultry Curry",
@@ -5421,7 +5416,8 @@
   },
   "Item_Cook_C_12": {
     "Name": "Item_Cook_C_12",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_H": {
     "Name": "Armored Carp",
@@ -5484,7 +5480,8 @@
   },
   "Item_Cook_C_06": {
     "Name": "Item_Cook_C_06",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Material_05_00": {
     "Name": "Fresh Milk",
@@ -5523,7 +5520,8 @@
   },
   "Item_Cook_C_02": {
     "Name": "Item_Cook_C_02",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "ElectricArrow": {
     "Name": "Shock Arrow",
@@ -5664,7 +5662,8 @@
   },
   "PlayerStole2_Vagrant": {
     "Name": "PlayerStole2_Vagrant",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Obj_Maracas": {
     "Name": "Hestu's Maracas",
@@ -5901,7 +5900,8 @@
   },
   "Item_Cook_B_04": {
     "Name": "Item_Cook_B_04",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Meat_06": {
     "Name": "Raw Bird Drumstick",
@@ -6114,7 +6114,8 @@
   },
   "Item_Cook_B_14": {
     "Name": "Item_Cook_B_14",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Mushroom_A": {
     "Name": "Stamella Shroom",
@@ -6181,7 +6182,8 @@
   },
   "Item_Cook_C_07": {
     "Name": "Item_Cook_C_07",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Material_05": {
     "Name": "Fresh Milk",
@@ -6362,7 +6364,8 @@
   },
   "Item_Cook_G_08": {
     "Name": "Item_Cook_G_08",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Enemy_29": {
     "Name": "Ancient Shaft",
@@ -6370,7 +6373,8 @@
   },
   "Item_Cook_C_13": {
     "Name": "Item_Cook_C_13",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_I": {
     "Name": "Hearty Salmon",

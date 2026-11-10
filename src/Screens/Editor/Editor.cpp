@@ -244,7 +244,7 @@ void EditorScreen::buildScreen(){
         Aether::ListButton* tabButton;
         tabButton = new Aether::ListButton(
             tabName,
-            [this, tabName, tabIdx](){
+            [this, tabName](){
                 Logger::Write(tabName+" was selected");
                 this->showTab(tabName);
             }
@@ -329,7 +329,7 @@ void EditorScreen::buildScreen(){
             this->app->showScreen("Menu");
         });
 
-        confirmBox->rightButton()->onPress([this, confirmBox](){
+        confirmBox->rightButton()->onPress([confirmBox](){
             confirmBox->close();
         });
 

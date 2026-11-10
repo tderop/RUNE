@@ -11,6 +11,10 @@
 namespace Rune{
     namespace JsonData{
         std::unordered_map<std::string, std::string> JsonPaths = {
+            {
+                "Metadata",
+                "romfs:/json/metadata.json"
+            },
             {   
                 "EditorData",
                 "romfs:/json/entry_data.jsonc"

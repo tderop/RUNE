@@ -326,7 +326,10 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     // Add a button for resetting all 
 
     // Show the first page
-    Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, ellipses);
+    Logger::Importantf("Time taken to generate initial %s page: %dms", menu->menuName().c_str(),
+        timeCode(
+            [menu, inventoryItems, currentPage, ellipses](){
+                Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, ellipses);})/1000000);
 
     // Bind navigation actions
     InputSystem& inputService = InputSystem::getService();
