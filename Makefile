@@ -56,12 +56,10 @@ AETHER_SOURCE_DIR := $(if $(TOPDIR),$(TOPDIR),$(CURDIR))/external/Aether/source
 AETHER_SOURCE_FILES := $(shell find "$(AETHER_SOURCE_DIR)" -type f -name "*.cpp")
 AETHER_OBJECT_FILES := $(patsubst $(AETHER_SOURCE_DIR)/%.cpp,aether/%.o,$(AETHER_SOURCE_FILES))
 
-DATA       := data
+# DATA       := data
 INCLUDES   := include src \
               external/Aether/include \
-              libs/range-v3/include \
               libs/json/include \
-              libs/spdlog/include \
               libs/stb/include
 
 OUTPUTDIR  := output
@@ -88,7 +86,6 @@ ASFLAGS    := -g $(ARCH)
 LDFLAGS    = -specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) $(LIBPATHS) -Wl,-Map,$(notdir $*.map)
 
 LIBS := -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx \
-        -lspdlog \
         -lEGL -lglapi -lGLESv2 -ldrm_nouveau \
         -lm \
         -lfreetype -lpng -ljpeg -lwebp \
@@ -108,8 +105,7 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 export OUTPUT := $(CURDIR)/$(OUTPUTDIR)/$(TARGET)
 export TOPDIR := $(CURDIR)
 
-export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
-                $(foreach dir,$(DATA),$(CURDIR)/$(dir))
+export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 
 export DEPSDIR := $(CURDIR)/$(BUILD)
 export AETHER_OBJECT_FILES
@@ -252,14 +248,6 @@ aether/%.o: $(TOPDIR)/external/Aether/source/%.cpp
 %.bin.o %_bin.h : %.bin
 	@echo $(notdir $<)
 	@$(bin2o)
-
-# %.bgsvdata.o %_bgsvdata.h : %.bgsvdata
-# 	@echo $(notdir $<)
-# 	@$(bin2o)
-
-# %.bgdata.o %_bgdata.h : %.bgdata
-# 	@echo $(notdir $<)
-# 	@$(bin2o)
 
 -include $(DEPENDS)
 

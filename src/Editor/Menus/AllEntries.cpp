@@ -8,7 +8,6 @@
 #include <Input/Input.hpp>
 
 #include <string>
-#include <memory>
 
 const int ENTRIES_PER_PAGE = 50;
 

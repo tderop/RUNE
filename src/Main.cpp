@@ -275,9 +275,6 @@ int main(){
     // This is the case because of the new Rune::Application that was created in initApplet()
 
     // The rest of the main function covers InputService polling, and exiting services when closing
-    std::string out;
-    Rune::Save::GetDataName(*runeMetadata, 2063992120, &out);
-    Logger::Importantf("DataName: %s", out.c_str());
     while (app->window()->loop()){
         // Update InputService (allows for InputService connections, input detection, basically required for the whole system to work)
         inputService.update();

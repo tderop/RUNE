@@ -47,9 +47,7 @@ Thanks to:
 - ZeldaMods for save file information found at https://zeldamods.org/wiki/Save_Files
 - MrCheeze for `actor_names.json`, a part of the botw-tools repository https://github.com/MrCheeze/botw-tools/
 - Léo Lam (@leoetlino) at ZeldaMods for
-    - The bymlplus library for parsing BYAML files: https://github.com/zeldamods/bymlplus
-        - Required range-v3 by Eric Niebler (@ericniebler)
-        - Required spdlog by Gabi Melman (@gabime)
+    - The bymlplus library for parsing BYAML files: https://github.com/zeldamods/bymlplus (used for metadata generation)
     - oead - `oead::yaz0` source used for helping me understand the yaz0 compression format: https://github.com/zeldamods/oead
 - KillzXGaming for
     - Switch Toolbox used for helping me understand the SBITEMICO format: https://github.com/KillzXGaming/Switch-Toolbox
