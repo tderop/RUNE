@@ -358,7 +358,7 @@ void EditorScreen::buildScreen(){
             Rune::Save::RawFile rawFile;
             Rune::Save::Encode(&rawFile, this->saveFile, [this](size_t cur, size_t max){
                 if (max == 0) { return; }
-                if (cur % 640 != 0) { return; }
+                if (cur % 1280 != 0) { return; }
                 this->app->setLoadingProgress(static_cast<float>(cur)/max);
             });
 
@@ -682,9 +682,16 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 
     // Decode the raw save file
     Logger::Write("[EDITOR] - Decoding raw save file...");
-    rc = Rune::Save::Decode(this->saveFile, rawSaveFile, *runeMetadata);
+    rc = Rune::Save::Decode(this->saveFile, rawSaveFile, *runeMetadata, 
+        [this](size_t cur, size_t max){
+            if (cur % 640 != 0) { return; }
+            this->app->setLoadingProgress(static_cast<float>(cur)/max);
+        }
+    );
+
     if (R_FAILED(rc)){
         Logger::Write("[EDITOR] - Failed to decode save file for slot "+std::to_string(saveSlot->index)+"!");
+        return;
     }
 
     Logger::Write("[EDITOR] - Raw save file decoded successfully!");
@@ -696,6 +703,7 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
     rc = Rune::Save::GetSaveRawFile(&rawCaptionFile, captionFileDataPath);
     if (R_FAILED(rc)){
         Logger::Write("[EDITOR] - Failed to get raw caption file for slot "+std::to_string(saveSlot->index)+"!");
+        return;
     }
 
     // Decode the raw caption file
@@ -703,6 +711,7 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
     rc = Rune::Save::Decode(this->captionFile, rawCaptionFile, *runeMetadata);
     if (R_FAILED(rc)){
         Logger::Write("[EDITOR] - Failed to decode caption file for slot "+std::to_string(saveSlot->index)+"!");
+        return;
     }
 
     Logger::Write("[EDITOR] - Raw caption file decoded successfully!");

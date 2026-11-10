@@ -225,6 +225,10 @@ namespace Aether {
         }
     }
 
+    void Element::onHighlight(std::function<void(bool)> f){
+        this->onHighlightFunc_ = f;
+    }
+
     bool Element::selectable() {
         return this->selectable_;
     }
@@ -253,6 +257,10 @@ namespace Aether {
         }
         if (!b) {
             this->setSelected(false);
+        }
+
+        if (this->onHighlightFunc_){
+            this->onHighlightFunc_(b);
         }
     }
 

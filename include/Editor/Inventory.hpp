@@ -87,6 +87,26 @@ namespace Rune{
             Unknown=0xFFFFFFFF
         };
 
+        /** @brief A vector of all the modifiers that need a value editor */
+        inline const std::vector<Modifier> kValueModifiers = {
+            Modifier::AttackUp, Modifier::DurabilityUp, 
+            Modifier::MultiShot, Modifier::GuardUp
+        };
+
+        /** @brief Determine whether a modifier needs a value editor */
+        inline bool ModifierNeedsValueEditor(Modifier m){
+            if (m == Modifier::None){ return false; }
+            uint32_t mStripped = static_cast<uint32_t>(m) & ~kEnhancedMask;
+
+            for (const auto& mCheck : kValueModifiers){
+                if (mCheck == m || static_cast<uint32_t>(mCheck) == mStripped){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         struct ModifierInfo {
             Modifier modifier;
             const char* name;
@@ -357,5 +377,11 @@ namespace Rune{
          * @return Whether the armor is dyeable or not
          */
         bool IsArmorDyeable(const std::string& actorName);
+
+        /**
+         * @brief Get the maximum durability of a piece of eqipment
+         * @param actorName The equipment actor name
+         */
+        uint32_t GetMaxDurability(const std::string& actorName);
     } // namespace Inventory
 } // namespace Rune

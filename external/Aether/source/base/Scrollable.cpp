@@ -50,6 +50,10 @@ namespace Aether {
             case Padding::None:
                 return 5;   // Need some padding to handle highlight
                 break;
+            
+            default:
+                return 0;
+                break;
         }
     }
 
@@ -68,7 +72,7 @@ namespace Aether {
         }
 
         // If children don't take up enough space don't scroll!
-        if (this->maxScrollPos_ <= this->h()) {
+        if (this->maxScrollPos_ <= static_cast<unsigned int>(this->h())) {
             this->maxScrollPos_ = 0;
             return;
         }
@@ -166,7 +170,7 @@ namespace Aether {
         unsigned int old = this->scrollPos_;
         if (pos < 0) {
             this->scrollPos_ = 0;
-        } else if (pos > this->maxScrollPos_) {
+        } else if (static_cast<unsigned int>(pos) > this->maxScrollPos_) {
             this->scrollPos_ = this->maxScrollPos_;
         } else {
             this->scrollPos_ = pos;

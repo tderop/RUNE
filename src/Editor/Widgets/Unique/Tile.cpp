@@ -288,6 +288,11 @@ namespace Rune {
                 Aether::Render::Wait);
             Aether::Text* ovlSwapText = new Aether::Text(
                 0, 0, "Swap",  18);
+            ovlSwapBtn->onHighlight([](bool h){
+                if (h){
+                    Logger::Important("I am here and I am alive");
+                }
+            });
 
             ovlSwapImg->setScaleDimensions(24, 24);
             ovlSwapImg->renderAsync();
@@ -308,8 +313,54 @@ namespace Rune {
             });
 
             // -------------
-
+            
             cursorX = ovlSwapBtn->right()+btnSpacing;
+
+            // Add reset button if weapon, bow or shield
+            switch (inventoryItem.category){
+                case Category::Weapons:
+                case Category::Bows:
+                case Category::Shields: {
+                    this->ovlResetBtn = new Aether::BorderButton(
+                        0, 0, btnWidth, 42,
+                        3, "", 1, [](){}
+                    );
+                    Aether::Image* ovlResetImg = new Aether::Image(
+                        0, 0, ASSET_PATHS.at("reset"),
+                        Aether::Render::Wait
+                    );
+                    Aether::Text* ovlResetText = new Aether::Text(
+                        0, 0, "Reset", 18
+                    );
+
+                    ovlResetImg->setScaleDimensions(24, 24);
+                    ovlResetImg->renderAsync();
+
+                    ovlResetBtn->setXY(cursorX, cursorY);
+                    ovlResetImg->setXY(cursorX+32, ovlResetBtn->centreY()-ovlResetImg->scaleHeight()/2);
+                    ovlResetText->setXY(ovlResetImg->right()+12, ovlResetBtn->centreY()-ovlResetText->textureHeight()/2);
+
+                    ovlResetBtn->setBorderColour(LIGHT_SEPARATOR_COLOUR);
+                    ovlResetBtn->setFillColour(LIGHT_BACKGROUND_COLOUR);
+
+                    this->ovl->addTempElement(ovlResetBtn);
+                    ovlResetBtn->addElement(ovlResetImg);
+                    ovlResetImg->addElement(ovlResetText);
+
+                    ovlResetBtn->onPress([this](){
+                        this->onReset();
+                    });
+
+                    cursorX = ovlResetBtn->right()+btnSpacing;
+                    break;
+                }
+
+                default:
+                    break;
+            }
+
+            // -------------
+
             this->ovlDeleteBtn = new Aether::BorderButton(
                 0, 0, btnWidth, 42, 
                 3, "", 1, [](){});
@@ -421,12 +472,12 @@ namespace Rune {
                         __INT32_MAX__/kDurabilityMultiplier);
                     ovlPrimaryValueStepper->setValue(
                         inventoryItem.value/kDurabilityMultiplier);
+                    ovlPrimaryValueStepper->setDefaultValue(
+                        GetMaxDurability(inventoryItem.actorName));
                     cursorY += ovlPrimaryValueStepper->h()+PROPERTY_Y_SPACING;
 
                     this->ovlSecondaryFlagDropdown = new Aether::Dropdown(cursorX,
-                        cursorY, "Modifier");
-                    ovlSecondaryFlagDropdown->setValue(
-                        ModifierName((Modifier)inventoryItem.flagSp));
+                        cursorY, "Modifier", 180, 180);
                     
                     std::map<std::string, std::any> buffMap;
                     const auto& categoryModifiers = kCategoryModifiers
@@ -449,6 +500,25 @@ namespace Rune {
                     visiblePropertyEditors.push_back(ovlSecondaryValueStepper);
                     this->ovl->addTempElement(ovlSecondaryValueStepper);
                     this->ovl->addTempElement(ovlSecondaryFlagDropdown);
+
+                    // Hide Modifier Val. stepper if value is not needed
+                    ovlSecondaryFlagDropdown->onValueChange([this](){
+                        if (this->ovlSecondaryFlagDropdown == nullptr) { return; }
+                        auto modOpt = this->ovlSecondaryFlagDropdown->getValueData<Modifier>();
+
+                        bool needsEditor = false;
+                        if (modOpt.has_value()){
+                            Modifier currentModifier = modOpt.value();
+                            needsEditor = ModifierNeedsValueEditor(currentModifier);
+                        }
+                        
+                        // Hide the value stepper, and reset it to 1
+                        this->ovlSecondaryValueStepper->setHidden(!needsEditor);
+                        if (!needsEditor){ this->ovlSecondaryValueStepper->setValue(1); }
+                    });
+
+                    ovlSecondaryFlagDropdown->setValue(
+                        ModifierName(static_cast<Modifier>(inventoryItem.flagSp)));
 
                     // Show keyboard for manual input on press
                     ovlSecondaryValueStepper->onPress([this](){
@@ -655,6 +725,7 @@ namespace Rune {
 
         void Tile::onDelete(){
             this->inventoryItem.actorName = "";
+
             this->inventoryItem.value = 0;
             this->inventoryItem.valueSp = 0;
             this->inventoryItem.flagSp = 0;
@@ -675,6 +746,7 @@ namespace Rune {
             // Show loading message
             Application* app = Application::getApplication();
             Aether::MessageBox* loadingMsg = app->showLoading("Loading items...", true);
+            loadingMsg->onButtonPress(Aether::Button::B, [](){}); // Stub exiting the menu
             
             // Get a list of available actor names
             std::vector<std::string> otherActorNames 
@@ -694,13 +766,21 @@ namespace Rune {
             ctrlBar->addControl(Aether::Button::X, "Search");
             swapOvl->addElement(ctrlBar);
 
-            // Make a central list frames
+            // Make a central list frame
             Aether::Rectangle* listFrame = new Aether::Rectangle(0, 0, 960, 540, 6);
             listFrame->setColour(BACKGROUND_COLOUR);
             listFrame->setXY(
                 swapBg->centreX()-listFrame->w()/2,
                 swapBg->centreY()-listFrame->h()/2);
             swapOvl->addElement(listFrame);
+
+            // Add instructional text
+            Aether::Text* hintText = new Aether::Text(0, 0, "Select an Item", 32);
+            hintText->setXY(
+                listFrame->centreX()-hintText->textureWidth()/2,
+                listFrame->y()-hintText->textureHeight()-24);
+            hintText->setColour(TEXT_COLOUR);
+            swapOvl->addElement(hintText);
 
             // Make the list
             Aether::List* list = new Aether::List(
@@ -721,7 +801,7 @@ namespace Rune {
             for (const std::string& otherActor : otherActorNames){
                 std::string fullName = GetNameFromActorName(otherActor);
                 Aether::ListButton* actorOptn = new Aether::ListButton(
-                    fullName+" ("+otherActor+")", [this, swapOvl, otherActor](){
+                    fullName, [this, swapOvl, otherActor](){
                         this->inventoryItem.actorName = otherActor;
 
                         this->updateOvlImg();
@@ -730,10 +810,12 @@ namespace Rune {
 
                         this->ovl->setExitEnabled(true);
                         this->window->removeOverlay(swapOvl);
+
+                        this->ovl->setFocused(this->ovlSwapBtn);
                     }
                 );
                 actorOptn->setLineColour(LIGHT_SEPARATOR_COLOUR);
-                actorOptn->setTextColour(TOP_R);
+                // actorOptn->setTextColour(TOP_R);
 
                 list->addElement(actorOptn);
                 
@@ -786,6 +868,7 @@ namespace Rune {
             swapOvl->onButtonPress(Aether::Button::B, [this, swapOvl](){
                 this->ovl->setExitEnabled(true);
                 this->window->removeOverlay(swapOvl);
+                this->ovl->setFocused(this->ovlSwapBtn);
             });
 
             swapOvl->setFocused(list);
@@ -905,6 +988,30 @@ namespace Rune {
 
         Tile::~Tile(){
             // Do whatever
+        }
+
+        void Tile::onReset(){
+            switch (inventoryItem.category){
+                case Category::Weapons:
+                case Category::Bows:
+                case Category::Shields: {
+                    // Reset durability
+                    uint32_t maxDurability = GetMaxDurability(
+                        inventoryItem.actorName)*kDurabilityMultiplier; // bruh
+                    inventoryItem.value = maxDurability;
+
+                    // Remove modifier
+                    inventoryItem.modifier = Modifier::None;
+                    inventoryItem.flagSp = 0;
+                    inventoryItem.valueSp = 0;
+                    break;
+                }
+
+                default:
+                    break;
+            }
+
+            this->updatePropertyEditors();
         }
 
     } // namespace Inventory

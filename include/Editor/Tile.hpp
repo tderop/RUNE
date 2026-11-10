@@ -57,6 +57,8 @@ namespace Rune {
                 Aether::BorderButton* ovlSwapBtn=nullptr;
                 /** @brief The delete button in the widget overlay */
                 Aether::BorderButton* ovlDeleteBtn=nullptr;
+                /** @brief The 'reset' button in the widget overlay */
+                Aether::BorderButton* ovlResetBtn=nullptr;
                 /** @brief The big text in the image frame showing the name of the item */
                 Aether::Text* ovlImgText=nullptr;
                 /** @brief Text showing there is nothing available to edit right now */
@@ -156,6 +158,11 @@ namespace Rune {
                  * @brief The callback run when the swap button is pressed in the editor
                  */
                 void onSwap();
+
+                /**
+                 * @brief The callback to run when the reset button is pressed
+                 */
+                void onReset();
 
                 /**
                  * @brief The callback that handles when the overlay is closed

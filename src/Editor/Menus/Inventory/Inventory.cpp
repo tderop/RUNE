@@ -28,7 +28,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Logger::Write("[Rune::MenuBuilder::Inventory] - Running menu builder...");
 
     // Disable right stick navigation
-    Aether::SetRightStickNavigation(false);
+    // Aether::SetRightStickNavigation(false);
 
     // Get the menu category
     Rune::Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
@@ -323,6 +323,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         menuDot->setX(dotStart + (i*dotStride));
     }
 
+    // Add a button for resetting all 
+
     // Show the first page
     Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, ellipses);
 
@@ -367,7 +369,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         inputService.unbind("PrevPage");
 
         // Enable right stick navigation
-        Aether::SetRightStickNavigation(true);
+        // Aether::SetRightStickNavigation(true);
 
         // Delete the ellipses vector
         delete ellipses;

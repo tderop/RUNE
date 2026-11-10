@@ -164,11 +164,23 @@ void MenuScreen::showSaveSelect(){
                 // This is initially for supporting showing the thumbnail and timestamp in the editor to remind the user which save they are editing,
                 // but it may be useful for other changes later on!
                 Logger::Write("[MENU] - Showing editor screen...");
-                EditorScreen* editor = static_cast<EditorScreen*>(this->app->showScreen("Editor")); // Yes, I still hate this
+                auto loadingMsg = this->app->showLoading("Loading editor...", true);
 
-                // Pass the selected save slot to the editor
-                // New crash: maybe saveSlot goes out of scope? It can't until editSaveSlot() has finished execution, however.
+                // GET screen
+                EditorScreen* editor = static_cast<EditorScreen*>
+                    (this->app->getScreen("Editor")); // Yes, I still still hate this
+
+                if (editor == nullptr){
+                    Logger::Write("[MENU] - Editor screen is nullptr!");
+                    return;
+                }
+
+                // DECODE save
                 editor->editSaveSlot(&saveSlot);
+                // SHOW editor
+                this->app->showScreen("Editor");
+
+                loadingMsg->close();
             }
         );
 

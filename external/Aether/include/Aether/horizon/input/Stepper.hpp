@@ -31,6 +31,8 @@ namespace Aether {
             int value_ = 0;
             /** @brief The step */
             int step = 1;
+            /** @brief The default value to reset to */
+            int defaultValue_ = 0;
             /** @brief The minimum value of the stepper */
             int minValue = 0;
             /** @brief The maximum value of the stepper */
@@ -182,6 +184,17 @@ namespace Aether {
              * @return The label string
              */
             std::string getString();
+
+            /**
+             * @brief Reset the value
+             */
+            void reset();
+
+            /**
+             * @brief Set the default value
+             * @param def The new default value
+             */
+            void setDefaultValue(int def);
     };
 };
 

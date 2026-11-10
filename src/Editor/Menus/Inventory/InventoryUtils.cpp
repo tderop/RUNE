@@ -431,3 +431,27 @@ bool Rune::Inventory::IsArmorDyeable(const std::string& actorName){
 
     return prevRank.value_or(false);
 }
+
+uint32_t Rune::Inventory::GetMaxDurability(const std::string& actorName){
+    Rune::Json* actorData = nullptr;
+    Rune::JsonData::GetJsonById(actorData, "ActorData");
+
+    if (actorData == nullptr){
+        // Logger::Importantf("ActorData is nullptr");
+        return 0;
+    }
+
+    auto actorIt = actorData->find(actorName);
+    if (actorIt == actorData->end()){
+        // Logger::Importantf("Actor not found in data");
+        return 0;
+    }
+
+    auto durIt = actorIt->find("Durability");
+    if (durIt == actorIt->end()){
+        // Logger::Importantf("Is end or not number");
+        return 0;
+    }
+
+    return static_cast<uint32_t>(durIt->get<int>());
+}

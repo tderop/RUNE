@@ -456,6 +456,7 @@
   },
   "Weapon_Sword_503": {
     "Name": "Weapon_Sword_503",
+    "Hidden": true,
     "Durability": 40,
     "Attack": 1
   },
@@ -980,6 +981,7 @@
   },
   "Armor_500_Head": {
     "Name": "Armor_500_Head",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -1261,12 +1263,14 @@
   },
   "Armor_Default_Extra_01": {
     "Name": "Armor_Default_Extra_01",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
   },
   "Armor_502_Upper": {
     "Name": "Armor_502_Upper",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -1339,6 +1343,7 @@
   },
   "Armor_Default_Lower": {
     "Name": "Armor_Default_Lower",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -1360,12 +1365,12 @@
   },
   "Armor_042_Head_B": {
     "Name": "Stealth Mask",
+    "Hidden": true,
     "StarNum": 2,
     "Defence": 4,
     "NextRank": "Armor_077_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_012_Head"
   },
   "Armor_040_Lower": {
@@ -1471,6 +1476,7 @@
   },
   "Armor_501_Upper": {
     "Name": "Armor_501_Upper",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -1857,11 +1863,11 @@
   },
   "Armor_079_Head_B": {
     "Name": "Stealth Mask",
+    "Hidden": true,
     "StarNum": 5,
     "Defence": 16,
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_078_Head"
   },
   "Armor_102_Upper": {
@@ -1935,6 +1941,7 @@
   },
   "Armor_501_Lower": {
     "Name": "Armor_501_Lower",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -2020,12 +2027,12 @@
   },
   "Armor_077_Head_B": {
     "Name": "Stealth Mask",
+    "Hidden": true,
     "StarNum": 3,
     "Defence": 6,
     "NextRank": "Armor_078_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_042_Head"
   },
   "Armor_009_Upper": {
@@ -2257,6 +2264,7 @@
   },
   "Armor_Default_Extra_00": {
     "Name": "Armor_Default_Extra_00",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -2287,11 +2295,11 @@
   },
   "Armor_015_Head_B": {
     "Name": "Hylian Hood",
+    "Hidden": true,
     "StarNum": 5,
     "Defence": 20,
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_004_Head"
   },
   "Armor_078_Head": {
@@ -2369,10 +2377,10 @@
   },
   "Armor_178_Head_B": {
     "Name": "Zant's Helmet",
+    "Hidden": true,
     "StarNum": 1,
     "Defence": 3,
-    "Dyeable": false,
-    "Hidden": true
+    "Dyeable": false
   },
   "Armor_087_Head": {
     "Name": "Radiant Mask",
@@ -2419,11 +2427,11 @@
   },
   "Armor_012_Head_B": {
     "Name": "Stealth Mask",
+    "Hidden": true,
     "StarNum": 1,
     "Defence": 2,
     "NextRank": "Armor_042_Head",
-    "Dyeable": true,
-    "Hidden": true
+    "Dyeable": true
   },
   "Armor_227_Upper": {
     "Name": "Fierce Deity Armor",
@@ -2612,12 +2620,12 @@
   },
   "Armor_002_Head_B": {
     "Name": "Hylian Hood",
+    "Hidden": true,
     "StarNum": 2,
     "Defence": 5,
     "NextRank": "Armor_003_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_001_Head"
   },
   "Armor_116_Upper": {
@@ -2669,6 +2677,7 @@
   },
   "Armor_Default_Upper": {
     "Name": "Armor_Default_Upper",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -2804,12 +2813,12 @@
   },
   "Armor_078_Head_B": {
     "Name": "Stealth Mask",
+    "Hidden": true,
     "StarNum": 4,
     "Defence": 9,
     "NextRank": "Armor_079_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_077_Head"
   },
   "Armor_114_Lower": {
@@ -2893,6 +2902,7 @@
   },
   "Armor_500_Upper": {
     "Name": "Armor_500_Upper",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 2,
     "Dyeable": false
@@ -3156,6 +3166,7 @@
   },
   "Armor_Default_Head": {
     "Name": "Armor_Default_Head",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -3329,12 +3340,12 @@
   },
   "Armor_003_Head_B": {
     "Name": "Hylian Hood",
+    "Hidden": true,
     "StarNum": 3,
     "Defence": 8,
     "NextRank": "Armor_004_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_002_Head"
   },
   "Armor_212_Upper": {
@@ -3478,12 +3489,12 @@
   },
   "Armor_004_Head_B": {
     "Name": "Hylian Hood",
+    "Hidden": true,
     "StarNum": 4,
     "Defence": 12,
     "NextRank": "Armor_015_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_003_Head"
   },
   "Armor_229_Head": {
@@ -3554,10 +3565,10 @@
   },
   "Armor_177_Head_B": {
     "Name": "Ravio's Hood",
+    "Hidden": true,
     "StarNum": 1,
     "Defence": 2,
-    "Dyeable": false,
-    "Hidden": true
+    "Dyeable": false
   },
   "Armor_169_Head": {
     "Name": "Vah Naboris Divine Helm",
@@ -3695,6 +3706,7 @@
   },
   "Armor_501_Head": {
     "Name": "Armor_501_Head",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 0,
     "Dyeable": false
@@ -4180,6 +4192,7 @@
   },
   "Armor_500_Lower": {
     "Name": "Armor_500_Lower",
+    "Hidden": true,
     "StarNum": 0,
     "Defence": 1,
     "Dyeable": false
@@ -4221,11 +4234,11 @@
   },
   "Armor_001_Head_B": {
     "Name": "Hylian Hood",
+    "Hidden": true,
     "StarNum": 1,
     "Defence": 3,
     "NextRank": "Armor_002_Head",
-    "Dyeable": true,
-    "Hidden": true
+    "Dyeable": true
   },
   "Armor_017_Head": {
     "Name": "Radiant Mask",

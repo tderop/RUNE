@@ -226,14 +226,17 @@ Result Rune::Save::GetSaveRawFile(Rune::Save::RawFile* out, std::string filePath
 /**
  * @brief Decode a raw save file.
  */
-Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw, const Rune::Save::Metadata& metadata){
+Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw, const Rune::Save::Metadata& metadata, std::function<void(size_t cur, size_t max)> onProgress){
     // move trivial values
     out->path   = raw.path;
     out->header = raw.header;
 
-    for (size_t i = 0; i < raw.entries.size(); i++){
-        const Rune::Save::RawEntry& rawEntry = raw.entries[i];
+    size_t maxProgress = raw.entries.size();
 
+    for (size_t i = 0; i < maxProgress; i++){
+        onProgress(i, maxProgress);
+
+        const Rune::Save::RawEntry& rawEntry = raw.entries[i];
         Rune::Save::Entry entry;
         entry.id = rawEntry.id;
 

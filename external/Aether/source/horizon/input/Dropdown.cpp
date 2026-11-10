@@ -1,3 +1,6 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wc++20-extensions"
+
 #include "Aether/horizon/input/Dropdown.hpp"
 
 #define TEXT_SPACING 142
@@ -33,7 +36,7 @@ namespace Aether {
         this->list_ = new List(
             this->backgroundRect_->x(), this->backgroundRect_->y(),
             this->backgroundRect_->w(), this->backgroundRect_->h(),
-            Aether::Padding::None
+            Aether::Padding::FitScrollbar
         );
         this->list_->setScrollBarColour(LINE_COLOUR);
         this->addElement(this->list_);
@@ -83,6 +86,9 @@ namespace Aether {
 
     void Dropdown::valueUpdated(){
         this->dropdownBtn_->setString(this->value_);
+        if (this->onValueChangeFunc_){
+            this->onValueChangeFunc_();
+        }
     }
 
     void Dropdown::reorganiseElements(){
@@ -136,10 +142,20 @@ namespace Aether {
 
     void Dropdown::setValue(std::string s){
         this->value_ = s;
+        // if (!this->map_.empty()){
+        //     this->
+        // }
+
         this->valueUpdated();
     }
 
     std::string Dropdown::getValue(){
         return this->value_;
     }
+
+    void Dropdown::onValueChange(std::function<void()> f){
+        this->onValueChangeFunc_ = f;
+    }
 } // namespace Aether
+
+#pragma GCC diagnostic pop

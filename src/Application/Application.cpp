@@ -139,6 +139,15 @@ namespace Rune{
         this->_window = nullptr;
     }
 
+    Aether::Screen* Application::getScreen(const std::string& screenName) const{
+        auto screenIt = this->screens.find(screenName);
+        if (screenIt == this->screens.end()){
+            return nullptr;
+        }
+
+        return screenIt->second;
+    }
+
     Aether::Screen* Application::showScreen(const std::string& screenName){
         Aether::Screen* screen = this->screens.at(screenName);
     

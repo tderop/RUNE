@@ -55,6 +55,8 @@ namespace Aether {
 
             /** @brief A queue of functions that will run the next frame */
             static std::queue<std::function<void()>> deferredPressFuncs_;
+            /** @brief The function to run when selected */
+            std::function<void(bool)> onHighlightFunc_;
 
         protected:
             /** @brief Background colour if element is highlighted */
@@ -318,7 +320,13 @@ namespace Aether {
              *
              * @param b state to change selected status to
              */
-            virtual void setSelected(bool b);
+            void setSelected(bool b);
+
+            /**
+             * @brief Set a function to run when this element is selected
+             * @param f The function to run when the element is selected
+             */
+            void onHighlight(std::function<void(bool highlighted)> f);
 
             /**
              * @brief Check if current element is selectable

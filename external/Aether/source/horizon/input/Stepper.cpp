@@ -221,4 +221,12 @@ namespace Aether {
     std::string Stepper::getString(){
         return this->label->string();
     }
+
+    void Stepper::reset(){
+        this->value_ = defaultValue_;
+    }
+
+    void Stepper::setDefaultValue(int def){
+        this->defaultValue_ = def;
+    }
 }

@@ -29,6 +29,9 @@ namespace Aether {
             Rectangle * backgroundRect_=nullptr;
             /** @brief The list showing the dropdown options */
             List* list_=nullptr;
+            
+            /** @brief The function to run when the value is changed */
+            std::function<void()> onValueChangeFunc_;
 
             /** @brief The height of the dropdown menu */
             int dropdownH_;
@@ -58,6 +61,12 @@ namespace Aether {
              * @param h The height of the dropdown menu
              */
             Dropdown(int x, int y, std::string s="", int w = 180, int h = 240);
+
+            /**
+             * @brief Set the function to run when the value is changed
+             * @param f The function to run when value is changed
+             */
+            void onValueChange(std::function<void()> f);
 
             /**
              * @brief Set the dropdown data

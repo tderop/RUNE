@@ -49,6 +49,11 @@ namespace Rune{
             Aether::Screen* showScreen(const std::string& screenName);
 
             /**
+             * @brief Get a screen by its name.
+             */
+            Aether::Screen* getScreen(const std::string& screenName) const;
+
+            /**
              * @brief Get the current screen name.
              */
             std::string currentScreenName();

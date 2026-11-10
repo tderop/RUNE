@@ -232,7 +232,7 @@ namespace Rune
         /**
          * @brief Decode a raw save file.
          */
-        Result Decode(File *out, const RawFile &raw, const Metadata &metadata);
+        Result Decode(File *out, const RawFile &raw, const Metadata &metadata, std::function<void(size_t cur, size_t max)> onProgress=[](size_t, size_t){});
 
         /**
          * @brief Convert a RuneSaveValue to a displayable string
