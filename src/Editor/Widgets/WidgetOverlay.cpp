@@ -113,11 +113,13 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     panelBg->setColour(BACKGROUND_COLOUR);
     this->_panel->addElement(panelBg);
 
-    this->onOpen([panel](){
+    this->onOpen([this, panel](){
+        this->setFocused(panel);
+
         // Logger::Important("Panel has been opened.");
         panel->setY(250+panel->h());
 
-        Aether::Tween openMove(panel, .15, Aether::EasingStyle::Cubic, Aether::EasingDirection::Out, {
+        Aether::Tween openMove(panel, .25, Aether::EasingStyle::Cubic, Aether::EasingDirection::Out, {
             .Position={{0, 250}}
         });
         openMove.play();
@@ -125,7 +127,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
 
     this->onClose([panel](){
         // tween out the panel
-        Aether::Tween outTween(panel, .15, Aether::EasingStyle::Cubic, 
+        Aether::Tween outTween(panel, .25, Aether::EasingStyle::Cubic, 
         Aether::EasingDirection::Out, {
             .Position = {{0, 350+panel->h()}} 
         });

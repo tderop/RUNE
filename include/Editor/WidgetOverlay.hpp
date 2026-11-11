@@ -6,8 +6,6 @@
 #include <Utils/Trove.hpp>
 #include <Events/Signal.hpp>
 
-#include <functional>
-
 const int OVL_PANEL_WIDTH = 1280;
 const int OVL_PANEL_HEIGHT = 470;
 

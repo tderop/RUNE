@@ -7,7 +7,6 @@
 #include "Aether/base/Container.hpp"
 #include "Aether/horizon/button/BorderButton.hpp"
 #include "Aether/primary/Text.hpp"
-#include "Aether/utils/Types.hpp"
 
 namespace Aether {
     class Stepper : public Container {
@@ -195,6 +194,11 @@ namespace Aether {
              * @param def The new default value
              */
             void setDefaultValue(int def);
+
+            /**
+             * @brief Get the main button value container
+             */
+            Aether::BorderButton* getValueButton();
     };
 };
 

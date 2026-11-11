@@ -229,4 +229,8 @@ namespace Aether {
     void Stepper::setDefaultValue(int def){
         this->defaultValue_ = def;
     }
+
+    Aether::BorderButton* Stepper::getValueButton(){
+        return this->valueBtn;
+    }
 }

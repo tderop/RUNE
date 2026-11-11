@@ -534,7 +534,7 @@ namespace Aether {
 
         // Recreate scroll bar texture if needed
         if (this->scrollBar == nullptr) {
-            int size = (0.8*this->h()) * (this->h()/(double)(this->h() + this->maxScrollPos_/3));
+            int size = (0.8*this->h()) * (this->h()/(double)(this->h() + this->maxScrollPos_/3.0f));
             if (size < MIN_SCROLLBAR_SIZE) {
                 size = MIN_SCROLLBAR_SIZE;
             }
@@ -554,7 +554,7 @@ namespace Aether {
 
         // Draw scroll bar
         if (this->maxScrollPos_ != 0 && this->showScrollBar_ && this->scrollBar != nullptr) {
-            int yPos = this->y() + PADDING/2 + (((float)this->scrollPos_ / this->maxScrollPos_) * (this->h() - this->scrollBar->height() - PADDING));
+            int yPos = this->y() + PADDING/2.0f + (((float)this->scrollPos_ / this->maxScrollPos_) * (this->h() - this->scrollBar->height() - PADDING));
             this->scrollBar->setColour(this->scrollBarColour);
             this->scrollBar->render(this->x() + this->w() - this->scrollBar->width(), yPos);
         }

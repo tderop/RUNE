@@ -333,15 +333,15 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     menu->controlBar()->addControl(OPTIONS_BUTTON, "Options");
     Aether::Overlay* optnOvl = new Aether::Overlay();
 
-    Aether::Rectangle* bgFrame = new Aether::Rectangle(
-        0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0
-    );
+    // Aether::Rectangle* bgFrame = new Aether::Rectangle(
+    //     0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0
+    // );
     Aether::Rectangle* optnFrame = new Aether::Rectangle(
         0, 0, 320, 360, 6);
     Aether::Text* optnText = new Aether::Text(0, 0, 
         menu->menuName()+" - Options", 32);
 
-    bgFrame->setColour(Aether::Colour{0, 0, 0, 150});
+    // bgFrame->setColour(Aether::Colour{0, 0, 0, });
     optnFrame->setColour(BACKGROUND_COLOUR);    
     optnText->setColour(TEXT_COLOUR);
 
@@ -349,7 +349,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     optnText->centreAtXY(optnFrame->centreX(),
         optnFrame->y()-56);
 
-    optnOvl->addElement(bgFrame);
+    // optnOvl->addElement(bgFrame);
     optnOvl->addElement(optnFrame);
     optnOvl->addElement(optnText);
     
