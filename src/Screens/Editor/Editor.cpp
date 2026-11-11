@@ -303,6 +303,7 @@ void EditorScreen::buildScreen(){
     Aether::ControlBar* controlBar = new Aether::ControlBar();
     controlBar->addControl(Aether::Button::PLUS, "Save");
     controlBar->addControl(Aether::Button::MINUS, "Exit");
+    this->controlBar = controlBar;
 
     // confirmation message box
     Aether::MessageBox* confirmBox = new Aether::MessageBox();
@@ -630,6 +631,9 @@ void EditorScreen::showMenu(int menuIdx){
 
     // Set the widgetOverlay (for entries, AGAIN)
     menu->setWidgetOverlay(this->widgetOverlay);
+
+    // Set the controlBar
+    menu->setControlBar(this->controlBar);
 
     // Build the menu
     menu->build(builderName);

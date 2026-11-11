@@ -172,7 +172,7 @@ void Rune::Inventory::ShowPage(
     EditorMenu* menu, 
     std::vector<Rune::Inventory::Item>& inventoryItems,
     size_t page, 
-    std::vector<Aether::Ellipse*>* ellipses){
+    std::vector<Aether::Ellipse*>& ellipses){
     
     // Get menu category from name
     Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
@@ -277,13 +277,11 @@ void Rune::Inventory::ShowPage(
     // }
 
     // Highlight the right menu dot
-    if (ellipses != nullptr){
-        for (size_t i = 0; i < ellipses->size(); ++i){
-            if (i != page){
-                ellipses->at(i)->setColour(Rune::Inventory::kDisabledEllipse);
-            } else {
-                ellipses->at(i)->setColour(Rune::Inventory::kEnabledEllipse);
-            }
+    for (size_t i = 0; i < ellipses.size(); ++i){
+        if (i != page){
+            ellipses.at(i)->setColour(Rune::Inventory::kDisabledEllipse);
+        } else {
+            ellipses.at(i)->setColour(Rune::Inventory::kEnabledEllipse);
         }
     }
 }

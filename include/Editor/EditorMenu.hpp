@@ -57,6 +57,9 @@ class EditorMenu {
         /** @brief The cached builder used to construct */
         std::string builder;
 
+        /** @brief The current screen's control bar */
+        Aether::ControlBar* controlBar_;
+
         /** @brief the destructor */
         void onDelete();
 
@@ -71,6 +74,11 @@ class EditorMenu {
         // Disable copying (forgot to do this for a lot of other classes that own objects but meh doesn't matter too much)
         EditorMenu(const EditorMenu&) = delete;
 
+        /** @brief Get the control bar */
+        Aether::ControlBar* controlBar();
+
+        /** @brief Set the control bar */
+        void setControlBar(Aether::ControlBar* controlBar);
 
         /** @brief Build the menu UI */
         void build(std::string builderName="");

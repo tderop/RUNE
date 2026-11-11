@@ -312,7 +312,7 @@ namespace Rune{
         }
 
         std::string FormatValue(const Rune::Inventory::Item& inventoryItem);
-        void ShowPage(EditorMenu* menu, std::vector<Rune::Inventory::Item>& inventoryItems, size_t page, std::vector<Aether::Ellipse*>* ellipses=nullptr);
+        void ShowPage(EditorMenu* menu, std::vector<Rune::Inventory::Item>& inventoryItems, size_t page, std::vector<Aether::Ellipse*>& ellipses);
 
         /**
          * @brief Render all the icon textures. Fails if no textures exist.

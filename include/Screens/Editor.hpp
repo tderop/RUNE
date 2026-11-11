@@ -77,6 +77,8 @@ private:
     WidgetOverlay* widgetOverlay;
     Aether::List* editorScroll;
 
+    Aether::ControlBar* controlBar;
+
 public:
     // standard Aether class methods
 

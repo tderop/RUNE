@@ -5,6 +5,7 @@
 #include <Editor/EditorWidget.hpp>
 
 #include <Utils/Utils.hpp>
+#include <Utils/Timer.hpp>
 #include <Utils/Logger.hpp>
 #include <Save/Save.hpp>
 #include <Json/Json.hpp>
@@ -12,11 +13,14 @@
 #include <Input/Input.hpp>
 
 #include <Editor/Inventory.hpp>
+#include <Application/Application.hpp>
 
 #include <algorithm>
 #include <string>
 #include <vector>
 #include <map>
+
+#define OPTIONS_BUTTON Aether::Button::X
 
 /**
  * Rune::Inventory::Item Value:
@@ -289,7 +293,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     auto currentPage = std::make_shared<int>(0);
 
     // The dots showing which page is currently being viewed
-    std::vector<Aether::Ellipse*>* ellipses = new std::vector<Aether::Ellipse*>;
+    auto ellipses = std::make_shared<std::vector<Aether::Ellipse*>>();
 
     // Do not show navigation dot when there is only one page
     if (maxPage > 0){
@@ -323,29 +327,56 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         menuDot->setX(dotStart + (i*dotStride));
     }
 
-    // Add a button for resetting all durability
-    Aether::BorderButton* resetAllBtn = nullptr;
-    // if (Inventory::IsCategoryEquipment(menuCategory)){
-    //     resetAllBtn = new Aether::BorderButton(0, 0, 148, 
-    //         42, 3, "Reset Durability", 24, 
-    //         [](){});
-    //     resetAllBtn->setBorderColour(LIGHT_SEPARATOR_COLOUR);
-    //     resetAllBtn->setFillColour(LIGHT_BACKGROUND_COLOUR);
-    //     resetAllBtn->setXY(menu->body()->x()+24, menu->body()->y()+Rune::Inventory::kYStartOffset);
-    //     menu->body()->addElement(resetAllBtn);
-    // }
+    // Options overlay
+    menu->controlBar()->addControl(OPTIONS_BUTTON, "Options");
+    Aether::Overlay* optnOvl = new Aether::Overlay();
+
+    Aether::Rectangle* bgFrame = new Aether::Rectangle(
+        0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0
+    );
+    Aether::Rectangle* optnFrame = new Aether::Rectangle(
+        0, 0, 320, 360, 6);
+    Aether::Text* optnText = new Aether::Text(0, 0, 
+        menu->menuName()+" - Options", 32);
+
+    bgFrame->setColour(Aether::Colour{0, 0, 0, 150});
+    optnFrame->setColour(BACKGROUND_COLOUR);
+    optnText->setColour(TEXT_COLOUR);
+
+    optnFrame->setXY(WINDOW_RESOLUTION_X/2-optnFrame->w()/2,
+        WINDOW_RESOLUTION_Y/2-optnFrame->h()/2);
+    optnText->setXY(optnFrame->centreX()-optnText->textureWidth()/2,
+        optnFrame->y()-optnText->textureHeight()-24);
+
+    optnOvl->addElement(bgFrame);
+    optnOvl->addElement(optnFrame);
+    optnOvl->addElement(optnText);
+    
+    menu->screen()->onButtonPress(OPTIONS_BUTTON, [optnOvl](){
+        Application* app = Rune::Application::getApplication();
+        app->window()->addOverlay(optnOvl);
+    });
+
+    optnOvl->onButtonPress(OPTIONS_BUTTON, [](){}); // stub
+    optnOvl->onButtonPress(Aether::Button::B, [optnOvl](){
+        optnOvl->close();
+    });
+
+    // if (Inventory::IsCategoryEquipment(menuCategory)){}
 
     // Show the first page
-    Logger::Importantf("Time taken to generate initial %s page: %dms", menu->menuName().c_str(),
-        timeCode(
-            [menu, inventoryItems, currentPage, ellipses](){
-                Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, ellipses);})/1000000);
+    Timer::start();
+    Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, *ellipses);
+    Timer::end();
+
+    Logger::Importantf("Time taken to generate initial %s page: %.2fms", menu->menuName().c_str(), Timer::get()/1E+6);
 
     // Bind navigation actions
     InputSystem& inputService = InputSystem::getService();
     inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_ZR));
     inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_ZL));
 
+    // Go to the next page when ZR is pressed
     inputService.connect("NextPage", [menu, inventoryItems, currentPage, maxPage, ellipses](InputSystem& svc, InputState state){
         if (state != InputState::Begin || maxPage == 0){
             return;
@@ -358,9 +389,10 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage += 1;
         }
 
-        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), ellipses);
+        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
     });
 
+    // Go to the previous page when ZL is pressed
     inputService.connect("PrevPage", [menu, inventoryItems, currentPage, maxPage, ellipses](InputSystem& svc, InputState state){
         if (state != InputState::Begin || maxPage == 0){
             return;
@@ -372,10 +404,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage -= 1;
         }
 
-        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), ellipses);
+        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
     });
 
-    menu->giveTask([ellipses](){
+    // This method is run when the menu is cleared
+    menu->giveTask([menu, ellipses, optnOvl](){
         // Unbind pagination actions
         InputSystem& inputService = InputSystem::getService();
         inputService.unbind("NextPage");
@@ -384,8 +417,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         // Enable right stick navigation
         // Aether::SetRightStickNavigation(true);
 
-        // Delete the ellipses vector
-        delete ellipses;
+        // remove the options control
+        menu->controlBar()->removeControl(OPTIONS_BUTTON);
+        menu->window()->removeOverlay(optnOvl);
     });
 
     return;

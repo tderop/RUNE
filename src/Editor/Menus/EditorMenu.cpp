@@ -33,6 +33,14 @@ EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Scr
     // Doesn't matter if no menu builder, just make empty object
 }
 
+Aether::ControlBar* EditorMenu::controlBar(){
+    return this->controlBar_;
+}
+
+void EditorMenu::setControlBar(Aether::ControlBar* controlBar){
+    this->controlBar_ = controlBar;
+}
+
 void EditorMenu::onDelete(){
     this->clearAllWidgets();
 
