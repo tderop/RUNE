@@ -20,7 +20,8 @@ void showPage(EditorMenu* menu, Aether::Text* pageCount, size_t page){
     menu->clearAllWidgets();
 
     std::vector<Rune::Save::Entry>& entries = menu->saveFile()->entries;
-    pageCount->setString(std::to_string(page)+"/"+std::to_string(entries.size()/ENTRIES_PER_PAGE));
+    pageCount->setString(std::to_string(page+1)+"/"+std::to_string((entries.size()/ENTRIES_PER_PAGE)+1));
+    pageCount->setX(menu->body()->centreX()/2-pageCount->textureWidth()/2-12);
 
     for (size_t cursor = cursorStart; cursor < cursorEnd; ++cursor){
         if (cursor >= entries.size()){

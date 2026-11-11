@@ -248,7 +248,7 @@ namespace Rune {
             ovlImgFrame->setColour(MUTED_BACKGROUND_COLOUR);
             this->ovl->addTempElement(ovlImgFrame);
 
-            this->ovlImgText = new Aether::Text(0, 0, "Unassigned",
+            this->ovlImgText = new Aether::Text(0, 0, DUMMY_NAME,
                 20);
             ovlImgText->setXY(ovlImgFrame->centreX()-ovlImgText->textureWidth()/2,
                 ovlImgFrame->bottom()-ovlImgText->textureHeight()-16);
@@ -311,11 +311,6 @@ namespace Rune {
                 Aether::Render::Wait);
             Aether::Text* ovlSwapText = new Aether::Text(
                 0, 0, "Swap",  18);
-            ovlSwapBtn->onHighlight([](bool h){
-                if (h){
-                    Logger::Important("I am here and I am alive");
-                }
-            });
 
             ovlSwapImg->setScaleDimensions(24, 24);
             ovlSwapImg->renderAsync();

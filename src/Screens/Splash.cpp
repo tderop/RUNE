@@ -13,7 +13,6 @@
 #include <Editor/Inventory.hpp>
 
 #include <math.h>
-#include <filesystem>
 
 const size_t TEXTURES_PER_FRAME = 16;
 const bool PRELOAD_ICON_TEXTURES = false;
@@ -71,9 +70,29 @@ void SplashScreen::loadRune(void* _self){
 
     Trove* loadingTrove = new Trove();
 
+    // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
+    {
+        std::lock_guard<std::mutex> lock(self->_statusMutex);
+        self->_status="Initialising JSON...";
+    }
+    Rune::JsonData::Init();
+
+    // Step 0: Load metadata
+    {
+        std::lock_guard<std::mutex> lock(self->_statusMutex);
+        self->_status="Loading metadata...";
+    }
+    Result rc = Rune::Save::LoadMetadata(runeMetadata);
+    if (R_FAILED(rc)){
+        // RUNE CANNOT load without metadata.
+        std::lock_guard<std::mutex> lock(self->_statusMutex);
+        self->_status = "Failed to load metadata ("+intToHex(rc)+") // Press PLUS (+) to exit.";
+        return;
+    }
+
     // Step 1: Extract Assets
     // Extract assets and report progress
-    Result rc = Rune::Romfs::ExtractAssets(
+    rc = Rune::Romfs::ExtractAssets(
         [self](size_t completed, size_t max){
             std::string suffix;
 

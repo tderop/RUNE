@@ -383,5 +383,11 @@ namespace Rune{
          * @param actorName The equipment actor name
          */
         uint32_t GetMaxDurability(const std::string& actorName);
+
+        /**
+         * @brief Check if a category is an equipment category (weapons, bows, shields etc.)
+         * @param c The category to check
+         */
+        bool IsCategoryEquipment(Category c);
     } // namespace Inventory
 } // namespace Rune

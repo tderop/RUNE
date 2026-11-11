@@ -235,12 +235,10 @@ namespace Rune{
         return this->_currentScreenName;
     }
 
-    Aether::MessageBox* Application::showLoading(const std::string& msg, bool showProgress){
+    Aether::MessageBox* Application::showLoading(const std::string& msg, bool showProgress, bool noUpdate){
         // Show loading
         if (this->_loadingMsg == nullptr){
             this->_loadingMsg = new Aether::MessageBox("Loading...");
-            _loadingMsg->addTopButton("", [](){});
-            _loadingMsg->topButton()->setHidden(true);
 
             _loadingMsg->setRectangleColour(BACKGROUND_COLOUR);
             _loadingMsg->setLineColour(Aether::Colour{0, 0, 0, 0});
@@ -249,6 +247,9 @@ namespace Rune{
         }
 
         if (this->_loadingProgress == nullptr){
+            _loadingMsg->addTopButton("", [](){});
+            _loadingMsg->topButton()->setHidden(true);
+            
             this->_loadingProgress = new Aether::RoundProgressBar((WINDOW_RESOLUTION_X/2)-(385/2), 400, 385);
             _loadingProgress->setBackgroundColour(MUTED_BACKGROUND_COLOUR);
             _loadingProgress->setForegroundColour(TOP_R);
@@ -264,7 +265,9 @@ namespace Rune{
         
         // Add the loading message and force a UI update
         this->_window->addOverlay(_loadingMsg);
-        this->_window->loop();
+        if (!noUpdate){
+            this->_window->loop();
+        }
 
         return _loadingMsg;
     }

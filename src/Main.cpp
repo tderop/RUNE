@@ -51,7 +51,7 @@ void exitApplet(InputSystem& inputService, InputState state){
     if (state == InputState::Begin){
         // If there is a valid app, and the current active screen is the main menu, queue exit
         if (app != nullptr && app->window() != nullptr 
-            && app->currentScreenName() == "Menu"){
+            && (app->currentScreenName() == "Menu" || app->currentScreenName() == "Splash")){
 
             app->window()->exit();
         } else if (app == nullptr){ // If app is uninitialised, exit
@@ -212,28 +212,6 @@ Result initApplet(){
     Rune::Application::setApplication(app);
 
     Logger::Write("[Rune::Application] - Successfully loaded application manager.");
-
-    // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
-    Rune::JsonData::Init();
-    Logger::Write("[INIT] - Initialised Rune::Json");
-
-    /**
-     * Parse the save metadata. The save metadata contains basically all of the information required to decode save files, including (but not limited to):
-     * - Data type
-     * - Data name (internal key)
-     * - Hash value (crc32 of internal key, stored as a signed 32-bit integer in BYAML files.)
-     * - Minimum value
-     * - Maximum value
-     * - Initial (default) value
-     */
-    rc = Rune::Save::LoadMetadata(&saveMetadata);
-    if (R_FAILED(rc)){
-        Logger::Write("Failed to parse BotW .bgsvdata metadata.");
-        exitApplet(inputService, InputState::Begin);
-        return -2;
-    }
-
-    Logger::Write("[INIT] - Parsed save metadata files");
 
     // Initialise the account service. This is used for knowing which user's save file should be accessed.
     rc = accountInitialize(AccountServiceType_Application);

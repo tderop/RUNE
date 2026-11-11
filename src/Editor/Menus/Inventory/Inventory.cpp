@@ -297,7 +297,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             // Create a new circle
             Aether::Ellipse* menuDot = new Aether::Ellipse(
                 0,
-                menu->body()->y()+Rune::Inventory::kYStartOffset - 18, 
+                menu->body()->y()+Rune::Inventory::kYStartOffset - 24, 
                 Rune::Inventory::kDotWidth
             );
 
@@ -313,7 +313,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     }
 
     // Calculate values for dot repositioning
-    float centerPosition = (menu->body()->x() + Rune::Inventory::kXStartOffset + (Rune::Inventory::kGridWidth/2));
+    float centerPosition = (menu->body()->x() + Rune::Inventory::kXStartOffset + (Rune::Inventory::kGridWidth/2.0f));
     int dotStride = Rune::Inventory::kDotWidth + Rune::Inventory::kDotPadding;
     int dotStart = centerPosition - (((ellipses->size())-1)*(dotStride))/2.0f;
 
@@ -323,7 +323,17 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         menuDot->setX(dotStart + (i*dotStride));
     }
 
-    // Add a button for resetting all 
+    // Add a button for resetting all durability
+    Aether::BorderButton* resetAllBtn = nullptr;
+    // if (Inventory::IsCategoryEquipment(menuCategory)){
+    //     resetAllBtn = new Aether::BorderButton(0, 0, 148, 
+    //         42, 3, "Reset Durability", 24, 
+    //         [](){});
+    //     resetAllBtn->setBorderColour(LIGHT_SEPARATOR_COLOUR);
+    //     resetAllBtn->setFillColour(LIGHT_BACKGROUND_COLOUR);
+    //     resetAllBtn->setXY(menu->body()->x()+24, menu->body()->y()+Rune::Inventory::kYStartOffset);
+    //     menu->body()->addElement(resetAllBtn);
+    // }
 
     // Show the first page
     Logger::Importantf("Time taken to generate initial %s page: %dms", menu->menuName().c_str(),

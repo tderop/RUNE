@@ -7,6 +7,7 @@
 #include <array>
 #include <variant>
 #include <functional>
+#include <mutex>
 
 // consts
 const std::string SAVE_DISTRICT_KEY = "SaveDistrictName";
@@ -330,4 +331,4 @@ namespace Rune
     }
 }
 
-extern Rune::Save::Metadata *runeMetadata;
+extern Rune::Save::Metadata* runeMetadata;

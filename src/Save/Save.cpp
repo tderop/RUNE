@@ -16,7 +16,7 @@
 
 #include <Json/Json.hpp>
 
-Rune::Save::Metadata* runeMetadata = nullptr;
+Rune::Save::Metadata* runeMetadata = new Rune::Save::Metadata();
 const char* testSavePath = "sdmc:/TestSave/";
 
 std::string Rune::Save::GetVersionString(Rune::Save::Version version){

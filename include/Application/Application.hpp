@@ -63,7 +63,7 @@ namespace Rune{
              * despite my abysmally optimised code
              * @note It's your job to close this overlay! BUT DON'T DELETE IT!!!!! (or at least null it afterwards if you do)
              */
-            Aether::MessageBox* showLoading(const std::string& msg="Loading...", bool showProgress=false);
+            Aether::MessageBox* showLoading(const std::string& msg="Loading...", bool showProgress=false, bool noUpdate=false);
 
             /**
              * @brief Set the loading bar progress (0 to 1)

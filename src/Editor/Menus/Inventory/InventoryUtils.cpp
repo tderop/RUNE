@@ -194,12 +194,16 @@ void Rune::Inventory::ShowPage(
         )
     );
 
+    // For shifting equipment inventories
+    int offsetX = 0;
+    // if (IsCategoryEquipment(menuCategory)){ offsetX = 52; }
+
     for (size_t i = cursorStart; i < cursorEnd; ++i){
         // Get the inventory item
         Rune::Inventory::Item& inventoryItem = inventoryItems.at(i);
 
         // Calculate position of the new tile
-        int tileX = startX + (Rune::Inventory::kTileSize+Rune::Inventory::kTilePadding)*((i-cursorStart)%Rune::Inventory::kTilesPerRow);
+        int tileX = startX + (Rune::Inventory::kTileSize+Rune::Inventory::kTilePadding)*((i-cursorStart)%Rune::Inventory::kTilesPerRow) + offsetX;
         int tileY = startY + ((i-cursorStart)/Rune::Inventory::kTilesPerRow)*(Rune::Inventory::kTileSize+Rune::Inventory::kTilePadding);
 
         // Determine which tile type to use
@@ -454,4 +458,11 @@ uint32_t Rune::Inventory::GetMaxDurability(const std::string& actorName){
     }
 
     return static_cast<uint32_t>(durIt->get<int>());
+}
+
+// Incredible implementation by yours truly
+bool Rune::Inventory::IsCategoryEquipment(Rune::Inventory::Category c){
+    return (c == Rune::Inventory::Category::Weapons) ||
+            (c == Rune::Inventory::Category::Bows) ||
+            (c == Rune::Inventory::Category::Shields);
 }
