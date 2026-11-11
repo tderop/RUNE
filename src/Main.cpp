@@ -211,6 +211,9 @@ Result initApplet(){
     app = new Rune::Application(initSuccess);
     Rune::Application::setApplication(app);
 
+    // Initialise Aether tweening
+    Aether::Tween::setWindow(app->window());
+
     Logger::Write("[Rune::Application] - Successfully loaded application manager.");
 
     // Initialise the account service. This is used for knowing which user's save file should be accessed.

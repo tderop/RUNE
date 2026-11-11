@@ -507,4 +507,21 @@ namespace Aether {
             e = e->parent_;
         }
     }
+
+    void Element::centreAtX(int x){
+        this->setX(x-this->w()/2);
+    }
+
+    void Element::centreAtY(int y){
+        this->setY(y-this->h()/2);
+    }
+
+    void Element::centreAtXY(int x, int y){
+        this->centreAtX(x);
+        this->centreAtY(y);
+    }
+
+    void Element::centreAtElement(Element * e){
+        this->centreAtXY(e->centreX(), e->centreY());
+    }
 };

@@ -11,7 +11,7 @@ void WidgetOverlay::clearTrove(){
 
 void WidgetOverlay::addTempElement(Aether::Element* element){
     this->_trove->addElement(element);
-    this->addElement(element);
+    this->_panel->addElement(element);
 }
 
 void WidgetOverlay::removeTempElement(Aether::Element* element){
@@ -20,6 +20,7 @@ void WidgetOverlay::removeTempElement(Aether::Element* element){
     }
 
     this->_trove->removeElement(element);
+
     Aether::Element* parent = element->parent();
     if (parent != nullptr){
         parent->removeElement(element);

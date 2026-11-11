@@ -4,6 +4,9 @@ namespace Aether {
     BaseText::BaseText(const int x, const int y, const std::string & str, const unsigned int size) : Texture(x, y) {
         this->fontSize_ = size;
         this->string_ = str;
+
+        this->setW(this->textureWidth());
+        this->setH(this->textureHeight());
     }
 
     std::string BaseText::string() {

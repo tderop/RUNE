@@ -8,6 +8,7 @@
 
 // Include all relevant hpp's
 #include "Aether/types/Colour.hpp"
+#include "Aether/types/Tween.hpp"
 #include "Aether/base/AsyncItem.hpp"
 #include "Aether/horizon/button/FilledButton.hpp"
 #include "Aether/horizon/input/Stepper.hpp"

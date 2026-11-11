@@ -21,6 +21,8 @@
 #include <map>
 
 #define OPTIONS_BUTTON Aether::Button::X
+#define OPTIONS_FRAME_W 320
+#define OPTIONS_FRAME_H 360
 
 /**
  * Rune::Inventory::Item Value:
@@ -340,25 +342,41 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         menu->menuName()+" - Options", 32);
 
     bgFrame->setColour(Aether::Colour{0, 0, 0, 150});
-    optnFrame->setColour(BACKGROUND_COLOUR);
+    optnFrame->setColour(BACKGROUND_COLOUR);    
     optnText->setColour(TEXT_COLOUR);
 
-    optnFrame->setXY(WINDOW_RESOLUTION_X/2-optnFrame->w()/2,
-        WINDOW_RESOLUTION_Y/2-optnFrame->h()/2);
-    optnText->setXY(optnFrame->centreX()-optnText->textureWidth()/2,
-        optnFrame->y()-optnText->textureHeight()-24);
+    optnFrame->centreAtXY(WINDOW_RESOLUTION_X/2, WINDOW_RESOLUTION_Y/2);
+    optnText->centreAtXY(optnFrame->centreX(),
+        optnFrame->y()-56);
 
     optnOvl->addElement(bgFrame);
     optnOvl->addElement(optnFrame);
     optnOvl->addElement(optnText);
     
-    menu->screen()->onButtonPress(OPTIONS_BUTTON, [optnOvl](){
+    menu->screen()->onButtonPress(OPTIONS_BUTTON, [optnOvl, optnFrame](){
         Application* app = Rune::Application::getApplication();
         app->window()->addOverlay(optnOvl);
+        
+        // Reset position before size tween
+        optnFrame->setWH(1, 1);
+        optnFrame->centreAtXY(WINDOW_RESOLUTION_X/2, WINDOW_RESOLUTION_Y/2);
+
+        // Tween in
+        Aether::Tween sizeTween(optnFrame, .33, Aether::EasingStyle::Cubic, 
+            Aether::EasingDirection::Out, {
+                .Size = {{320, 360}}
+        });
+        sizeTween.play();
     });
 
     optnOvl->onButtonPress(OPTIONS_BUTTON, [](){}); // stub
-    optnOvl->onButtonPress(Aether::Button::B, [optnOvl](){
+    optnOvl->onButtonPress(Aether::Button::B, [optnOvl, optnFrame](){
+        Aether::Tween t(optnFrame, .33,Aether::EasingStyle::Cubic, 
+            Aether::EasingDirection::Out, {
+                .Size = {{1, 1}}
+        });
+        t.play();
+
         optnOvl->close();
     });
 

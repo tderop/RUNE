@@ -74,6 +74,9 @@ namespace Aether {
 
         this->scaleWidth_ = width;
         this->scaleHeight_ = height;
+        this->setW(scaleWidth_);
+        this->setH(scaleHeight_);
+
         return true;
     }
 

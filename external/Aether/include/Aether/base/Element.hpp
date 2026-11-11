@@ -1,4 +1,4 @@
-#ifndef AETHER_ELEMENT_HPP
+    #ifndef AETHER_ELEMENT_HPP
 #define AETHER_ELEMENT_HPP
 
 #include "Aether/types/Drawable.hpp"
@@ -57,6 +57,8 @@ namespace Aether {
             static std::queue<std::function<void()>> deferredPressFuncs_;
             /** @brief The function to run when selected */
             std::function<void(bool)> onHighlightFunc_;
+
+            std::pair<int, int> anchorPoint_={0, 0};
 
         protected:
             /** @brief Background colour if element is highlighted */
@@ -530,6 +532,28 @@ namespace Aether {
              * @param e currently highlighted element within given element or nullptr if none found
              */
             friend void moveHighlight(Element * e);
+
+            // Transformations
+
+            /**
+             * @brief Centre the element at a provided X position
+             */
+            void centreAtX(int x);
+
+            /**
+             * @brief Centre the element at a provided Y position
+             */
+            void centreAtY(int y);
+
+            /**
+             * @brief Centre the element at a pair of coordinates
+             */
+            void centreAtXY(int x, int y);
+
+            /**
+             * @brief Centre the element to the centre of another element
+             */
+            void centreAtElement(Element * e);
     };
 };
 
