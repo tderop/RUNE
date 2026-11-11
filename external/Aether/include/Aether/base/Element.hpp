@@ -435,7 +435,7 @@ namespace Aether {
              *
              * @param e element to focus
              */
-            void setFocused(Element * e);
+            virtual void setFocused(Element * e);
 
             /**
              * @brief Sets current element as unfocused

@@ -114,7 +114,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_panel->addElement(panelBg);
 
     this->onOpen([this, panel](){
-        this->setFocused(panel);
+        Aether::Element::setFocused(panel);
 
         // Logger::Important("Panel has been opened.");
         panel->setY(250+panel->h());
@@ -246,6 +246,10 @@ void WidgetOverlay::setExitEnabled(bool exitEnabled){
 
 bool WidgetOverlay::exitEnabled(){
     return this->_exitEnabled;
+}
+
+void WidgetOverlay::setFocused(Aether::Element* e){
+    this->_panel->setFocused(e);
 }
 
 WidgetOverlay::~WidgetOverlay(){
