@@ -15,7 +15,7 @@ class WidgetOverlay : public Aether::Overlay{
     private:
         Trove* _trove;
         Aether::Text* _titleLabel = nullptr;
-        Aether::Rectangle* _panel = nullptr;
+        Aether::Container* _panel = nullptr;
         Aether::List* _list = nullptr;
 
         Aether::HelpButton* _infoButton = nullptr;
@@ -46,7 +46,7 @@ class WidgetOverlay : public Aether::Overlay{
         /**
          * @brief Get the panel.
          */
-        Aether::Rectangle* panel();
+        Aether::Container* panel();
 
         /**
          * @brief Add an element that will be deleted when the overlay menu closes.

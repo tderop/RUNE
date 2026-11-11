@@ -1,5 +1,6 @@
 #include <Aether/Aether.hpp>
 #include <Editor/WidgetOverlay.hpp>
+#include <Utils/Logger.hpp>
 #include <Config.hpp>
 
 const int DEV_NOTE_WRAP_WIDTH = 480;
@@ -28,7 +29,7 @@ void WidgetOverlay::removeTempElement(Aether::Element* element){
 }
 
 void WidgetOverlay::addList(){
-    Aether::List* list = new Aether::List(30, 322, 1220, 326);
+    Aether::List* list = new Aether::List(30, _panel->y()+72, 1220, 326);
     this->addTempElement(list);
     this->_list = list;
 }
@@ -58,7 +59,7 @@ void WidgetOverlay::closeWidgetOverlay(bool isSave){
     this->close();
 }
 
-Aether::Rectangle* WidgetOverlay::panel(){
+Aether::Container* WidgetOverlay::panel(){
     return this->_panel;
 }
 
@@ -97,16 +98,39 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->onCloseSignal = new Signal<bool>();
 
     // the main panel
-    Aether::Rectangle* panel = new Aether::Rectangle(
-        0,
-        250,
+    Aether::Container* panel = new Aether::Container(
+        0, 250, OVL_PANEL_WIDTH, OVL_PANEL_HEIGHT
+    );
+
+    this->_panel = panel;
+    this->addElement(panel);
+
+    Aether::Rectangle* panelBg = new Aether::Rectangle(
+        panel->x(), panel->y(),
         OVL_PANEL_WIDTH,
         OVL_PANEL_HEIGHT
     );
+    panelBg->setColour(BACKGROUND_COLOUR);
+    this->_panel->addElement(panelBg);
 
-    panel->setColour(BACKGROUND_COLOUR);
-    this->addElement(panel);
-    this->_panel = panel;
+    this->onOpen([panel](){
+        // Logger::Important("Panel has been opened.");
+        panel->setY(250+panel->h());
+
+        Aether::Tween openMove(panel, .15, Aether::EasingStyle::Cubic, Aether::EasingDirection::Out, {
+            .Position={{0, 250}}
+        });
+        openMove.play();
+    });
+
+    this->onClose([panel](){
+        // tween out the panel
+        Aether::Tween outTween(panel, .15, Aether::EasingStyle::Cubic, 
+        Aether::EasingDirection::Out, {
+            .Position = {{0, 350+panel->h()}} 
+        });
+        outTween.play();
+    });
 
     // the title
     Aether::Text* titleLabel = new Aether::Text(
@@ -117,7 +141,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     );
 
     this->_titleLabel = titleLabel;
-    this->addElement(titleLabel);
+    this->_panel->addElement(titleLabel);
 
     // the info button
     this->_infoButton = new Aether::HelpButton(
@@ -129,7 +153,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_infoButton->setColour(Aether::Colour{255, 255, 255, 150});
     this->_infoButton->setHidden(true);
 
-    this->addElement(this->_infoButton);
+    this->_panel->addElement(this->_infoButton);
 
     // dev text and separator rect
     this->_devNoteText = new Aether::TextBlock(
@@ -149,8 +173,8 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_devNoteRect->setColour(SEPARATOR_COLOUR);
     this->_devNoteText->setHidden(true);
     this->_devNoteRect->setHidden(true);
-    this->addElement(this->_devNoteRect);
-    this->addElement(this->_devNoteText);
+    this->_panel->addElement(this->_devNoteRect);
+    this->_panel->addElement(this->_devNoteText);
 
     // the top separator
     Aether::Rectangle* topSeparator = new Aether::Rectangle(
@@ -161,7 +185,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     );
 
     topSeparator->setColour(SEPARATOR_COLOUR);
-    this->addElement(topSeparator);
+    this->_panel->addElement(topSeparator);
 
     // bottom separator
     Aether::Rectangle* bottomSeparator = new Aether::Rectangle(
@@ -172,14 +196,14 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     );
 
     bottomSeparator->setColour(SEPARATOR_COLOUR);
-    this->addElement(bottomSeparator);
+    this->_panel->addElement(bottomSeparator);
 
     // control bar
     Aether::ControlBar* controlBar = new Aether::ControlBar();
     controlBar->addControl(Aether::Button::PLUS, "Save");
     controlBar->addControl(Aether::Button::B, "Cancel");
 
-    this->addElement(controlBar);
+    this->_panel->addElement(controlBar);
 
     /**
      * Handle saving changes

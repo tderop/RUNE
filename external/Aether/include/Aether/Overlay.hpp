@@ -13,9 +13,21 @@ namespace Aether {
      */
     class Overlay : public Screen {
         private:
+            friend Window;
+
             /** @brief Store value to check if overlay should be closed or not. */
             bool close_;
-
+            /** @brief The function that runs when the overlay has been opened */
+            std::function<void()> onOpenFunc_;
+            /** @brief The function that runs when the overlay has been closed */
+            std::function<void()> onCloseFunc_;
+            
+            /**
+             * @brief Mark overlay to be able to used (readded) again
+             * @note This shouldn't ever needed to be called apart from internally!
+             */
+            void reuse();
+            void opened();
         public:
             /**
              * @brief Construct a new Overlay object
@@ -26,12 +38,6 @@ namespace Aether {
              * @brief Mark overlay to be closed
              */
             void close();
-
-            /**
-             * @brief Mark overlay to be able to used (readded) again
-             * @note This shouldn't ever needed to be called apart from internally!
-             */
-            void reuse();
 
             /**
              * @brief Check if overlay is marked to be closed
@@ -45,6 +51,18 @@ namespace Aether {
              * @brief Draws background then renders overlay
              */
             void render();
+
+            /**
+             * @brief Set a function to be run when the overlay is opened
+             * @param f The function to run
+             */
+            void onOpen(std::function<void()> f);
+
+            /**
+             * @brief Set a function to be run when the overlay is closed
+             * @param f The function to run
+             */
+            void onClose(std::function<void()> f);
     };
 };
 

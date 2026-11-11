@@ -224,7 +224,6 @@ namespace Rune {
         void Tile::setOvlState(bool open){
             if (open){
                 this->ovlOpen = true;
-                this->window->addOverlay(this->ovl);
             }
             else {
                 this->ovlOpen = false;
@@ -653,7 +652,7 @@ namespace Rune {
                     break;
             }
 
-            if (ovlPrimaryValueStepper->isVisible()){
+            if (!ovlPrimaryValueStepper->hidden()){
                 // Add to screen if visible
                 this->visiblePropertyEditors
                     .push_back(ovlPrimaryValueStepper);
@@ -911,11 +910,13 @@ namespace Rune {
             
             // Build the core overlay elements and open the overlay
             this->buildOvl();
-            this->setOvlState(true);
 
+            this->setOvlState(true);
             this->updateOvlText();
             this->updateOvlImg();
             this->updatePropertyEditors();
+
+            this->window->addOverlay(this->ovl);
         }
 
         void Tile::onClose(bool isSave){

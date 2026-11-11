@@ -19,54 +19,13 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
     widget->getEditButton()->onPress([widget, saveEntry](){
         Logger::Write("[WIDGET " + saveEntry->dataName + "] - Bool widget clicked!");
 
-        // get the popup list
-        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Getting popup list...");
-        Aether::PopupList *popupList = widget->getPopupList();
-    
-        // clear its entries
-        // widget->removePopupListEntries();
-        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Removing all popup list entries...");
-        popupList->removeEntries();
-
-        // update its title
-        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Getting readable save key name...");
-        std::string readableSaveKey = Rune::Save::GetReadableKeyName(saveEntry->dataName);
-        popupList->setTitleLabel("Edit Value - " + readableSaveKey); // kinda looks ugly`
-
-        // add true/false options
+        // Check current value
         Logger::Write("[WIDGET " + saveEntry->dataName + "] - Adding popup list entries...");
         bool boolSaveValue = std::get<bool>(saveEntry->value);
 
-        widget->addPopupListEntry(std::string("true"), [widget, saveEntry]() { // set entry to true
-            Aether::ListOption* editBtn = widget->getEditButton();
-            if (editBtn == nullptr){
-                Logger::Write("[WIDGET " + saveEntry->dataName + "] - No edit button!");
-                return;
-            }
-
-            saveEntry->value = true;
-            editBtn->setValue("true");
-            
-        }, (boolSaveValue == true));
-
-        widget->addPopupListEntry(std::string("false"), [widget, saveEntry]() { // set entry to false
-            Aether::ListOption* editBtn = widget->getEditButton();
-
-            if (editBtn == nullptr){
-                Logger::Write("[WIDGET " + saveEntry->dataName + "] - No edit button!");
-                return;
-            }
-
-            saveEntry->value = false;
-            editBtn->setValue("false");
-        }, (boolSaveValue == false));
-
-        // show the popup list
-        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Showing popup list...");
-        widget->getWindow()->addOverlay(popupList);
-
-        Logger::Write("[WIDGET " + saveEntry->dataName + "] - Popup list shown successfully!");
-        Logger::Write("*******************************************************");
+        // Invert and update
+        saveEntry->value=!boolSaveValue;
+        widget->getEditButton()->setValue(Rune::Save::ValueToString(saveEntry->value));
     });
 
     Logger::Write("[WIDGET " + saveEntry->dataName + "] - Created bool widget successfully!");

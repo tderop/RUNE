@@ -343,6 +343,8 @@ namespace Aether {
         if (this->overlays.size() > 1) {
             this->overlays[this->overlays.size() - 2]->setInactive();
         }
+
+        ovl->opened();
     }
 
     bool Window::removeOverlay(Overlay* ovl){
