@@ -8,4 +8,6 @@ The widget system should be migrated to an entirely object-oriented system, in w
 ### The Menu System is Poorly Designed
 For the same reason, with the same remedial actions.
 
-
+## 2. Save Data is Directly Modified by Widgets
+When modifying a value through an `EditorWidget`, the widgets themselves are responsible for validation checks, which they shouldn't be as these are primarily designed to be for UI interaction only.<br>
+The system should be migrated to a database-like model, in which edits are validated and saved through a setter, and changes are logged. 

@@ -91,7 +91,8 @@ LIBS := -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx \
         -lfreetype -lpng -ljpeg -lwebp \
         -lharfbuzz -lbz2 -lz \
         -lstdc++ \
-        -lnx
+        -lSDL2_mixer -lvorbisidec -lmodplug -lmpg123 -lopusfile -logg -lopus \
+        -lnx \
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries
