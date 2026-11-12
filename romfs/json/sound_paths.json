@@ -1,0 +1,15 @@
+{
+    "cancel" : "romfs:/sound/cancel.opus",
+    "change_menu" : "romfs:/sound/change_menu.opus",
+    "change_page" : "romfs:/sound/change_page.opus",
+    "confirm" : "romfs:/sound/confirm.opus",
+    "cursor" : "romfs:/sound/cursor.opus",
+    "decide" : "romfs:/sound/decide.opus",
+    "dialog" : "romfs:/sound/dialog.opus",
+    "fail" : "romfs:/sound/fail.opus",
+    "flip" : "romfs:/sound/flip.opus",
+    "keyboard" : "romfs:/sound/keyboard.opus",
+    "open_big" : "romfs:/sound/open_big.opus",
+    "open_dialog" : "romfs:/sound/open_dialog.opus",
+    "select" : "romfs:/sound/select.opus"
+}

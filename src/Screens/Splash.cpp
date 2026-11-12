@@ -9,6 +9,7 @@
 
 #include <Application/Application.hpp>
 #include <Application/Romfs.hpp>
+#include <Application/Audio.hpp>
 
 #include <Editor/Menus/Inventory.hpp>
 
@@ -149,6 +150,18 @@ void SplashScreen::loadRune(void* _self){
             Rune::Inventory::Category category = Rune::Inventory::GetCategoryFromActorName(name);
             Rune::Inventory::CategoryActors[category].push_back(name);
         }
+    }
+
+    // Step 4: Load sounds
+    // The sound susbsystem being uninitialised is not a problem, so just print error code and proceed anyway
+    {
+        std::lock_guard<std::mutex> lock(self->_statusMutex);
+        self->_status = "Loading sounds...";
+    }
+
+    const char* audioErr = Rune::Audio::Init();
+    if (audioErr != nullptr){
+        Logger::Importantf("[INIT] - Failed to initialise sound subsystem: %s", audioErr);
     }
 
     // I'm loaded, run other loading steps

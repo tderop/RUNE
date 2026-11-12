@@ -26,6 +26,8 @@ class Sound {
          * */
         static const char* Init();
 
+        Sound() = default;
+
         /**
          * @brief Create a new sound object
          * @note Only .opus files can be used

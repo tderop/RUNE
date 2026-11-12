@@ -11,6 +11,7 @@
 #include <Utils/Trove.hpp>
 
 #include <Application/Application.hpp>
+#include <Application/Audio.hpp>
 
 int SAVE_ICON_SIZE = 16; // 16x16 pixels for image icons (star, hard mode)
 

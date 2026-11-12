@@ -4,9 +4,9 @@
 // Source libs
 #include <Input/Input.hpp> // Provides my own InputService
 #include <Utils/Logger.hpp> // Provides my own logging service
-#include <Utils/Sound.hpp> // Provides Sound object and allows main to initialise the Sound subsystem
 #include <Save/Save.hpp> // Provides Rune::Save::Metadata functionality and other Rune::Save types for parsing metadata on load
 #include <Application/Application.hpp> // Provides Rune::Application for managing different screens
+#include <Application/Audio.hpp>
 #include <Json/Json.hpp> // Provides Rune::Json and Rune::JsonData for handling RUNE's romFS JSON files
 #include <Application/Romfs.hpp> // Handles extracting assets from the local BotW installation
 #include <Application/Tests.hpp>
@@ -236,13 +236,6 @@ Result initApplet(){
         Logger::Write("[INIT] - Mounted BotW save data");
     }
 
-    // Initialise the sound subsystem
-    // The sound susbsystem being uninitialised is not a problem, so just print error code and proceed anyway
-    const char* soundErr = Sound::Init();
-    if (soundErr != nullptr){
-        Logger::Importantf("[INIT] - Failed to initialise sound subsystem: %s", soundErr);
-    }
-
     // The application initialised successfully
     if (mountSuccess){
         Logger::Write("[INIT] - Initialised RUNE successfully!");
@@ -261,17 +254,7 @@ int main(){
     // If you're wondering where the main code is, check /src/Application/Application.cpp
     // This handles showing the splash screen, and then loading the first screen: the menu (Menu.cpp)
     // This is the case because of the new Rune::Application that was created in initApplet()
-
-    // Test sound
-    Sound* testSound = new Sound("romfs:/sound/confirm.opus");
-    if (!testSound->isLoaded()){
-        Logger::Important("Failed to load sound.");
-    }
-    else {
-        testSound->play();
-    }
-    // evil
-    delete testSound;
+    Result rc;
 
     // The rest of the main function covers InputService polling, and exiting services when closing
     while (app->window()->loop()){
@@ -282,7 +265,7 @@ int main(){
     Logger::Write("[MAIN] - Exiting RUNE...");
 
     // Exit romFS (the path used to access RUNE's assets such as images and JSON files)
-    Result rc = romfsExit();
+    rc = romfsExit();
     if (R_FAILED(rc)){
         Logger::Write("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
     }

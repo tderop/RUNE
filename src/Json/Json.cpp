@@ -30,6 +30,10 @@ namespace Rune{
             {
                 "LocationNames",
                 "romfs:/json/location_names.json"
+            },
+            {
+                "SoundPaths",
+                "romfs:/json/sound_paths.json"
             }
         };
 
