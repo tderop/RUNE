@@ -2,7 +2,6 @@
 #include <switch.h>
 #include <unordered_map>
 #include <string>
-#include <vector>
 
 #include <Input/Input.hpp>
 #include <Events/Signal.hpp>
@@ -220,7 +219,7 @@ InputState InputSystem::getButtonState(const InputObject& inputObject){
 
 InputState InputSystem::getBindState(const std::string& bindID){
     // check if there is a bind
-    if (bindings.find(bindID) != bindings.end()){ // fuck you compiler
+    if (bindings.find(bindID) != bindings.end()){
         // if there is one, check all button states to see which one it is covered by
         InputObject& inputObject = bindings.at(bindID);
         return getButtonState(inputObject);
@@ -288,7 +287,7 @@ void InputSystem::unbind(const std::string& bindID){
     bindings.erase(bindID);
     
     // clear the signal
-    if (signals.find(bindID) != signals.end()){ // fuck you compiler x2
+    if (signals.find(bindID) != signals.end()){
         signals.at(bindID).clear();
         signals.erase(bindID);
     }

@@ -132,7 +132,8 @@ namespace Rune {
                                 tileBtn->bottom()
                                 -this->tileLabelText->textureHeight()-12);
                         
-                            this->tileLabelText->setHidden(false);
+                            this->tileLabelText->setHidden(!GetActorValue<bool>(inventoryItem.actorName, 
+                                "CanStack").value_or(false));
                             this->tileLabelRect->setHidden(true);
                             break;
                         }
@@ -143,8 +144,7 @@ namespace Rune {
                                 this->tileLabelRect->centreX()
                                 -this->tileLabelText->textureWidth()/2,
                                 this->tileLabelRect->centreY()
-                                -this->tileLabelText->textureHeight()/2
-                            );
+                            -this->tileLabelText->textureHeight()/2);
 
                             this->tileLabelText->setHidden(false);
                             this->tileLabelRect->setHidden(false);
