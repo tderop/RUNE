@@ -176,8 +176,12 @@ void MenuScreen::showSaveSelect(){
                     return;
                 }
 
+                // Play sound
+                Rune::Audio::playSound("decide");
+
                 // DECODE save
                 editor->editSaveSlot(&saveSlot);
+
                 // SHOW editor
                 this->app->showScreen("Editor");
 
@@ -527,6 +531,9 @@ void MenuScreen::buildScreen(){
     );
 
     this->saveSlotScroll = scrollable;
+    this->saveSlotScroll->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
 
     // centre
     scrollable->setX(scrollable->x()-scrollable->w()/2);

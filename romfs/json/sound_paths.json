@@ -1,7 +1,8 @@
 {
     "cancel" : "romfs:/sound/cancel.opus",
-    "change_menu" : "romfs:/sound/change_menu.opus",
-    "change_page" : "romfs:/sound/change_page.opus",
+    "page_slide" : "romfs:/sound/page_slide.opus",
+    "mid_page_slide" : "romfs:/sound/mid_page_slide.opus",
+    "big_page_slide" : "romfs:/sound/big_page_slide.opus",
     "confirm" : "romfs:/sound/confirm.opus",
     "cursor" : "romfs:/sound/cursor.opus",
     "decide" : "romfs:/sound/decide.opus",
@@ -11,5 +12,6 @@
     "keyboard" : "romfs:/sound/keyboard.opus",
     "open_big" : "romfs:/sound/open_big.opus",
     "open_dialog" : "romfs:/sound/open_dialog.opus",
-    "select" : "romfs:/sound/select.opus"
+    "select" : "romfs:/sound/select.opus",
+    "open_menu" : "romfs:/sound/open_menu.opus"
 }

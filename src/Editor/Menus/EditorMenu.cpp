@@ -2,6 +2,8 @@
 #include <Editor/MenuBuilder.hpp>
 #include <Utils/Logger.hpp>
 
+#include <Application/Audio.hpp>
+
 #include <functional>
 
 EditorMenu::EditorMenu(std::string menuName, Aether::Window* window, Aether::Screen* screen){
@@ -111,12 +113,18 @@ void EditorMenu::setList(Aether::List* list){
             list->w(),
             list->h()
         );
+        this->_body->onCursorMove([](){
+            Rune::Audio::playSound("Cursor");
+        });
 
         this->_screen->addElement(_body);
         this->addToTrove(_body);
     }
 
     this->_list = list;
+    this->_list->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
 }
 
 // Return list

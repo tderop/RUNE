@@ -16,6 +16,10 @@ namespace Aether {
     class Container : public Element {
         protected:
              void addElementAt(Element * e, size_t i);
+        
+        private:
+            std::function<void()> onCursorMoveFunc_;
+            std::function<void()> onCursorEndFunc_;
 
         public:
             /**
@@ -44,6 +48,18 @@ namespace Aether {
             void removeAllElements();
             bool returnElement(Element * e);
             void returnAllElements();
+
+            /**
+             * @brief Set a function to run when the cursor successfully moves
+             * @param f The function to run when the cursor moves
+             */
+            void onCursorMove(std::function<void()> f);
+
+            /**
+             * @brief Set a function to run when the cursor fails to move, or hits a dead end
+             * @param f The function to run when the cursor fails to move
+             */
+            void onCursorEnd(std::function<void()> f);
 
             /**
              * @brief Determine which element to move to

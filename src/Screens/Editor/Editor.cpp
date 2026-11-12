@@ -16,6 +16,7 @@
 #include <string>
 
 #include <Application/Application.hpp>
+#include <Application/Audio.hpp>
 
 // Widgets used to modify values
 #include <Editor/EditorWidget.hpp>
@@ -42,6 +43,10 @@ EditorScreen::EditorScreen(Rune::Application* app) : app(app) {
     this->pageTrove = new Trove();
     // This trove stores elements to be destroyed when the window's screen is changed (Editor unloads)
     this->screenTrove = new Trove();
+
+    this->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
 }
 
 /**
@@ -229,6 +234,10 @@ void EditorScreen::buildScreen(){
         96 //,
         // Aether::Padding::None
     );
+    tabButtonList->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
+
     // tabButtonList->setScrollBarColour(SEPARATOR_COLOUR);
     // tabButtonList->setShowScrollBar(false);
 
@@ -246,6 +255,8 @@ void EditorScreen::buildScreen(){
             tabName,
             [this, tabName](){
                 Logger::Write(tabName+" was selected");
+
+                Rune::Audio::playSound("select");
                 this->showTab(tabName);
             }
         );

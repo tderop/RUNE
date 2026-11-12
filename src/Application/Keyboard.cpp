@@ -1,4 +1,6 @@
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
+
 #include <Utils/Logger.hpp>
 #include <string>
 
@@ -12,8 +14,11 @@ Result Rune::Keyboard::getStringInput(std::string* outStr, const std::string& hi
     swkbdConfigMakePresetDefault(&kbd);
     swkbdConfigSetGuideText(&kbd, hint.c_str());
 
+    Audio::playSound("keyboard");
+
     char buf[256] = {0}; // default to null terminated string
     rc = swkbdShow(&kbd, buf, sizeof(buf));
+
     if (R_FAILED(rc)){
         return rc;
     }
@@ -46,6 +51,8 @@ Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, 
     if (showDecimal){
         swkbdConfigSetRightOptionalSymbolKey(&kbd, &decimal);
     }
+
+    Audio::playSound("keyboard");
 
     char buf[16] = {0};
     rc = swkbdShow(&kbd, buf, sizeof(buf));

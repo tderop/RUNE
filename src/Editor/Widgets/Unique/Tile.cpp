@@ -5,6 +5,7 @@
 
 #include <Application/Application.hpp>
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
 
 #include <Editor/Menus/Inventory.hpp>
 #include <Editor/Widgets/Tile.hpp>
@@ -898,6 +899,12 @@ namespace Rune {
         }
 
         void Tile::onPress(){
+            // Play open sound
+            Audio::playSound("open_menu");
+            // if (R_FAILED(rc)){
+            //     Logger::Importantf("No. (%08X)", rc);
+            // }
+
             // Assign widget overlay
             if (this->ovl == nullptr){
                 this->ovl = this->widget->getWidgetOverlay();
@@ -922,6 +929,8 @@ namespace Rune {
 
         void Tile::onClose(bool isSave){
             if (isSave){
+                Audio::playSound("confirm");
+
                 // ActorName changed
                 Save::Entry* porchItemEntry = Save::GetEntryFromDataName(*this->saveFile, kInventoryKey);
                 auto& porchItem = std::get<std::vector<std::string>>(porchItemEntry->value);
@@ -1000,6 +1009,7 @@ namespace Rune {
             }
             else {
                 // Nothing was changed, no reload needed
+                Audio::playSound("cancel");
                 this->inventoryItem = originalInventoryItem;
             }
 

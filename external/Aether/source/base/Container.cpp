@@ -23,6 +23,9 @@ namespace Aether {
         if (this->hidden()) {
             return false;
         }
+        
+        bool eventHandled = false;
+        bool cursorMoved = false;
 
         switch (e->type()) {
             case EventType::ButtonPressed:
@@ -37,11 +40,12 @@ namespace Aether {
                         }
                     }
 
-                    return found;
+                    eventHandled = found;
                 }
                 // Default behaviour is to pass to focused
                 if (this->focused()->handleEvent(e)) {
-                    return true;
+                    eventHandled = true;
+                    break;
                 }
 
                 // If children didn't handle it, shift focus between them
@@ -49,7 +53,7 @@ namespace Aether {
                     // Cur: current element that's focused
                     // Pot: potential element to move to
                     case Button::DPAD_RIGHT:
-                        return moveHighlight(this, [](Element * cur, Element * pot) {
+                        cursorMoved = moveHighlight(this, [](Element * cur, Element * pot) {
                             return (pot->x() >= cur->x() + cur->w());
                         },
                         [](Element * cur, Element * pot){
@@ -58,7 +62,7 @@ namespace Aether {
                         break;
 
                     case Button::DPAD_LEFT:
-                        return moveHighlight(this, [](Element * cur, Element * pot) {
+                        cursorMoved = moveHighlight(this, [](Element * cur, Element * pot) {
                             return (pot->x() + pot->w() <= cur->x());
                         },
                         [](Element * cur, Element * pot){
@@ -67,7 +71,7 @@ namespace Aether {
                         break;
 
                     case Button::DPAD_UP:
-                        return moveHighlight(this, [](Element * cur, Element * pot) {
+                        cursorMoved = moveHighlight(this, [](Element * cur, Element * pot) {
                             return (pot->y() + pot->h() <= cur->y());
                         },
                         [](Element * cur, Element * pot){
@@ -76,7 +80,7 @@ namespace Aether {
                         break;
 
                     case Button::DPAD_DOWN:
-                        return moveHighlight(this, [](Element * cur, Element * pot) {
+                        cursorMoved = moveHighlight(this, [](Element * cur, Element * pot) {
                             return (pot->y() >= cur->y() + cur->h());
                         },
                         [](Element * cur, Element * pot){
@@ -92,7 +96,8 @@ namespace Aether {
             case EventType::ButtonReleased:
                 if (this->focused() != nullptr) {
                     if (this->focused()->handleEvent(e)) {
-                        return true;
+                        eventHandled = true;
+                        break;
                     }
                 }
                 break;
@@ -103,13 +108,25 @@ namespace Aether {
                 // Check from top to bottom
                 for (size_t i = this->children.size(); i > 0; i--) {
                     if (this->children[i-1]->handleEvent(e)) {
-                        return true;
+                        eventHandled = true;
+                        break;
                     }
                 }
                 break;
         }
 
-        return false;
+        if (cursorMoved && this->onCursorMoveFunc_){
+            this->onCursorMoveFunc_();
+        }
+        else if (!cursorMoved && this->onCursorEndFunc_){
+            this->onCursorEndFunc_();
+        }
+
+        if (cursorMoved){
+            eventHandled = true;
+        }
+
+        return eventHandled;
     }
 
     bool Container::removeElement(Element * e) {
@@ -182,6 +199,15 @@ namespace Aether {
             parent->setFocused(mv);
             return true;
         }
+
         return false;
+    }
+
+    void Container::onCursorMove(std::function<void()> f){
+        this->onCursorMoveFunc_ = f;
+    }
+
+    void Container::onCursorEnd(std::function<void()> f){
+        this->onCursorEndFunc_ = f;
     }
 };
