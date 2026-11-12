@@ -6,7 +6,8 @@
 #include <Application/Application.hpp>
 #include <Application/Keyboard.hpp>
 
-#include <Editor/Tile.hpp>
+#include <Editor/Menus/Inventory.hpp>
+#include <Editor/Widgets/Tile.hpp>
 
 #include <Utils/Logger.hpp>
 #include <Utils/Utils.hpp>

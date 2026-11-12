@@ -1,6 +1,6 @@
 #include <Editor/MenuBuilder.hpp>
 #include <Editor/EditorMenu.hpp>
-#include <Editor/Inventory.hpp>
+#include <Editor/Menus/Inventory.hpp>
 
 #include <Json/Json.hpp>
 #include <Utils/Logger.hpp>

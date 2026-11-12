@@ -2,7 +2,7 @@
 
 #include <Aether/Aether.hpp>
 
-#include <Editor/Inventory.hpp>
+#include <Editor/Menus/Inventory.hpp>
 #include <Editor/EditorWidget.hpp>
 #include <Editor/EditorMenu.hpp>
 #include <Editor/WidgetOverlay.hpp>

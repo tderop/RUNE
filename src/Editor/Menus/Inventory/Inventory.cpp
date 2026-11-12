@@ -12,7 +12,7 @@
 #include <Config.hpp>
 #include <Input/Input.hpp>
 
-#include <Editor/Inventory.hpp>
+#include <Editor/Menus/Inventory.hpp>
 #include <Application/Application.hpp>
 
 #include <algorithm>

@@ -1,4 +1,4 @@
-#include <Editor/Inventory.hpp>
+#include <Editor/Menus/Inventory.hpp>
 
 #include <map>
 #include <string>

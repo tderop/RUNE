@@ -10,7 +10,7 @@
 #include <Application/Application.hpp>
 #include <Application/Romfs.hpp>
 
-#include <Editor/Inventory.hpp>
+#include <Editor/Menus/Inventory.hpp>
 
 #include <math.h>
 
