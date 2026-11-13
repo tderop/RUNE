@@ -126,6 +126,12 @@ namespace Rune {
             switch (type){
                 case (TileType::Standard): {
                     switch (style){
+                        default:
+                            // If there is an image, show it
+                            if (this->tileThumb != nullptr && this->tileThumb->hidden()){
+                                this->tileThumb->setHidden(false);
+                            }
+
                         case (TileStyle::NoLabel): {
                             this->tileLabelText->setFontSize(18);
                             this->tileLabelText->setXY(
@@ -213,6 +219,12 @@ namespace Rune {
                     tileBtn->onHighlight([tileEditImg](bool h){
                         tileEditImg->setHidden(!h);
                     });
+
+                    // Check if there is an image, and if there is, hide it
+                    if (this->tileThumb != nullptr && !this->tileThumb->hidden()){
+                        this->tileThumb->setHidden(true);
+                    }
+
                     break;
                 }
 
@@ -1036,8 +1048,13 @@ namespace Rune {
                 }
 
                 // Request for the menu to reload to generate new tile
-                this->menu->requestReload();
-                Logger::Important("Requested Menu Reload.");
+                // this->menu->requestReload();
+                // Logger::Important("Requested Menu Reload.");
+
+                this->updateThumbnail(inventoryItem.thumbPath);
+                this->updateBuffStar();
+                TileType tileType = (inventoryItem.actorName.empty()) ? TileType::Empty : inventoryItem.type;
+                this->updateTileFormat(tileType, inventoryItem.style, inventoryItem.name);
             }
             else {
                 // Nothing was changed, no reload needed
