@@ -3,6 +3,10 @@
 
 #include "Aether/base/Texture.hpp"
 #include "Aether/base/TextureResource.hpp"
+#include "Aether/types/LRUCache.hpp"
+
+#define CACHE_SIZE 1500
+#define TEXTURE_CACHING true
 
 namespace Aether {
     /**
@@ -37,11 +41,12 @@ namespace Aether {
             size_t scaleHeight_;                /** @brief Height to scale to in pixels */
 
             TextureHandle texture_;
+            inline static LRUCache<std::string, TextureHandle> textureCache_ = LRUCache<std::string, TextureHandle>(CACHE_SIZE);
 
             /**
              * @brief Overrides Texture's method to render the image.
              */
-            Drawable * renderDrawable();
+            Drawable * renderDrawable() override;
 
             /**
              * @brief Small helper to render based on passed type.
@@ -50,7 +55,14 @@ namespace Aether {
              */
             void performRender(const Render type);
 
+            /**
+             * @brief Helper for caching a texture when it is loaded from storage
+             */
+            void cacheTexture(std::string_view path);
+
         public:
+            inline static const bool kCachingEnabled = TEXTURE_CACHING;
+
             /**
              * @brief Constructs a new Image element using a pointer to data.
              * @note This data is not copied, pass a vector if copying is preferred.
@@ -146,6 +158,9 @@ namespace Aether {
              * @return Scale height (in pixels).
              */
             size_t scaleHeight();
+
+            void renderSync() override;
+            void renderAsync() override;
 
             /**
              * @brief Destroys the image element.

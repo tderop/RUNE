@@ -2,6 +2,10 @@
 #include "Aether/base/TextureResource.hpp"
 
 namespace Aether {
+    void Image::cacheTexture(std::string_view path){
+
+    }
+
     Image::Image(const int x, const int y, unsigned char * data, const size_t size, const Render type) : Texture(x, y) {
         this->scaleWidth_ = 0;
         this->scaleHeight_ = 0;
@@ -58,12 +62,53 @@ namespace Aether {
     }
 
     void Image::performRender(const Render type) {
+        if (type != Render::Wait && Aether::Image::kCachingEnabled){
+            // Read cache in the case of a file-type image to prevent storage reads
+            if (this->type == Type::File && !this->path.empty()){
+                TextureHandle cachedTexture = nullptr;
+                std::string key = this->path+std::to_string(this->scaleWidth_)
+                    +std::to_string(this->scaleHeight_);
+
+                // if texture is cached, use that instead of reading from storage
+                if (Image::textureCache_.hasKey(key)){
+                    cachedTexture = Image::textureCache_.getData(key);
+                    this->texture_ = cachedTexture;
+                    this->type = Type::Cached;
+                }
+
+                // If the texture isn't cached, then generate and cache it
+                else {
+                    std::unique_ptr<Drawable> drawable(renderer->renderImageSurface(path, this->scaleWidth_, 
+                        this->scaleHeight_));
+                    bool success = drawable->convertToTexture();
+                    if (success){
+                        // If the texture was generated successfully, make a new texture handle, and cache it
+                        TextureHandle texture = std::make_shared<TextureResource>(this->renderer, drawable->releaseTexture(), 
+                            drawable->width(), drawable->height());
+                        Image::textureCache_.addData(key, texture);
+
+                        // Change type to texture and use the new texture
+                        this->texture_ = texture;
+                        this->type = Type::Cached;
+                    }
+                }
+        }
+        }
+
         if (type == Render::Sync) {
-            this->renderSync();
+            Texture::renderSync();
 
         } else if (type == Render::Async) {
-            this->renderAsync();
+            Texture::renderAsync();
         }
+    }
+
+    void Image::renderSync(){
+        this->performRender(Render::Sync);
+    }
+
+    void Image::renderAsync(){
+        this->performRender(Render::Async);
     }
 
     bool Image::setScaleDimensions(const size_t width, const size_t height) {

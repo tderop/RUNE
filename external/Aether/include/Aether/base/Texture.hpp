@@ -134,14 +134,14 @@ namespace Aether {
              * effect if a texture is currently stored, or a task is already queued. To
              * recreate the texture, call \ref destroy() first.
              */
-            void renderSync();
+            virtual void renderSync();
 
             /**
              * @brief Request to start rendering the texture asynchronously. This has no
              * effect if a texture is currently stored, or a task is already queued. To
              * recreate the texture, call \ref destroy() first.
              */
-            void renderAsync();
+            virtual void renderAsync();
 
             /**
              * @brief Called internally. Overrides Element's update method to handle

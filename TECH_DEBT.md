@@ -14,3 +14,6 @@ The system should be migrated to a database-like model, in which edits are valid
 
 ## 3. Inventory Menus are Slow
 Inventory menus were implemented rapidly in order to get the base functionality in place. Therefore they are slow to load and can feel rough to use. Icon generation and metadata reading are implemented inefficiently and need to be optimised significantly to bring inventory generation as close as possible to a target of 100ms. 
+
+## 4. Inconsistent Private Member Variable Naming 
+Member variables do not use the same naming convention amongst different classes. Some use an underscore before the name, some use a trailing underscore, and some have no underscores despite being private. This can introduce confusion when trying to differentiate between private and public members and methods when programming/reading code.
