@@ -128,12 +128,21 @@ namespace Rune {
                     switch (style){
                         default:
                             // If there is an image, show it
-                            if (this->tileThumb != nullptr && this->tileThumb->hidden()){
-                                this->tileThumb->setHidden(false);
+                            if (this->tileThumb != nullptr && tileThumb->hidden()){
+                                tileThumb->setHidden(false);
+                            }
+
+                            // Stub out the onSelect (so the edit icon does not show when highlighted)
+                            tileBtn->onHighlight([](bool){});
+
+                            // If there is an edit icon (that shows for empty tiles), hide it
+                            if (this->tileEditImg != nullptr && !tileEditImg->hidden()){
+                                tileEditImg->setHidden(true);
                             }
 
                         case (TileStyle::NoLabel): {
                             this->tileLabelText->setFontSize(18);
+                            this->tileLabelText->setString(str);
                             this->tileLabelText->setXY(
                                 tileBtn->x()+14,
                                 tileBtn->bottom()
@@ -147,11 +156,12 @@ namespace Rune {
 
                         case (TileStyle::Label): {
                             this->tileLabelText->setFontSize(16);
+                            this->tileLabelText->setString(str);
                             this->tileLabelText->setXY(
                                 this->tileLabelRect->centreX()
                                 -this->tileLabelText->textureWidth()/2,
                                 this->tileLabelRect->centreY()
-                            -this->tileLabelText->textureHeight()/2);
+                                -this->tileLabelText->textureHeight()/2);
 
                             this->tileLabelText->setHidden(false);
                             this->tileLabelRect->setHidden(false);
@@ -216,8 +226,18 @@ namespace Rune {
                     tileBtn->addElement(tileEditImg);
 
                     // Highlight bind
-                    tileBtn->onHighlight([tileEditImg](bool h){
-                        tileEditImg->setHidden(!h);
+                    tileBtn->onHighlight([this](bool h){
+                        if (!this->tileEditImg){
+                            this->tileEditImg = new Aether::Image(0, 0,
+                                ASSET_PATHS.at("edit"), Aether::Render::Wait);
+                            this->tileEditImg->setScaleDimensions(tileBtn->w()*0.65, tileBtn->h()*0.65);
+                            this->tileEditImg->centreAtElement(this->tileBtn);
+                            this->tileEditImg->renderAsync();
+                            this->tileEditImg->setHidden(!tileBtn->highlighted());
+                            this->tileEditImg->setColour(Aether::Colour{255, 255, 255, 90});
+                        }
+
+                        this->tileEditImg->setHidden(!h);
                     });
 
                     // Check if there is an image, and if there is, hide it
@@ -509,7 +529,6 @@ namespace Rune {
 
                     this->ovlSecondaryFlagDropdown = new Aether::Dropdown(cursorX,
                         cursorY, "Modifier", 180, 180);
-                    
                     std::map<std::string, std::any> buffMap;
                     const auto& categoryModifiers = kCategoryModifiers
                         .find(inventoryItem.category);
@@ -528,8 +547,11 @@ namespace Rune {
                         cursorY, "Modifier Val.");
                     ovlSecondaryValueStepper->setMax(__UINT16_MAX__);
                     ovlSecondaryValueStepper->setValue(inventoryItem.valueSp);
-                    ovlSecondaryValueStepper->onValueChange([](){
+                    ovlSecondaryValueStepper->onValueChange([this](){
                         Audio::playSound("cursor");
+
+                        // Update my copy on change
+                        this->inventoryItem.valueSp = this->ovlSecondaryValueStepper->value();
                     });
                     ovlSecondaryValueStepper->onCursorMove([](){
                         Audio::playSound("cursor");
@@ -544,11 +566,15 @@ namespace Rune {
                         Audio::playSound("decide");
 
                         auto modOpt = this->ovlSecondaryFlagDropdown->getValueData<Modifier>();
-
                         bool needsEditor = false;
+
                         if (modOpt.has_value()){
                             Modifier currentModifier = modOpt.value();
                             needsEditor = ModifierNeedsValueEditor(currentModifier);
+
+                            // Update my copy on change
+                            this->inventoryItem.flagSp = static_cast<int32_t>(currentModifier);
+                            this->inventoryItem.modifier = currentModifier;
                         }
                         
                         // Hide the value stepper, and reset it to 1
@@ -655,6 +681,8 @@ namespace Rune {
                         }
 
                         if (newActor.empty()){ return; }
+
+                        // Update my copy on change
                         this->inventoryItem.actorName = newActor;
                         *starCount = newStarCount;
 
@@ -704,8 +732,18 @@ namespace Rune {
                         }
                 });
 
-                ovlPrimaryValueStepper->onValueChange([](){
+                ovlPrimaryValueStepper->onValueChange([this](){
                     Audio::playSound("cursor");
+
+                    // Update my copy on change
+                    int newPrimaryValue = this->ovlPrimaryValueStepper->value();
+                    if (this->inventoryItem.category == Category::Weapons ||
+                        this->inventoryItem.category == Category::Bows || 
+                        this->inventoryItem.category == Category::Shields){
+                        
+                        newPrimaryValue *= kDurabilityMultiplier;
+                    }
+                    this->inventoryItem.value = newPrimaryValue;
                 });
                 ovlPrimaryValueStepper->onCursorMove([](){
                     Audio::playSound("cursor");
@@ -733,8 +771,8 @@ namespace Rune {
             this->window = this->app->window();
             this->saveFile = this->menu->saveFile();
             this->saveEntry = this->widget->getSaveEntry();
-            this->originalInventoryItem = std::any_cast<Item>(widgetMeta.at(0));
-            this->inventoryItem = this->originalInventoryItem; // Editable copy
+            this->originalInventoryItem = std::any_cast<Item*>(widgetMeta.at(0));
+            this->inventoryItem = *this->originalInventoryItem; // Editable copy
 
             // // Build the tile button // // 
             int buttonX = this->inventoryItem.x;
@@ -990,20 +1028,12 @@ namespace Rune {
                 // PorchItem_Value1 changed
                 Save::Entry* primaryValueEntry = Save::GetEntryFromDataName(*this->saveFile, kInventoryValueKey);
                 auto& primaryValue = std::get<std::vector<int32_t>>(primaryValueEntry->value);
-                int newPrimaryValue=this->ovlPrimaryValueStepper->value();
-
-                if (inventoryItem.category == Category::Weapons ||
-                    inventoryItem.category == Category::Bows || 
-                    inventoryItem.category == Category::Shields){
-                    
-                    newPrimaryValue *= kDurabilityMultiplier;
-                }
 
                 if (inventoryItem.index >= primaryValue.size()){
                     Logger::Importantf("(Value1) Error: Index %d is OOB", inventoryItem.index);
                 } else {
-                    primaryValue[inventoryItem.index] = newPrimaryValue;
-                    Logger::Importantf("Saved Value1 Update (%d)", newPrimaryValue);
+                    primaryValue[inventoryItem.index] = inventoryItem.value;
+                    Logger::Importantf("Saved Value1 Update (%d)", inventoryItem.value);
                 }
 
                 // PorchItem_FlagSp changed
@@ -1018,15 +1048,8 @@ namespace Rune {
                     if (inventoryItem.localIndex >= secondaryFlags.size()){
                         Logger::Importantf("(FlagSp) Error: Index %d is OOB", inventoryItem.localIndex);
                     } else {
-                        int32_t oldFlag = secondaryFlags.at(
-                            this->inventoryItem.localIndex);
-
-                        int newSecondaryFlagValue = static_cast<int32_t>(
-                            this->ovlSecondaryFlagDropdown->getValueData<Modifier>()
-                                .value_or((Modifier)oldFlag));
-
-                        secondaryFlags[this->inventoryItem.localIndex]= newSecondaryFlagValue;
-                        Logger::Importantf("Saved FlagSp Update (%d)", newSecondaryFlagValue);
+                        secondaryFlags[this->inventoryItem.localIndex]= inventoryItem.flagSp;
+                        Logger::Importantf("Saved FlagSp Update (%d)", inventoryItem.flagSp);
                     }
                 }
 
@@ -1041,9 +1064,8 @@ namespace Rune {
                     if (inventoryItem.localIndex >= secondaryValues.size()){
                         Logger::Importantf("(ValueSp) Error: Index %d is OOB", inventoryItem.localIndex);
                     } else {
-                        int newSecondaryValue = this->ovlSecondaryValueStepper->value();
-                        secondaryValues[this->inventoryItem.localIndex] = newSecondaryValue;
-                        Logger::Importantf("Saved ValueSp Update (%d)", newSecondaryValue);
+                        secondaryValues[this->inventoryItem.localIndex] = inventoryItem.valueSp;
+                        Logger::Importantf("Saved ValueSp Update (%d)", inventoryItem.valueSp);
                     }
                 }
 
@@ -1051,15 +1073,21 @@ namespace Rune {
                 // this->menu->requestReload();
                 // Logger::Important("Requested Menu Reload.");
 
+                TileType tileType = (inventoryItem.actorName.empty()) ? TileType::Empty : inventoryItem.type;
+                inventoryItem.type = tileType;
+
+                // Update original item in vector
+                *originalInventoryItem = this->inventoryItem;
+
+                // Update my tile
                 this->updateThumbnail(inventoryItem.thumbPath);
                 this->updateBuffStar();
-                TileType tileType = (inventoryItem.actorName.empty()) ? TileType::Empty : inventoryItem.type;
-                this->updateTileFormat(tileType, inventoryItem.style, inventoryItem.name);
+                this->updateTileFormat(inventoryItem.type, inventoryItem.style, FormatValue(inventoryItem));
             }
             else {
                 // Nothing was changed, no reload needed
                 // Audio::playSound("cancel");
-                this->inventoryItem = originalInventoryItem;
+                this->inventoryItem = *originalInventoryItem;
             }
 
             this->setOvlState(false);

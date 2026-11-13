@@ -256,7 +256,7 @@ void Rune::Inventory::ShowPage(
             Rune::Inventory::kInventoryKey,
             true,
             {
-                inventoryItem,
+                &inventoryItem,
                 Rune::Inventory::FormatValue(inventoryItem),
                 widgetBtn
             },

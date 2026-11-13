@@ -118,12 +118,12 @@ public:
     /**
      * @brief Navigate to the next menu on the current tab.
      */
-    void nextMenu(InputSystem& inputService, InputState state);
+    void nextMenu();
 
     /**
      * @brief Navigate to the previous menu on the current tab.
      */
-    void prevMenu(InputSystem& inputService, InputState state);
+    void prevMenu();
 
     /**
      * @brief Generate a widget for interacting with a particular key in save data. These are dev-editor style widgets, used for modifying decoded, raw values.

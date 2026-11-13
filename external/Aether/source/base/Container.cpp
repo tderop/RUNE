@@ -43,7 +43,7 @@ namespace Aether {
                     eventHandled = found;
                 }
                 // Default behaviour is to pass to focused
-                if (this->focused()->handleEvent(e)) {
+                if (this->focused() && this->focused()->handleEvent(e)) {
                     eventHandled = true;
                     break;
                 }

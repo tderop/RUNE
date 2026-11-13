@@ -85,19 +85,11 @@ void EditorScreen::positionTabSelectIndicator(Aether::Rectangle* selectIndicator
     }
 }
 
-void EditorScreen::nextMenu(InputSystem& inputService, InputState state){
-    if (state != InputState::Begin){
-        return;
-    }
-
+void EditorScreen::nextMenu(){
     this->showMenu(this->selectedMenu+1);
 }
 
-void EditorScreen::prevMenu(InputSystem& inputService, InputState state){
-    if (state != InputState::Begin){
-        return;
-    }
-
+void EditorScreen::prevMenu(){
     this->showMenu(this->selectedMenu-1);
 }
 
@@ -861,21 +853,14 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 }
 
 void EditorScreen::onLoad(){
-    // show menu 0
-    
-    // wire up inputs
-    InputSystem& inputService = InputSystem::getService();
-
     // navigate to next menu when pressing R
-    inputService.bind("NextMenu", InputObject(InputType::Gamepad, HidNpadButton_R));
-    inputService.connect("NextMenu", [this](InputSystem& inputService, InputState state){
-        this->nextMenu(inputService, state);
+    this->onButtonPress(Aether::Button::R, [this](){
+        this->nextMenu();
     });
 
     // navigate to previous menu when pressing L
-    inputService.bind("PrevMenu", InputObject(InputType::Gamepad, HidNpadButton_L));
-    inputService.connect("PrevMenu", [this](InputSystem& inputService, InputState state){
-        this->prevMenu(inputService, state);
+    this->onButtonPress(Aether::Button::L, [this](){
+        this->prevMenu();
     });
 
     // Show the first tab

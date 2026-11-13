@@ -30,7 +30,7 @@ namespace Rune {
                 /** @brief The inventoryItem shared ptr */
                 Item inventoryItem;
                 /** @brief The original item state before it was modified */
-                Item originalInventoryItem;
+                Item* originalInventoryItem;
 
                 /** @brief The Tile BorderButton */
                 Aether::BorderButton* tileBtn=nullptr;
@@ -40,6 +40,8 @@ namespace Rune {
                 Aether::Rectangle* tileLabelRect=nullptr;
                 /** @brief The Tile's label text */
                 Aether::Text* tileLabelText=nullptr;
+                /** @brief The Tile's edit image */
+                Aether::Image* tileEditImg=nullptr;
                 /** @brief The Tile's buff star */
                 Aether::Image* buffStar=nullptr;
 

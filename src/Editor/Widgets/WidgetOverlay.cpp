@@ -54,7 +54,7 @@ void WidgetOverlay::setTitleLabel(const std::string &title){
 
 void WidgetOverlay::closeWidgetOverlay(bool isSave){
     if (isSave){
-        Rune::Audio::playSound("confirm");
+        Rune::Audio::playSound("decide");
     }
     else {
         Rune::Audio::playSound("cancel");
