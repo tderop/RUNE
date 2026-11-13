@@ -107,6 +107,7 @@ namespace Rune{
             return false;
         }
 
+
         struct ModifierInfo {
             Modifier modifier;
             const char* name;
@@ -389,5 +390,12 @@ namespace Rune{
          * @param c The category to check
          */
         bool IsCategoryEquipment(Category c);
+
+        /** @brief Format the label value of an inventory item */
+        std::string FormatModifier(Item item, const int value);
+
+        /** @brief Strip the enhancement mask from a modifier */
+        Modifier UnenhanceModifier(Modifier m);
+
     } // namespace Inventory
 } // namespace Rune

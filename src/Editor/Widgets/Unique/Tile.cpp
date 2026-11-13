@@ -1072,9 +1072,7 @@ namespace Rune {
                 // Request for the menu to reload to generate new tile
                 // this->menu->requestReload();
                 // Logger::Important("Requested Menu Reload.");
-
-                TileType tileType = (inventoryItem.actorName.empty()) ? TileType::Empty : inventoryItem.type;
-                inventoryItem.type = tileType;
+                inventoryItem.type = (inventoryItem.actorName.empty()) ? TileType::Empty : TileType::Standard;
 
                 // Update original item in vector
                 *originalInventoryItem = this->inventoryItem;
@@ -1082,7 +1080,8 @@ namespace Rune {
                 // Update my tile
                 this->updateThumbnail(inventoryItem.thumbPath);
                 this->updateBuffStar();
-                this->updateTileFormat(inventoryItem.type, inventoryItem.style, FormatValue(inventoryItem));
+                this->updateTileFormat(inventoryItem.type, 
+                    inventoryItem.style, FormatValue(inventoryItem));
             }
             else {
                 // Nothing was changed, no reload needed
