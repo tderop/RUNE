@@ -9,7 +9,6 @@
 #include "Aether/base/Container.hpp"
 #include "Aether/primary/Text.hpp"
 #include "Aether/horizon/button/BorderButton.hpp"
-#include "Aether/horizon/list/ListButton.hpp"
 #include "Aether/horizon/list/List.hpp"
 
 namespace Aether {

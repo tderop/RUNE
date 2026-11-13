@@ -3,6 +3,7 @@
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
 #include <Utils/Logger.hpp>
 
 /**
@@ -51,6 +52,9 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
                 numSpinner->setValue((int)outFloat);
                 // editOverlay->closeWidgetOverlay(true);
             }
+        });
+        numSpinner->onValueChange([](){
+            Rune::Audio::playSound("cursor");
         });
 
         editOverlay->addTempElement(numSpinner);

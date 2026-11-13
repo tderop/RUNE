@@ -114,7 +114,7 @@ void EditorMenu::setList(Aether::List* list){
             list->h()
         );
         this->_body->onCursorMove([](){
-            Rune::Audio::playSound("Cursor");
+            Rune::Audio::playSound("cursor");
         });
 
         this->_screen->addElement(_body);

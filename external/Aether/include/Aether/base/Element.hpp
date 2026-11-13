@@ -474,7 +474,7 @@ namespace Aether {
              *
              * @param f Function to invoke
              */
-            void onPress(std::function<void()> f);
+            virtual void onPress(std::function<void()> f);
 
             /**
              * @brief Attempt to handle a given event

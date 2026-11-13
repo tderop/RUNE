@@ -11,3 +11,6 @@ For the same reason, with the same remedial actions.
 ## 2. Save Data is Directly Modified by Widgets
 When modifying a value through an `EditorWidget`, the widgets themselves are responsible for validation checks, which they shouldn't be as these are primarily designed to be for UI interaction only.<br>
 The system should be migrated to a database-like model, in which edits are validated and saved through a setter, and changes are logged. 
+
+## 3. Inventory Menus are Slow
+Inventory menus were implemented rapidly in order to get the base functionality in place. Therefore they are slow to load and can feel rough to use. Icon generation and metadata reading are implemented inefficiently and need to be optimised significantly to bring inventory generation as close as possible to a target of 100ms. 

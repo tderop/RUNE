@@ -3,6 +3,8 @@
 #include <Editor/WidgetOverlay.hpp> // maybe should be all one header idk
 
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
+
 #include <Config.hpp>
 #include <Save/Save.hpp>
 
@@ -79,6 +81,9 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
             editOverlay->panel()->y() + editOverlay->panel()->h()/2 - 24,
             180
         );
+        numSpinner->onValueChange([](){
+            Rune::Audio::playSound("cursor");
+        });
 
         // Anchor the number spinner to the centre of the overlay
         numSpinner->setXY(

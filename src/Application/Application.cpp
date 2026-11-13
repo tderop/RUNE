@@ -13,6 +13,8 @@
 #include <Utils/Logger.hpp>
 #include <Config.hpp>
 
+#include <algorithm>
+
 #include <math.h>
 
 /**
@@ -277,7 +279,7 @@ namespace Rune{
             return;
         }
 
-        _loadingProgress->setValue(progress*100);
+        _loadingProgress->setValue(std::min((progress*100.0f) + 1.0f, 100.0f));
         this->_window->loop();
     }
 

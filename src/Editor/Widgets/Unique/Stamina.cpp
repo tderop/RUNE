@@ -3,6 +3,8 @@
 #include <Editor/WidgetOverlay.hpp> // maybe should be all one header idk
 
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
+
 #include <Config.hpp>
 
 #include <Utils/Trove.hpp>
@@ -57,6 +59,9 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
             editOverlay->panel()->y() + editOverlay->panel()->h()/2 - 24,
             180
         );
+        numSpinner->onValueChange([](){
+            Rune::Audio::playSound("cursor");
+        });
 
         // anchor to centre
         numSpinner->setXY(

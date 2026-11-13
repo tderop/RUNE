@@ -516,6 +516,12 @@ namespace Rune {
                         cursorY, "Modifier Val.");
                     ovlSecondaryValueStepper->setMax(__UINT16_MAX__);
                     ovlSecondaryValueStepper->setValue(inventoryItem.valueSp);
+                    ovlSecondaryValueStepper->onValueChange([](){
+                        Audio::playSound("cursor");
+                    });
+                    ovlSecondaryValueStepper->onCursorMove([](){
+                        Audio::playSound("cursor");
+                    });
                     visiblePropertyEditors.push_back(ovlSecondaryValueStepper);
                     this->ovl->addTempElement(ovlSecondaryValueStepper);
                     this->ovl->addTempElement(ovlSecondaryFlagDropdown);
@@ -523,6 +529,8 @@ namespace Rune {
                     // Hide Modifier Val. stepper if value is not needed
                     ovlSecondaryFlagDropdown->onValueChange([this](){
                         if (this->ovlSecondaryFlagDropdown == nullptr) { return; }
+                        Audio::playSound("decide");
+
                         auto modOpt = this->ovlSecondaryFlagDropdown->getValueData<Modifier>();
 
                         bool needsEditor = false;
@@ -619,6 +627,7 @@ namespace Rune {
 
                     // Change stars and visual when stepper changes
                     ovlArmorStarStepper->onValueChange([this, starCount](){
+                        Audio::playSound("cursor");
                         int newStarCount = this->ovlArmorStarStepper->value()+1;
                         int diff = newStarCount-*starCount;
                         if (diff == 0) { return; }
@@ -642,6 +651,10 @@ namespace Rune {
                             this->ovlArmorStars->setString(
                                 this->ovlArmorStars->string()+STAR); 
                         }
+                    });
+
+                    ovlArmorStarStepper->onCursorMove([](){
+                        Audio::playSound("cursor");
                     });
 
                     this->ovl->addTempElement(ovlArmorStarStepper);
@@ -677,6 +690,13 @@ namespace Rune {
                             this->ovlPrimaryValueStepper->setValue(
                                 static_cast<int>(out));
                         }
+                });
+
+                ovlPrimaryValueStepper->onValueChange([](){
+                    Audio::playSound("cursor");
+                });
+                ovlPrimaryValueStepper->onCursorMove([](){
+                    Audio::playSound("cursor");
                 });
             }
 
@@ -743,6 +763,11 @@ namespace Rune {
         }
 
         void Tile::onDelete(){
+            if (this->ovl == nullptr){
+                return;
+            }
+            // Audio::playSound("select");
+
             this->inventoryItem.actorName = "";
 
             this->inventoryItem.value = 0;
@@ -758,6 +783,7 @@ namespace Rune {
             if (this->ovl == nullptr){
                 return;
             }
+            Audio::playSound("open_menu");
 
             // Disable exiting the overlay temporarily
             this->ovl->setExitEnabled(false);
@@ -808,6 +834,9 @@ namespace Rune {
                 Aether::Padding::FitScrollbar
             );
             list->setScrollBarColour(LIGHT_SEPARATOR_COLOUR);
+            list->onCursorMove([](){
+                Audio::playSound("cursor");
+            });
             swapOvl->addElement(list);
 
             // Build the options
@@ -821,6 +850,7 @@ namespace Rune {
                 std::string fullName = GetNameFromActorName(otherActor);
                 Aether::ListButton* actorOptn = new Aether::ListButton(
                     fullName, [this, swapOvl, otherActor](){
+                        // Audio::playSound("select");
                         this->inventoryItem.actorName = otherActor;
 
                         this->updateOvlImg();
@@ -885,6 +915,8 @@ namespace Rune {
             });
 
             swapOvl->onButtonPress(Aether::Button::B, [this, swapOvl](){
+                Audio::playSound("cancel");
+
                 this->ovl->setExitEnabled(true);
                 this->window->removeOverlay(swapOvl);
                 this->ovl->setFocused(this->ovlSwapBtn);
@@ -900,7 +932,7 @@ namespace Rune {
 
         void Tile::onPress(){
             // Play open sound
-            Audio::playSound("open_menu");
+            // Audio::playSound("open_menu");
             // if (R_FAILED(rc)){
             //     Logger::Importantf("No. (%08X)", rc);
             // }
@@ -929,7 +961,7 @@ namespace Rune {
 
         void Tile::onClose(bool isSave){
             if (isSave){
-                Audio::playSound("confirm");
+                // Audio::playSound("confirm");
 
                 // ActorName changed
                 Save::Entry* porchItemEntry = Save::GetEntryFromDataName(*this->saveFile, kInventoryKey);
@@ -1009,7 +1041,7 @@ namespace Rune {
             }
             else {
                 // Nothing was changed, no reload needed
-                Audio::playSound("cancel");
+                // Audio::playSound("cancel");
                 this->inventoryItem = originalInventoryItem;
             }
 
@@ -1021,6 +1053,8 @@ namespace Rune {
         }
 
         void Tile::onReset(){
+            // Audio::playSound("select");
+
             switch (inventoryItem.category){
                 case Category::Weapons:
                 case Category::Bows:

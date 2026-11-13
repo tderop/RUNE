@@ -333,15 +333,28 @@ void EditorScreen::buildScreen(){
     confirmBox->addLeftButton("Yes", [](){});
     confirmBox->addRightButton("No", [](){});
 
+    confirmBox->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
+
+    messageBox->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
+
     // Exiting the editor
     this->onButtonPress(Aether::Button::MINUS, [this, confirmBox](){
+        Rune::Audio::playSound("open_menu");
+
         confirmBox->setString("Are you sure you want to exit?");
         confirmBox->leftButton()->onPress([this, confirmBox](){
+            Rune::Audio::playSound("decide");
+
             confirmBox->close();
             this->app->showScreen("Menu");
         });
 
         confirmBox->rightButton()->onPress([confirmBox](){
+            Rune::Audio::playSound("cancel");
             confirmBox->close();
         });
 
@@ -350,18 +363,22 @@ void EditorScreen::buildScreen(){
     });
 
     messageBox->addTopButton("OK", [messageBox](){
+        Rune::Audio::playSound("dialog");
         messageBox->close();
     });
 
     // handle compiling the save when saving
     this->onButtonPress(Aether::Button::PLUS, 
         [this, confirmBox, messageBox]{
+        Rune::Audio::playSound("open_menu");
 
         Aether::Window* window = this->app->window();
         Logger::Write("[EDITOR] - Plus pressed, requesting save...");
 
         confirmBox->setString("Save changes? This will modify this save slot.");
         confirmBox->leftButton()->onPress([this, window, confirmBox, messageBox](){
+            Rune::Audio::playSound("decide");
+
             // remove the confirm box and show loading
             confirmBox->close();
             auto loadingMsg = this->app->showLoading("Packing values...", true);
@@ -392,9 +409,11 @@ void EditorScreen::buildScreen(){
             loadingMsg->close();
 
             if (R_SUCCEEDED(rc)){
+                Rune::Audio::playSound("confirm");
                 messageBox->setString("Saved! Backups are in the sdcard:/switch/RUNE directory.");
             } else {
-                messageBox->setString("An error ocurred when compiling edited save file.");
+                Rune::Audio::playSound("fail");
+                messageBox->setString("An error ocurred when compiling edited save file. ("+intToHex(rc)+")");
             }
 
             window->addOverlay(messageBox);
@@ -402,6 +421,7 @@ void EditorScreen::buildScreen(){
         });
 
         confirmBox->rightButton()->onPress([confirmBox]{
+            Rune::Audio::playSound("cancel");
             confirmBox->close();
         });
 
@@ -476,6 +496,7 @@ void EditorScreen::showTab(std::string tabName){
     for (std::string menuName : tabMeta.menus){
         // std::string fullMenuName = menuName;
         Aether::BorderButton* menuText = new Aether::BorderButton(0, 0, 196, 48, 1, menuName, 18, [this, idx](){
+            Rune::Audio::playSound("select");
             this->showMenu(idx);
         });
 

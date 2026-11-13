@@ -2,6 +2,7 @@
 #include <Editor/EditorWidget.hpp>
 #include <Save/Save.hpp>
 #include <Events/Signal.hpp>
+#include <Application/Audio.hpp>
 #include <Utils/Logger.hpp>
 
 /**
@@ -17,6 +18,7 @@ void Rune::WidgetBuilder::Bool(EditorWidget* widget){
 
     // set click callback
     widget->getEditButton()->onPress([widget, saveEntry](){
+        Rune::Audio::playSound("select");
         Logger::Write("[WIDGET " + saveEntry->dataName + "] - Bool widget clicked!");
 
         // Check current value

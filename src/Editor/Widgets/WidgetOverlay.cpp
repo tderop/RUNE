@@ -3,6 +3,8 @@
 #include <Utils/Logger.hpp>
 #include <Config.hpp>
 
+#include <Application/Audio.hpp>
+
 const int DEV_NOTE_WRAP_WIDTH = 480;
 
 void WidgetOverlay::clearTrove(){
@@ -32,6 +34,10 @@ void WidgetOverlay::addList(){
     Aether::List* list = new Aether::List(30, _panel->y()+72, 1220, 326);
     this->addTempElement(list);
     this->_list = list;
+
+    this->_list->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
 }
 
 Aether::List* WidgetOverlay::list(){
@@ -47,6 +53,13 @@ void WidgetOverlay::setTitleLabel(const std::string &title){
 }
 
 void WidgetOverlay::closeWidgetOverlay(bool isSave){
+    if (isSave){
+        Rune::Audio::playSound("confirm");
+    }
+    else {
+        Rune::Audio::playSound("cancel");
+    }
+
     this->onCloseSignal->fire(isSave);
 
     this->setDeveloperNote("");
@@ -103,8 +116,11 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     );
 
     this->_panel = panel;
+    panel->onCursorMove([](){
+        Rune::Audio::playSound("cursor");
+    });
     this->addElement(panel);
-
+    
     Aether::Rectangle* panelBg = new Aether::Rectangle(
         panel->x(), panel->y(),
         OVL_PANEL_WIDTH,
@@ -114,6 +130,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
     this->_panel->addElement(panelBg);
 
     this->onOpen([this, panel](){
+        Rune::Audio::playSound("open_menu");
         Aether::Element::setFocused(panel);
 
         // Logger::Important("Panel has been opened.");
@@ -227,6 +244,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
      * Show/hide hint when question mark is pressed
      */
     this->_infoButton->onPress([this](){
+        Rune::Audio::playSound("select");
         this->setHintVisible(!this->hintVisible());
     });
 }

@@ -2,6 +2,7 @@
 #pragma GCC diagnostic ignored "-Wc++20-extensions"
 
 #include "Aether/horizon/input/Dropdown.hpp"
+#include "Aether/horizon/list/ListButton.hpp"
 
 #define TEXT_SPACING 142
 #define TEXT_SIZE 20
