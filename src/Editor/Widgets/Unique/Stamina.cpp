@@ -211,7 +211,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
             if (isSave){
                 // update value
                 Logger::Write("[WidgetOverlay::onCloseSignal] - WidgetOverlay closed; updating value to "
-                    +numSpinner->value());
+                    +std::to_string(numSpinner->value()));
 
                 int upgrades = numSpinner->value();
                 float rawStamina = upgrades*UPGRADE_VALUE;
