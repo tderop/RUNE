@@ -279,7 +279,7 @@ namespace Rune{
             return;
         }
 
-        _loadingProgress->setValue(std::min((progress*100.0f) + 1.0f, 100.0f));
+        _loadingProgress->setValue(std::min((progress*100.0f), 100.0f));
         this->_window->loop();
     }
 

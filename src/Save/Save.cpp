@@ -197,7 +197,7 @@ Result Rune::Save::Decode(Rune::Save::File* out, const Rune::Save::RawFile& raw,
     size_t maxProgress = raw.entries.size();
 
     for (size_t i = 0; i < maxProgress; i++){
-        onProgress(i, maxProgress);
+        onProgress(i, maxProgress-1);
 
         const Rune::Save::RawEntry& rawEntry = raw.entries[i];
         Rune::Save::Entry entry;

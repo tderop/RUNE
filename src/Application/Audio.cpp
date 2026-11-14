@@ -51,4 +51,14 @@ namespace Rune {
         // Play the sound and return its error code
         return soundIt->second->play();
     }
+
+    void Audio::Exit(){
+        if (Audio::db_.empty()){ return; }
+
+        // Free all the sound resources
+        for (const auto& [_, sound] : Audio::db_){
+            delete sound;
+        }
+        Audio::db_.clear();
+    }
 } // namespace Rune

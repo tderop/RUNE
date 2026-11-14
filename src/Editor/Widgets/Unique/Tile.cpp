@@ -30,7 +30,11 @@
 
 namespace Rune {
     namespace Inventory {
-        void Tile::updateThumbnail(const std::string &path){
+        void Tile::updateThumbnail(){
+            inventoryItem.thumbPath = 
+                GetThumbPathFromInventoryItem(inventoryItem);
+            const std::string& path = inventoryItem.thumbPath;
+
             if (!path.empty()){
                 // Get the thumbnail texture key
                 int thumbSize = static_cast<int>(kTileSize*kThumbScale);
@@ -477,8 +481,7 @@ namespace Rune {
             }
 
             // Update thumbnail path
-            inventoryItem.thumbPath = GetThumbPathFromActorName(GetActorValue<std::string>(inventoryItem.actorName, "IconActorName")
-                .value_or(inventoryItem.actorName));
+            inventoryItem.thumbPath = GetThumbPathFromInventoryItem(inventoryItem);
 
             // Make a new thumbnail and reposition it
             this->ovlImg = new Aether::Image(0, 0, 
@@ -744,6 +747,10 @@ namespace Rune {
                         newPrimaryValue *= kDurabilityMultiplier;
                     }
                     this->inventoryItem.value = newPrimaryValue;
+
+                    if (this->inventoryItem.category == Category::Armor){
+                        this->updateOvlImg();
+                    }
                 });
                 ovlPrimaryValueStepper->onCursorMove([](){
                     Audio::playSound("cursor");
@@ -797,7 +804,7 @@ namespace Rune {
             // tileBtn->addElement(debugTxt);
 
             // Set the tile elements
-            this->updateThumbnail(inventoryItem.thumbPath);
+            this->updateThumbnail();
             this->updateBuffStar();
             // // Tile button built // //
 
@@ -931,7 +938,7 @@ namespace Rune {
                 genProgress++;
                 if (genProgress % 12 == 0){
                     app->setLoadingProgress(static_cast<float>(genProgress)
-                        /otherActorNames.size());
+                        /(otherActorNames.size()-1));
                 }
             }
 
@@ -981,12 +988,6 @@ namespace Rune {
         }
 
         void Tile::onPress(){
-            // Play open sound
-            // Audio::playSound("open_menu");
-            // if (R_FAILED(rc)){
-            //     Logger::Importantf("No. (%08X)", rc);
-            // }
-
             // Assign widget overlay
             if (this->ovl == nullptr){
                 this->ovl = this->widget->getWidgetOverlay();
@@ -1078,7 +1079,7 @@ namespace Rune {
                 *originalInventoryItem = this->inventoryItem;
 
                 // Update my tile
-                this->updateThumbnail(inventoryItem.thumbPath);
+                this->updateThumbnail();
                 this->updateBuffStar();
                 this->updateTileFormat(inventoryItem.type, 
                     inventoryItem.style, FormatValue(inventoryItem));

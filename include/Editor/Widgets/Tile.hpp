@@ -101,9 +101,8 @@ namespace Rune {
 
                 /**
                  * @brief Update the thumbnail image
-                 * @param path The path to the thumbnail
                  */
-                void updateThumbnail(const std::string& path);
+                void updateThumbnail();
 
                 /**
                  * @brief Add the buff star to the tile if there is a modifier

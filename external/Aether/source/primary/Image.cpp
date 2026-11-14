@@ -1,6 +1,8 @@
 #include "Aether/primary/Image.hpp"
 #include "Aether/base/TextureResource.hpp"
 
+// #include <switch.h>
+
 namespace Aether {
     void Image::cacheTexture(std::string_view path){
 
@@ -71,6 +73,10 @@ namespace Aether {
 
                 // if texture is cached, use that instead of reading from storage
                 if (Image::textureCache_.hasKey(key)){
+
+                    // std::string msg = "Cache hit: "+key;
+                    // svcOutputDebugString(msg.c_str(), msg.size());
+
                     cachedTexture = Image::textureCache_.getData(key);
                     this->texture_ = cachedTexture;
                     this->type = Type::Cached;

@@ -2,7 +2,6 @@
 #include "Aether/Renderer.hpp"
 
 #include <SDL2/SDL_render.h>
-#include <memory>
 
 namespace Aether {
     TextureResource::TextureResource(

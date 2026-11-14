@@ -74,12 +74,6 @@ namespace Rune {
                 iconActorName = inventoryItem.actorName;
             }
 
-            // Check if path is cached
-            auto path = IconPathCache->get<std::string>(iconActorName);
-            if (path != std::nullopt){
-                return path.value();
-            }
-
             int32_t value = inventoryItem.value;
 
             // Individual category handlers
@@ -94,30 +88,39 @@ namespace Rune {
                         std::stringstream dyeIdentifier;
                         dyeIdentifier << "." << std::setfill('0') << std::setw(2) << value;
 
-                        // Build the full image path
-                        std::string fullPath = THUMB_PATH + fileId + dyeIdentifier.str() + ".png";
+                        // Build the image identifier
+                        const std::string cacheId = fileId + dyeIdentifier.str();
+
+                        // Check if the path is cached
+                        auto cachedPath = IconPathCache->get<std::string>(cacheId);
+                        if (cachedPath.has_value()){ // If it is cached, return this value
+                            return cachedPath.value();
+                        }
+
+                        // Path not cached, build the full path
+                        std::string fullPath = THUMB_PATH + cacheId + ".png";
 
                         // Return the full path only if exists
                         if (!std::filesystem::exists(fullPath)){
-                            std::string fallbackPath = GetThumbPathFromActorName(iconActorName);
-                            // Logger::Write("[Rune::Inventory] - File does not exist! '"+fullPath+"... using '"+fallbackPath+"'", true);
-                            return fallbackPath;
+                            // Default to standard actor name lookup
+                            break;
                         } else {
-                            // Logger::Write("[Rune::Inventory] - File exists! '"+fullPath+"'", true);
+                            // Cache full path after verification and return it
+                            IconPathCache->put(cacheId, fullPath);
                             return fullPath;
                         }
                     }
 
-                    // Return the original path (not dyeable armor)
-                    return GetThumbPathFromActorName(iconActorName);
+                    break;
                 }
 
                 default:
-                    return GetThumbPathFromActorName(iconActorName);
+                    // Default to standard actor name lookup
+                    break;
             }
 
-
-            return "";
+            // Return the original path (not dyeable armor)
+            return GetThumbPathFromActorName(iconActorName);
         }
 
         Rune::Json GetActorObject(const std::string& actorName){
@@ -236,9 +239,6 @@ namespace Rune {
                     // Set modifier info
                     inventoryItem.modifier = (Modifier)inventoryItem.flagSp;
 
-                    // Set thumbnail
-                    inventoryItem.thumbPath = GetThumbPathFromInventoryItem(inventoryItem);
-
                     // Data is stored, initialisation is no longer necessary
                     inventoryItem._initialised = true;
                 }
@@ -269,56 +269,6 @@ namespace Rune {
                     ellipses.at(i)->setColour(kEnabledEllipse);
                 }
             }
-        }
-
-        Result PreloadTextures(
-            Aether::Renderer* renderer, 
-            std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, 
-            std::function<void(size_t, size_t)> onProgress){
-
-            // return 0;
-
-            // Return if directory does not exist
-            if (!std::filesystem::exists(THUMB_PATH)){
-                return LibnxError_NotFound;
-            }
-
-            // Iterate through and cache textures
-            size_t progress = 0;
-            size_t maxProgress = std::distance(
-                std::filesystem::directory_iterator(THUMB_PATH),
-                std::filesystem::directory_iterator{}
-            ); 
-
-            int thumbSize = static_cast<int>(kTileSize*kThumbScale);
-            std::string suffix = "|"+std::to_string(thumbSize)+"x"+std::to_string(thumbSize);
-
-            for (const auto& entry : std::filesystem::directory_iterator(THUMB_PATH)){
-                // Progress
-                onProgress(++progress, maxProgress);
-                
-                const std::string path = entry.path().string();
-                const std::string key = path+suffix;
-
-                // Get the drawable after rendering the image surface
-                std::unique_ptr<Aether::Drawable> drawable(renderer->renderImageSurface(path, thumbSize, thumbSize));
-
-                // If bad drawable, return
-                if (!drawable || drawable->type() != Aether::Drawable::Type::Surface){
-                    return LibnxError_IoError;
-                }
-
-                // On decoded, hand graphics work to main thread
-                onDecoded(key, std::move(drawable));
-            }
-
-            return 0;
-        }
-
-        Result CacheIconPaths(){
-            Rune::Json actorNameJson;
-
-            return 0;
         }
 
         Category GetCategoryFromActorName(const std::string& actorName){

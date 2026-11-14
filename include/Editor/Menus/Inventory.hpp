@@ -316,19 +316,6 @@ namespace Rune{
         void ShowPage(EditorMenu* menu, std::vector<Rune::Inventory::Item>& inventoryItems, size_t page, std::vector<Aether::Ellipse*>& ellipses);
 
         /**
-         * @brief Render all the icon textures. Fails if no textures exist.
-         * @param progress Function to run for every progress iteration
-         * @return Error code
-         */
-        Result PreloadTextures(Aether::Renderer* renderer, std::function<void(const std::string&,std::unique_ptr<Aether::Drawable>)> onDecoded, std::function<void(size_t, size_t)> onProgress=[](size_t, size_t){});
-
-        /**
-         * @brief Load all actorname icon paths. 
-         * @return Error code
-         */
-        Result CacheIconPaths();
-
-        /**
          * @brief Determine an item's category from its actor name
          * @note About 99.9% accurate
          * @param actorName The item's actor name

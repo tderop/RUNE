@@ -30,5 +30,10 @@ namespace Rune {
              */
             static Result playSound(const std::string& id);
 
+            /**
+             * @brief Exit the audio subsystem
+             */
+            void Exit();
+
     };
 } // namespace Rune

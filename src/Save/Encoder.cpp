@@ -291,7 +291,7 @@ void Rune::Save::Encode(Rune::Save::RawFile* out, Rune::Save::File* saveFile, st
         }
 
         currentProgress++;
-        onProgress(currentProgress, maxProgress);
+        onProgress(currentProgress, maxProgress-1);
     }
 
     // return out;
@@ -367,7 +367,7 @@ Result Rune::Save::CompileTo(RawFile* rawSaveFile, const std::string &outputPath
         sav.write(reinterpret_cast<const char*>(&rawEntry.value), sizeof(rawEntry.value));
 
         currentProgress++;
-        onProgress(currentProgress, maxProgress);
+        onProgress(currentProgress, maxProgress-1);
     }
 
     // Write the padding bytes

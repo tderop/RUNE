@@ -109,37 +109,7 @@ void SplashScreen::loadRune(void* _self){
         }
     );
 
-    // Step 2: Preload textures
-    if (PRELOAD_ICON_TEXTURES){
-        rc = Rune::Inventory::PreloadTextures(
-            self->app->window()->renderer(),
-
-            // Add texture to queue to be rendered
-            [self](const std::string& key, std::unique_ptr<Aether::Drawable> drawable){
-                std::lock_guard<std::mutex> lock(self->_textureMutex);
-                self->_textureQueue.push({
-                    key, std::move(drawable)
-                });
-            },
-
-            // Show progress
-            [self](size_t completed, size_t max){
-                std::string suffix;
-
-                if (max != 0){ // prevent div by 0
-                    suffix = std::to_string(static_cast<int>((static_cast<float>(completed)
-                    /static_cast<float>(max))*100))+"%";
-                }
-
-                {
-                    std::lock_guard<std::mutex> lock(self->_statusMutex);
-                    self->_status = "Preloading textures: "+suffix;
-                }
-            }
-        );
-    }
-
-    // Step 3: Equipment category cache
+    // Step 2: Equipment category cache
     Rune::Json* actorData;
     Rune::JsonData::GetJsonById(actorData, "ActorData");
     
@@ -152,7 +122,7 @@ void SplashScreen::loadRune(void* _self){
         }
     }
 
-    // Step 4: Load sounds
+    // Step 3: Load sounds
     // The sound susbsystem being uninitialised is not a problem, so just print error code and proceed anyway
     {
         std::lock_guard<std::mutex> lock(self->_statusMutex);
