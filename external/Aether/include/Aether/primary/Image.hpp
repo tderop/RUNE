@@ -5,6 +5,8 @@
 #include "Aether/base/TextureResource.hpp"
 #include "Aether/types/LRUCache.hpp"
 
+#include <unordered_set>
+
 #define CACHE_SIZE 1500
 #define TEXTURE_CACHING true
 
@@ -15,6 +17,9 @@ namespace Aether {
      * until rendering is complete.
      */
     class Image : public Texture {
+        protected:
+            void onTextureReady() override;
+
         private:
             /**
              * @brief Enumeration for types of image
@@ -43,6 +48,11 @@ namespace Aether {
             TextureHandle texture_;
             inline static LRUCache<std::string, TextureHandle> textureCache_ = LRUCache<std::string, TextureHandle>(CACHE_SIZE);
 
+            std::string cacheKey_;
+            bool ownsPending_=false;
+            bool waitingOnCache_=false;
+            inline static std::unordered_set<std::string> pending_;
+
             /**
              * @brief Overrides Texture's method to render the image.
              */
@@ -57,8 +67,18 @@ namespace Aether {
 
             /**
              * @brief Helper for caching a texture when it is loaded from storage
+             * @param path The string path where the texture will be cached
              */
             void cacheTexture(std::string_view path);
+
+            /**
+             * @brief Generate the key used by this image to store the texture in cache
+             * @param path Path to the image file
+             * @param w Width of the texture
+             * @param h Height of the texture
+             * @return The string key
+             */
+            static std::string makeKey(const std::string& path, const int w, const int h);
 
         public:
             inline static const bool kCachingEnabled = TEXTURE_CACHING;
@@ -161,6 +181,7 @@ namespace Aether {
 
             void renderSync() override;
             void renderAsync() override;
+            void update(unsigned int dt) override;
 
             /**
              * @brief Destroys the image element.

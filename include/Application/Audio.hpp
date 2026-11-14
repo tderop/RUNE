@@ -14,6 +14,8 @@ namespace Rune {
      */
     class Audio {
         private:
+            /** @brief Intialised flag */
+            inline static bool initialized_ = false;
             /** @brief The preloaded sounds */
             inline static std::unordered_map<std::string, Sound*> db_;
         public:
@@ -33,7 +35,7 @@ namespace Rune {
             /**
              * @brief Exit the audio subsystem
              */
-            void Exit();
+            static void Exit();
 
     };
 } // namespace Rune

@@ -8,6 +8,10 @@ namespace Aether {
 
     }
 
+    std::string Image::makeKey(const std::string& path, const int w, const int h){
+        return path+"|"+std::to_string(w)+"x"+std::to_string(h);
+    }
+
     Image::Image(const int x, const int y, unsigned char * data, const size_t size, const Render type) : Texture(x, y) {
         this->scaleWidth_ = 0;
         this->scaleHeight_ = 0;
@@ -64,41 +68,27 @@ namespace Aether {
     }
 
     void Image::performRender(const Render type) {
-        if (type != Render::Wait && Aether::Image::kCachingEnabled){
-            // Read cache in the case of a file-type image to prevent storage reads
-            if (this->type == Type::File && !this->path.empty()){
-                TextureHandle cachedTexture = nullptr;
-                std::string key = this->path+std::to_string(this->scaleWidth_)
-                    +std::to_string(this->scaleHeight_);
+        // Check if suitable to perform texture cache operations
+        if (type != Render::Wait && kCachingEnabled && 
+            this->type == Type::File && !this->path.empty()){
+            
+            // Generate the key from the path and dimensions
+            this->cacheKey_ = makeKey(this->path, this->scaleWidth_, this->scaleHeight_);
 
-                // if texture is cached, use that instead of reading from storage
-                if (Image::textureCache_.hasKey(key)){
-
-                    // std::string msg = "Cache hit: "+key;
-                    // svcOutputDebugString(msg.c_str(), msg.size());
-
-                    cachedTexture = Image::textureCache_.getData(key);
-                    this->texture_ = cachedTexture;
-                    this->type = Type::Cached;
-                }
-
-                // If the texture isn't cached, then generate and cache it
-                else {
-                    std::unique_ptr<Drawable> drawable(renderer->renderImageSurface(path, this->scaleWidth_, 
-                        this->scaleHeight_));
-                    bool success = drawable->convertToTexture();
-                    if (success){
-                        // If the texture was generated successfully, make a new texture handle, and cache it
-                        TextureHandle texture = std::make_shared<TextureResource>(this->renderer, drawable->releaseTexture(), 
-                            drawable->width(), drawable->height());
-                        Image::textureCache_.addData(key, texture);
-
-                        // Change type to texture and use the new texture
-                        this->texture_ = texture;
-                        this->type = Type::Cached;
-                    }
-                }
-        }
+            if (Image::textureCache_.hasKey(this->cacheKey_)){
+                // Already found in cache, use this texture and change to cached texture mode
+                this->texture_ = textureCache_.getData(this->cacheKey_);
+                this->type = Type::Cached;
+            }
+            else if (type == Render::Async && Image::pending_.count(this->cacheKey_)){
+                // This is already being loaded, poll in update
+                this->waitingOnCache_ = true;
+                return;
+            }
+            else if (Image::pending_.insert(this->cacheKey_).second){
+                // Not found in cache and not being loaded, so insert this key to pending and begin work
+                this->ownsPending_ = true;
+            }
         }
 
         if (type == Render::Sync) {
@@ -155,7 +145,57 @@ namespace Aether {
         return this->y()+this->scaleHeight()/2;
     }
 
-    Image::~Image() {
+    void Image::onTextureReady(){
+        // Lose ownership of the pending set and remove the cache key from the list
+        if (this->ownsPending_){
+            Image::pending_.erase(this->cacheKey_);
+            this->ownsPending_ = false;
+        }
 
+        if (!kCachingEnabled || this->type != Type::File || this->cacheKey_.empty() 
+            || this->drawable->type() != Drawable::Type::Texture){
+
+            return;
+        }
+
+        const int w = this->drawable->width();
+        const int h = this->drawable->height();
+
+        TextureHandle tex = std::make_shared<TextureResource>(
+            this->renderer, this->drawable->releaseTexture(), w, h
+        );
+
+        if (!Image::textureCache_.hasKey(this->cacheKey_)){
+            Image::textureCache_.addData(this->cacheKey_, tex);
+        }
+
+        // swap the owning drawable for a shared so cache owns texture
+        delete this->drawable;
+        this->drawable = new Drawable(this->renderer, tex);
+        this->texture_ = tex;
+        this->type = Type::Cached;
+    }
+
+    void Image::update(unsigned int dt){
+        if (this->waitingOnCache_){
+            if (Image::textureCache_.hasKey(this->cacheKey_)){
+                this->waitingOnCache_ = false;
+                this->texture_ = textureCache_.getData(this->cacheKey_);
+                this->type = Type::Cached;
+                Texture::renderSync();
+            }
+            else if (!Image::pending_.count(this->cacheKey_)){
+                // loader finished without caching, load here instead
+                this->waitingOnCache_ = false;
+                this->renderAsync();
+            }
+        }
+        Texture::update(dt);
+    }
+
+    Image::~Image() {
+        if (this->ownsPending_){
+            Image::pending_.erase(this->cacheKey_);
+        }
     }
 };

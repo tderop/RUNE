@@ -309,8 +309,8 @@ namespace Aether {
         }
 
         IMG_Quit();
-        SDL_Quit();
-        this->logMessage("Cleaned up", false);
+        SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+        this->logMessage("Cleaned up", true);
     }
 
     unsigned int Renderer::memoryUsage() {

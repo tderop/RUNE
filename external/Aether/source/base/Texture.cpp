@@ -3,6 +3,8 @@
 #include "Aether/ThreadPool.hpp"
 
 namespace Aether {
+    void Texture::onTextureReady(){}
+
     Texture::Texture(const int x, const int y) : Element(x, y, 0, 0) {
         this->asyncID = 0;
         this->onRenderDoneFunc = nullptr;
@@ -15,6 +17,7 @@ namespace Aether {
 
     void Texture::setupDrawable() {
         this->drawable->convertToTexture();
+        this->onTextureReady();
         this->drawable->setColour(this->colour_);
 
         this->setW(this->drawable->width());

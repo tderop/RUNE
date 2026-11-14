@@ -26,6 +26,11 @@ class Sound {
          * */
         static const char* Init();
 
+        /**
+         * @brief Deinitialise sounds (required)
+         */
+        static void Exit();
+
         Sound() = default;
 
         /**

@@ -2,6 +2,7 @@
 #define AETHER_TEXTURE_HPP
 
 #include "Aether/base/Element.hpp"
+
 #include <atomic>
 
 namespace Aether {
@@ -23,6 +24,8 @@ namespace Aether {
      */
     class Texture : public Element {
         private:
+            friend class Image;
+
             // Forward declare nested class
             class RenderJob;
 
@@ -55,6 +58,11 @@ namespace Aether {
              * @brief Method provided by children defining how to render the texture.
              */
             virtual Drawable * renderDrawable() = 0;
+
+            /**
+             * @brief Function to run when a texture has been generated
+             */
+            virtual void onTextureReady();
 
         public:
             /**

@@ -67,9 +67,16 @@ Result Sound::play(){
     return 0;
 }
 
+void Sound::Exit(){ 
+    Mix_CloseAudio();
+    Mix_Quit();
+    SDL_QuitSubSystem(SDL_INIT_AUDIO);
+}
+
 Sound::~Sound(){
     // Free the sound if allocated
     if (this->audio_ != nullptr){
+        // Not running?
         Mix_FreeMusic(this->audio_);
         this->audio_ = nullptr;
     }

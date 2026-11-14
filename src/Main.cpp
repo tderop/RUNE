@@ -273,10 +273,16 @@ int main(){
     // Exit the account service
     accountExit();
 
+    // Exit the audio service
+    Rune::Audio::Exit();
+
     // Delete the window for full cleanup
     if (app->window() != nullptr){
         app->deleteWindow();
     }
+
+    // Exit SDL
+    SDL_Quit();
 
     return 0;
 }
