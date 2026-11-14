@@ -4497,7 +4497,8 @@
   },
   "Obj_AncientArrow_B_01": {
     "Name": "Ancient Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_D_06": {
     "Name": "Salt-Grilled Gourmet Meat",
@@ -4544,7 +4545,8 @@
   },
   "Obj_ElectricArrow_A_03": {
     "Name": "Shock Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Animal_Fish_K": {
     "Name": "Hearty Blueshell Snail",
@@ -4566,7 +4568,8 @@
   },
   "Obj_FireArrow_A_01": {
     "Name": "Fire Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Animal_Fish_C": {
     "Name": "Chillfin Trout",
@@ -4575,7 +4578,8 @@
   },
   "Obj_BombArrow_A_03": {
     "Name": "Bomb Arrow x10",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Fruit_C": {
     "Name": "Voltfruit",
@@ -4600,7 +4604,8 @@
   },
   "Obj_AncientArrow_A_01": {
     "Name": "Ancient Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Mushroom_N_00": {
     "Name": "Big Hearty Truffle",
@@ -4701,7 +4706,8 @@
   "Obj_ArrowBundle_A_10": {
     "Name": "Arrow x[NUMBER]",
     "CanStack": true,
-    "IconActorName": "Obj_ArrowBundle_A_01"
+    "IconActorName": "Obj_ArrowBundle_A_01",
+    "Hidden": true
   },
   "Item_Enemy_03": {
     "Name": "Lizalfos Horn",
@@ -4851,7 +4857,8 @@
   },
   "Obj_IceArrow_A_02": {
     "Name": "Ice Arrow x10",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_A_02": {
     "Name": "Steamed Mushrooms",
@@ -4903,7 +4910,8 @@
   },
   "Obj_ArrowBundle_A_01": {
     "Name": "Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Mushroom_B": {
     "Name": "Chillshroom",
@@ -4919,7 +4927,8 @@
   },
   "Obj_IceArrow_A_03": {
     "Name": "Ice Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_A_03": {
     "Name": "Steamed Fruit",
@@ -5129,7 +5138,8 @@
   },
   "Obj_ElectricArrow_A_02": {
     "Name": "Shock Arrow x10",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_I_01": {
     "Name": "Fruit Pie",
@@ -5219,7 +5229,8 @@
   },
   "Obj_ArrowNormal_A_01": {
     "Name": "Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Animal_Fish_B": {
     "Name": "Hearty Bass",
@@ -5232,7 +5243,8 @@
   },
   "Obj_BombArrow_A_02": {
     "Name": "Bomb Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "GameRomHorseSaddle_03": {
     "Name": "Knight's Saddle",
@@ -5330,7 +5342,8 @@
   },
   "Obj_FireArrow_A_02": {
     "Name": "Fire Arrow x10",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Enemy_20": {
     "Name": "Octorok Tentacle",
@@ -5369,7 +5382,8 @@
   },
   "Obj_BombArrow_A_04": {
     "Name": "Bomb Arrow x20",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_B_21": {
     "Name": "Sautéed Peppers",
@@ -5638,7 +5652,8 @@
   },
   "Obj_IceArrow_A_01": {
     "Name": "Ice Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_Cook_A_01": {
     "Name": "Mushroom Skewer",
@@ -5771,7 +5786,8 @@
   },
   "Obj_AncientArrow_C_01": {
     "Name": "Ancient Arrow x3",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Obj_WarpDLC": {
     "Name": "Travel Medallion",
@@ -6124,7 +6140,8 @@
   "Obj_ArrowBundle_A_02": {
     "Name": "Arrow x10",
     "CanStack": true,
-    "IconActorName": "Obj_ArrowBundle_A_01"
+    "IconActorName": "Obj_ArrowBundle_A_01",
+    "Hidden": true
   },
   "Item_Cook_A_08": {
     "Name": "Fish and Mushroom Skewer",
@@ -6212,7 +6229,8 @@
   },
   "Obj_ElectricArrow_B_01": {
     "Name": "Shock Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Item_RoastFish_15": {
     "Name": "Blackened Crab",
@@ -6322,11 +6340,13 @@
   },
   "Obj_FireArrow_A_03": {
     "Name": "Fire Arrow x5",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Obj_BombArrow_A_01": {
     "Name": "Bomb Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Animal_Fish_A": {
     "Name": "Hyrule Bass",
@@ -6383,7 +6403,8 @@
   },
   "Obj_ElectricArrow_A_01": {
     "Name": "Shock Arrow",
-    "CanStack": true
+    "CanStack": true,
+    "Hidden": true
   },
   "Obj_RemoteBombCube2": {
     "Name": "Remote Bomb +",

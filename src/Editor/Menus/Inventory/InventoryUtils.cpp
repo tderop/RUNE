@@ -425,5 +425,9 @@ namespace Rune {
             // Default to the input value if could not format
             return std::to_string(value);
         }
+
+        bool IsActorArrow(std::string_view actorName){
+            return (actorName.find(kArrowPrefix) != std::string::npos);
+        }
     } // namespace Inventory
 } // namespace Rune

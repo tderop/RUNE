@@ -855,11 +855,13 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 void EditorScreen::onLoad(){
     // navigate to next menu when pressing R
     this->onButtonPress(Aether::Button::R, [this](){
+        Rune::Audio::playSound("big_page_slide.opus");
         this->nextMenu();
     });
 
     // navigate to previous menu when pressing L
     this->onButtonPress(Aether::Button::L, [this](){
+        Rune::Audio::playSound("big_page_slide.opus");
         this->prevMenu();
     });
 
@@ -881,7 +883,6 @@ void EditorScreen::onUnload(){
 
     // Edit null
     this->editSaveSlot(nullptr);
-
     Logger::Write("============== [EDITOR] - Screen successfully unloaded. ==============");
 }
 

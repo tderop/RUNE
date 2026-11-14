@@ -171,7 +171,7 @@ namespace Rune{
         inline const int kMaxDyeColour = 15;
         inline const int kInventoryMaxCount = 420;
 
-        inline const int kArrowSlots = 6;
+        inline const int kMaxArrowSlots = 6;
         inline const std::string kArrowPrefix = "Arrow";
 
         // For elixirs
@@ -386,6 +386,9 @@ namespace Rune{
 
         /** @brief Strip the enhancement mask from a modifier */
         Modifier UnenhanceModifier(Modifier m);
+
+        /** @brief Determine if an actor name is an arrow */
+        bool IsActorArrow(std::string_view actorName);
 
     } // namespace Inventory
 } // namespace Rune

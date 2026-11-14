@@ -83,11 +83,15 @@ const std::map<Rune::Inventory::Category, size_t> Rune::Inventory::kMaxSlots = {
 const std::map<Rune::Inventory::Category, std::vector<std::string>> Rune::Inventory::kInventoryPrefixes = {
     {
         Rune::Inventory::Category::Weapons,
-        {"Weapon_Sword", "Weapon_Lsword", "Weapon_Spear"}
+    {"Weapon_Sword", "Weapon_Lsword", "Weapon_Spear"}
+    },
+    {
+        Rune::Inventory::Category::Arrows,
+        {"Arrow"}
     },
     {
         Rune::Inventory::Category::Bows,
-        {"Weapon_Bow", "Arrow"}
+        {"Weapon_Bow"}
     },
     {
         Rune::Inventory::Category::Shields,

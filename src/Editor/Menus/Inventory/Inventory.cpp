@@ -99,6 +99,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     int currentIdx = -1;
     int localIdx = 0; // this index only increments when a valid slot has been found
 
+    // For keeping track of the arrows subsection
+    int arrowSlots = 0;
+
     auto tileStyleEntry = Rune::Inventory::kLabelTileStyles.find(menuCategory);
     Rune::Inventory::TileStyle tileStyle = Rune::Inventory::TileStyle::NoLabel;
 
@@ -107,8 +110,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         tileStyle = tileStyleEntry->second;
     }
 
-    // For merging arrows into the bow inventory
-    bool isArrow = false;
+    // A vector of arrows to be merged with the bows inventory afterwards
+    std::vector<Rune::Inventory::Item> toMerge;
 
     // Iterate through inventory and populate slots
     for (const std::string& actorName : inventory){
@@ -116,43 +119,40 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         currentIdx++;
 
         // Check if valid prefix
+        bool isArrow = Inventory::IsActorArrow(actorName);
         bool foundPrefix = false;
 
-        for (const std::string& prefix : prefixes){
-            // If the prefix was found, check ignores too
-            if ((actorName.find(prefix) != std::string::npos)){
-                foundPrefix = true;
-
-                // Update arrow status if the arrow prefix was found
-                if (prefix == Inventory::kArrowPrefix){
-                    isArrow = true;
-                }
-
-                break;
-            }
-        }
-
-        // No prefix found? Continue to next inventory item
-        if (!foundPrefix){
-            continue;
-        }  
-
-        // Valid prefix found, check if this item is ignored
-        if (!ignores.empty()){
-            bool foundIgnore = false;
-
-            // Iterate through ignores
-            for (const std::string& ignore : ignores){
-                // An ignore was found, break and continue to next prefix
-                if (actorName.find(ignore) != std::string::npos){
-                    foundIgnore = true;
+        if (!(isArrow && menuCategory == Rune::Inventory::Category::Bows)){ // Hardcoded exception for arrows
+            for (const std::string& prefix : prefixes){
+                // If the prefix was found, check ignores too
+                if ((actorName.find(prefix) != std::string::npos)){
+                    foundPrefix = true;
                     break;
                 }
             }
 
-            // ignore this one
-            if (foundIgnore){
+            // No prefix found? Continue to next inventory item
+            if (!foundPrefix){
                 continue;
+            }  
+
+            // Valid prefix found, check if this item is ignored
+            if (!ignores.empty()){
+                bool foundIgnore = false;
+
+                // Iterate through ignores
+                for (const std::string& ignore : ignores){
+                    // An ignore was found, break and continue to next prefix
+                    if (actorName.find(ignore) != std::string::npos){
+                        foundIgnore = true;
+                        break;
+                    }
+                }
+
+                // ignore this one
+                if (foundIgnore){
+                    continue;
+                }
             }
         }
 
@@ -174,12 +174,16 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
 
         // Make a new inventory item object representing the item in Link's pouch
-        Rune::Inventory::Category itemCategory = Rune::Inventory
-            ::GetCategoryFromMenuName(menu->menuName());
+
+        // Shadowed values
+        Rune::Inventory::Category menuCategoryOvr = menuCategory;
+        Rune::Inventory::TileStyle tileStyleOvr = tileStyle; 
         
-        if (itemCategory == Rune::Inventory::Category::Bows && isArrow){
-            itemCategory = Rune::Inventory::Category::Arrows;
-            tileStyle = Inventory::TileStyle::NoLabel;
+        // If this is an arrow object, overwrite the category and style, and update the arrow count
+        if (menuCategoryOvr == Rune::Inventory::Category::Bows && isArrow){
+            menuCategoryOvr = Rune::Inventory::Category::Arrows;
+            tileStyleOvr = Inventory::TileStyle::NoLabel;
+            arrowSlots++;
         }
 
         Rune::Inventory::Item inventoryItem{
@@ -188,10 +192,10 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             itemValue, 
             static_cast<size_t>(currentIdx),
             static_cast<size_t>(localIdx),
-            itemCategory,
+            menuCategoryOvr,
             itemFlagSp,
             itemValueSp,
-            tileStyle
+            tileStyleOvr
         };
 
         // Add Sp keys
@@ -199,7 +203,12 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         inventoryItem.valueSpKey = valueSpKey;
 
         // Store the inventory item
-        inventoryItems->push_back(inventoryItem);
+        if (!isArrow){
+            inventoryItems->push_back(inventoryItem);
+        }
+        else {
+            toMerge.push_back(inventoryItem);
+        }
 
         // Increment the local index as the value was successfully parsed
         localIdx++;
@@ -305,6 +314,38 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
                 }
             }
 
+        }
+    }
+
+    // Merge toMerge with inventoryItems
+    for (const auto& item : toMerge){
+        inventoryItems->push_back(item);
+    }
+
+    // Fill additional arrow slots (up to 6 by default)
+    int emptyArrowSlots = Rune::Inventory::kMaxArrowSlots - arrowSlots;
+    if (menuCategory == Rune::Inventory::Category::Bows 
+            && emptyArrowSlots > 0 && foundSafeIdx){
+        
+        for (int i = 0; i < emptyArrowSlots && foundSafeIdx; ++i){
+            Rune::Inventory::Item newItem = emptySlot;
+            newItem.index = currentIdx;
+
+            newItem.category = Rune::Inventory::Category::Arrows;
+            newItem.style = Rune::Inventory::TileStyle::NoLabel;
+            
+            inventoryItems->push_back(newItem);
+
+            // Search for new valid slot
+            foundSafeIdx = false;
+            for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
+                if (inventory.at(j).empty()){
+                    currentIdx = j;
+                    foundSafeIdx = true;
+
+                    break;
+                }
+            }
         }
     }
 
