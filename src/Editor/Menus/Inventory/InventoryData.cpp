@@ -87,7 +87,7 @@ const std::map<Rune::Inventory::Category, std::vector<std::string>> Rune::Invent
     },
     {
         Rune::Inventory::Category::Bows,
-        {"Weapon_Bow"}
+        {"Weapon_Bow", "Arrow"}
     },
     {
         Rune::Inventory::Category::Shields,

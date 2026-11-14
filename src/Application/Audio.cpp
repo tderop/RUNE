@@ -9,8 +9,6 @@ namespace Rune {
             return soundErr;
         }
 
-        return nullptr;
-
         // Get the JSON
         Rune::Json* soundJson = nullptr;
         Rune::JsonData::GetJsonById(soundJson, "SoundPaths");
@@ -31,6 +29,8 @@ namespace Rune {
             Sound* newSound = new Sound(soundPath);
             if (!newSound->isLoaded()){ 
                 Logger::Importantf("Sound at %s is not loaded", soundPath.c_str());
+
+                delete newSound;
                 continue; 
             } // Do not add unloaded sounds
 
@@ -67,8 +67,10 @@ namespace Rune {
         // Delete all sounds (Mix_FreeMusic)
         if (!Audio::db_.empty()){
             // Free all the sound resources
-            for (const auto& [_, sound] : Audio::db_){
+            for (const auto& [id, sound] : Audio::db_){
+                // Logger::Importantf("ID: %s", id.c_str());
                 delete sound;
+                // Logger::Importantf("ID: %s\n======\n", id.c_str());
             }
             Audio::db_.clear();
         }

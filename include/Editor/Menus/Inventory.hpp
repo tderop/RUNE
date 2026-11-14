@@ -171,6 +171,9 @@ namespace Rune{
         inline const int kMaxDyeColour = 15;
         inline const int kInventoryMaxCount = 420;
 
+        inline const int kArrowSlots = 6;
+        inline const std::string kArrowPrefix = "Arrow";
+
         // For elixirs
         inline const std::string kElixirPrefix = "Item_Cook_C_17"; // other effects are like Item_Cook_C_17_DefenseUp for example
         // Look into CookEffect0 (vector2f array)
@@ -186,7 +189,7 @@ namespace Rune{
         extern const std::map<Category, std::vector<std::string>> kInventoryIgnores;
 
         extern const std::map<Category, std::string> kLabelValueKeys;
-        inline const std::vector<Category> kQuantityMenus = {Category::Materials, Category::Food, Category::KeyItems};
+        inline const std::vector<Category> kQuantityMenus = {Category::Materials, Category::Food, Category::KeyItems, Category::Arrows};
 
         extern const std::map<Category, std::vector<Modifier>> kCategoryModifiers;
 

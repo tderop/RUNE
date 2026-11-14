@@ -64,6 +64,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
 
     Rune::Save::Entry* inventoryEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(),Rune::Inventory::kInventoryKey);
     auto inventory = std::get<std::vector<std::string>>(inventoryEntry->value);
+    Logger::Important(Rune::Save::ValueToString(inventory));
 
     // Get the itemValues entry entry
     Rune::Save::Entry* valuesEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), Rune::Inventory::kInventoryValueKey);
@@ -106,6 +107,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         tileStyle = tileStyleEntry->second;
     }
 
+    // For merging arrows into the bow inventory
+    bool isArrow = false;
+
     // Iterate through inventory and populate slots
     for (const std::string& actorName : inventory){
         // Two linear searches through prefixes and ignores
@@ -118,6 +122,12 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             // If the prefix was found, check ignores too
             if ((actorName.find(prefix) != std::string::npos)){
                 foundPrefix = true;
+
+                // Update arrow status if the arrow prefix was found
+                if (prefix == Inventory::kArrowPrefix){
+                    isArrow = true;
+                }
+
                 break;
             }
         }
@@ -164,13 +174,21 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         }
 
         // Make a new inventory item object representing the item in Link's pouch
+        Rune::Inventory::Category itemCategory = Rune::Inventory
+            ::GetCategoryFromMenuName(menu->menuName());
+        
+        if (itemCategory == Rune::Inventory::Category::Bows && isArrow){
+            itemCategory = Rune::Inventory::Category::Arrows;
+            tileStyle = Inventory::TileStyle::NoLabel;
+        }
+
         Rune::Inventory::Item inventoryItem{
             actorName, 
             itemName, 
             itemValue, 
             static_cast<size_t>(currentIdx),
             static_cast<size_t>(localIdx),
-            Rune::Inventory::GetCategoryFromMenuName(menu->menuName()),
+            itemCategory,
             itemFlagSp,
             itemValueSp,
             tileStyle

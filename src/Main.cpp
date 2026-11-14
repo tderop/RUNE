@@ -264,17 +264,17 @@ int main(){
 
     Logger::Write("[MAIN] - Exiting RUNE...");
 
-    // Exit romFS (the path used to access RUNE's assets such as images and JSON files)
-    rc = romfsExit();
-    if (R_FAILED(rc)){
-        Logger::Write("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
-    }
-
     // Exit the account service
     accountExit();
 
     // Exit the audio service
     Rune::Audio::Exit();
+
+    // Exit romFS (the path used to access RUNE's assets such as images and JSON files)
+    rc = romfsExit();
+    if (R_FAILED(rc)){
+        Logger::Write("[MAIN] - Failed to exit RomFS: " + std::to_string(rc));
+    }
 
     // Delete the window for full cleanup
     if (app->window() != nullptr){
