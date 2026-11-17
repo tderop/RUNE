@@ -12,8 +12,9 @@ For the same reason, with the same remedial actions.
 When modifying a value through an `EditorWidget`, the widgets themselves are responsible for validation checks, which they shouldn't be as these are primarily designed to be for UI interaction only.<br>
 The system should be migrated to a database-like model, in which edits are validated and saved through a setter, and changes are logged. 
 
-## 3. Inventory Menus are Slow
-Inventory menus were implemented rapidly in order to get the base functionality in place. Therefore they are slow to load and can feel rough to use. Icon generation and metadata reading are implemented inefficiently and need to be optimised significantly to bring inventory generation as close as possible to a target of 100ms. 
+## 3. ~~Inventory Menus are Slow~~
+~~Inventory menus were implemented rapidly in order to get the base functionality in place. Therefore they are slow to load and can feel rough to use. Icon generation and metadata reading are implemented inefficiently and need to be optimised significantly to bring inventory generation as close as possible to a target of 100ms.~~
+After a good amount of refactoring, I'm quite satisfied with the speed of inventory menu generation! Feedback is what counts now.
 
 ## 4. Inconsistent Private Member Variable Naming 
 Member variables do not use the same naming convention amongst different classes. Some use an underscore before the name, some use a trailing underscore, and some have no underscores despite being private. This can introduce confusion when trying to differentiate between private and public members and methods when programming/reading code.

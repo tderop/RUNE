@@ -431,14 +431,14 @@ namespace Aether {
         this->setHighlighted(false);
     }
 
-    void Element::setFocused(Element * e) {
+    Element* Element::setFocused(Element * e) {
         if (this->focused_ != nullptr) {
             this->focused_->setInactive();
         }
         this->focused_ = e;
 
         if (e == nullptr) {
-            return;
+            return e;
         }
         e->setInactive();
 
@@ -448,7 +448,7 @@ namespace Aether {
         while (next != nullptr) {
             // Stop if not focussed
             if (next->focused() != last) {
-                return;
+                return e;
             }
             last = next;
             next = next->parent();
@@ -456,6 +456,7 @@ namespace Aether {
 
         // If we've reached the root then we need to set it active
         e->setActive();
+        return e;
     }
 
     void Element::setFocussed(Element * e) {

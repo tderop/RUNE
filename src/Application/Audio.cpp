@@ -68,9 +68,7 @@ namespace Rune {
         if (!Audio::db_.empty()){
             // Free all the sound resources
             for (const auto& [id, sound] : Audio::db_){
-                // Logger::Importantf("ID: %s", id.c_str());
                 delete sound;
-                // Logger::Importantf("ID: %s\n======\n", id.c_str());
             }
             Audio::db_.clear();
         }

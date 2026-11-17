@@ -3,67 +3,80 @@
     "Name": "Mighty Lynel Bow",
     "Durability": 35,
     "Attack": 20,
-    "ShotCount": 3
+    "ShotCount": 3,
+    "Hidden": true
   },
   "Weapon_Shield_008": {
     "Name": "Reinforced Lizal Shield",
     "Durability": 12,
-    "Guard": 22
+    "Guard": 22,
+    "Hidden": true
   },
   "Weapon_Sword_053": {
     "Name": "Vicious Sickle",
     "Durability": 14,
-    "Attack": 16
+    "Attack": 16,
+    "Hidden": true
   },
   "Weapon_Sword_057": {
     "Name": "Goddess Sword",
     "Durability": 45,
-    "Attack": 28
+    "Attack": 28,
+    "Hidden": true
   },
   "Weapon_Lsword_059": {
     "Name": "Biggoron's Sword",
     "Durability": 60,
-    "Attack": 50
+    "Attack": 50,
+    "Hidden": true
   },
   "Weapon_Spear_038": {
     "Name": "Fishing Harpoon",
     "Durability": 12,
-    "Attack": 8
+    "Attack": 8,
+    "Hidden": true
   },
   "Weapon_Lsword_004": {
     "Name": "Boko Bat",
     "Durability": 8,
-    "Attack": 6
+    "Attack": 6,
+    "Hidden": true
   },
   "Weapon_Spear_030": {
     "Name": "Throwing Spear",
     "Durability": 20,
-    "Attack": 6
+    "Attack": 6,
+    "Hidden": true
   },
   "Weapon_Sword_002": {
     "Name": "Soldier's Broadsword",
     "Durability": 23,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Lsword_051": {
     "Name": "Giant Boomerang",
     "Durability": 40,
-    "Attack": 25
+    "Attack": 25,
+    "Hidden": true
   },
   "Weapon_Shield_004": {
     "Name": "Boko Shield",
     "Durability": 5,
-    "Guard": 3
+    "Guard": 3,
+    "Hidden": true
   },
   "Weapon_Lsword_055": {
     "Name": "Edge of Duality",
     "Durability": 35,
-    "Attack": 50
+    "Attack": 50,
+    "Hidden": true
   },
   "Weapon_Sword_006": {
     "Name": "Dragonbone Boko Club",
     "Durability": 18,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Sword_502": {
     "Name": "One-Hit Obliterator",
@@ -74,129 +87,154 @@
   "Weapon_Spear_034": {
     "Name": "Frostspear",
     "Durability": 40,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Shield_014": {
     "Name": "Guardian Shield+",
     "Durability": 13,
-    "Guard": 30
+    "Guard": 30,
+    "Hidden": true
   },
   "Weapon_Lsword_041": {
     "Name": "Eightfold Longblade",
     "Durability": 25,
-    "Attack": 32
+    "Attack": 32,
+    "Hidden": true
   },
   "Weapon_Lsword_045": {
     "Name": "Farming Hoe",
     "Durability": 6,
-    "Attack": 16
+    "Attack": 16,
+    "Hidden": true
   },
   "Weapon_Spear_024": {
     "Name": "Royal Halberd",
     "Durability": 50,
-    "Attack": 26
+    "Attack": 26,
+    "Hidden": true
   },
   "Weapon_Lsword_018": {
     "Name": "Savage Lynel Crusher",
     "Durability": 35,
-    "Attack": 78
+    "Attack": 78,
+    "Hidden": true
   },
   "Weapon_Sword_016": {
     "Name": "Lynel Sword",
     "Durability": 26,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Bow_036": {
     "Name": "Royal Bow",
     "Durability": 60,
-    "Attack": 38
+    "Attack": 38,
+    "Hidden": true
   },
   "Weapon_Lsword_010": {
     "Name": "Moblin Club",
     "Durability": 12,
-    "Attack": 9
+    "Attack": 9,
+    "Hidden": true
   },
   "Weapon_Sword_043": {
     "Name": "Torch",
     "Durability": 8,
-    "Attack": 2
+    "Attack": 2,
+    "Hidden": true
   },
   "Weapon_Shield_018": {
     "Name": "Savage Lynel Shield",
     "Durability": 20,
     "Attack": 21,
-    "Guard": 62
+    "Guard": 62,
+    "Hidden": true
   },
   "Weapon_Sword_047": {
     "Name": "Royal Guard's Sword",
     "Durability": 14,
-    "Attack": 48
+    "Attack": 48,
+    "Hidden": true
   },
   "Weapon_Lsword_014": {
     "Name": "Ancient Battle Axe+",
     "Durability": 20,
-    "Attack": 45
+    "Attack": 45,
+    "Hidden": true
   },
   "Weapon_Spear_028": {
     "Name": "Silverscale Spear",
     "Durability": 40,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Bow_032": {
     "Name": "Savage Lynel Bow",
     "Durability": 45,
     "Attack": 32,
-    "ShotCount": 3
+    "ShotCount": 3,
+    "Hidden": true
   },
   "Weapon_Shield_041": {
     "Name": "Shield of the Mind's Eye",
     "Durability": 16,
-    "Guard": 16
+    "Guard": 16,
+    "Hidden": true
   },
   "Weapon_Shield_034": {
     "Name": "Emblazoned Shield",
     "Durability": 12,
-    "Guard": 3
+    "Guard": 3,
+    "Hidden": true
   },
   "Weapon_Spear_004": {
     "Name": "Boko Spear",
     "Durability": 12,
-    "Attack": 2
+    "Attack": 2,
+    "Hidden": true
   },
   "Weapon_Lsword_038": {
     "Name": "Boat Oar",
     "Durability": 8,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Shield_030": {
     "Name": "Hylian Shield",
     "Durability": 800,
-    "Guard": 90
+    "Guard": 90,
+    "Hidden": true
   },
   "Weapon_Shield_038": {
     "Name": "Ancient Shield",
     "Durability": 32,
-    "Guard": 70
+    "Guard": 70,
+    "Hidden": true
   },
   "Weapon_Bow_016": {
     "Name": "Swallow Bow",
     "Durability": 30,
-    "Attack": 9
+    "Attack": 9,
+    "Hidden": true
   },
   "Weapon_Lsword_030": {
     "Name": "Double Axe",
     "Durability": 52,
-    "Attack": 18
+    "Attack": 18,
+    "Hidden": true
   },
   "Weapon_Lsword_034": {
     "Name": "Great Frostblade",
     "Durability": 40,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Spear_008": {
     "Name": "Enhanced Lizal Spear",
     "Durability": 22,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Sword_080": {
     "Name": "Master Sword",
@@ -206,127 +244,152 @@
   "Weapon_Sword_073": {
     "Name": "Demon Carver",
     "Durability": 25,
-    "Attack": 40
+    "Attack": 40,
+    "Hidden": true
   },
   "Weapon_Lsword_020": {
     "Name": "Rusty Claymore",
     "Durability": 10,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Bow_006": {
     "Name": "Lizal Bow",
     "Durability": 25,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Spear_018": {
     "Name": "Savage Lynel Spear",
     "Durability": 45,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Bow_002": {
     "Name": "Soldier's Bow",
     "Durability": 36,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Lsword_024": {
     "Name": "Royal Claymore",
     "Durability": 40,
-    "Attack": 52
+    "Attack": 52,
+    "Hidden": true
   },
   "Weapon_Spear_010": {
     "Name": "Moblin Spear",
     "Durability": 15,
-    "Attack": 4
+    "Attack": 4,
+    "Hidden": true
   },
   "Weapon_Sword_022": {
     "Name": "Soup Ladle",
     "Durability": 5,
-    "Attack": 4
+    "Attack": 4,
+    "Hidden": true
   },
   "Weapon_Spear_014": {
     "Name": "Guardian Spear+",
     "Durability": 25,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Spear_049": {
     "Name": "Ceremonial Trident",
     "Durability": 40,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Bow_003": {
     "Name": "Spiked Boko Bow",
     "Durability": 20,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Lsword_074": {
     "Name": "Windcleaver",
     "Durability": 25,
-    "Attack": 40
+    "Attack": 40,
+    "Hidden": true
   },
   "Weapon_Shield_021": {
     "Name": "Rusty Shield",
     "Durability": 16,
-    "Guard": 3
+    "Guard": 3,
+    "Hidden": true
   },
   "Weapon_Spear_015": {
     "Name": "Guardian Spear++",
     "Durability": 35,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Lsword_029": {
     "Name": "Golden Claymore",
     "Durability": 30,
-    "Attack": 28
+    "Attack": 28,
+    "Hidden": true
   },
   "Weapon_Sword_027": {
     "Name": "Zora Sword",
     "Durability": 27,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Sword_023": {
     "Name": "Ancient Short Sword",
     "Durability": 54,
-    "Attack": 40
+    "Attack": 40,
+    "Hidden": true
   },
   "Weapon_Spear_011": {
     "Name": "Spiked Moblin Spear",
     "Durability": 20,
-    "Attack": 9
+    "Attack": 9,
+    "Hidden": true
   },
   "Weapon_Shield_025": {
     "Name": "Silver Shield",
     "Durability": 20,
-    "Guard": 18
+    "Guard": 18,
+    "Hidden": true
   },
   "Weapon_Shield_031": {
     "Name": "Hunter's Shield",
     "Durability": 10,
-    "Guard": 3
+    "Guard": 3,
+    "Hidden": true
   },
   "Weapon_Spear_005": {
     "Name": "Spiked Boko Spear",
     "Durability": 15,
-    "Attack": 6
+    "Attack": 6,
+    "Hidden": true
   },
   "Weapon_Spear_001": {
     "Name": "Traveler's Spear",
     "Durability": 30,
-    "Attack": 3
+    "Attack": 3,
+    "Hidden": true
   },
   "Weapon_Sword_033": {
     "Name": "Flameblade",
     "Durability": 36,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Lsword_060": {
     "Name": "Fierce Deity Sword",
     "Durability": 35,
-    "Attack": 60
+    "Attack": 60,
+    "Hidden": true
   },
   "Weapon_Shield_035": {
     "Name": "Traveler's Shield",
     "Durability": 12,
-    "Guard": 4
+    "Guard": 4,
+    "Hidden": true
   },
   "Weapon_Sword_081": {
     "Name": "Master Sword",
@@ -336,634 +399,759 @@
   "Weapon_Spear_009": {
     "Name": "Forked Lizal Spear",
     "Durability": 28,
-    "Attack": 18
+    "Attack": 18,
+    "Hidden": true
   },
   "Weapon_Bow_013": {
     "Name": "Forest Dweller's Bow",
     "Durability": 35,
     "Attack": 15,
-    "ShotCount": 3
+    "ShotCount": 3,
+    "Hidden": true
   },
   "Weapon_Lsword_035": {
     "Name": "Great Thunderblade",
     "Durability": 50,
-    "Attack": 32
+    "Attack": 32,
+    "Hidden": true
   },
   "Weapon_Lsword_031": {
     "Name": "Iron Sledgehammer",
     "Durability": 40,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Bow_017": {
     "Name": "Falcon Bow",
     "Durability": 50,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Spear_050": {
     "Name": "Lightscale Trident",
     "Durability": 70,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Sword_062": {
     "Name": "Lightning Rod",
     "Durability": 14,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Lsword_019": {
     "Name": "Moblin Arm",
     "Durability": 5,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Sword_017": {
     "Name": "Mighty Lynel Sword",
     "Durability": 32,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Spear_025": {
     "Name": "Forest Dweller's Spear",
     "Durability": 35,
-    "Attack": 11
+    "Attack": 11,
+    "Hidden": true
   },
   "Weapon_Shield_015": {
     "Name": "Guardian Shield++",
     "Durability": 20,
-    "Guard": 42
+    "Guard": 42,
+    "Hidden": true
   },
   "Weapon_Spear_021": {
     "Name": "Rusty Halberd",
     "Durability": 15,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Sword_013": {
     "Name": "Guardian Sword",
     "Durability": 17,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Spear_029": {
     "Name": "Gerudo Spear",
     "Durability": 35,
-    "Attack": 16
+    "Attack": 16,
+    "Hidden": true
   },
   "Weapon_Bow_033": {
     "Name": "Royal Guard's Bow",
     "Durability": 20,
-    "Attack": 50
+    "Attack": 50,
+    "Hidden": true
   },
   "Weapon_Shield_040": {
     "Name": "Pot Lid",
     "Durability": 10,
-    "Guard": 1
+    "Guard": 1,
+    "Hidden": true
   },
   "Weapon_Lsword_015": {
     "Name": "Ancient Battle Axe++",
     "Durability": 25,
-    "Attack": 60
+    "Attack": 60,
+    "Hidden": true
   },
   "Weapon_Lsword_011": {
     "Name": "Spiked Moblin Club",
     "Durability": 18,
-    "Attack": 27
+    "Attack": 27,
+    "Hidden": true
   },
   "Weapon_Lsword_005": {
     "Name": "Spiked Boko Bat",
     "Durability": 12,
-    "Attack": 18
+    "Attack": 18,
+    "Hidden": true
   },
   "Weapon_Bow_023": {
     "Name": "Ancient Bow",
     "Durability": 120,
-    "Attack": 44
+    "Attack": 44,
+    "Hidden": true
   },
   "Weapon_Sword_052": {
     "Name": "Scimitar of the Seven",
     "Durability": 60,
-    "Attack": 32
+    "Attack": 32,
+    "Hidden": true
   },
   "Weapon_Shield_009": {
     "Name": "Steel Lizal Shield",
     "Durability": 15,
-    "Guard": 35
+    "Guard": 35,
+    "Hidden": true
   },
   "Weapon_Bow_027": {
     "Name": "Dragon Bone Boko Bow",
     "Durability": 30,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Lsword_001": {
     "Name": "Traveler's Claymore",
     "Durability": 20,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Sword_503": {
     "Name": "Weapon_Sword_503",
     "Durability": 40,
-    "Attack": 1
+    "Attack": 1,
+    "Hidden": true
   },
   "Weapon_Spear_035": {
     "Name": "Thunderspear",
     "Durability": 50,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Sword_007": {
     "Name": "Lizal Boomerang",
     "Durability": 17,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Lsword_054": {
     "Name": "Boulder Breaker",
     "Durability": 60,
-    "Attack": 60
+    "Attack": 60,
+    "Hidden": true
   },
   "Weapon_Bow_072": {
     "Name": "Twilight Bow",
     "Durability": 100,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Shield_001": {
     "Name": "Wooden Shield",
     "Durability": 12,
-    "Guard": 2
+    "Guard": 2,
+    "Hidden": true
   },
   "Weapon_Shield_005": {
     "Name": "Spiked Boko Shield",
     "Durability": 7,
-    "Guard": 10
+    "Guard": 10,
+    "Hidden": true
   },
   "Weapon_Sword_003": {
     "Name": "Knight's Broadsword",
     "Durability": 27,
-    "Attack": 26
+    "Attack": 26,
+    "Hidden": true
   },
   "Weapon_Spear_031": {
     "Name": "Drillshaft",
     "Durability": 50,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Lsword_013": {
     "Name": "Ancient Battle Axe",
     "Durability": 15,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Bow_035": {
     "Name": "Knight's Bow",
     "Durability": 48,
-    "Attack": 26
+    "Attack": 26,
+    "Hidden": true
   },
   "Weapon_Sword_040": {
     "Name": "Spring-Loaded Hammer",
     "Durability": 80,
-    "Attack": 1
+    "Attack": 1,
+    "Hidden": true
   },
   "Weapon_Sword_044": {
     "Name": "Tree Branch",
     "Durability": 4,
-    "Attack": 2
+    "Attack": 2,
+    "Hidden": true
   },
   "Weapon_Shield_042": {
     "Name": "Kite Shield",
     "Durability": 16,
-    "Guard": 14
+    "Guard": 14,
+    "Hidden": true
   },
   "Weapon_Lsword_017": {
     "Name": "Mighty Lynel Crusher",
     "Durability": 25,
-    "Attack": 54
+    "Attack": 54,
+    "Hidden": true
   },
   "Weapon_Sword_019": {
     "Name": "Bokoblin Arm",
     "Durability": 5,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Spear_023": {
     "Name": "Ancient Spear",
     "Durability": 50,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Shield_017": {
     "Name": "Mighty Lynel Shield",
     "Durability": 15,
     "Attack": 13,
-    "Guard": 44
+    "Guard": 44,
+    "Hidden": true
   },
   "Weapon_Shield_013": {
     "Name": "Guardian Shield",
     "Durability": 10,
-    "Guard": 18
+    "Guard": 18,
+    "Hidden": true
   },
   "Weapon_Sword_048": {
     "Name": "Meteor Rod",
     "Durability": 32,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Sword_015": {
     "Name": "Guardian Sword++",
     "Durability": 32,
-    "Attack": 40
+    "Attack": 40,
+    "Hidden": true
   },
   "Weapon_Spear_027": {
     "Name": "Zora Spear",
     "Durability": 40,
-    "Attack": 9
+    "Attack": 9,
+    "Hidden": true
   },
   "Weapon_Sword_001": {
     "Name": "Traveler's Sword",
     "Durability": 20,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Bow_029": {
     "Name": "Phrenic Bow",
     "Durability": 45,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Spear_033": {
     "Name": "Flamespear",
     "Durability": 50,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Shield_007": {
     "Name": "Lizal Shield",
     "Durability": 8,
-    "Guard": 15
+    "Guard": 15,
+    "Hidden": true
   },
   "Weapon_Sword_058": {
     "Name": "Sword",
     "Durability": 27,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Lsword_056": {
     "Name": "Korok Leaf",
     "Durability": 25,
-    "Attack": 1
+    "Attack": 1,
+    "Hidden": true
   },
   "Weapon_Shield_003": {
     "Name": "Knight's Shield",
     "Durability": 23,
-    "Guard": 40
+    "Guard": 40,
+    "Hidden": true
   },
   "Weapon_Spear_037": {
     "Name": "Serpentine Spear",
     "Durability": 35,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Sword_005": {
     "Name": "Spiked Boko Club",
     "Durability": 14,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Lsword_003": {
     "Name": "Knight's Claymore",
     "Durability": 30,
-    "Attack": 38
+    "Attack": 38,
+    "Hidden": true
   },
   "Weapon_Sword_050": {
     "Name": "Thunderstorm Rod",
     "Durability": 32,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Sword_009": {
     "Name": "Lizal Tri-Boomerang",
     "Durability": 27,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Sword_021": {
     "Name": "Rusty Broadsword",
     "Durability": 8,
-    "Attack": 6
+    "Attack": 6,
+    "Hidden": true
   },
   "Weapon_Bow_009": {
     "Name": "Lynel Bow",
     "Durability": 30,
     "Attack": 10,
-    "ShotCount": 3
+    "ShotCount": 3,
+    "Hidden": true
   },
   "Weapon_Spear_013": {
     "Name": "Guardian Spear",
     "Durability": 20,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Spear_017": {
     "Name": "Mighty Lynel Spear",
     "Durability": 35,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Sword_025": {
     "Name": "Forest Dweller's Sword",
     "Durability": 27,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Shield_023": {
     "Name": "Forest Dweller's Shield",
     "Durability": 18,
-    "Guard": 30
+    "Guard": 30,
+    "Hidden": true
   },
   "Weapon_Sword_070": {
     "Name": "Master Sword",
     "Durability": 40,
     "Attack": 30,
-    "TrueFormAttack": 60
+    "TrueFormAttack": 60,
+    "Hidden": true
   },
   "Weapon_Lsword_023": {
     "Name": "Ancient Bladesaw",
     "Durability": 50,
-    "Attack": 55
+    "Attack": 55,
+    "Hidden": true
   },
   "Weapon_Lsword_027": {
     "Name": "Silver Longsword",
     "Durability": 30,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Sword_029": {
     "Name": "Gerudo Scimitar",
     "Durability": 23,
-    "Attack": 16
+    "Attack": 16,
+    "Hidden": true
   },
   "Weapon_Bow_001": {
     "Name": "Traveler's Bow",
     "Durability": 22,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Sword_060": {
     "Name": "Fire Rod",
     "Durability": 14,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Lsword_033": {
     "Name": "Great Flameblade",
     "Durability": 50,
-    "Attack": 34
+    "Attack": 34,
+    "Hidden": true
   },
   "Weapon_Bow_015": {
     "Name": "Golden Bow",
     "Durability": 60,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Bow_011": {
     "Name": "Strengthened Lizal Bow",
     "Durability": 35,
-    "Attack": 25
+    "Attack": 25,
+    "Hidden": true
   },
   "Weapon_Lsword_037": {
     "Name": "Stone Smasher",
     "Durability": 40,
-    "Attack": 42
+    "Attack": 42,
+    "Hidden": true
   },
   "Weapon_Shield_037": {
     "Name": "Daybreaker",
     "Durability": 60,
-    "Guard": 48
+    "Guard": 48,
+    "Hidden": true
   },
   "Weapon_Spear_003": {
     "Name": "Knight's Halberd",
     "Durability": 40,
-    "Attack": 13
+    "Attack": 13,
+    "Hidden": true
   },
   "Weapon_Sword_031": {
     "Name": "Feathered Edge",
     "Durability": 27,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Sword_035": {
     "Name": "Thunderblade",
     "Durability": 36,
-    "Attack": 22
+    "Attack": 22,
+    "Hidden": true
   },
   "Weapon_Spear_007": {
     "Name": "Lizal Spear",
     "Durability": 18,
-    "Attack": 7
+    "Attack": 7,
+    "Hidden": true
   },
   "Weapon_Bow_040": {
     "Name": "Duplex Bow",
     "Durability": 18,
     "Attack": 14,
-    "ShotCount": 2
+    "ShotCount": 2,
+    "Hidden": true
   },
   "Weapon_Shield_033": {
     "Name": "Royal Guard's Shield",
     "Durability": 14,
-    "Guard": 70
+    "Guard": 70,
+    "Hidden": true
   },
   "Weapon_Lsword_036": {
     "Name": "Cobble Crusher",
     "Durability": 30,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Bow_014": {
     "Name": "Silver Bow",
     "Durability": 40,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Lsword_032": {
     "Name": "Woodcutter's Axe",
     "Durability": 47,
-    "Attack": 3
+    "Attack": 3,
+    "Hidden": true
   },
   "Weapon_Sword_061": {
     "Name": "Ice Rod",
     "Durability": 14,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Shield_032": {
     "Name": "Fisherman's Shield",
     "Durability": 10,
-    "Guard": 3
+    "Guard": 3,
+    "Hidden": true
   },
   "Weapon_Spear_006": {
     "Name": "Dragonbone Boko Spear",
     "Durability": 20,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Sword_034": {
     "Name": "Frostblade",
     "Durability": 30,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Sword_030": {
     "Name": "Moonlight Scimitar",
     "Durability": 32,
-    "Attack": 25
+    "Attack": 25,
+    "Hidden": true
   },
   "Weapon_Spear_002": {
     "Name": "Soldier's Spear",
     "Durability": 35,
-    "Attack": 7
+    "Attack": 7,
+    "Hidden": true
   },
   "Weapon_Shield_036": {
     "Name": "Radiant Shield",
     "Durability": 26,
-    "Guard": 35
+    "Guard": 35,
+    "Hidden": true
   },
   "Weapon_Shield_022": {
     "Name": "Royal Shield",
     "Durability": 29,
-    "Guard": 55
+    "Guard": 55,
+    "Hidden": true
   },
   "Weapon_Sword_024": {
     "Name": "Royal Broadsword",
     "Durability": 36,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Spear_016": {
     "Name": "Lynel Spear",
     "Durability": 25,
-    "Attack": 14
+    "Attack": 14,
+    "Hidden": true
   },
   "Weapon_Spear_012": {
     "Name": "Dragonbone Moblin Spear",
     "Durability": 25,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Sword_020": {
     "Name": "Lizalfos Arm",
     "Durability": 8,
-    "Attack": 12
+    "Attack": 12,
+    "Hidden": true
   },
   "Weapon_Shield_026": {
     "Name": "Gerudo Shield",
     "Durability": 20,
-    "Guard": 20
+    "Guard": 20,
+    "Hidden": true
   },
   "Weapon_Spear_047": {
     "Name": "Royal Guard's Spear",
     "Durability": 15,
-    "Attack": 32
+    "Attack": 32,
+    "Hidden": true
   },
   "Weapon_Bow_004": {
     "Name": "Boko Bow",
     "Durability": 16,
-    "Attack": 4
+    "Attack": 4,
+    "Hidden": true
   },
   "Weapon_Sword_004": {
     "Name": "Boko Club",
     "Durability": 12,
-    "Attack": 4
+    "Attack": 4,
+    "Hidden": true
   },
   "Weapon_Spear_036": {
     "Name": "Wooden Mop",
     "Durability": 8,
-    "Attack": 5
+    "Attack": 5,
+    "Hidden": true
   },
   "Weapon_Bow_071": {
     "Name": "Bow of Light",
     "Durability": 100,
-    "Attack": 100
+    "Attack": 100,
+    "Hidden": true
   },
   "Weapon_Shield_002": {
     "Name": "Soldier's Shield",
     "Durability": 16,
-    "Guard": 16
+    "Guard": 16,
+    "Hidden": true
   },
   "Weapon_Sword_059": {
     "Name": "Sea-Breeze Boomerang",
     "Durability": 20,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Lsword_057": {
     "Name": "Sword of the Six Sages",
     "Durability": 50,
-    "Attack": 48
+    "Attack": 48,
+    "Hidden": true
   },
   "Weapon_Shield_006": {
     "Name": "Dragonbone Boko Shield",
     "Durability": 8,
-    "Guard": 25
+    "Guard": 25,
+    "Hidden": true
   },
   "Weapon_Bow_028": {
     "Name": "Great Eagle Bow",
     "Durability": 60,
     "Attack": 28,
-    "ShotCount": 3
+    "ShotCount": 3,
+    "Hidden": true
   },
   "Weapon_Spear_032": {
     "Name": "Feathered Spear",
     "Durability": 35,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Lsword_006": {
     "Name": "Dragonbone Boko Bat",
     "Durability": 16,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Sword_008": {
     "Name": "Lizal Forked Boomerang",
     "Durability": 23,
-    "Attack": 24
+    "Attack": 24,
+    "Hidden": true
   },
   "Weapon_Sword_051": {
     "Name": "Boomerang",
     "Durability": 18,
-    "Attack": 8
+    "Attack": 8,
+    "Hidden": true
   },
   "Weapon_Lsword_002": {
     "Name": "Soldier's Claymore",
     "Durability": 25,
-    "Attack": 20
+    "Attack": 20,
+    "Hidden": true
   },
   "Weapon_Shield_057": {
     "Name": "Hero's Shield",
     "Durability": 90,
-    "Guard": 65
+    "Guard": 65,
+    "Hidden": true
   },
   "Weapon_Lsword_016": {
     "Name": "Lynel Crusher",
     "Durability": 20,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Sword_018": {
     "Name": "Savage Lynel Sword",
     "Durability": 41,
-    "Attack": 58
+    "Attack": 58,
+    "Hidden": true
   },
   "Weapon_Bow_030": {
     "Name": "Steel Lizal Bow",
     "Durability": 50,
-    "Attack": 36
+    "Attack": 36,
+    "Hidden": true
   },
   "Weapon_Sword_041": {
     "Name": "Eightfold Blade",
     "Durability": 26,
-    "Attack": 15
+    "Attack": 15,
+    "Hidden": true
   },
   "Weapon_Lsword_012": {
     "Name": "Dragonbone Moblin Club",
     "Durability": 24,
-    "Attack": 45
+    "Attack": 45,
+    "Hidden": true
   },
   "Weapon_Sword_014": {
     "Name": "Guardian Sword+",
     "Durability": 26,
-    "Attack": 30
+    "Attack": 30,
+    "Hidden": true
   },
   "Weapon_Sword_049": {
     "Name": "Blizzard Rod",
     "Durability": 32,
-    "Attack": 10
+    "Attack": 10,
+    "Hidden": true
   },
   "Weapon_Lsword_047": {
     "Name": "Royal Guard's Claymore",
     "Durability": 15,
-    "Attack": 72
+    "Attack": 72,
+    "Hidden": true
   },
   "Weapon_Shield_016": {
     "Name": "Lynel Shield",
     "Durability": 12,
     "Attack": 7,
-    "Guard": 30
+    "Guard": 30,
+    "Hidden": true
   },
   "Weapon_Bow_038": {
     "Name": "Wooden Bow",
     "Durability": 20,
-    "Attack": 4
+    "Attack": 4,
+    "Hidden": true
   },
   "Weapon_Spear_022": {
     "Name": "Farmer's Pitchfork",
     "Durability": 12,
-    "Attack": 7
+    "Attack": 7,
+    "Hidden": true
   },
   "Armor_066_Lower": {
     "Name": "Desert Voe Trousers",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_067_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_008_Lower",
@@ -973,6 +1161,7 @@
     "Name": "Zora Armor",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_062_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_006_Upper",
@@ -982,6 +1171,7 @@
     "Name": "Armor_500_Head",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_180_Upper": {
@@ -994,6 +1184,7 @@
     "Name": "Rubber Helm",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_104_Head",
     "Dyeable": true,
     "IconActorName": "Armor_046_Head",
@@ -1003,6 +1194,7 @@
     "Name": "Tunic of the Wild",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_061_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_005_Upper",
@@ -1026,6 +1218,7 @@
     "Name": "Diamond Circlet",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_120_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_024",
@@ -1035,6 +1228,7 @@
     "Name": "Hylian Hood",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_003_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
@@ -1044,6 +1238,7 @@
     "Name": "Sheik's Mask",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
     "PrevRank": "Armor_223_Head"
@@ -1052,6 +1247,7 @@
     "Name": "Snowquill Trousers",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_072_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_009_Lower",
@@ -1069,6 +1265,7 @@
     "Name": "Stealth Chest Guard",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_078_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_012_Upper",
@@ -1085,6 +1282,7 @@
     "Name": "Snowquill Headdress",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_009_Head",
     "PrevRank": "Armor_072_Head"
@@ -1093,6 +1291,7 @@
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_169_Head",
     "Dyeable": true,
     "IconActorName": "Armor_184_Head",
@@ -1102,6 +1301,7 @@
     "Name": "Soldier's Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_097_Head",
     "Dyeable": true,
     "IconActorName": "Armor_020_Head",
@@ -1111,6 +1311,7 @@
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_183_Head",
     "PrevRank": "Armor_196_Head"
@@ -1119,6 +1320,7 @@
     "Name": "Fierce Deity Boots",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_228_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_225_Lower",
@@ -1134,6 +1336,7 @@
     "Name": "Sapphire Circlet",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_128_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_026",
@@ -1143,6 +1346,7 @@
     "Name": "Sand Boots",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_155_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_049_Lower",
@@ -1158,6 +1362,7 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_191_Head",
     "Dyeable": true,
     "IconActorName": "Armor_182_Head",
@@ -1174,6 +1379,7 @@
     "Name": "Diamond Circlet",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_024",
     "PrevRank": "Armor_119_Head"
@@ -1196,6 +1402,7 @@
     "Name": "Ancient Greaves",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_102_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_021_Lower",
@@ -1205,6 +1412,7 @@
     "Name": "Tunic of the Sky",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_219_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_215_Upper",
@@ -1221,6 +1429,7 @@
     "Name": "Climbing Boots",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_014_Lower",
     "PrevRank": "Armor_085_Lower"
@@ -1236,6 +1445,7 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_075_Head",
     "Dyeable": true,
     "IconActorName": "Armor_011_Head",
@@ -1245,6 +1455,7 @@
     "Name": "Tunic of Twilight",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_214_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_210_Upper",
@@ -1254,6 +1465,7 @@
     "Name": "Cap of the Wind",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_208_Head",
     "Dyeable": false,
     "IconActorName": "Armor_205_Head",
@@ -1263,12 +1475,14 @@
     "Name": "Armor_Default_Extra_01",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_502_Upper": {
     "Name": "Armor_502_Upper",
     "StarNum": 0,
     "Defence": 2,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_005_Head": {
@@ -1282,6 +1496,7 @@
     "Name": "Tunic of the Wild",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_039_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_005_Upper",
@@ -1291,6 +1506,7 @@
     "Name": "Sheik's Mask",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_224_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
@@ -1300,6 +1516,7 @@
     "Name": "Trousers of Time",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_203_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_200_Lower",
@@ -1315,6 +1532,7 @@
     "Name": "Trousers of the Wind",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_205_Lower",
     "PrevRank": "Armor_208_Lower"
@@ -1323,6 +1541,7 @@
     "Name": "Rubber Helm",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_105_Head",
     "Dyeable": true,
     "IconActorName": "Armor_046_Head",
@@ -1332,6 +1551,7 @@
     "Name": "Soldier's Armor",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_098_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_020_Upper",
@@ -1341,12 +1561,14 @@
     "Name": "Armor_Default_Lower",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_204_Upper": {
     "Name": "Tunic of Time",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_200_Upper",
     "PrevRank": "Armor_203_Upper"
@@ -1362,16 +1584,17 @@
     "Name": "Stealth Mask",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_077_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_012_Head"
   },
   "Armor_040_Lower": {
     "Name": "Desert Voe Trousers",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_065_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_008_Lower",
@@ -1388,6 +1611,7 @@
     "Name": "Trousers of the Sky",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_217_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_215_Lower",
@@ -1397,6 +1621,7 @@
     "Name": "Climbing Boots",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_086_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_014_Lower",
@@ -1413,6 +1638,7 @@
     "Name": "Ancient Greaves",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_021_Lower",
     "PrevRank": "Armor_101_Lower"
@@ -1421,6 +1647,7 @@
     "Name": "Radiant Shirt",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_089_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_017_Upper",
@@ -1430,6 +1657,7 @@
     "Name": "Rubber Armor",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_105_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_046_Upper",
@@ -1446,6 +1674,7 @@
     "Name": "Climbing Gear",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_084_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_014_Upper",
@@ -1455,6 +1684,7 @@
     "Name": "Snowquill Tunic",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_071_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_009_Upper",
@@ -1464,6 +1694,7 @@
     "Name": "Cap of the Wild",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_039_Head",
     "Dyeable": true,
     "IconActorName": "Armor_005_Head",
@@ -1473,12 +1704,14 @@
     "Name": "Armor_501_Upper",
     "StarNum": 0,
     "Defence": 2,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_213_Head": {
     "Name": "Cap of Twilight",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_214_Head",
     "Dyeable": false,
     "IconActorName": "Armor_210_Head",
@@ -1488,6 +1721,7 @@
     "Name": "Climber's Bandanna",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_086_Head",
     "Dyeable": true,
     "IconActorName": "Armor_014_Head",
@@ -1497,6 +1731,7 @@
     "Name": "Cap of the Wild",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_061_Head",
     "Dyeable": true,
     "IconActorName": "Armor_005_Head",
@@ -1519,6 +1754,7 @@
     "Name": "Cap of the Wind",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_205_Head",
     "PrevRank": "Armor_208_Head"
@@ -1527,6 +1763,7 @@
     "Name": "Trousers of Time",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_202_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_200_Lower",
@@ -1542,6 +1779,7 @@
     "Name": "Tunic of the Wind",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_208_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_205_Upper",
@@ -1551,6 +1789,7 @@
     "Name": "Opal Earrings",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_135_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_028",
@@ -1560,6 +1799,7 @@
     "Name": "Barbarian Armor",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_114_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_048_Upper",
@@ -1569,6 +1809,7 @@
     "Name": "Ancient Greaves",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_100_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_021_Lower",
@@ -1585,6 +1826,7 @@
     "Name": "Hylian Tunic",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_015_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_001_Upper",
@@ -1601,6 +1843,7 @@
     "Name": "Desert Voe Trousers",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_066_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_008_Lower",
@@ -1610,6 +1853,7 @@
     "Name": "Soldier's Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_020_Head",
     "PrevRank": "Armor_097_Head"
@@ -1618,6 +1862,7 @@
     "Name": "Hylian Trousers",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_003_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_001_Lower",
@@ -1627,6 +1872,7 @@
     "Name": "Zora Armor",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_064_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_006_Upper",
@@ -1642,6 +1888,7 @@
     "Name": "Opal Earrings",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_134_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_028",
@@ -1659,6 +1906,7 @@
     "Name": "Topaz Earrings",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_130_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_027",
@@ -1668,6 +1916,7 @@
     "Name": "Trousers of the Hero",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_234_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_230_Lower",
@@ -1677,6 +1926,7 @@
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_168_Head",
     "Dyeable": true,
     "IconActorName": "Armor_184_Head",
@@ -1692,6 +1942,7 @@
     "Name": "Desert Voe Headband",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_008_Head",
     "PrevRank": "Armor_066_Head"
@@ -1700,6 +1951,7 @@
     "Name": "Cap of Twilight",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_210_Head",
     "PrevRank": "Armor_213_Head"
@@ -1708,6 +1960,7 @@
     "Name": "Snowquill Trousers",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_073_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_009_Lower",
@@ -1717,6 +1970,7 @@
     "Name": "Stealth Tights",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_012_Lower",
     "PrevRank": "Armor_078_Lower"
@@ -1725,6 +1979,7 @@
     "Name": "Hylian Trousers",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_001_Lower",
     "PrevRank": "Armor_004_Lower"
@@ -1733,6 +1988,7 @@
     "Name": "Flamebreaker Armor",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_075_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_011_Upper",
@@ -1749,6 +2005,7 @@
     "Name": "Fierce Deity Armor",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_225_Upper",
     "PrevRank": "Armor_228_Upper"
@@ -1757,6 +2014,7 @@
     "Name": "Champion's Tunic",
     "StarNum": 5,
     "Defence": 32,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_116_Upper",
     "PrevRank": "Armor_150_Upper"
@@ -1765,6 +2023,7 @@
     "Name": "Snow Boots",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_158_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_141_Lower",
@@ -1774,6 +2033,7 @@
     "Name": "Diamond Circlet",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_118_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_024",
@@ -1783,6 +2043,7 @@
     "Name": "Cap of the Sky",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_219_Head",
     "Dyeable": false,
     "IconActorName": "Armor_215_Head",
@@ -1792,6 +2053,7 @@
     "Name": "Desert Voe Spaulder",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_065_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_008_Upper",
@@ -1801,6 +2063,7 @@
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_196_Head",
     "Dyeable": true,
     "IconActorName": "Armor_183_Head",
@@ -1824,6 +2087,7 @@
     "Name": "Sapphire Circlet",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_126_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_026",
@@ -1841,6 +2105,7 @@
     "Name": "Climbing Gear",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_086_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_014_Upper",
@@ -1850,6 +2115,7 @@
     "Name": "Tunic of the Sky",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_217_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_215_Upper",
@@ -1859,15 +2125,16 @@
     "Name": "Stealth Mask",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_078_Head"
   },
   "Armor_102_Upper": {
     "Name": "Ancient Cuirass",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_021_Upper",
     "PrevRank": "Armor_101_Upper"
@@ -1876,6 +2143,7 @@
     "Name": "Radiant Tights",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_089_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_017_Lower",
@@ -1885,6 +2153,7 @@
     "Name": "Rubber Tights",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_105_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_046_Lower",
@@ -1894,6 +2163,7 @@
     "Name": "Snowquill Headdress",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_072_Head",
     "Dyeable": true,
     "IconActorName": "Armor_009_Head",
@@ -1903,6 +2173,7 @@
     "Name": "Climbing Boots",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_084_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_014_Lower",
@@ -1912,6 +2183,7 @@
     "Name": "Cap of Time",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_203_Head",
     "Dyeable": false,
     "IconActorName": "Armor_200_Head",
@@ -1928,6 +2200,7 @@
     "Name": "Snowquill Trousers",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_071_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_009_Lower",
@@ -1937,6 +2210,7 @@
     "Name": "Armor_501_Lower",
     "StarNum": 0,
     "Defence": 2,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_055_Head": {
@@ -1949,6 +2223,7 @@
     "Name": "Fierce Deity Mask",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_227_Head",
     "Dyeable": false,
     "IconActorName": "Armor_225_Head",
@@ -1970,6 +2245,7 @@
     "Name": "Tunic of Time",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_202_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_200_Upper",
@@ -1979,6 +2255,7 @@
     "Name": "Trousers of the Wind",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_208_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_205_Lower",
@@ -1988,6 +2265,7 @@
     "Name": "Barbarian Leg Wraps",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_114_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_048_Lower",
@@ -1997,6 +2275,7 @@
     "Name": "Ancient Cuirass",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_100_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_021_Upper",
@@ -2006,6 +2285,7 @@
     "Name": "Ancient Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_102_Head",
     "Dyeable": true,
     "IconActorName": "Armor_021_Head",
@@ -2022,10 +2302,10 @@
     "Name": "Stealth Mask",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_078_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_042_Head"
   },
   "Armor_009_Upper": {
@@ -2039,6 +2319,7 @@
     "Name": "Desert Voe Spaulder",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_066_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_008_Upper",
@@ -2048,6 +2329,7 @@
     "Name": "Hylian Trousers",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_015_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_001_Lower",
@@ -2057,6 +2339,7 @@
     "Name": "Zora Greaves",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_064_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_006_Lower",
@@ -2066,6 +2349,7 @@
     "Name": "Rubber Helm",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_046_Head",
     "PrevRank": "Armor_105_Head"
@@ -2081,6 +2365,7 @@
     "Name": "Hylian Tunic",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_003_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_001_Upper",
@@ -2096,6 +2381,7 @@
     "Name": "Tunic of the Hero",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_234_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_230_Upper",
@@ -2105,6 +2391,7 @@
     "Name": "Zora Helm",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_062_Head",
     "Dyeable": true,
     "IconActorName": "Armor_006_Head",
@@ -2114,16 +2401,17 @@
     "Name": "Sheik's Mask",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_223_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
-    "Hidden": true,
     "PrevRank": "Armor_221_Head"
   },
   "Armor_221_Head": {
     "Name": "Sheik's Mask",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_222_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
@@ -2133,6 +2421,7 @@
     "Name": "Snowquill Tunic",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_073_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_009_Upper",
@@ -2142,6 +2431,7 @@
     "Name": "Amber Earrings",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_139_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_029",
@@ -2151,6 +2441,7 @@
     "Name": "Stealth Chest Guard",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_012_Upper",
     "PrevRank": "Armor_078_Upper"
@@ -2166,6 +2457,7 @@
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_189_Head",
     "Dyeable": true,
     "IconActorName": "Armor_181_Head",
@@ -2175,6 +2467,7 @@
     "Name": "Flamebreaker Boots",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_075_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_011_Lower",
@@ -2184,6 +2477,7 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_011_Head",
     "PrevRank": "Armor_075_Head"
@@ -2192,6 +2486,7 @@
     "Name": "Hylian Tunic",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_001_Upper",
     "PrevRank": "Armor_004_Upper"
@@ -2206,6 +2501,7 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_193_Head",
     "Dyeable": true,
     "IconActorName": "Armor_182_Head",
@@ -2215,6 +2511,7 @@
     "Name": "Radiant Mask",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_090_Head",
     "Dyeable": true,
     "IconActorName": "Armor_017_Head",
@@ -2224,6 +2521,7 @@
     "Name": "Fierce Deity Boots",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_225_Lower",
     "PrevRank": "Armor_228_Lower"
@@ -2232,6 +2530,7 @@
     "Name": "Ruby Circlet",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_123_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_025",
@@ -2241,6 +2540,7 @@
     "Name": "Cap of the Wild",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_060_Head",
     "Dyeable": true,
     "IconActorName": "Armor_005_Head",
@@ -2250,6 +2550,7 @@
     "Name": "Zora Greaves",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_062_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_006_Lower",
@@ -2259,12 +2560,14 @@
     "Name": "Armor_Default_Extra_00",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_066_Upper": {
     "Name": "Desert Voe Spaulder",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_067_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_008_Upper",
@@ -2274,6 +2577,7 @@
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_187_Head",
     "Dyeable": true,
     "IconActorName": "Armor_181_Head",
@@ -2289,15 +2593,16 @@
     "Name": "Hylian Hood",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_004_Head"
   },
   "Armor_078_Head": {
     "Name": "Stealth Mask",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_079_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
@@ -2314,6 +2619,7 @@
     "Name": "Opal Earrings",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_028",
     "PrevRank": "Armor_135_Head"
@@ -2322,6 +2628,7 @@
     "Name": "Trousers of the Wild",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_061_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_005_Lower",
@@ -2331,6 +2638,7 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_074_Head",
     "Dyeable": true,
     "IconActorName": "Armor_011_Head",
@@ -2347,6 +2655,7 @@
     "Name": "Champion's Tunic",
     "StarNum": 2,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_149_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_116_Upper",
@@ -2356,6 +2665,7 @@
     "Name": "Zora Helm",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_063_Head",
     "Dyeable": true,
     "IconActorName": "Armor_006_Head",
@@ -2378,6 +2688,7 @@
     "Name": "Radiant Mask",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_088_Head",
     "Dyeable": true,
     "IconActorName": "Armor_017_Head",
@@ -2387,6 +2698,7 @@
     "Name": "Cap of Twilight",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_212_Head",
     "Dyeable": false,
     "IconActorName": "Armor_210_Head",
@@ -2396,6 +2708,7 @@
     "Name": "Snowquill Tunic",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_072_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_009_Upper",
@@ -2412,6 +2725,7 @@
     "Name": "Stealth Tights",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_078_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_012_Lower",
@@ -2429,6 +2743,7 @@
     "Name": "Fierce Deity Armor",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_228_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_225_Upper",
@@ -2438,6 +2753,7 @@
     "Name": "Sand Boots",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_153_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_049_Lower",
@@ -2447,6 +2763,7 @@
     "Name": "Barbarian Helm",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_113_Head",
     "Dyeable": true,
     "IconActorName": "Armor_048_Head",
@@ -2463,6 +2780,7 @@
     "Name": "Snow Boots",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_141_Lower",
     "PrevRank": "Armor_158_Lower"
@@ -2477,6 +2795,7 @@
     "Name": "Amber Earrings",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_029",
     "PrevRank": "Armor_139_Head"
@@ -2485,6 +2804,7 @@
     "Name": "Fierce Deity Mask",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_229_Head",
     "Dyeable": false,
     "IconActorName": "Armor_225_Head",
@@ -2507,6 +2827,7 @@
     "Name": "Trousers of the Sky",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_219_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_215_Lower",
@@ -2516,6 +2837,7 @@
     "Name": "Ancient Cuirass",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_102_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_021_Upper",
@@ -2538,6 +2860,7 @@
     "Name": "Climbing Gear",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_014_Upper",
     "PrevRank": "Armor_085_Upper"
@@ -2553,6 +2876,7 @@
     "Name": "Trousers of Twilight",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_214_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_210_Lower",
@@ -2562,6 +2886,7 @@
     "Name": "Cap of the Hero",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_233_Head",
     "Dyeable": false,
     "IconActorName": "Armor_230_Head",
@@ -2571,6 +2896,7 @@
     "Name": "Trousers of the Wild",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_039_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_005_Lower",
@@ -2580,6 +2906,7 @@
     "Name": "Cap of the Sky",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_217_Head",
     "Dyeable": false,
     "IconActorName": "Armor_215_Head",
@@ -2589,6 +2916,7 @@
     "Name": "Desert Voe Headband",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_066_Head",
     "Dyeable": true,
     "IconActorName": "Armor_008_Head",
@@ -2598,6 +2926,7 @@
     "Name": "Tunic of Time",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_203_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_200_Upper",
@@ -2614,10 +2943,10 @@
     "Name": "Hylian Hood",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_003_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_001_Head"
   },
   "Armor_116_Upper": {
@@ -2631,6 +2960,7 @@
     "Name": "Tunic of the Wind",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_205_Upper",
     "PrevRank": "Armor_208_Upper"
@@ -2639,6 +2969,7 @@
     "Name": "Topaz Earrings",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_132_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_027",
@@ -2654,6 +2985,7 @@
     "Name": "Trousers of Time",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_200_Lower",
     "PrevRank": "Armor_203_Lower"
@@ -2662,6 +2994,7 @@
     "Name": "Soldier's Greaves",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_098_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_020_Lower",
@@ -2671,12 +3004,14 @@
     "Name": "Armor_Default_Upper",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_105_Upper": {
     "Name": "Rubber Armor",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_106_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_046_Upper",
@@ -2686,6 +3021,7 @@
     "Name": "Fierce Deity Mask",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_228_Head",
     "Dyeable": false,
     "IconActorName": "Armor_225_Head",
@@ -2695,6 +3031,7 @@
     "Name": "Tunic of Twilight",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_212_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_210_Upper",
@@ -2704,6 +3041,7 @@
     "Name": "Climbing Boots",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_085_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_014_Lower",
@@ -2713,6 +3051,7 @@
     "Name": "Trousers of the Sky",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_218_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_215_Lower",
@@ -2722,6 +3061,7 @@
     "Name": "Radiant Shirt",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_090_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_017_Upper",
@@ -2731,6 +3071,7 @@
     "Name": "Rubber Tights",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_104_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_046_Lower",
@@ -2747,6 +3088,7 @@
     "Name": "Ancient Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_101_Head",
     "Dyeable": true,
     "IconActorName": "Armor_021_Head",
@@ -2763,6 +3105,7 @@
     "Name": "Soldier's Armor",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_096_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_020_Upper",
@@ -2772,6 +3115,7 @@
     "Name": "Tunic of the Wind",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_207_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_205_Upper",
@@ -2781,6 +3125,7 @@
     "Name": "Ruby Circlet",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_025",
     "PrevRank": "Armor_123_Head"
@@ -2789,6 +3134,7 @@
     "Name": "Soldier's Greaves",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_020_Lower",
     "PrevRank": "Armor_097_Lower"
@@ -2797,6 +3143,7 @@
     "Name": "Barbarian Armor",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_113_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_048_Upper",
@@ -2806,16 +3153,17 @@
     "Name": "Stealth Mask",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_079_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
-    "Hidden": true,
     "PrevRank": "Armor_077_Head"
   },
   "Armor_114_Lower": {
     "Name": "Barbarian Leg Wraps",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_048_Lower",
     "PrevRank": "Armor_113_Lower"
@@ -2830,6 +3178,7 @@
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_195_Head",
     "Dyeable": true,
     "IconActorName": "Armor_183_Head",
@@ -2852,6 +3201,7 @@
     "Name": "Cap of the Sky",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_215_Head",
     "PrevRank": "Armor_218_Head"
@@ -2860,6 +3210,7 @@
     "Name": "Cap of Time",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_204_Head",
     "Dyeable": false,
     "IconActorName": "Armor_200_Head",
@@ -2869,6 +3220,7 @@
     "Name": "Soldier's Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_096_Head",
     "Dyeable": true,
     "IconActorName": "Armor_020_Head",
@@ -2878,6 +3230,7 @@
     "Name": "Flamebreaker Armor",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_074_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_011_Upper",
@@ -2895,21 +3248,23 @@
     "Name": "Armor_500_Upper",
     "StarNum": 0,
     "Defence": 2,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_224_Head_B": {
     "Name": "Sheik's Mask",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
-    "Hidden": true,
     "PrevRank": "Armor_223_Head"
   },
   "Armor_189_Head": {
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_181_Head",
     "PrevRank": "Armor_188_Head"
@@ -2918,6 +3273,7 @@
     "Name": "Stealth Mask",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_078_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
@@ -2934,6 +3290,7 @@
     "Name": "Tunic of the Hero",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_230_Upper",
     "PrevRank": "Armor_233_Upper"
@@ -2942,6 +3299,7 @@
     "Name": "Cap of Time",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_200_Head",
     "PrevRank": "Armor_203_Head"
@@ -2950,6 +3308,7 @@
     "Name": "Trousers of the Hero",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_233_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_230_Lower",
@@ -2965,6 +3324,7 @@
     "Name": "Amber Earrings",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_140_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_029",
@@ -2974,6 +3334,7 @@
     "Name": "Hylian Trousers",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_004_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_001_Lower",
@@ -2983,6 +3344,7 @@
     "Name": "Zora Armor",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_063_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_006_Upper",
@@ -2992,6 +3354,7 @@
     "Name": "Ruby Circlet",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_124_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_025",
@@ -3021,6 +3384,7 @@
     "Name": "Zora Greaves",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_006_Lower",
     "PrevRank": "Armor_063_Lower"
@@ -3029,6 +3393,7 @@
     "Name": "Radiant Mask",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_089_Head",
     "Dyeable": true,
     "IconActorName": "Armor_017_Head",
@@ -3038,6 +3403,7 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_182_Head",
     "PrevRank": "Armor_192_Head"
@@ -3046,6 +3412,7 @@
     "Name": "Snow Boots",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_157_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_141_Lower",
@@ -3055,6 +3422,7 @@
     "Name": "Fierce Deity Armor",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_229_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_225_Upper",
@@ -3064,16 +3432,17 @@
     "Name": "Sheik's Mask",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_224_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
-    "Hidden": true,
     "PrevRank": "Armor_222_Head"
   },
   "Armor_150_Upper": {
     "Name": "Champion's Tunic",
     "StarNum": 4,
     "Defence": 22,
+    "Hidden": true,
     "NextRank": "Armor_151_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_116_Upper",
@@ -3090,6 +3459,7 @@
     "Name": "Stealth Tights",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_079_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_012_Lower",
@@ -3119,6 +3489,7 @@
     "Name": "Flamebreaker Armor",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_076_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_011_Upper",
@@ -3142,6 +3513,7 @@
     "Name": "Snowquill Trousers",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_009_Lower",
     "PrevRank": "Armor_072_Lower"
@@ -3150,6 +3522,7 @@
     "Name": "Cap of the Hero",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_230_Head",
     "PrevRank": "Armor_233_Head"
@@ -3158,6 +3531,7 @@
     "Name": "Armor_Default_Head",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_012_Head": {
@@ -3171,6 +3545,7 @@
     "Name": "Trousers of the Hero",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_232_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_230_Lower",
@@ -3187,6 +3562,7 @@
     "Name": "Barbarian Helm",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_114_Head",
     "Dyeable": true,
     "IconActorName": "Armor_048_Head",
@@ -3196,6 +3572,7 @@
     "Name": "Tunic of the Wild",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_005_Upper",
     "PrevRank": "Armor_060_Upper"
@@ -3204,6 +3581,7 @@
     "Name": "Desert Voe Trousers",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_008_Lower",
     "PrevRank": "Armor_066_Lower"
@@ -3219,6 +3597,7 @@
     "Name": "Sand Boots",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_049_Lower",
     "PrevRank": "Armor_154_Lower"
@@ -3227,6 +3606,7 @@
     "Name": "Amber Earrings",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_138_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_029",
@@ -3236,6 +3616,7 @@
     "Name": "Vah Ruta Divine Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_188_Head",
     "Dyeable": true,
     "IconActorName": "Armor_181_Head",
@@ -3245,6 +3626,7 @@
     "Name": "Stealth Mask",
     "StarNum": 5,
     "Defence": 16,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
     "PrevRank": "Armor_078_Head"
@@ -3253,6 +3635,7 @@
     "Name": "Fierce Deity Boots",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_227_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_225_Lower",
@@ -3269,6 +3652,7 @@
     "Name": "Flamebreaker Armor",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_011_Upper",
     "PrevRank": "Armor_075_Upper"
@@ -3290,6 +3674,7 @@
     "Name": "Zora Helm",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_064_Head",
     "Dyeable": true,
     "IconActorName": "Armor_006_Head",
@@ -3299,6 +3684,7 @@
     "Name": "Climber's Bandanna",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_014_Head",
     "PrevRank": "Armor_085_Head"
@@ -3307,6 +3693,7 @@
     "Name": "Snowquill Headdress",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_071_Head",
     "Dyeable": true,
     "IconActorName": "Armor_009_Head",
@@ -3323,6 +3710,7 @@
     "Name": "Zora Helm",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_006_Head",
     "PrevRank": "Armor_063_Head"
@@ -3331,16 +3719,17 @@
     "Name": "Hylian Hood",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_004_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_002_Head"
   },
   "Armor_212_Upper": {
     "Name": "Tunic of Twilight",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_213_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_210_Upper",
@@ -3350,6 +3739,7 @@
     "Name": "Cap of the Sky",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_218_Head",
     "Dyeable": false,
     "IconActorName": "Armor_215_Head",
@@ -3359,6 +3749,7 @@
     "Name": "Rubber Armor",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_046_Upper",
     "PrevRank": "Armor_105_Upper"
@@ -3367,6 +3758,7 @@
     "Name": "Tunic of the Sky",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_215_Upper",
     "PrevRank": "Armor_218_Upper"
@@ -3375,6 +3767,7 @@
     "Name": "Ancient Greaves",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_101_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_021_Lower",
@@ -3384,6 +3777,7 @@
     "Name": "Trousers of Twilight",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_210_Lower",
     "PrevRank": "Armor_213_Lower"
@@ -3392,6 +3786,7 @@
     "Name": "Radiant Tights",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_088_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_017_Lower",
@@ -3414,6 +3809,7 @@
     "Name": "Topaz Earrings",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_131_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_027",
@@ -3423,6 +3819,7 @@
     "Name": "Stealth Tights",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_077_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_012_Lower",
@@ -3438,6 +3835,7 @@
     "Name": "Trousers of the Wind",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_209_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_205_Lower",
@@ -3447,6 +3845,7 @@
     "Name": "Barbarian Armor",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_112_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_048_Upper",
@@ -3456,6 +3855,7 @@
     "Name": "Barbarian Helm",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_048_Head",
     "PrevRank": "Armor_113_Head"
@@ -3471,6 +3871,7 @@
     "Name": "Soldier's Armor",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_097_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_020_Upper",
@@ -3480,16 +3881,17 @@
     "Name": "Hylian Hood",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_015_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
-    "Hidden": true,
     "PrevRank": "Armor_003_Head"
   },
   "Armor_229_Head": {
     "Name": "Fierce Deity Mask",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_225_Head",
     "PrevRank": "Armor_228_Head"
@@ -3498,6 +3900,7 @@
     "Name": "Trousers of Time",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_204_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_200_Lower",
@@ -3507,6 +3910,7 @@
     "Name": "Radiant Tights",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_017_Lower",
     "PrevRank": "Armor_089_Lower"
@@ -3521,6 +3925,7 @@
     "Name": "Desert Voe Headband",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_065_Head",
     "Dyeable": true,
     "IconActorName": "Armor_008_Head",
@@ -3530,6 +3935,7 @@
     "Name": "Cap of the Hero",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_234_Head",
     "Dyeable": false,
     "IconActorName": "Armor_230_Head",
@@ -3539,6 +3945,7 @@
     "Name": "Hylian Hood",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
     "PrevRank": "Armor_004_Head"
@@ -3547,6 +3954,7 @@
     "Name": "Trousers of the Wild",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_060_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_005_Lower",
@@ -3563,6 +3971,7 @@
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_184_Head",
     "PrevRank": "Armor_168_Head"
@@ -3571,6 +3980,7 @@
     "Name": "Snowquill Headdress",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_073_Head",
     "Dyeable": true,
     "IconActorName": "Armor_009_Head",
@@ -3580,6 +3990,7 @@
     "Name": "Soldier's Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_098_Head",
     "Dyeable": true,
     "IconActorName": "Armor_020_Head",
@@ -3589,6 +4000,7 @@
     "Name": "Cap of Time",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_202_Head",
     "Dyeable": false,
     "IconActorName": "Armor_200_Head",
@@ -3606,6 +4018,7 @@
     "Name": "Tunic of the Hero",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_232_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_230_Upper",
@@ -3615,6 +4028,7 @@
     "Name": "Champion's Tunic",
     "StarNum": 3,
     "Defence": 14,
+    "Hidden": true,
     "NextRank": "Armor_150_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_116_Upper",
@@ -3624,6 +4038,7 @@
     "Name": "Sapphire Circlet",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_127_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_026",
@@ -3633,6 +4048,7 @@
     "Name": "Trousers of the Wild",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_005_Lower",
     "PrevRank": "Armor_060_Lower"
@@ -3648,6 +4064,7 @@
     "Name": "Desert Voe Spaulder",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_008_Upper",
     "PrevRank": "Armor_066_Upper"
@@ -3656,6 +4073,7 @@
     "Name": "Vah Rudania Divine Helm",
     "StarNum": 4,
     "Defence": 18,
+    "Hidden": true,
     "NextRank": "Armor_197_Head",
     "Dyeable": true,
     "IconActorName": "Armor_183_Head",
@@ -3671,6 +4089,7 @@
     "Name": "Ancient Helm",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_021_Head",
     "PrevRank": "Armor_101_Head"
@@ -3679,6 +4098,7 @@
     "Name": "Snow Boots",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_159_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_141_Lower",
@@ -3688,6 +4108,7 @@
     "Name": "Fierce Deity Armor",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_227_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_225_Upper",
@@ -3697,12 +4118,14 @@
     "Name": "Armor_501_Head",
     "StarNum": 0,
     "Defence": 0,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_153_Lower": {
     "Name": "Sand Boots",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_154_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_049_Lower",
@@ -3725,6 +4148,7 @@
     "Name": "Flamebreaker Boots",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_011_Lower",
     "PrevRank": "Armor_075_Lower"
@@ -3740,6 +4164,7 @@
     "Name": "Hylian Hood",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_004_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
@@ -3749,6 +4174,7 @@
     "Name": "Diamond Circlet",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_119_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_024",
@@ -3765,6 +4191,7 @@
     "Name": "Sheik's Mask",
     "StarNum": 3,
     "Defence": 6,
+    "Hidden": true,
     "NextRank": "Armor_223_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
@@ -3774,6 +4201,7 @@
     "Name": "Trousers of Twilight",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_213_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_210_Lower",
@@ -3783,6 +4211,7 @@
     "Name": "Rubber Tights",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_046_Lower",
     "PrevRank": "Armor_105_Lower"
@@ -3791,6 +4220,7 @@
     "Name": "Ancient Cuirass",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_101_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_021_Upper",
@@ -3800,6 +4230,7 @@
     "Name": "Trousers of the Sky",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_215_Lower",
     "PrevRank": "Armor_218_Lower"
@@ -3808,6 +4239,7 @@
     "Name": "Radiant Shirt",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_088_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_017_Upper",
@@ -3817,6 +4249,7 @@
     "Name": "Tunic of Twilight",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_210_Upper",
     "PrevRank": "Armor_213_Upper"
@@ -3825,6 +4258,7 @@
     "Name": "Hylian Hood",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_015_Head",
     "Dyeable": true,
     "IconActorName": "Armor_001_Head",
@@ -3834,6 +4268,7 @@
     "Name": "Rubber Helm",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_106_Head",
     "Dyeable": true,
     "IconActorName": "Armor_046_Head",
@@ -3843,6 +4278,7 @@
     "Name": "Stealth Chest Guard",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_077_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_012_Upper",
@@ -3852,6 +4288,7 @@
     "Name": "Barbarian Leg Wraps",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_112_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_048_Lower",
@@ -3861,6 +4298,7 @@
     "Name": "Ruby Circlet",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_122_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_025",
@@ -3870,6 +4308,7 @@
     "Name": "Tunic of the Wind",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_209_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_205_Upper",
@@ -3879,10 +4318,10 @@
     "Name": "Sheik's Mask",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_222_Head",
     "Dyeable": false,
     "IconActorName": "Armor_220_Head",
-    "Hidden": true,
     "PrevRank": "Armor_220_Head"
   },
   "Armor_170_Upper": {
@@ -3895,6 +4334,7 @@
     "Name": "Soldier's Greaves",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_097_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_020_Lower",
@@ -3911,6 +4351,7 @@
     "Name": "Radiant Shirt",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_017_Upper",
     "PrevRank": "Armor_089_Upper"
@@ -3919,6 +4360,7 @@
     "Name": "Vah Medoh Divine Helm",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_192_Head",
     "Dyeable": true,
     "IconActorName": "Armor_182_Head",
@@ -3928,6 +4370,7 @@
     "Name": "Tunic of Time",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_204_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_200_Upper",
@@ -3943,6 +4386,7 @@
     "Name": "Cap of the Wind",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_207_Head",
     "Dyeable": false,
     "IconActorName": "Armor_205_Head",
@@ -3958,6 +4402,7 @@
     "Name": "Flamebreaker Helm",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_076_Head",
     "Dyeable": true,
     "IconActorName": "Armor_011_Head",
@@ -3967,6 +4412,7 @@
     "Name": "Radiant Mask",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_017_Head",
     "PrevRank": "Armor_089_Head"
@@ -3975,6 +4421,7 @@
     "Name": "Tunic of the Wild",
     "StarNum": 3,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_060_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_005_Upper",
@@ -3991,6 +4438,7 @@
     "Name": "Climber's Bandanna",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_085_Head",
     "Dyeable": true,
     "IconActorName": "Armor_014_Head",
@@ -4000,6 +4448,7 @@
     "Name": "Cap of the Wild",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_005_Head",
     "PrevRank": "Armor_060_Head"
@@ -4008,6 +4457,7 @@
     "Name": "Rubber Tights",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_106_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_046_Lower",
@@ -4017,6 +4467,7 @@
     "Name": "Trousers of Twilight",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_212_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_210_Lower",
@@ -4026,6 +4477,7 @@
     "Name": "Cap of Twilight",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_213_Head",
     "Dyeable": false,
     "IconActorName": "Armor_210_Head",
@@ -4035,6 +4487,7 @@
     "Name": "Tunic of the Sky",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_218_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_215_Upper",
@@ -4044,6 +4497,7 @@
     "Name": "Climbing Gear",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_085_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_014_Upper",
@@ -4053,6 +4507,7 @@
     "Name": "Radiant Tights",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_090_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_017_Lower",
@@ -4062,6 +4517,7 @@
     "Name": "Rubber Armor",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_104_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_046_Upper",
@@ -4071,6 +4527,7 @@
     "Name": "Opal Earrings",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_136_Head",
     "Dyeable": false,
     "IconActorName": "Obj_Head_028",
@@ -4080,6 +4537,7 @@
     "Name": "Cap of the Wind",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_209_Head",
     "Dyeable": false,
     "IconActorName": "Armor_205_Head",
@@ -4108,6 +4566,7 @@
     "Name": "Trousers of the Wind",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_207_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_205_Lower",
@@ -4117,6 +4576,7 @@
     "Name": "Soldier's Greaves",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_096_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_020_Lower",
@@ -4126,6 +4586,7 @@
     "Name": "Barbarian Helm",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_112_Head",
     "Dyeable": true,
     "IconActorName": "Armor_048_Head",
@@ -4135,6 +4596,7 @@
     "Name": "Soldier's Armor",
     "StarNum": 5,
     "Defence": 28,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_020_Upper",
     "PrevRank": "Armor_097_Upper"
@@ -4143,6 +4605,7 @@
     "Name": "Barbarian Leg Wraps",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_113_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_048_Lower",
@@ -4152,6 +4615,7 @@
     "Name": "Barbarian Armor",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_048_Upper",
     "PrevRank": "Armor_113_Upper"
@@ -4173,6 +4637,7 @@
     "Name": "Flamebreaker Boots",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_074_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_011_Lower",
@@ -4182,12 +4647,14 @@
     "Name": "Armor_500_Lower",
     "StarNum": 0,
     "Defence": 1,
+    "Hidden": true,
     "Dyeable": false
   },
   "Armor_231_Head": {
     "Name": "Cap of the Hero",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_232_Head",
     "Dyeable": false,
     "IconActorName": "Armor_230_Head",
@@ -4197,6 +4664,7 @@
     "Name": "Trousers of the Hero",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Armor_230_Lower",
     "PrevRank": "Armor_233_Lower"
@@ -4205,6 +4673,7 @@
     "Name": "Stealth Mask",
     "StarNum": 2,
     "Defence": 4,
+    "Hidden": true,
     "NextRank": "Armor_077_Head",
     "Dyeable": true,
     "IconActorName": "Armor_012_Head",
@@ -4214,6 +4683,7 @@
     "Name": "Tunic of the Hero",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_233_Upper",
     "Dyeable": false,
     "IconActorName": "Armor_230_Upper",
@@ -4238,6 +4708,7 @@
     "Name": "Zora Greaves",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_063_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_006_Lower",
@@ -4247,6 +4718,7 @@
     "Name": "Hylian Tunic",
     "StarNum": 3,
     "Defence": 8,
+    "Hidden": true,
     "NextRank": "Armor_004_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_001_Upper",
@@ -4263,6 +4735,7 @@
     "Name": "Zora Armor",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_006_Upper",
     "PrevRank": "Armor_063_Upper"
@@ -4286,6 +4759,7 @@
     "Name": "Topaz Earrings",
     "StarNum": 5,
     "Defence": 18,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_027",
     "PrevRank": "Armor_131_Head"
@@ -4294,6 +4768,7 @@
     "Name": "Fierce Deity Boots",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_229_Lower",
     "Dyeable": false,
     "IconActorName": "Armor_225_Lower",
@@ -4303,6 +4778,7 @@
     "Name": "Ancient Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_100_Head",
     "Dyeable": true,
     "IconActorName": "Armor_021_Head",
@@ -4326,6 +4802,7 @@
     "Name": "Stealth Chest Guard",
     "StarNum": 4,
     "Defence": 9,
+    "Hidden": true,
     "NextRank": "Armor_079_Upper",
     "Dyeable": true,
     "IconActorName": "Armor_012_Upper",
@@ -4342,6 +4819,7 @@
     "Name": "Climber's Bandanna",
     "StarNum": 2,
     "Defence": 5,
+    "Hidden": true,
     "NextRank": "Armor_084_Head",
     "Dyeable": true,
     "IconActorName": "Armor_014_Head",
@@ -4351,6 +4829,7 @@
     "Name": "Vah Naboris Divine Helm",
     "StarNum": 2,
     "Defence": 7,
+    "Hidden": true,
     "NextRank": "Armor_199_Head",
     "Dyeable": true,
     "IconActorName": "Armor_184_Head",
@@ -4360,6 +4839,7 @@
     "Name": "Flamebreaker Boots",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_076_Lower",
     "Dyeable": true,
     "IconActorName": "Armor_011_Lower",
@@ -4376,6 +4856,7 @@
     "Name": "Desert Voe Headband",
     "StarNum": 4,
     "Defence": 12,
+    "Hidden": true,
     "NextRank": "Armor_067_Head",
     "Dyeable": true,
     "IconActorName": "Armor_008_Head",
@@ -4385,6 +4866,7 @@
     "Name": "Snowquill Tunic",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": true,
     "IconActorName": "Armor_009_Upper",
     "PrevRank": "Armor_072_Upper"
@@ -4400,6 +4882,7 @@
     "Name": "Sapphire Circlet",
     "StarNum": 5,
     "Defence": 20,
+    "Hidden": true,
     "Dyeable": false,
     "IconActorName": "Obj_Head_026",
     "PrevRank": "Armor_127_Head"
@@ -4706,8 +5189,8 @@
   "Obj_ArrowBundle_A_10": {
     "Name": "Arrow x[NUMBER]",
     "CanStack": true,
-    "IconActorName": "Obj_ArrowBundle_A_01",
-    "Hidden": true
+    "Hidden": true,
+    "IconActorName": "Obj_ArrowBundle_A_01"
   },
   "Item_Enemy_03": {
     "Name": "Lizalfos Horn",
@@ -6140,8 +6623,8 @@
   "Obj_ArrowBundle_A_02": {
     "Name": "Arrow x10",
     "CanStack": true,
-    "IconActorName": "Obj_ArrowBundle_A_01",
-    "Hidden": true
+    "Hidden": true,
+    "IconActorName": "Obj_ArrowBundle_A_01"
   },
   "Item_Cook_A_08": {
     "Name": "Fish and Mushroom Skewer",

@@ -1,4 +1,5 @@
 #include <Aether/Aether.hpp>
+#include <Aether/utils/Utils.hpp>
 
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
@@ -14,6 +15,7 @@
 
 #include <Editor/Menus/Inventory.hpp>
 #include <Application/Application.hpp>
+#include <Application/Audio.hpp>
 #include <Editor/Menus/Inventory/Pouch.hpp>
 
 #include <string>
@@ -23,15 +25,21 @@
 #define OPTIONS_FRAME_W 320
 #define OPTIONS_FRAME_H 360
 
+#define PREV_PAGE Aether::Button::RSTICK_LEFT
+#define NEXT_PAGE Aether::Button::RSTICK_RIGHT
+
+#define PAGE_PROMPT_SPACING 24
+
 void Rune::MenuBuilder::Inventory(EditorMenu* menu){
+    // Disable right stick navigation
+    Aether::SetRightStickNavigation(false);
+
     // Make a new pouch (parse the inventory save data) if one hasn't been made yet
     if (Inventory::CurrentPouch == nullptr){
-        Logger::Importantf("[INVENTORY] - Creating new pouch.");
         Inventory::CurrentPouch = new Inventory::Pouch(menu->saveFile());
     }
 
     // Get the items for this category
-    Logger::Importantf("[INVENTORY] - Getting items in this category.");
     Inventory::Category category = Inventory::GetCategoryFromMenuName(menu->menuName());
 
     // Default to hardcoded max
@@ -89,9 +97,26 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     int dotStart = centerPosition - (((ellipses->size())-1)*(dotStride))/2.0f;
 
     // Reposition menu dots
+    Aether::Ellipse* lastDot = nullptr;
     for (int i = 0; i < static_cast<int>(ellipses->size()); ++i){
         Aether::Ellipse* menuDot = ellipses->at(i);
         menuDot->setX(dotStart + (i*dotStride));
+
+        lastDot = menuDot;
+    }
+
+    // Show the prompt to change page if multiple pages are in this menu
+    if (lastDot != nullptr){
+        Aether::Text* pagePrompt = new Aether::Text(
+            0, 0,
+            Aether::Utils::buttonToCharacter(Aether::Button::RSTICK),
+            20
+        );
+
+        pagePrompt->setColour(MUTED_TEXT_COLOR);
+        pagePrompt->setX(lastDot->right()+PAGE_PROMPT_SPACING);
+        pagePrompt->centreAtY(lastDot->centreY());
+        menu->body()->addElement(pagePrompt);
     }
 
     // Options overlay
@@ -151,10 +176,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Timer::end();
 
     // Go to the next page when ZR is pressed
-    menu->screen()->onButtonPress(Aether::Button::ZR, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+    menu->screen()->onButtonPress(NEXT_PAGE, [menu, inventoryItems, currentPage, maxPage, ellipses](){
         if (maxPage == 0){
             return;
         }
+        Audio::playSound("page_slide");
 
         // Change current page, wrap around if at max page
         if (*currentPage >= maxPage){
@@ -167,10 +193,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     });
 
     // Go to the previous page when ZL is pressed
-    menu->screen()->onButtonPress(Aether::Button::ZL, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+    menu->screen()->onButtonPress(PREV_PAGE, [menu, inventoryItems, currentPage, maxPage, ellipses](){
         if (maxPage == 0){
             return;
         }
+        Audio::playSound("page_slide");
 
         if (*currentPage <= 0){
             *currentPage = maxPage;
@@ -197,6 +224,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         if (Inventory::CurrentPouch != nullptr){
             Inventory::CurrentPouch->resetBlankSlots();
         }
+
+        // Re-enable right stick navigation
+        Aether::SetRightStickNavigation(true);
     });
 
     return;

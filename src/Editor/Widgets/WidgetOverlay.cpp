@@ -131,7 +131,7 @@ WidgetOverlay::WidgetOverlay(const std::string &title){
 
     this->onOpen([this, panel](){
         Rune::Audio::playSound("open_menu");
-        Aether::Element::setFocused(panel);
+        this->setFocused(panel);
 
         // Logger::Important("Panel has been opened.");
         panel->setY(250+panel->h());

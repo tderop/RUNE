@@ -2,8 +2,8 @@
 #define AETHER_UTILS_HPP
 
 #include "Aether/utils/Types.hpp"
-#include <cstddef>
 #include <string>
+#include <switch.h>
 
 /** @brief Fake controller ID for held events */
 const short int FAKE_ID = 99;

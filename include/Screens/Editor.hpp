@@ -62,6 +62,7 @@ private:
     std::vector<EditorWidget*> tempWidgets;
     EditorMenu* currentMenu = nullptr;
 
+    Aether::Container* tabButtonContainer=nullptr;
     std::vector<Aether::ListButton*> tabButtons;
     Aether::Rectangle* topPanel;
 

@@ -90,6 +90,10 @@
         "Description": "Your record distance travelled in the 'Bird Man Research' paragliding minigame. Why do you even need to edit this?",
         "Unit": "metres"
     },
+    "Motorcycle_Energy" : {
+        "Readable" : "Motorcycle Energy",
+        "Description" : "The remaining fuel in the Master Cycle Zero. Maximum energy is 1,000 units."
+    },
 
     /**
     * string_data

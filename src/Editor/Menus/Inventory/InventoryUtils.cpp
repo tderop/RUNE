@@ -121,7 +121,9 @@ namespace Rune {
             }
 
             // Return the original path (not dyeable armor)
-            return GetThumbPathFromActorName(iconActorName);
+            std::string thumbPath = GetThumbPathFromActorName(iconActorName);
+
+            return thumbPath;
         }
 
         Rune::Json GetActorObject(const std::string& actorName){
@@ -202,6 +204,9 @@ namespace Rune {
                 )
             );
 
+            // The button to set cursor focus to once the menu has been generated
+            Aether::BorderButton* focusBtn = nullptr;
+
             for (size_t i = cursorStart; i < cursorEnd; ++i){
                 // Get the inventory item
                 auto inventoryItem = inventoryItems->at(i);
@@ -246,6 +251,9 @@ namespace Rune {
                 // Make inventory tile (use widgets)
                 // Assign tile a border button, store it for later if first
                 Aether::BorderButton* widgetBtn = new Aether::BorderButton(-1, -1, 1, 1, 4, "", 24, [](){});
+                if (focusBtn == nullptr){
+                    focusBtn = widgetBtn;
+                }
 
                 // Build the new tile widget
                 Rune::MenuBuilder::AddWidgetFromSaveKey(
@@ -268,6 +276,12 @@ namespace Rune {
                 } else {
                     ellipses.at(i)->setColour(kEnabledEllipse);
                 }
+            }
+
+            // Focus the first button
+            if (focusBtn != nullptr){
+                menu->screen()->setFocused(menu->body())
+                    ->setFocused(focusBtn);
             }
         }
 
@@ -374,19 +388,16 @@ namespace Rune {
             Rune::JsonData::GetJsonById(actorData, "ActorData");
 
             if (actorData == nullptr){
-                // Logger::Importantf("ActorData is nullptr");
                 return 0;
             }
 
             auto actorIt = actorData->find(actorName);
             if (actorIt == actorData->end()){
-                // Logger::Importantf("Actor not found in data");
                 return 0;
             }
 
             auto durIt = actorIt->find("Durability");
             if (durIt == actorIt->end()){
-                // Logger::Importantf("Is end or not number");
                 return 0;
             }
 

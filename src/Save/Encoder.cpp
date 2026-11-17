@@ -23,7 +23,7 @@ void Rune::Save::Encode(Rune::Save::RawFile* out, Rune::Save::File* saveFile, st
     size_t currentProgress=0;
     size_t maxProgress=saveFile->entries.size();
 
-    Logger::Importantf("Entries: %d", maxProgress);
+    Logger::Writef("Entries: %d", maxProgress);
 
     for (const auto& entry : saveFile->entries){
         switch (entry.dataType){

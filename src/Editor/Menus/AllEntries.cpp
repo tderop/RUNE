@@ -1,3 +1,4 @@
+#include <Aether/utils/Utils.hpp>
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
 
@@ -6,9 +7,13 @@
 #include <Utils/Utils.hpp>
 #include <Input/Input.hpp>
 #include <Application/Keyboard.hpp>
+#include <Application/Audio.hpp>
 
 #include <string>
 #include <memory>
+
+#define NEXT_PAGE Aether::Button::ZR
+#define PREV_PAGE Aether::Button::ZL
 
 const int ENTRIES_PER_PAGE = 50;
 const Aether::Button SEARCH_BUTTON = Aether::Button::X;
@@ -46,9 +51,6 @@ void showPage(EditorMenu* menu, Aether::Text* pageCount, size_t page, idx_filter
     else {
         pageCount->setString(std::to_string(page+1)+"/"+std::to_string((entries.size()/ENTRIES_PER_PAGE)+1));
     }
-
-    // Reposition the page count
-    pageCount->setX(menu->body()->x()+24);
 }
 
 void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
@@ -66,12 +68,19 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
     menu->list()->setH(newH);
     menu->list()->setY(menu->list()->y()+toShrink);
 
+    // ZL/ZR prompt
+    Aether::Text* pagePrompt = new Aether::Text(0, 0, 
+        Aether::Utils::buttonToCharacter(PREV_PAGE)+"  "+Aether::Utils::buttonToCharacter(NEXT_PAGE),
+        18);
+    pagePrompt->setColour(MUTED_TEXT_COLOR);
+    pagePrompt->setXY(menu->body()->x()+18, menu->body()->y()+pagePrompt->textureHeight()+6);
+
     // Text element showing the current page and the max page
     Aether::Text* pageCount = new Aether::Text(0, 0, 
         "0/0", 18);
     pageCount->setColour(MUTED_TEXT_COLOR);
-    pageCount->setXY(menu->body()->x()+menu->body()->w()/2-pageCount->textureWidth()/2-12,
-        menu->body()->y()+pageCount->textureHeight()+6);
+    pageCount->setX(pagePrompt->right()+24);
+    pageCount->centreAtY(pagePrompt->centreY());
 
     // A list of indexes that represent which save entry names matched a search query if one has been used
     idx_filter filter = std::make_shared<std::vector<size_t>>();
@@ -110,10 +119,11 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
 
     auto viewingEntries = std::make_shared<std::vector<size_t>>();
     inputService.connect("NextPage", [menu, currentPage, pageCount, maxPage, filter](InputSystem& svc, InputState state){
-        if (state != InputState::Begin){
+        if (state != InputState::Begin || *maxPage == 0){
             return;
         }
 
+        Audio::playSound("page_slide");
         size_t page = *currentPage + 1;
         if (page > *maxPage){
             page = 0;
@@ -124,10 +134,11 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
     });
 
     inputService.connect("PrevPage", [menu, currentPage, pageCount, maxPage, filter](InputSystem& svc, InputState state){
-        if (state != InputState::Begin){
+        if (state != InputState::Begin || *maxPage == 0){
             return;
         }
 
+        Audio::playSound("page_slide");
         size_t page = *currentPage;
         if (page <= 0){
             page = *maxPage-1;
@@ -156,4 +167,7 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
 
     menu->addToTrove(pageCount);
     menu->body()->addElement(pageCount);
+
+    menu->addToTrove(pagePrompt);
+    menu->body()->addElement(pagePrompt);
 }

@@ -31,11 +31,21 @@
 namespace Rune {
     namespace Inventory {
         void Tile::updateThumbnail(){
+            // Update the icon actor name
+            if (!inventoryItem.actorName.empty()){
+                auto iconOpt = GetActorValue<std::string>(inventoryItem.actorName, "IconActorName");
+                inventoryItem.iconActorName = (iconOpt.has_value()) ? iconOpt.value() : "";
+            }
+
+            // Get tne new thumbnail path
             inventoryItem.thumbPath = 
                 GetThumbPathFromInventoryItem(inventoryItem);
             const std::string& path = inventoryItem.thumbPath;
 
             if (!path.empty()){
+                // Empty text
+                this->tileBtn->setString("");
+
                 // Get the thumbnail texture key
                 int thumbSize = static_cast<int>(kTileSize*kThumbScale);
                 std::string textureKey = path+"|"+std::to_string(thumbSize)+
@@ -80,6 +90,11 @@ namespace Rune {
                 this->tileThumb->renderAsync();
             }
             else {
+                // hide the tile thumbnail if it exists
+                if (this->tileThumb != nullptr){
+                    this->tileThumb->setHidden(true);
+                }
+
                 tileBtn->setString(this->inventoryItem.name);
                 tileBtn->setTextColour(TEXT_COLOUR);
             }
@@ -358,7 +373,6 @@ namespace Rune {
             ovlSwapBtn->addElement(ovlSwapText);
 
             ovlSwapBtn->onPress([this](){
-                Logger::Important("[TILE] - Swap button pressed.");
                 this->onSwap();
             });
 
@@ -760,7 +774,7 @@ namespace Rune {
             // Unpack and validate meta
             std::vector<std::any> widgetMeta = widget->getMeta();
             if (widgetMeta.empty()){
-                Logger::Important("Failed to make Tile widget: "
+                Logger::Write("Failed to make Tile widget: "
                     "widget meta was empty!");
                 return;
             }
@@ -832,33 +846,33 @@ namespace Rune {
         }
 
         void Tile::onSwap(){
-            Logger::Important("[TILE] - Running onSwap()...");
+            Logger::Write("[TILE] - Running onSwap()...");
             if (this->ovl == nullptr){
-                Logger::Important("[TILE] - ovl is nullptr!");
+                Logger::Write("[TILE] - ovl is nullptr!");
                 return;
             }
 
-            Logger::Important("[TILE] - Playing menu open sound...");
+            Logger::Write("[TILE] - Playing menu open sound...");
             Audio::playSound("open_menu");
 
             // Disable exiting the overlay temporarily
-            Logger::Important("[TILE] - Disabling exiting the overlay...");
+            Logger::Write("[TILE] - Disabling exiting the overlay...");
             this->ovl->setExitEnabled(false);
 
             // Show loading message
-            Logger::Important("Getting the application...");
+            Logger::Write("Getting the application...");
             Application* app = Application::getApplication();
 
             Aether::MessageBox* loadingMsg = app->showLoading("Loading items...", true);
             loadingMsg->onButtonPress(Aether::Button::B, [](){}); // Stub exiting the menu
             
-            Logger::Importantf("[TILE] - Category: %d", static_cast<int>(inventoryItem.category));
+            Logger::Writef("[TILE] - Category: %d", static_cast<int>(inventoryItem.category));
 
             // Get a list of available actor names
             std::vector<std::string> otherActorNames 
                 = CategoryActors.find(inventoryItem.category)->second;
 
-            Logger::Importantf("[TILE] - Found other actor names");
+            Logger::Writef("[TILE] - Found other actor names");
 
             // Make a main containter
             Aether::Overlay* swapOvl = new Aether::Overlay();
@@ -921,8 +935,22 @@ namespace Rune {
                         if (IsCategoryEquipment(inventoryItem.category)){
                             this->inventoryItem.durability = GetMaxDurability(inventoryItem.actorName);
                             this->inventoryItem.value = inventoryItem.durability*100;
-                        } else {
+                        }
+
+                        // Set value to 1 for perishables
+                        else if (inventoryItem.category == Category::Arrows || inventoryItem.category == Category::Materials 
+                            || inventoryItem.category == Category::KeyItems || inventoryItem.category == Category::Food){
+
                             this->inventoryItem.value = 1;
+                        }
+
+                        // Set value to 0 for dyeable armor, and -1 for undyeable
+                        else if (inventoryItem.category == Category::Armor) {
+                            if (IsArmorDyeable(inventoryItem.actorName)){
+                                this->inventoryItem.value = 0;
+                            } else {
+                                this->inventoryItem.value = -1;
+                            }
                         }
 
                         this->updateOvlImg();
@@ -972,7 +1000,7 @@ namespace Rune {
                         if (name.find(out) == std::string::npos){
                             btn->setHidden(true); // Hide buttons that don't match
                         } else {
-                            Logger::Importantf("Showing: %s", name.c_str());
+                            Logger::Writef("Showing: %s", name.c_str());
                             btn->setHidden(false); // Show buttons that do
                             btn->setY(list->y()+12+(posOffset*btn->h()));
 

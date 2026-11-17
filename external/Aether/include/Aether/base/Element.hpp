@@ -1,4 +1,4 @@
-    #ifndef AETHER_ELEMENT_HPP
+#ifndef AETHER_ELEMENT_HPP
 #define AETHER_ELEMENT_HPP
 
 #include "Aether/types/Drawable.hpp"
@@ -435,7 +435,7 @@ namespace Aether {
              *
              * @param e element to focus
              */
-            void setFocused(Element * e); // learned my lesson ;-;
+            Element* setFocused(Element * e);
 
             /**
              * @brief Sets current element as unfocused

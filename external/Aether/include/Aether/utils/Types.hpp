@@ -3,6 +3,7 @@
 
 #include "Aether/types/Colour.hpp"
 #include <functional>
+#include <switch.h>
 
 namespace Aether {
     /**

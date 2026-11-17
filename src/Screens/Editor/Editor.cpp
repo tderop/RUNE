@@ -4,6 +4,7 @@
 
 #include <switch.h>
 #include <Aether/Aether.hpp>
+#include <Aether/utils/Utils.hpp>
 
 #include <Screens/Editor.hpp>
 #include <Config.hpp>
@@ -29,11 +30,14 @@
 #include <Editor/Menus/Inventory/Pouch.hpp>
 
 // Constants
-int TAB_BUTTON_HEIGHT = 64; // px
-int EDITOR_TOP_Y = 72; // px
-int MAX_TITLE_LENGTH = 16; // px
+#define TAB_BUTTON_HEIGHT 64 // px
+#define EDITOR_TOP_Y 72 // px
+#define MAX_TITLE_LENGTH 16 // px
+#define CAPTION_IMAGE_SCALE 0.9f // relative width of the image relative to the last ListButton in the tabs list
 
-float CAPTION_IMAGE_SCALE = 0.9f; // relative width of the image relative to the last ListButton in the tabs list
+#define LR_PROMPT_PADDING 24
+#define NEXT_MENU Aether::Button::R
+#define PREV_MENU Aether::Button::L
 
 /**
  * The constructor for the editor screen. Runs once when a new screen is
@@ -164,6 +168,30 @@ void EditorScreen::buildScreen(){
 
     topPanel->setColour(MUTED_BACKGROUND_COLOUR);
 
+    // L/R prompts
+    Aether::Text* leftPrompt = new Aether::Text(
+        0, 0,
+        Aether::Utils::buttonToCharacter(PREV_MENU),
+        28
+    );
+    Aether::Text* rightPrompt = new Aether::Text(
+        0, 0,
+        Aether::Utils::buttonToCharacter(NEXT_MENU),
+        28
+    );
+
+    leftPrompt->setX(topPanel->x()+LR_PROMPT_PADDING);
+    leftPrompt->centreAtY(topPanel->centreY());
+
+    rightPrompt->setX(topPanel->right()-rightPrompt->textureWidth()-LR_PROMPT_PADDING);
+    rightPrompt->centreAtY(topPanel->centreY());
+
+    leftPrompt->setColour(MUTED_TEXT_COLOR);
+    rightPrompt->setColour(MUTED_TEXT_COLOR);
+
+    this->topPanel->addElement(leftPrompt);
+    this->topPanel->addElement(rightPrompt);
+
     // separators
     Logger::Write("[EDITOR] - Making top separator...");
     Aether::Rectangle* topSeparator = new Aether::Rectangle(
@@ -231,6 +259,7 @@ void EditorScreen::buildScreen(){
     tabButtonList->onCursorMove([](){
         Rune::Audio::playSound("cursor");
     });
+    this->tabButtonContainer = tabButtonList;
 
     // tabButtonList->setScrollBarColour(SEPARATOR_COLOUR);
     // tabButtonList->setShowScrollBar(false);
@@ -350,7 +379,7 @@ void EditorScreen::buildScreen(){
                 Rune::Inventory::CurrentPouch = nullptr;
             }
             else {
-                Logger::Important("CurrentPouch is nullptr!");
+                Logger::Write("CurrentPouch is nullptr!");
             }
 
             this->app->showScreen("Menu");
@@ -391,7 +420,7 @@ void EditorScreen::buildScreen(){
                 Rune::Inventory::CurrentPouch->save();
             }
             else {
-                Logger::Important("CurrentPouch is nullptr!");
+                Logger::Write("CurrentPouch is nullptr!");
             }
 
             // encode the save file
@@ -873,16 +902,24 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 
 void EditorScreen::onLoad(){
     // navigate to next menu when pressing R
-    this->onButtonPress(Aether::Button::R, [this](){
-        Rune::Audio::playSound("big_page_slide.opus");
+    this->onButtonPress(NEXT_MENU, [this](){
+        Rune::Audio::playSound("big_page_slide");
         this->nextMenu();
     });
 
     // navigate to previous menu when pressing L
-    this->onButtonPress(Aether::Button::L, [this](){
-        Rune::Audio::playSound("big_page_slide.opus");
+    this->onButtonPress(PREV_MENU, [this](){
+        Rune::Audio::playSound("big_page_slide");
         this->prevMenu();
     });
+
+    // Select the first tab button
+    if (!this->tabButtons.empty() 
+        && this->tabButtonContainer != nullptr){
+
+        this->setFocused(tabButtonContainer)
+            ->setFocused(tabButtons.at(0));
+    }
 
     // Show the first tab
     this->showTab(Rune::Editor::Tabs.at(0));

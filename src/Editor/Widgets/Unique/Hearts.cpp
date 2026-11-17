@@ -95,7 +95,6 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         std::vector<Aether::Image*>* hearts = new std::vector<Aether::Image*>;
 
         numSpinner->onValueChange([numSpinner, editOverlay, hearts](){
-            Logger::Important("Updating heart count");
 
             // The initial X position of the first heart on each row
             int initX = numSpinner->x() + numSpinner->w() + 36;
@@ -104,11 +103,6 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
             // Get the current value of the number spinner
             int value = numSpinner->value();
-
-            // if (!value){
-            //     // If the value is zero, do nothing
-            //     return;
-            // }
 
             // The currently processing heart row (each row consists of 15 hearts, every time 15 hearts have been made this is incremented)
             int row = hearts->size()/HEARTS_PER_ROW;
