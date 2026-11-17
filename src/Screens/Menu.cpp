@@ -166,9 +166,7 @@ void MenuScreen::showSaveSelect(){
                 // but it may be useful for other changes later on!
                 Logger::Write("[MENU] - Showing editor screen...");
                 auto loadingMsg = this->app->showLoading("Loading editor...", true);
-
-                // stub exit
-                // loadingMsg->onButtonPress(Aether::Button::B, [](){});
+                loadingMsg->onButtonPress(Aether::Button::B, [](){}); // stub exit
 
                 // GET screen
                 EditorScreen* editor = static_cast<EditorScreen*>

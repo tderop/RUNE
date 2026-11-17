@@ -474,10 +474,6 @@ namespace Rune {
                 ovl->setDeveloperNoteX(this->ovlPropertiesBox->right()
                     +2*OVERLAY_X_SPACING);
             }
-
-            if (this->visiblePropertyEditors.empty()){
-                this->ovlNoEditText->setHidden(false);
-            }
         }
 
         void Tile::updateOvlImg(){
@@ -491,6 +487,9 @@ namespace Rune {
 
             // Update thumbnail path
             inventoryItem.thumbPath = GetThumbPathFromInventoryItem(inventoryItem);
+            if (inventoryItem.thumbPath.empty()){
+                inventoryItem.thumbPath = PLACEHOLDER_THUMB_PATH;
+            }
 
             // Make a new thumbnail and reposition it
             this->ovlImg = new Aether::Image(0, 0, 
@@ -515,6 +514,7 @@ namespace Rune {
                 }
             }
 
+            this->visiblePropertyEditors.clear();
             this->ovlPrimaryValueStepper = nullptr;
             this->ovlSecondaryFlagDropdown = nullptr;
             this->ovlSecondaryValueStepper = nullptr;
@@ -565,9 +565,6 @@ namespace Rune {
                             });
                         }
                     });
-                    // ovlSecondaryFlagDropdown->onValueChange([](){
-                    //     Audio::playSound("select");
-                    // });
 
                     visiblePropertyEditors.push_back(ovlSecondaryFlagDropdown);
                     cursorY += ovlSecondaryFlagDropdown->h()+PROPERTY_Y_SPACING;

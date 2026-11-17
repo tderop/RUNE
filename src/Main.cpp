@@ -66,6 +66,13 @@ void exitApplet(InputSystem& inputService, InputState state){
  * @return Result
  */
 Result initApplet(){
+    // Overclock the CPU, and downclock the GPU
+    // RUNE is not GPU hungry but frequently performs heavy CPU work
+    Result rc = appletSetCpuBoostMode(ApmCpuBoostMode_FastLoad);
+    if (R_FAILED(rc)){
+        Logger::Importantf("Failed to set CPU boost mode: %08X", rc);
+    } // no boost is fine, it just means loading is slower
+
     // Check for the presence of an emulator to determine whether Logger::Write() should print messages to the console or not
     // This is unique to my own emulator development environment, I put an empty file called "emulator" on the virtual SD card
     if (std::filesystem::exists("sdmc:/emulator")){
@@ -128,7 +135,7 @@ Result initApplet(){
     }
 
     // initialise romFS for accessing RUNE assets
-    Result rc = romfsInit();
+    rc = romfsInit();
     if (R_FAILED(rc)){
         Logger::Write("[MAIN] - Failed to initialize RomFS: " + std::to_string(rc));
         return -3; // These arbitrary negative values just specify what type of error ocurred during applet initialisation.

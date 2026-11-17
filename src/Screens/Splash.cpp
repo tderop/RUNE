@@ -238,6 +238,12 @@ void SplashScreen::update(unsigned int dt){
             this->_threadStarted = false;
         }
 
+        // Reset CPU status
+        // Result rc = appletSetCpuBoostMode(ApmCpuBoostMode_Normal);
+        // if (R_FAILED(rc)){
+        //     Logger::Importantf("Failed to reset CPU boost mode: %08X", rc);
+        // }
+
         this->_statusText->setString("Done!");
         this->loadCompleteSignal->fire();
     }
