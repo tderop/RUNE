@@ -291,5 +291,7 @@ int main(){
     // Exit SDL
     SDL_Quit();
 
+    // Reset CPU mode
+    appletSetCpuBoostMode(ApmCpuBoostMode_Normal);
     return 0;
 }
