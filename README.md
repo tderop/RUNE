@@ -24,7 +24,7 @@
 You're now running RUNE on your Nintendo Switch!
 
 ### Why don't I see icons in RUNE?
-Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB.
+Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB. You're responsible for keeping these on your own device! Redistributing these assets to anyone else is a violation of copyright law.
 <br>
 
 ## Screenshots

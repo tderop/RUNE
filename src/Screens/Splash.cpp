@@ -74,15 +74,11 @@ void SplashScreen::loadRune(void* _self){
     // Initialise JSON files (parse them and turn them into JSON objects, without initialisation the JSON files would be inaccessible through Rune::JsonData methods)
     {
         std::lock_guard<std::mutex> lock(self->_statusMutex);
-        self->_status="Initialising JSON...";
+        self->_status="Initialising metadata...";
     }
     Rune::JsonData::Init();
 
     // Step 0: Load metadata
-    {
-        std::lock_guard<std::mutex> lock(self->_statusMutex);
-        self->_status="Loading metadata...";
-    }
     Result rc = Rune::Save::LoadMetadata(runeMetadata);
     if (R_FAILED(rc)){
         // RUNE CANNOT load without metadata.

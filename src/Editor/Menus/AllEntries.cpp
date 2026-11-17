@@ -113,13 +113,9 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
         }
     });
 
-    InputSystem& inputService = InputSystem::getService();
-    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_ZR));
-    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_ZL));
-
     auto viewingEntries = std::make_shared<std::vector<size_t>>();
-    inputService.connect("NextPage", [menu, currentPage, pageCount, maxPage, filter](InputSystem& svc, InputState state){
-        if (state != InputState::Begin || *maxPage == 0){
+    menu->screen()->onButtonPress(Aether::Button::ZR, [menu, currentPage, pageCount, maxPage, filter](){
+        if (*maxPage == 0){
             return;
         }
 
@@ -133,8 +129,8 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
         showPage(menu, pageCount, *currentPage, filter);
     });
 
-    inputService.connect("PrevPage", [menu, currentPage, pageCount, maxPage, filter](InputSystem& svc, InputState state){
-        if (state != InputState::Begin || *maxPage == 0){
+    menu->screen()->onButtonPress(Aether::Button::ZL, [menu, currentPage, pageCount, maxPage, filter](){
+        if (*maxPage == 0){
             return;
         }
 
@@ -151,10 +147,6 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
     });
 
     menu->giveTask([menu, currentPage, originalY, originalH](){
-        InputSystem& inputService = InputSystem::getService();
-        inputService.unbind("NextPage");
-        inputService.unbind("PrevPage");
-
         menu->list()->setY(originalY);
         menu->list()->setH(originalH);
 
