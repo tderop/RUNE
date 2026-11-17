@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-#define OPTIONS_BUTTON Aether::Button::X
+#define OPTIONS_BUTTON Aether::Button::NO_BUTTON
 #define OPTIONS_FRAME_W 320
 #define OPTIONS_FRAME_H 360
 
@@ -150,16 +150,9 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Rune::Inventory::ShowPage(menu, inventoryItems, *currentPage, *ellipses);
     Timer::end();
 
-    // Logger::Importantf("Time taken to generate initial %s page: %.2fms", menu->menuName().c_str(), Timer::get()/1E+6);
-
-    // Bind navigation actions
-    InputSystem& inputService = InputSystem::getService();
-    inputService.bind("NextPage", InputObject(InputType::Gamepad, HidNpadButton_ZR));
-    inputService.bind("PrevPage", InputObject(InputType::Gamepad, HidNpadButton_ZL));
-
     // Go to the next page when ZR is pressed
-    inputService.connect("NextPage", [menu, inventoryItems, currentPage, maxPage, ellipses](InputSystem& svc, InputState state){
-        if (state != InputState::Begin || maxPage == 0){
+    menu->screen()->onButtonPress(Aether::Button::ZR, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+        if (maxPage == 0){
             return;
         }
 
@@ -174,8 +167,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     });
 
     // Go to the previous page when ZL is pressed
-    inputService.connect("PrevPage", [menu, inventoryItems, currentPage, maxPage, ellipses](InputSystem& svc, InputState state){
-        if (state != InputState::Begin || maxPage == 0){
+    menu->screen()->onButtonPress(Aether::Button::ZL, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+        if (maxPage == 0){
             return;
         }
 
@@ -192,11 +185,6 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     menu->giveTask([menu, ellipses, optnOvl, inventoryItems](){
         // Delete heap allocations
         delete inventoryItems;
-
-        // Unbind pagination actions
-        InputSystem& inputService = InputSystem::getService();
-        inputService.unbind("NextPage");
-        inputService.unbind("PrevPage");
 
         // Enable right stick navigation
         // Aether::SetRightStickNavigation(true);

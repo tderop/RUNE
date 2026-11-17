@@ -219,6 +219,11 @@ namespace Rune {
 
                     // Highlight bind
                     tileBtn->onHighlight([this](bool h){
+                        if (this->inventoryItem.type != TileType::Empty){
+                            this->tileEditImg->setHidden(true);
+                            return;
+                        }
+
                         if (!this->tileEditImg){
                             this->tileEditImg = new Aether::Image(0, 0,
                                 ASSET_PATHS.at("edit"), Aether::Render::Wait);
@@ -230,7 +235,6 @@ namespace Rune {
                             tileBtn->addElement(this->tileEditImg);
                         }
 
-                        Logger::Important("ich bin highlight");
                         this->tileEditImg->setHidden(!h);
                     });
 
@@ -979,6 +983,8 @@ namespace Rune {
                             posOffset+=1;
                         }
                     }
+
+                    list->setScrollPos(0);
                 }
             });
 
