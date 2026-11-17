@@ -95,7 +95,7 @@ namespace Aether {
             return;
         }
 
-        // Destroy the texture, getting it's info first
+        // Destroy the texture, getting its info first
         int w, h;
         SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
         SDL_DestroyTexture(tex);

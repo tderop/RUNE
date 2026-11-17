@@ -92,6 +92,10 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
             ovl->list()->addElement(editBtn);
         }
 
+        // focus the first button
+        ovl->panel()->setFocused(ovl->list());
+        ovl->list()->setFocused(buttons.at(0));
+
         ovl->onCloseSignal->connectWithId([widget, buttons](size_t id, bool isSave){
             widget->getWidgetOverlay()->onCloseSignal->disconnect(id);
 
@@ -115,9 +119,5 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
             }
         });
         widget->getWindow()->addOverlay(ovl);
-
-        // focus the first button
-        ovl->setFocused(ovl->list());
-        ovl->list()->setFocused(buttons.at(0));
     });
 }

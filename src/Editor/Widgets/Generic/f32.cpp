@@ -63,7 +63,7 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
         editOverlay->list()->addElement(editBtn);
 
         // focus the first button
-        editOverlay->setFocused(editOverlay->list());
+        editOverlay->panel()->setFocused(editOverlay->list());
         editOverlay->list()->setFocused(editBtn);
 
         // save on close

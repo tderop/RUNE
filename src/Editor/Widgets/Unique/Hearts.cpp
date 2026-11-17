@@ -95,6 +95,8 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
         std::vector<Aether::Image*>* hearts = new std::vector<Aether::Image*>;
 
         numSpinner->onValueChange([numSpinner, editOverlay, hearts](){
+            Logger::Important("Updating heart count");
+
             // The initial X position of the first heart on each row
             int initX = numSpinner->x() + numSpinner->w() + 36;
             // The initial Y position of every heart on the first row
@@ -119,8 +121,6 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
             // If the number spinner value is greater than the current number of hearts, generate more hearts
             if (value > (int)hearts->size()){
                 // Create the number of hearts equal to the difference between hearts.size() and value
-                // Logger::Write("[Hearts] - Generating "+std::to_string(value-hearts->size())+" hearts.");
-
                 size_t toGenerate = value-(hearts->size());
                 for (size_t i = 0; i < toGenerate; ++i){
                     Aether::Image* newHeart = new Aether::Image(
@@ -135,7 +135,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
                     newHeart->renderAsync();
 
                     // Add new hearts
-                    editOverlay->addElement(newHeart);
+                    editOverlay->addTempElement(newHeart);
                     hearts->push_back(newHeart);
 
                     // Recalculate row and column

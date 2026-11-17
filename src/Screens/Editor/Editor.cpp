@@ -213,7 +213,7 @@ void EditorScreen::buildScreen(){
 
     // Separator
     Aether::Rectangle* copyrightSeparator = new Aether::Rectangle(
-        logoSeparator->x(), copyrightAndDisclaimer->y()-12,
+        logoSeparator->x(), bottomSeparator->y(),
         logoSeparatorWidth, 2
     );
 

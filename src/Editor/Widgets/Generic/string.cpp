@@ -46,7 +46,7 @@ void Rune::WidgetBuilder::String(EditorWidget* widget){
         ovl->list()->addElement(editBtn);
 
         // focus the first button
-        ovl->setFocused(ovl->list());
+        ovl->panel()->setFocused(ovl->list());
         ovl->list()->setFocused(editBtn);
 
         ovl->onCloseSignal->connectWithId([widget, editBtn](size_t id, bool isSave){

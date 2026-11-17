@@ -110,7 +110,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                     numSpinner->valueContainer()->y()+(numSpinner->valueContainer()->h()/2)-(fullImg->textureHeight()/2)
                 );
 
-                editOverlay->addElement(fullImg);
+                editOverlay->addTempElement(fullImg);
                 staminaTrove->addElement(fullImg);
 
                 segmentOffset += fullImg->textureWidth() + 6;

@@ -217,18 +217,6 @@ namespace Rune {
                     this->tileLabelRect->setHidden(true);
                     this->tileLabelText->setHidden(true);
 
-                    // Make the edit image that shows on selection
-                    Aether::Image* tileEditImg = new Aether::Image(0, 0,
-                        ASSET_PATHS.at("edit"), Aether::Render::Wait);
-                    tileEditImg->setScaleDimensions(tileBtn->w()*0.65, tileBtn->h()*0.65);
-                    tileEditImg->setXY(tileBtn->centreX()-tileEditImg->scaleWidth()/2, 
-                    tileBtn->centreY()-tileEditImg->scaleHeight()/2);
-                    tileEditImg->renderAsync();
-                    tileEditImg->setHidden(!tileBtn->highlighted());
-                    tileEditImg->setColour(Aether::Colour{255, 255, 255, 90});
-
-                    tileBtn->addElement(tileEditImg);
-
                     // Highlight bind
                     tileBtn->onHighlight([this](bool h){
                         if (!this->tileEditImg){
@@ -239,8 +227,10 @@ namespace Rune {
                             this->tileEditImg->renderAsync();
                             this->tileEditImg->setHidden(!tileBtn->highlighted());
                             this->tileEditImg->setColour(Aether::Colour{255, 255, 255, 90});
+                            tileBtn->addElement(this->tileEditImg);
                         }
 
+                        Logger::Important("ich bin highlight");
                         this->tileEditImg->setHidden(!h);
                     });
 
@@ -920,7 +910,16 @@ namespace Rune {
                 Aether::ListButton* actorOptn = new Aether::ListButton(
                     fullName, [this, swapOvl, otherActor](){
                         // Audio::playSound("select");
+
                         this->inventoryItem.actorName = otherActor;
+
+                        // Reset durability/quantity on swap
+                        if (IsCategoryEquipment(inventoryItem.category)){
+                            this->inventoryItem.durability = GetMaxDurability(inventoryItem.actorName);
+                            this->inventoryItem.value = inventoryItem.durability*100;
+                        } else {
+                            this->inventoryItem.value = 1;
+                        }
 
                         this->updateOvlImg();
                         this->updateOvlText();
