@@ -328,7 +328,7 @@ namespace Rune{
         }
 
         std::string FormatValue(const Rune::Inventory::Item& inventoryItem);
-        void ShowPage(EditorMenu* menu, PouchItems* pouchItems, size_t page, std::vector<Aether::Ellipse*>& ellipses);
+        void ShowPage(EditorMenu* menu, PouchItems* pouchItems, size_t page, std::vector<Aether::Ellipse*>& ellipses, bool noFocus=false);
 
         /**
          * @brief Determine an item's category from its actor name

@@ -181,7 +181,8 @@ namespace Rune {
             EditorMenu* menu, 
             Inventory::PouchItems* inventoryItems,
             size_t page, 
-            std::vector<Aether::Ellipse*>& ellipses){
+            std::vector<Aether::Ellipse*>& ellipses,
+            bool noFocus){
             // Get menu category from name
             Inventory::Category menuCategory = GetCategoryFromMenuName(menu->menuName());
 
@@ -251,7 +252,7 @@ namespace Rune {
                 // Make inventory tile (use widgets)
                 // Assign tile a border button, store it for later if first
                 Aether::BorderButton* widgetBtn = new Aether::BorderButton(-1, -1, 1, 1, 4, "", 24, [](){});
-                if (focusBtn == nullptr){
+                if (focusBtn == nullptr && !noFocus){
                     focusBtn = widgetBtn;
                 }
 

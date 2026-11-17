@@ -86,7 +86,7 @@ namespace Aether {
     }
 
     Drawable * BorderButton::renderHighlightBG() {
-        return this->renderer->renderFilledRoundRectTexture(this->w(), this->h(), CORNER_RAD + 2);
+        return this->renderer->renderFilledRoundRectTexture(this->w(), this->h(), CORNER_RAD-4);
     }
 
     Drawable * BorderButton::renderHighlight() {
@@ -94,6 +94,6 @@ namespace Aether {
     }
 
     Drawable * BorderButton::renderSelection() {
-        return this->renderer->renderFilledRoundRectTexture(this->w(), this->h(), CORNER_RAD + 2);
+        return this->renderer->renderFilledRoundRectTexture(this->w(), this->h(), CORNER_RAD-4);
     }
 };

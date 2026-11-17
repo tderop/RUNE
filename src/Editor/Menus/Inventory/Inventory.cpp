@@ -25,6 +25,10 @@
 #define OPTIONS_FRAME_W 320
 #define OPTIONS_FRAME_H 360
 
+#define ARROW_BUTTON_W 64
+#define ARROW_BUTTON_H 64
+#define ARROW_BUTTON_SPACING 24
+
 #define PREV_PAGE Aether::Button::RSTICK_LEFT
 #define NEXT_PAGE Aether::Button::RSTICK_RIGHT
 
@@ -142,6 +146,28 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     // optnOvl->addElement(bgFrame);
     optnOvl->addElement(optnFrame);
     optnOvl->addElement(optnText);
+
+    // Add left and right arrow buttons for touch navigation
+    Aether::BorderButton* buttonR = new Aether::BorderButton(0, 0, ARROW_BUTTON_W, ARROW_BUTTON_H, 0, ">", 32, [](){});
+    Aether::BorderButton* buttonL = new Aether::BorderButton(0, 0, ARROW_BUTTON_W, ARROW_BUTTON_H, 0, "<", 32, [](){});
+
+    buttonR->setX(menu->body()->x() + Inventory::kXStartOffset + Inventory::kGridWidth + 24);
+    buttonR->centreAtY(menu->body()->y() + Inventory::kYStartOffset + (Inventory::kGridHeight/2));
+    buttonL->setX(menu->body()->x() + Inventory::kXStartOffset - buttonL->w() - 24);
+    buttonL->centreAtY(buttonR->centreY());
+
+    buttonR->setBorderColour(LIGHT_SEPARATOR_COLOUR);
+    buttonR->setTextColour(MUTED_TEXT_COLOR);
+    buttonL->setBorderColour(LIGHT_SEPARATOR_COLOUR);
+    buttonL->setTextColour(MUTED_TEXT_COLOR);
+
+    if (maxPage == 0){
+        buttonR->setHidden(true);
+        buttonL->setHidden(true);
+    }
+
+    menu->body()->addElement(buttonR);
+    menu->body()->addElement(buttonL);
     
     menu->screen()->onButtonPress(OPTIONS_BUTTON, [optnOvl, optnFrame](){
         Application* app = Rune::Application::getApplication();
@@ -175,8 +201,8 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
     Rune::Inventory::ShowPage(menu, inventoryItems, *currentPage, *ellipses);
     Timer::end();
 
-    // Go to the next page when ZR is pressed
-    menu->screen()->onButtonPress(NEXT_PAGE, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+    // Helpers
+    auto nextPage = [menu, inventoryItems, currentPage, maxPage, ellipses](bool noFocus=false){
         if (maxPage == 0){
             return;
         }
@@ -189,11 +215,10 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage += 1;
         }
 
-        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
-    });
+        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses, noFocus);
+    };
 
-    // Go to the previous page when ZL is pressed
-    menu->screen()->onButtonPress(PREV_PAGE, [menu, inventoryItems, currentPage, maxPage, ellipses](){
+    auto prevPage = [menu, inventoryItems, currentPage, maxPage, ellipses](bool noFocus=false){
         if (maxPage == 0){
             return;
         }
@@ -205,8 +230,17 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage -= 1;
         }
 
-        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
-    });
+        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses, noFocus);
+    };
+
+    // Go to the next page when ZR is pressed
+    menu->screen()->onButtonPress(NEXT_PAGE, nextPage);
+    // Go to the previous page when ZL is pressed
+    menu->screen()->onButtonPress(PREV_PAGE, prevPage);
+
+    // Support for arrow buttons too
+    buttonR->onPress([nextPage](){nextPage(true);});
+    buttonL->onPress([prevPage](){prevPage(true);});
 
     // This method is run when the menu is cleared
     menu->giveTask([menu, ellipses, optnOvl, inventoryItems](){
