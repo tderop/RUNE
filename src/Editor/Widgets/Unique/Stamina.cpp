@@ -110,7 +110,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                     numSpinner->valueContainer()->y()+(numSpinner->valueContainer()->h()/2)-(fullImg->textureHeight()/2)
                 );
 
-                editOverlay->addTempElement(fullImg);
+                editOverlay->panel()->addElement(fullImg);
                 staminaTrove->addElement(fullImg);
 
                 segmentOffset += fullImg->textureWidth() + 6;
@@ -129,7 +129,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                 );
 
                 fullQuantity->setColour(TEXT_COLOUR);
-                editOverlay->addElement(fullQuantity);
+                editOverlay->panel()->addElement(fullQuantity);
                 staminaTrove->addElement(fullQuantity);
 
                 segmentOffset += fullQuantity->textureWidth() + 12;
@@ -155,7 +155,7 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
                     numSpinner->valueContainer()->y()+(numSpinner->valueContainer()->h()/2)-(segmentImg->textureHeight()/2)
                 );
 
-                editOverlay->addElement(segmentImg);
+                editOverlay->panel()->addElement(segmentImg);
                 staminaTrove->addElement(segmentImg);
             }
 

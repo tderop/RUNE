@@ -64,6 +64,9 @@ Thanks to:
 
 for making RUNE possible!
 
+## Testing
+RUNE was tested frequently in the Ryujinx emulator (for rapid testing) and on a modified Nintendo Switch running Atmosphére CFW (21.0.0, 1.12.1 emuMMC). There may be issues on higher firmware versions that are not 
+
 ## Attribution
 - <a href="https://www.flaticon.com/free-icons/foursquare-check-in" title="foursquare check in icons">Foursquare check in icons created by reussy - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Magnific - Flaticon</a>

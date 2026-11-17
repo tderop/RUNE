@@ -141,7 +141,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
                 for (int i = (hearts->size()-1); i > value-1; i--){
                     // Remove the heart image at this index
                     Aether::Image* heartImg = hearts->at(i);
-                    editOverlay->removeElement(heartImg);
+                    editOverlay->removeTempElement(heartImg);
 
                     // Remove the heart from the vector
                     hearts->erase(hearts->begin()+i);
@@ -200,7 +200,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
             for (size_t i = 0; i < hearts->size(); ++i){
                 Aether::Image* heartImg = hearts->at(i);
-                widget->getWidgetOverlay()->removeElement(heartImg);
+                widget->getWidgetOverlay()->removeTempElement(heartImg);
             }
 
             // Free memory
