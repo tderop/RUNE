@@ -17,6 +17,9 @@
 
 #include <math.h>
 
+#define MENU_FADE_OUT_TIME 0.33f
+#define MENU_FADE_IN_TIME 0.5f
+
 /**
  * The current issue is that compilation fails due to linker errors.
  * All to do with Rune::Application. Most likely a syntax misunderstanding.
@@ -47,6 +50,9 @@ namespace Rune{
                 Logger::Write("[AETHER] - "+message);
             }
         });
+
+        // set the window for tweens
+        Aether::Tween::setWindow(_window);
 
         // Set font spacing (why)
         this->_window->setFontSpacing(1.25);
@@ -165,20 +171,16 @@ namespace Rune{
             if (this->_currentScreen != nullptr && this->_fadeScreens){ // only fade out if there is a current screen
                 fadeOutRect = new Aether::Rectangle(0, 0, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, 0);
                 fadeOutRect->setColour(Aether::Colour{0, 0, 0, 0});
-
                 Logger::Write("[Rune::Application] - Current screen is not null. Fading out screen.");
+
                 this->_currentScreen->addElement(fadeOutRect); // add rect to current screen
 
                 // fade IN the rectangle
-                do {
-                    roundedOpacity = rectOpacity;
-
-                    fadeOutRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::min(roundedOpacity, 255))});
-                    rectOpacity += 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
-                    Logger::Write(std::to_string(roundedOpacity));
-
-                    usleep(TWEEN_UPDATE_TIME);
-                } while (rectOpacity < 255.0f);
+                Aether::Tween t(fadeOutRect, MENU_FADE_OUT_TIME, Aether::EasingStyle::Cubic, 
+                    Aether::EasingDirection::Out, {
+                        .Transparency = 255
+                    });
+                t.play();
 
                 Logger::Write("[Rune::Application] - Fade out complete.");
             }
@@ -202,7 +204,7 @@ namespace Rune{
             this->_currentScreen = screen;
             this->_currentScreenName = screenName;
 
-            if (this->_fadeScreens){
+            if (this->_fadeScreens && fadeInRect != nullptr){
                 // remove rect from old screen
                 if (fadeOutRect != nullptr && oldScreen != nullptr){
                     oldScreen->removeElement(fadeOutRect);
@@ -210,15 +212,11 @@ namespace Rune{
 
                 // fade in new screen
                 Logger::Write("[Rune::Application] - Fading in new screen.");
-                do {
-                    roundedOpacity = rectOpacity;
-
-                    fadeInRect->setColour(Aether::Colour{0, 0, 0, static_cast<char>(std::max(roundedOpacity, 0))});
-                    rectOpacity -= 150.0f*(static_cast<float>(TWEEN_UPDATE_TIME)/1000000);
-                    Logger::Write(std::to_string(roundedOpacity));
-
-                    usleep(TWEEN_UPDATE_TIME);
-                } while (rectOpacity > 0.0f);
+                Aether::Tween t(fadeInRect, MENU_FADE_IN_TIME, Aether::EasingStyle::Cubic, Aether::EasingDirection::Out, {
+                    .Transparency = 0
+                });
+                t.play();
+                
                 Logger::Write("[Rune::Application] - Fade in complete.");
 
                 // remove rect from new screen

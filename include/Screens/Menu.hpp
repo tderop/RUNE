@@ -9,9 +9,10 @@
 
 class MenuScreen : public Aether::Screen{
 private:
-    Rune::Application* app;
+    Rune::Application* app = nullptr;
     Aether::List* saveSlotScroll = nullptr;
-    Trove* trove;
+    Aether::Rectangle* fadeRect = nullptr;
+    Trove* trove = nullptr;
     // std::vector<Aether::Element*> myElements;
 
 public:

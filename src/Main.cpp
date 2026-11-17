@@ -209,7 +209,7 @@ Result initApplet(){
     // rc = Rune::Romfs::ExtractAssets();
 
     // Initialise the RUNE application manager. This handles screen management.
-    app = new Rune::Application(initSuccess);
+    app = new Rune::Application(initSuccess, true);
     Rune::Application::setApplication(app);
 
     // Initialise Aether tweening

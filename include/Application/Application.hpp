@@ -84,7 +84,6 @@ namespace Rune{
 
             // Determines whether to provide extensive logs or only important ones
             static inline bool IsVerbose = false;
-
             static inline bool TestsRunning = false;
     };
 }
