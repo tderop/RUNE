@@ -420,7 +420,7 @@ namespace Aether {
 
             /**
              * @brief Set element as activated
-             */
+            */
             virtual void setActive();
 
             /**
@@ -435,7 +435,7 @@ namespace Aether {
              *
              * @param e element to focus
              */
-            virtual void setFocused(Element * e);
+            void setFocused(Element * e); // learned my lesson ;-;
 
             /**
              * @brief Sets current element as unfocused

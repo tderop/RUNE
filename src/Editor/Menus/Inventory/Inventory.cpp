@@ -14,339 +14,45 @@
 
 #include <Editor/Menus/Inventory.hpp>
 #include <Application/Application.hpp>
+#include <Editor/Menus/Inventory/Pouch.hpp>
 
-#include <algorithm>
 #include <string>
 #include <vector>
-#include <map>
 
 #define OPTIONS_BUTTON Aether::Button::X
 #define OPTIONS_FRAME_W 320
 #define OPTIONS_FRAME_H 360
 
-/**
- * Rune::Inventory::Item Value:
- * - Weapons (Swords, Shields, Bows): Durability (MAX __INT32_MAX__) * 100 (why x100 I do not know, f32 support without f32 array?)
- * - Materials, Food, Key Items: Quantity (MAX 999)
- * - Armor: Dye Color (0 = undyed, -1 = not dyeable, 15 = max dye color - needs more RE)
- */
 void Rune::MenuBuilder::Inventory(EditorMenu* menu){
-    Logger::Write("[Rune::MenuBuilder::Inventory] - Running menu builder...");
-
-    // Disable right stick navigation
-    // Aether::SetRightStickNavigation(false);
-
-    // Get the menu category
-    Rune::Inventory::Category menuCategory = Rune::Inventory::GetCategoryFromMenuName(menu->menuName());
-
-    // Determine if there are inventory keys for the current menu
-    auto prefixEntry = Rune::Inventory::kInventoryPrefixes.find(menuCategory);
-
-    // Do not proceed if no prefixes
-    if (prefixEntry == Rune::Inventory::kInventoryPrefixes.end()){
-        return;
+    // Make a new pouch (parse the inventory save data) if one hasn't been made yet
+    if (Inventory::CurrentPouch == nullptr){
+        Logger::Importantf("[INVENTORY] - Creating new pouch.");
+        Inventory::CurrentPouch = new Inventory::Pouch(menu->saveFile());
     }
 
-    Logger::Write("[Rune::MenuBuilder::Inventory] - Got prefix entry!");
+    // Get the items for this category
+    Logger::Importantf("[INVENTORY] - Getting items in this category.");
+    Inventory::Category category = Inventory::GetCategoryFromMenuName(menu->menuName());
 
-    std::vector<std::string> prefixes = prefixEntry->second;
-
-    // Check for ignores too
-    auto ignoresEntry = Rune::Inventory::kInventoryIgnores.find(menuCategory);
-    std::vector<std::string> ignores;
+    // Default to hardcoded max
+    size_t maxSlots = GetMaxSlotsFromCategory(category);
     
-    if (ignoresEntry != Rune::Inventory::kInventoryIgnores.end()){
-        ignores = ignoresEntry->second;
+    // Check max unlocked slots in save data
+    auto maxIt = Inventory::kSlotKeys.find(category);
+    if (maxIt != Inventory::kSlotKeys.end()){
+        maxSlots = static_cast<size_t>(std::get<int>(Save
+            ::GetEntryFromDataName(*menu->saveFile(), 
+            maxIt->second)->value));
     }
+    Inventory::PouchItems* inventoryItems = new Inventory::PouchItems(
+        Inventory::CurrentPouch->getItemsByCategory(
+            category, maxSlots));
 
-    // Get a list of all the valid indexes for this category
-    auto inventoryItems = std::make_shared<std::vector<Rune::Inventory::Item>>();
-
-    Rune::Save::Entry* inventoryEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(),Rune::Inventory::kInventoryKey);
-    auto inventory = std::get<std::vector<std::string>>(inventoryEntry->value);
-    Logger::Important(Rune::Save::ValueToString(inventory));
-
-    // Get the itemValues entry entry
-    Rune::Save::Entry* valuesEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), Rune::Inventory::kInventoryValueKey);
-    auto itemValues = std::get<std::vector<int32_t>>(valuesEntry->value); 
-
-    // Get buffs data
-    auto flagSpKeyEntry  = Rune::Inventory::kFlagSpKeys.find(menuCategory);
-    auto valueSpKeyEntry = Rune::Inventory::kValueSpKeys.find(menuCategory);
-    
-    std::string flagSpKey;
-    std::string valueSpKey;
-
-    Rune::Save::Entry* flagSpEntry;
-    Rune::Save::Entry* valueSpEntry;
-
-    std::vector<int32_t> flagSp;
-    std::vector<int32_t> valueSp;
-
-    if (flagSpKeyEntry != Rune::Inventory::kFlagSpKeys.end() 
-        && valueSpKeyEntry != Rune::Inventory::kValueSpKeys.end())
-    {     
-        flagSpKey  = flagSpKeyEntry->second;
-        valueSpKey = valueSpKeyEntry->second;
-
-        flagSpEntry  = Rune::Save::GetEntryFromDataName(*menu->saveFile(), flagSpKeyEntry->second);
-        valueSpEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), valueSpKeyEntry->second);
-
-        flagSp = std::get<std::vector<int32_t>>(flagSpEntry->value);
-        valueSp = std::get<std::vector<int32_t>>(valueSpEntry->value);
-    }
-
-    int currentIdx = -1;
-    int localIdx = 0; // this index only increments when a valid slot has been found
-
-    // For keeping track of the arrows subsection
-    int arrowSlots = 0;
-
-    auto tileStyleEntry = Rune::Inventory::kLabelTileStyles.find(menuCategory);
-    Rune::Inventory::TileStyle tileStyle = Rune::Inventory::TileStyle::NoLabel;
-
-    // unpack style pair
-    if (tileStyleEntry != Rune::Inventory::kLabelTileStyles.end()){
-        tileStyle = tileStyleEntry->second;
-    }
-
-    // A vector of arrows to be merged with the bows inventory afterwards
-    std::vector<Rune::Inventory::Item> toMerge;
-
-    // Iterate through inventory and populate slots
-    for (const std::string& actorName : inventory){
-        // Two linear searches through prefixes and ignores
-        currentIdx++;
-
-        // Check if valid prefix
-        bool isArrow = Inventory::IsActorArrow(actorName);
-        bool foundPrefix = false;
-
-        if (!(isArrow && menuCategory == Rune::Inventory::Category::Bows)){ // Hardcoded exception for arrows
-            for (const std::string& prefix : prefixes){
-                // If the prefix was found, check ignores too
-                if ((actorName.find(prefix) != std::string::npos)){
-                    foundPrefix = true;
-                    break;
-                }
-            }
-
-            // No prefix found? Continue to next inventory item
-            if (!foundPrefix){
-                continue;
-            }  
-
-            // Valid prefix found, check if this item is ignored
-            if (!ignores.empty()){
-                bool foundIgnore = false;
-
-                // Iterate through ignores
-                for (const std::string& ignore : ignores){
-                    // An ignore was found, break and continue to next prefix
-                    if (actorName.find(ignore) != std::string::npos){
-                        foundIgnore = true;
-                        break;
-                    }
-                }
-
-                // ignore this one
-                if (foundIgnore){
-                    continue;
-                }
-            }
-        }
-
-        // A valid item, process and make inventory object
-        std::string itemName = Rune::Inventory::GetNameFromActorName(actorName);
-        int32_t itemValue = itemValues.at(currentIdx);
-
-        // Get buffs
-        int32_t itemFlagSp = 0;
-        int32_t itemValueSp = 0;
-
-        // Check that there are buffs for this inventory type and apply them
-        if (!flagSp.empty() && static_cast<int>(flagSp.size()) >= localIdx+1){
-            itemFlagSp = flagSp.at(localIdx);
-        }
-
-        if (!valueSp.empty() && static_cast<int>(valueSp.size()) >= localIdx+1){
-            itemValueSp = valueSp.at(localIdx);
-        }
-
-        // Make a new inventory item object representing the item in Link's pouch
-
-        // Shadowed values
-        Rune::Inventory::Category menuCategoryOvr = menuCategory;
-        Rune::Inventory::TileStyle tileStyleOvr = tileStyle; 
-        
-        // If this is an arrow object, overwrite the category and style, and update the arrow count
-        if (menuCategoryOvr == Rune::Inventory::Category::Bows && isArrow){
-            menuCategoryOvr = Rune::Inventory::Category::Arrows;
-            tileStyleOvr = Inventory::TileStyle::NoLabel;
-            arrowSlots++;
-        }
-
-        Rune::Inventory::Item inventoryItem{
-            actorName, 
-            itemName, 
-            itemValue, 
-            static_cast<size_t>(currentIdx),
-            static_cast<size_t>(localIdx),
-            menuCategoryOvr,
-            itemFlagSp,
-            itemValueSp,
-            tileStyleOvr
-        };
-
-        // Add Sp keys
-        inventoryItem.flagSpKey  = flagSpKey;
-        inventoryItem.valueSpKey = valueSpKey;
-
-        // Store the inventory item
-        if (!isArrow){
-            inventoryItems->push_back(inventoryItem);
-        }
-        else {
-            toMerge.push_back(inventoryItem);
-        }
-
-        // Increment the local index as the value was successfully parsed
-        localIdx++;
-    }
-
-    // An empty inventory slot template for this category
-    Rune::Inventory::Item emptySlot{"", "", 0, 0, 
-        0, menuCategory, 0, 0, tileStyle,
-        Rune::Inventory::TileType::Empty, ""};
-    
-    // If there are available flagSp/valueSp keys, then set them
-    emptySlot.flagSpKey = flagSpKey;
-    emptySlot.valueSpKey = valueSpKey;
-
-    // Find the first empty slot in PorchItem
-    auto emptyIt = std::find_if(inventory.begin(), inventory.end(),
-        [](const std::string& s){ return s.empty(); });
-
-    // Currently, if no value is found, this could be very destructive
-    // Additionally there are no checks to ensure the vector does not go beyond a size of 420 too
-    // so this could result in save file corruption if handled wrong
-    bool foundSafeIdx=false;
-    if (emptyIt != inventory.end()){
-        foundSafeIdx=true;
-        currentIdx = std::distance(inventory.begin(), emptyIt);
-        // Logger::Importantf("Actor name at %d: %s", currentIdx, inventory.at(currentIdx).c_str());
-    }
-
-    // Pad to fill all available unlocked slots
-    // // Show plus button only on this route
-    auto it = Rune::Inventory::kSlotKeys.find(menuCategory);
-
-    // In this case, the menu is upgradeable
-    if (it != Rune::Inventory::kSlotKeys.end() && foundSafeIdx){
-        // Get the max slots unlocked from the save file
-        Rune::Save::Entry* slotEntry = Rune::Save::GetEntryFromDataName(*menu->saveFile(), it->second);
-        int maxUnlockedSlots = std::get<int32_t>(slotEntry->value);
-
-        // Fill with padding slots up to unlocked max
-        // Break out if no safe index was found to prevent data corruption
-        for (int i = (inventoryItems->size()-1); i < (maxUnlockedSlots-1) && foundSafeIdx; ++i){
-            // Copy the empty slot template and update index values
-            Rune::Inventory::Item newItem = emptySlot;
-            newItem.index = currentIdx;
-            newItem.localIndex = localIdx;
-
-            inventoryItems->push_back(newItem);
-
-            // Keep incrementing currentIdx until another valid slot is found
-            foundSafeIdx = false;
-            for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
-                // Safe index to overwrite was found, break
-                if (inventory.at(j).empty()){
-                    currentIdx = j;
-                    foundSafeIdx=true;
-
-                    break;
-                }
-            }
-
-            // Increment local index, guaranteed to be safe due to hard cap on max slots
-            localIdx++;
-        }
-
-        // If the number of available slots is not the maximum and safe slots are still available, create an "add"
-        // tile so the user can add another slot
-        auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
-
-        if (it != Rune::Inventory::kMaxSlots.end() && foundSafeIdx){
-            size_t maxSlots = it->second;
-
-            if (inventoryItems->size() < maxSlots){
-                Rune::Inventory::Item addItem;
-                addItem.category = menuCategory;
-                addItem.type = Rune::Inventory::TileType::Add;
-
-                inventoryItems->push_back(addItem);
-            }
-        }
-        
-    } else { // Pad to fill all available slots
-        auto it = Rune::Inventory::kMaxSlots.find(menuCategory);
-        if (it != Rune::Inventory::kMaxSlots.end() && foundSafeIdx){
-            // Get max possible slots
-            int maxSlots = it->second;
-
-            // Add empty slots for every available slot
-            // Do not continue if no more safe slots
-            for (int i = (inventoryItems->size()-1); i < maxSlots-1 && foundSafeIdx; ++i){
-                Rune::Inventory::Item newItem = emptySlot;
-                newItem.index = currentIdx;
-                inventoryItems->push_back(newItem);
-
-                // Search for new valid slot
-                foundSafeIdx = false;
-                for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
-                    if (inventory.at(j).empty()){
-                        currentIdx = j;
-                        foundSafeIdx = true;
-
-                        break;
-                    }
-                }
-            }
-
-        }
-    }
-
-    // Merge toMerge with inventoryItems
-    for (const auto& item : toMerge){
-        inventoryItems->push_back(item);
-    }
-
-    // Fill additional arrow slots (up to 6 by default)
-    int emptyArrowSlots = Rune::Inventory::kMaxArrowSlots - arrowSlots;
-    if (menuCategory == Rune::Inventory::Category::Bows 
-            && emptyArrowSlots > 0 && foundSafeIdx){
-        
-        for (int i = 0; i < emptyArrowSlots && foundSafeIdx; ++i){
-            Rune::Inventory::Item newItem = emptySlot;
-            newItem.index = currentIdx;
-
-            newItem.category = Rune::Inventory::Category::Arrows;
-            newItem.style = Rune::Inventory::TileStyle::NoLabel;
-            
-            inventoryItems->push_back(newItem);
-
-            // Search for new valid slot
-            foundSafeIdx = false;
-            for (int j = ++currentIdx; j < Rune::Inventory::kInventoryMaxCount; ++j){
-                if (inventory.at(j).empty()){
-                    currentIdx = j;
-                    foundSafeIdx = true;
-
-                    break;
-                }
-            }
-        }
+    // Add arrows if this is a bows page
+    if (category == Inventory::Category::Bows){
+        Inventory::PouchItems arrows = Inventory::CurrentPouch->getItemsByCategory(Inventory::Category::Arrows, 
+            Inventory::kMaxArrowSlots);
+        inventoryItems->insert(inventoryItems->end(), arrows.begin(), arrows.end());
     }
 
     // Calculate max pages
@@ -439,14 +145,12 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         optnOvl->close();
     });
 
-    // if (Inventory::IsCategoryEquipment(menuCategory)){}
-
     // Show the first page
     Timer::start();
-    Rune::Inventory::ShowPage(menu, *inventoryItems, *currentPage, *ellipses);
+    Rune::Inventory::ShowPage(menu, inventoryItems, *currentPage, *ellipses);
     Timer::end();
 
-    Logger::Importantf("Time taken to generate initial %s page: %.2fms", menu->menuName().c_str(), Timer::get()/1E+6);
+    // Logger::Importantf("Time taken to generate initial %s page: %.2fms", menu->menuName().c_str(), Timer::get()/1E+6);
 
     // Bind navigation actions
     InputSystem& inputService = InputSystem::getService();
@@ -466,7 +170,7 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage += 1;
         }
 
-        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
+        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
     });
 
     // Go to the previous page when ZL is pressed
@@ -481,11 +185,14 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
             *currentPage -= 1;
         }
 
-        Rune::Inventory::ShowPage(menu, *inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
+        Rune::Inventory::ShowPage(menu, inventoryItems, static_cast<size_t>(*currentPage), *ellipses);
     });
 
     // This method is run when the menu is cleared
-    menu->giveTask([menu, ellipses, optnOvl](){
+    menu->giveTask([menu, ellipses, optnOvl, inventoryItems](){
+        // Delete heap allocations
+        delete inventoryItems;
+
         // Unbind pagination actions
         InputSystem& inputService = InputSystem::getService();
         inputService.unbind("NextPage");
@@ -497,6 +204,11 @@ void Rune::MenuBuilder::Inventory(EditorMenu* menu){
         // remove the options control
         menu->controlBar()->removeControl(OPTIONS_BUTTON);
         menu->window()->removeOverlay(optnOvl);
+
+        // Reset the blank pouch tiles
+        if (Inventory::CurrentPouch != nullptr){
+            Inventory::CurrentPouch->resetBlankSlots();
+        }
     });
 
     return;

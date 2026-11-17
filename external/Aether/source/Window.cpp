@@ -434,6 +434,8 @@ namespace Aether {
         while (!Element::deferredPressFuncs_.empty()){
             std::function<void()> callback = Element::deferredPressFuncs_.front();
             Element::deferredPressFuncs_.pop();
+
+            this->renderer()->logMessage("Running deferred press function...", false);
             callback();
         }
 

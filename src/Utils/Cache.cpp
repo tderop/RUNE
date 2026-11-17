@@ -47,6 +47,10 @@ void Cache::put(const std::string& key, std::any data){
     this->_cache[key] = {data, _usageOrder.begin()};
 }
 
+bool Cache::has(const std::string& key){
+    return (this->_cache.count(key) != 0);    
+}
+
 void Cache::clear(){
     // Empty the cache
     this->_cache.clear();

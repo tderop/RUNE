@@ -364,6 +364,7 @@ namespace Rune {
             ovlSwapBtn->addElement(ovlSwapText);
 
             ovlSwapBtn->onPress([this](){
+                Logger::Important("[TILE] - Swap button pressed.");
                 this->onSwap();
             });
 
@@ -778,7 +779,7 @@ namespace Rune {
             this->window = this->app->window();
             this->saveFile = this->menu->saveFile();
             this->saveEntry = this->widget->getSaveEntry();
-            this->originalInventoryItem = std::any_cast<Item*>(widgetMeta.at(0));
+            this->originalInventoryItem = std::any_cast<std::shared_ptr<Item>>(widgetMeta.at(0));
             this->inventoryItem = *this->originalInventoryItem; // Editable copy
 
             // // Build the tile button // // 
@@ -837,22 +838,33 @@ namespace Rune {
         }
 
         void Tile::onSwap(){
+            Logger::Important("[TILE] - Running onSwap()...");
             if (this->ovl == nullptr){
+                Logger::Important("[TILE] - ovl is nullptr!");
                 return;
             }
+
+            Logger::Important("[TILE] - Playing menu open sound...");
             Audio::playSound("open_menu");
 
             // Disable exiting the overlay temporarily
+            Logger::Important("[TILE] - Disabling exiting the overlay...");
             this->ovl->setExitEnabled(false);
 
             // Show loading message
+            Logger::Important("Getting the application...");
             Application* app = Application::getApplication();
+
             Aether::MessageBox* loadingMsg = app->showLoading("Loading items...", true);
             loadingMsg->onButtonPress(Aether::Button::B, [](){}); // Stub exiting the menu
             
+            Logger::Importantf("[TILE] - Category: %d", static_cast<int>(inventoryItem.category));
+
             // Get a list of available actor names
             std::vector<std::string> otherActorNames 
                 = CategoryActors.find(inventoryItem.category)->second;
+
+            Logger::Importantf("[TILE] - Found other actor names");
 
             // Make a main containter
             Aether::Overlay* swapOvl = new Aether::Overlay();
@@ -917,7 +929,7 @@ namespace Rune {
                         this->ovl->setExitEnabled(true);
                         this->window->removeOverlay(swapOvl);
 
-                        this->ovl->setFocused(this->ovlSwapBtn);
+                        this->ovl->focusElement(this->ovlSwapBtn);
                     }
                 );
                 actorOptn->setLineColour(LIGHT_SEPARATOR_COLOUR);
@@ -976,7 +988,7 @@ namespace Rune {
 
                 this->ovl->setExitEnabled(true);
                 this->window->removeOverlay(swapOvl);
-                this->ovl->setFocused(this->ovlSwapBtn);
+                this->ovl->focusElement(this->ovlSwapBtn);
             });
 
             swapOvl->setFocused(list);
@@ -1012,71 +1024,13 @@ namespace Rune {
 
         void Tile::onClose(bool isSave){
             if (isSave){
-                // Audio::playSound("confirm");
-
-                // ActorName changed
-                Save::Entry* porchItemEntry = Save::GetEntryFromDataName(*this->saveFile, kInventoryKey);
-                auto& porchItem = std::get<std::vector<std::string>>(porchItemEntry->value);
-                
-                if (inventoryItem.index >= porchItem.size()){
-                    Logger::Importantf("(PorchItem) Error: Index %d is OOB", inventoryItem.index);
-                } else {
-                    std::string oldName = porchItem.at(inventoryItem.index);
-                    porchItem[inventoryItem.index] = inventoryItem.actorName;
-                    Logger::Importantf("Saved ActorName Update (%s -> %s)", oldName.c_str(), inventoryItem.actorName.c_str());
-                }
-
-                // PorchItem_Value1 changed
-                Save::Entry* primaryValueEntry = Save::GetEntryFromDataName(*this->saveFile, kInventoryValueKey);
-                auto& primaryValue = std::get<std::vector<int32_t>>(primaryValueEntry->value);
-
-                if (inventoryItem.index >= primaryValue.size()){
-                    Logger::Importantf("(Value1) Error: Index %d is OOB", inventoryItem.index);
-                } else {
-                    primaryValue[inventoryItem.index] = inventoryItem.value;
-                    Logger::Importantf("Saved Value1 Update (%d)", inventoryItem.value);
-                }
-
-                // PorchItem_FlagSp changed
-                if (this->ovlSecondaryFlagDropdown != nullptr){
-                    Save::Entry* secondaryFlagEntry = Save
-                        ::GetEntryFromDataName(*this->saveFile, 
-                        inventoryItem.flagSpKey);
-
-                    auto& secondaryFlags = std::get<std::vector<int32_t>>(
-                        secondaryFlagEntry->value);
-
-                    if (inventoryItem.localIndex >= secondaryFlags.size()){
-                        Logger::Importantf("(FlagSp) Error: Index %d is OOB", inventoryItem.localIndex);
-                    } else {
-                        secondaryFlags[this->inventoryItem.localIndex]= inventoryItem.flagSp;
-                        Logger::Importantf("Saved FlagSp Update (%d)", inventoryItem.flagSp);
-                    }
-                }
-
-                // PorchItem_ValueSp changed
-                if (this->ovlSecondaryValueStepper != nullptr){
-                    Save::Entry* secondaryValueEntry = Save
-                        ::GetEntryFromDataName(*this->saveFile, 
-                        inventoryItem.valueSpKey);
-                    auto& secondaryValues = std::get<std::vector<int32_t>>(
-                        secondaryValueEntry->value);
-                        
-                    if (inventoryItem.localIndex >= secondaryValues.size()){
-                        Logger::Importantf("(ValueSp) Error: Index %d is OOB", inventoryItem.localIndex);
-                    } else {
-                        secondaryValues[this->inventoryItem.localIndex] = inventoryItem.valueSp;
-                        Logger::Importantf("Saved ValueSp Update (%d)", inventoryItem.valueSp);
-                    }
-                }
-
-                // Request for the menu to reload to generate new tile
-                // this->menu->requestReload();
-                // Logger::Important("Requested Menu Reload.");
+                // Update the tile type depending on its occupied state
                 inventoryItem.type = (inventoryItem.actorName.empty()) ? TileType::Empty : TileType::Standard;
 
-                // Update original item in vector
+                // Update the item in the Pouch
                 *originalInventoryItem = this->inventoryItem;
+
+                // Save changes made to the pouch
 
                 // Update my tile
                 this->updateThumbnail();

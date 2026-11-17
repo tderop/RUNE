@@ -66,6 +66,12 @@ class Cache{
         void put(const std::string& key, std::any data);
 
         /**
+         * @brief Check if a key is in the cache
+         * @param key The key where the data may be stored
+         */
+        bool has(const std::string& key);
+
+        /**
          * @brief Clear the cache
          */
         void clear();

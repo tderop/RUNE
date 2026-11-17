@@ -105,6 +105,6 @@ class WidgetOverlay : public Aether::Overlay{
 
         bool exitEnabled();
 
-        void setFocused(Element* e) override;
+        void focusElement(Element* e);
 
 };

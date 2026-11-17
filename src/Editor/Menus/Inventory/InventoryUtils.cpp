@@ -1,6 +1,7 @@
 #include <Editor/MenuBuilder.hpp>
 #include <Editor/EditorMenu.hpp>
 #include <Editor/Menus/Inventory.hpp>
+#include <Editor/Menus/Inventory/Pouch.hpp>
 
 #include <Json/Json.hpp>
 #include <Utils/Logger.hpp>
@@ -176,10 +177,9 @@ namespace Rune {
 
         void ShowPage(
             EditorMenu* menu, 
-            std::vector<Item>& inventoryItems,
+            Inventory::PouchItems* inventoryItems,
             size_t page, 
             std::vector<Aether::Ellipse*>& ellipses){
-            
             // Get menu category from name
             Inventory::Category menuCategory = GetCategoryFromMenuName(menu->menuName());
 
@@ -198,26 +198,26 @@ namespace Rune {
             size_t cursorEnd   = static_cast<size_t>(
                 std::min(
                     static_cast<int>(cursorStart+kTilesPerPage),
-                    static_cast<int>(inventoryItems.size())
+                    static_cast<int>(inventoryItems->size())
                 )
             );
 
             for (size_t i = cursorStart; i < cursorEnd; ++i){
                 // Get the inventory item
-                Item& inventoryItem = inventoryItems.at(i);
+                auto inventoryItem = inventoryItems->at(i);
 
                 // Calculate position of the new tile
                 int tileX = startX + (kTileSize+kTilePadding)*((i-cursorStart)%kTilesPerRow);
                 int tileY = startY + ((i-cursorStart)/kTilesPerRow)*(kTileSize+kTilePadding);
 
                 // Determine which tile type to use
-                inventoryItem.x = tileX;
-                inventoryItem.y = tileY;
+                inventoryItem->x = tileX;
+                inventoryItem->y = tileY;
 
                 // Resolve data only for visible page
                 // Load data only if uninitialised
-                if (!inventoryItem._initialised){
-                    Rune::Json jsonObj = GetActorObject(inventoryItem.actorName);
+                if (!inventoryItem->_initialised){
+                    Rune::Json jsonObj = GetActorObject(inventoryItem->actorName);
 
                     // using lambdas now because it was getting out of control
                     auto getString = [&](const std::string& key){
@@ -228,19 +228,19 @@ namespace Rune {
                         return GetActorValueFromObject<int>(jsonObj, key).value_or(-1);
                     };
 
-                    inventoryItem.iconActorName = getString("IconActorName");
-                    inventoryItem.nextRankActorName = getString("NextRank");
-                    inventoryItem.prevRankActorName = getString("PrevRank");
-                    inventoryItem.attack = getInt("Attack");
-                    inventoryItem.guard = getInt("Guard");
-                    inventoryItem.durability = getInt("Durability");
-                    inventoryItem.defence = getInt("Defence");
+                    inventoryItem->iconActorName = getString("IconActorName");
+                    inventoryItem->nextRankActorName = getString("NextRank");
+                    inventoryItem->prevRankActorName = getString("PrevRank");
+                    inventoryItem->attack = getInt("Attack");
+                    inventoryItem->guard = getInt("Guard");
+                    inventoryItem->durability = getInt("Durability");
+                    inventoryItem->defence = getInt("Defence");
 
                     // Set modifier info
-                    inventoryItem.modifier = (Modifier)inventoryItem.flagSp;
+                    inventoryItem->modifier = (Modifier)inventoryItem->flagSp;
 
                     // Data is stored, initialisation is no longer necessary
-                    inventoryItem._initialised = true;
+                    inventoryItem->_initialised = true;
                 }
 
                 // Make inventory tile (use widgets)
@@ -253,8 +253,8 @@ namespace Rune {
                     kInventoryKey,
                     true,
                     {
-                        &inventoryItem,
-                        FormatValue(inventoryItem),
+                        inventoryItem,
+                        FormatValue(*inventoryItem),
                         widgetBtn
                     },
                     menu->body()
@@ -428,6 +428,33 @@ namespace Rune {
 
         bool IsActorArrow(std::string_view actorName){
             return (actorName.find(kArrowPrefix) != std::string::npos);
+        }
+
+        std::string GetFlagSpKeyFromCategory(Category category){
+            auto it = kFlagSpKeys.find(category);
+            if (it == kFlagSpKeys.end()){
+                return "";
+            }
+
+            return it->second;
+        }
+
+        std::string GetValueSpKeyFromCategory(Category category){
+            auto it = kValueSpKeys.find(category);
+            if (it == kValueSpKeys.end()){
+                return "";
+            }
+
+            return it->second;
+        }
+
+    int GetMaxSlotsFromCategory(Category category){
+            auto it = kMaxSlots.find(category);
+            if (it == kMaxSlots.end()){
+                return -1;
+            }
+
+            return it->second;
         }
     } // namespace Inventory
 } // namespace Rune

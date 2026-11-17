@@ -266,7 +266,7 @@ bool WidgetOverlay::exitEnabled(){
     return this->_exitEnabled;
 }
 
-void WidgetOverlay::setFocused(Aether::Element* e){
+void WidgetOverlay::focusElement(Aether::Element* e){
     this->_panel->setFocused(e);
 }
 

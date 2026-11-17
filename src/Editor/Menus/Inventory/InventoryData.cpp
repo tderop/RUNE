@@ -72,7 +72,7 @@ const std::map<Rune::Inventory::Category, std::vector<Rune::Inventory::Modifier>
 
 const std::map<Rune::Inventory::Category, size_t> Rune::Inventory::kMaxSlots = {
     {Rune::Inventory::Category::Weapons, 20},
-    {Rune::Inventory::Category::Bows, 13},
+    {Rune::Inventory::Category::Bows, 14},
     {Rune::Inventory::Category::Shields, 20},
     {Rune::Inventory::Category::Armor, 100}, // goof
     {Rune::Inventory::Category::Materials, 160},

@@ -30,7 +30,7 @@ namespace Rune {
                 /** @brief The inventoryItem shared ptr */
                 Item inventoryItem;
                 /** @brief The original item state before it was modified */
-                Item* originalInventoryItem;
+                std::shared_ptr<Item> originalInventoryItem;
 
                 /** @brief The Tile BorderButton */
                 Aether::BorderButton* tileBtn=nullptr;

@@ -25,6 +25,8 @@
 // Menus used to hold widgets
 #include <Editor/EditorMenu.hpp>
 #include <Editor/MenuBuilder.hpp>
+#include <Editor/Menus/Inventory.hpp>
+#include <Editor/Menus/Inventory/Pouch.hpp>
 
 // Constants
 int TAB_BUTTON_HEIGHT = 64; // px
@@ -340,8 +342,17 @@ void EditorScreen::buildScreen(){
         confirmBox->setString("Are you sure you want to exit?");
         confirmBox->leftButton()->onPress([this, confirmBox](){
             Rune::Audio::playSound("decide");
-
             confirmBox->close();
+
+            // clear the pouch state
+            if (Rune::Inventory::CurrentPouch != nullptr){
+                delete Rune::Inventory::CurrentPouch;
+                Rune::Inventory::CurrentPouch = nullptr;
+            }
+            else {
+                Logger::Important("CurrentPouch is nullptr!");
+            }
+
             this->app->showScreen("Menu");
         });
 
@@ -374,6 +385,14 @@ void EditorScreen::buildScreen(){
             // remove the confirm box and show loading
             confirmBox->close();
             auto loadingMsg = this->app->showLoading("Packing values...", true);
+
+            // save any inventory changes made
+            if (Rune::Inventory::CurrentPouch != nullptr){
+                Rune::Inventory::CurrentPouch->save();
+            }
+            else {
+                Logger::Important("CurrentPouch is nullptr!");
+            }
 
             // encode the save file
             Rune::Save::RawFile rawFile;

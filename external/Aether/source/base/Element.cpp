@@ -1,11 +1,10 @@
 #include <algorithm>
 #include "Aether/base/Element.hpp"
-#include <limits>
 
 // Border size of highlight
-#define HIGHLIGHT_SIZE 6
+#define HIGHLIGHT_SIZE 4
 // Corner radius of highlight
-#define HIGHLIGHT_RAD 4
+#define HIGHLIGHT_RAD 3
 
 namespace Aether {
     Colour Element::hiBGColour = Colour(255, 255, 255, 255);

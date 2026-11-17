@@ -1,9 +1,7 @@
 #pragma once
 
 #include <Aether/Aether.hpp>
-#include <any>
 #include <optional>
-#include <functional>
 #include <string>
 #include <map>
 #include <unordered_map>
@@ -17,6 +15,12 @@
 
 namespace Rune{
     namespace Inventory{
+        // Forward declarations
+        class Pouch;
+
+        // Static members
+        inline Pouch* CurrentPouch=nullptr;
+
         // UI Configurations
         inline constexpr int kXStartOffset = 140;
         inline constexpr int kYStartOffset = 42;
@@ -189,9 +193,14 @@ namespace Rune{
         extern const std::map<Category, std::vector<std::string>> kInventoryIgnores;
 
         extern const std::map<Category, std::string> kLabelValueKeys;
-        inline const std::vector<Category> kQuantityMenus = {Category::Materials, Category::Food, Category::KeyItems, Category::Arrows};
-
         extern const std::map<Category, std::vector<Modifier>> kCategoryModifiers;
+
+        inline const std::vector<Category> kQuantityMenus = {Category::Materials, Category::Food, Category::KeyItems, Category::Arrows};
+        inline const std::vector<Category> kCategoryOrder = {
+            Category::Weapons, Category::Bows, Category::Arrows, 
+            Category::Shields, Category::Armor, Category::Materials, 
+            Category::Food, Category::KeyItems, Category::Unknown
+        };
 
         inline constexpr int kMaxMaterialQuantity = 999;
         inline constexpr int kMaxWeaponDurability = __INT32_MAX__;
@@ -265,6 +274,9 @@ namespace Rune{
             Item() = default;
         };
 
+        using PouchItems = std::vector<std::shared_ptr<Item>>;
+
+
         std::string GetThumbPathFromActorName(const std::string& actorName, bool noVerify=false);
         std::string GetThumbPathFromInventoryItem(const Item& inventoryItem);
         std::string GetNameFromActorName(const std::string& actorName);
@@ -316,7 +328,7 @@ namespace Rune{
         }
 
         std::string FormatValue(const Rune::Inventory::Item& inventoryItem);
-        void ShowPage(EditorMenu* menu, std::vector<Rune::Inventory::Item>& inventoryItems, size_t page, std::vector<Aether::Ellipse*>& ellipses);
+        void ShowPage(EditorMenu* menu, PouchItems* pouchItems, size_t page, std::vector<Aether::Ellipse*>& ellipses);
 
         /**
          * @brief Determine an item's category from its actor name
@@ -389,6 +401,13 @@ namespace Rune{
 
         /** @brief Determine if an actor name is an arrow */
         bool IsActorArrow(std::string_view actorName);
+
+        /** @brief Sort the inventory to be valid */
+        void SortInventory(Save::File* saveFile);
+        
+        std::string GetValueSpKeyFromCategory(Category category);
+        std::string GetFlagSpKeyFromCategory(Category category);
+        int GetMaxSlotsFromCategory(Category category);
 
     } // namespace Inventory
 } // namespace Rune

@@ -40,6 +40,8 @@ namespace Aether {
         friend Drawable;
         friend FontCache;
         friend class TextureResource;
+        friend class Element;
+        friend class Window;
 
         public:
             /** @brief Function to handle log messages */
