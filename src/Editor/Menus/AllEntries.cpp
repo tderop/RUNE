@@ -93,7 +93,7 @@ void Rune::MenuBuilder::AllEntries(EditorMenu* menu){
 
         // Get a search query from the user
         std::string out;
-        if (R_SUCCEEDED(Rune::Keyboard::getStringInput(&out, "Enter a search query... nothing will change if no results are found!"))){
+        if (R_SUCCEEDED(Rune::Keyboard::getStringInput(&out, "Enter a search query... nothing will change if no results   are found!"))){
             if (out.empty()){ return; }
             
             // Search for matching dataName entries

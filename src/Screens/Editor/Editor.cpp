@@ -92,10 +92,16 @@ void EditorScreen::positionTabSelectIndicator(Aether::Rectangle* selectIndicator
 }
 
 void EditorScreen::nextMenu(){
+    if (this->menuLabels.size() <= 1){ return; }
+
+    Rune::Audio::playSound("big_page_slide");
     this->showMenu(this->selectedMenu+1);
 }
 
 void EditorScreen::prevMenu(){
+    if (this->menuLabels.size() <= 1){ return; }
+
+    Rune::Audio::playSound("big_page_slide");
     this->showMenu(this->selectedMenu-1);
 }
 
@@ -903,13 +909,11 @@ void EditorScreen::editSaveSlot(Rune::Save::Slot* saveSlot){
 void EditorScreen::onLoad(){
     // navigate to next menu when pressing R
     this->onButtonPress(NEXT_MENU, [this](){
-        Rune::Audio::playSound("big_page_slide");
         this->nextMenu();
     });
 
     // navigate to previous menu when pressing L
     this->onButtonPress(PREV_MENU, [this](){
-        Rune::Audio::playSound("big_page_slide");
         this->prevMenu();
     });
 

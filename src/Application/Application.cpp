@@ -18,7 +18,7 @@
 #include <math.h>
 
 #define MENU_FADE_OUT_TIME 0.33f
-#define MENU_FADE_IN_TIME 0.5f
+#define MENU_FADE_IN_TIME 0.33f
 
 /**
  * The current issue is that compilation fails due to linker errors.
@@ -277,7 +277,7 @@ namespace Rune{
             return;
         }
 
-        _loadingProgress->setValue(std::min((progress*100.0f), 100.0f));
+        _loadingProgress->setValue(std::min((progress*100.0f)+1, 100.0f));
         this->_window->loop();
     }
 
