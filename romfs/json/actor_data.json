@@ -3,80 +3,67 @@
     "Name": "Mighty Lynel Bow",
     "Durability": 35,
     "Attack": 20,
-    "ShotCount": 3,
-    "Hidden": true
+    "ShotCount": 3
   },
   "Weapon_Shield_008": {
     "Name": "Reinforced Lizal Shield",
     "Durability": 12,
-    "Guard": 22,
-    "Hidden": true
+    "Guard": 22
   },
   "Weapon_Sword_053": {
     "Name": "Vicious Sickle",
     "Durability": 14,
-    "Attack": 16,
-    "Hidden": true
+    "Attack": 16
   },
   "Weapon_Sword_057": {
     "Name": "Goddess Sword",
     "Durability": 45,
-    "Attack": 28,
-    "Hidden": true
+    "Attack": 28
   },
   "Weapon_Lsword_059": {
     "Name": "Biggoron's Sword",
     "Durability": 60,
-    "Attack": 50,
-    "Hidden": true
+    "Attack": 50
   },
   "Weapon_Spear_038": {
     "Name": "Fishing Harpoon",
     "Durability": 12,
-    "Attack": 8,
-    "Hidden": true
+    "Attack": 8
   },
   "Weapon_Lsword_004": {
     "Name": "Boko Bat",
     "Durability": 8,
-    "Attack": 6,
-    "Hidden": true
+    "Attack": 6
   },
   "Weapon_Spear_030": {
     "Name": "Throwing Spear",
     "Durability": 20,
-    "Attack": 6,
-    "Hidden": true
+    "Attack": 6
   },
   "Weapon_Sword_002": {
     "Name": "Soldier's Broadsword",
     "Durability": 23,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Lsword_051": {
     "Name": "Giant Boomerang",
     "Durability": 40,
-    "Attack": 25,
-    "Hidden": true
+    "Attack": 25
   },
   "Weapon_Shield_004": {
     "Name": "Boko Shield",
     "Durability": 5,
-    "Guard": 3,
-    "Hidden": true
+    "Guard": 3
   },
   "Weapon_Lsword_055": {
     "Name": "Edge of Duality",
     "Durability": 35,
-    "Attack": 50,
-    "Hidden": true
+    "Attack": 50
   },
   "Weapon_Sword_006": {
     "Name": "Dragonbone Boko Club",
     "Durability": 18,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Sword_502": {
     "Name": "One-Hit Obliterator",
@@ -87,154 +74,129 @@
   "Weapon_Spear_034": {
     "Name": "Frostspear",
     "Durability": 40,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Shield_014": {
     "Name": "Guardian Shield+",
     "Durability": 13,
-    "Guard": 30,
-    "Hidden": true
+    "Guard": 30
   },
   "Weapon_Lsword_041": {
     "Name": "Eightfold Longblade",
     "Durability": 25,
-    "Attack": 32,
-    "Hidden": true
+    "Attack": 32
   },
   "Weapon_Lsword_045": {
     "Name": "Farming Hoe",
     "Durability": 6,
-    "Attack": 16,
-    "Hidden": true
+    "Attack": 16
   },
   "Weapon_Spear_024": {
     "Name": "Royal Halberd",
     "Durability": 50,
-    "Attack": 26,
-    "Hidden": true
+    "Attack": 26
   },
   "Weapon_Lsword_018": {
     "Name": "Savage Lynel Crusher",
     "Durability": 35,
-    "Attack": 78,
-    "Hidden": true
+    "Attack": 78
   },
   "Weapon_Sword_016": {
     "Name": "Lynel Sword",
     "Durability": 26,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Bow_036": {
     "Name": "Royal Bow",
     "Durability": 60,
-    "Attack": 38,
-    "Hidden": true
+    "Attack": 38
   },
   "Weapon_Lsword_010": {
     "Name": "Moblin Club",
     "Durability": 12,
-    "Attack": 9,
-    "Hidden": true
+    "Attack": 9
   },
   "Weapon_Sword_043": {
     "Name": "Torch",
     "Durability": 8,
-    "Attack": 2,
-    "Hidden": true
+    "Attack": 2
   },
   "Weapon_Shield_018": {
     "Name": "Savage Lynel Shield",
     "Durability": 20,
     "Attack": 21,
-    "Guard": 62,
-    "Hidden": true
+    "Guard": 62
   },
   "Weapon_Sword_047": {
     "Name": "Royal Guard's Sword",
     "Durability": 14,
-    "Attack": 48,
-    "Hidden": true
+    "Attack": 48
   },
   "Weapon_Lsword_014": {
     "Name": "Ancient Battle Axe+",
     "Durability": 20,
-    "Attack": 45,
-    "Hidden": true
+    "Attack": 45
   },
   "Weapon_Spear_028": {
     "Name": "Silverscale Spear",
     "Durability": 40,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Bow_032": {
     "Name": "Savage Lynel Bow",
     "Durability": 45,
     "Attack": 32,
-    "ShotCount": 3,
-    "Hidden": true
+    "ShotCount": 3
   },
   "Weapon_Shield_041": {
     "Name": "Shield of the Mind's Eye",
     "Durability": 16,
-    "Guard": 16,
-    "Hidden": true
+    "Guard": 16
   },
   "Weapon_Shield_034": {
     "Name": "Emblazoned Shield",
     "Durability": 12,
-    "Guard": 3,
-    "Hidden": true
+    "Guard": 3
   },
   "Weapon_Spear_004": {
     "Name": "Boko Spear",
     "Durability": 12,
-    "Attack": 2,
-    "Hidden": true
+    "Attack": 2
   },
   "Weapon_Lsword_038": {
     "Name": "Boat Oar",
     "Durability": 8,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Shield_030": {
     "Name": "Hylian Shield",
     "Durability": 800,
-    "Guard": 90,
-    "Hidden": true
+    "Guard": 90
   },
   "Weapon_Shield_038": {
     "Name": "Ancient Shield",
     "Durability": 32,
-    "Guard": 70,
-    "Hidden": true
+    "Guard": 70
   },
   "Weapon_Bow_016": {
     "Name": "Swallow Bow",
     "Durability": 30,
-    "Attack": 9,
-    "Hidden": true
+    "Attack": 9
   },
   "Weapon_Lsword_030": {
     "Name": "Double Axe",
     "Durability": 52,
-    "Attack": 18,
-    "Hidden": true
+    "Attack": 18
   },
   "Weapon_Lsword_034": {
     "Name": "Great Frostblade",
     "Durability": 40,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Spear_008": {
     "Name": "Enhanced Lizal Spear",
     "Durability": 22,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Sword_080": {
     "Name": "Master Sword",
@@ -244,152 +206,127 @@
   "Weapon_Sword_073": {
     "Name": "Demon Carver",
     "Durability": 25,
-    "Attack": 40,
-    "Hidden": true
+    "Attack": 40
   },
   "Weapon_Lsword_020": {
     "Name": "Rusty Claymore",
     "Durability": 10,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Bow_006": {
     "Name": "Lizal Bow",
     "Durability": 25,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Spear_018": {
     "Name": "Savage Lynel Spear",
     "Durability": 45,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Bow_002": {
     "Name": "Soldier's Bow",
     "Durability": 36,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Lsword_024": {
     "Name": "Royal Claymore",
     "Durability": 40,
-    "Attack": 52,
-    "Hidden": true
+    "Attack": 52
   },
   "Weapon_Spear_010": {
     "Name": "Moblin Spear",
     "Durability": 15,
-    "Attack": 4,
-    "Hidden": true
+    "Attack": 4
   },
   "Weapon_Sword_022": {
     "Name": "Soup Ladle",
     "Durability": 5,
-    "Attack": 4,
-    "Hidden": true
+    "Attack": 4
   },
   "Weapon_Spear_014": {
     "Name": "Guardian Spear+",
     "Durability": 25,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Spear_049": {
     "Name": "Ceremonial Trident",
     "Durability": 40,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Bow_003": {
     "Name": "Spiked Boko Bow",
     "Durability": 20,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Lsword_074": {
     "Name": "Windcleaver",
     "Durability": 25,
-    "Attack": 40,
-    "Hidden": true
+    "Attack": 40
   },
   "Weapon_Shield_021": {
     "Name": "Rusty Shield",
     "Durability": 16,
-    "Guard": 3,
-    "Hidden": true
+    "Guard": 3
   },
   "Weapon_Spear_015": {
     "Name": "Guardian Spear++",
     "Durability": 35,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Lsword_029": {
     "Name": "Golden Claymore",
     "Durability": 30,
-    "Attack": 28,
-    "Hidden": true
+    "Attack": 28
   },
   "Weapon_Sword_027": {
     "Name": "Zora Sword",
     "Durability": 27,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Sword_023": {
     "Name": "Ancient Short Sword",
     "Durability": 54,
-    "Attack": 40,
-    "Hidden": true
+    "Attack": 40
   },
   "Weapon_Spear_011": {
     "Name": "Spiked Moblin Spear",
     "Durability": 20,
-    "Attack": 9,
-    "Hidden": true
+    "Attack": 9
   },
   "Weapon_Shield_025": {
     "Name": "Silver Shield",
     "Durability": 20,
-    "Guard": 18,
-    "Hidden": true
+    "Guard": 18
   },
   "Weapon_Shield_031": {
     "Name": "Hunter's Shield",
     "Durability": 10,
-    "Guard": 3,
-    "Hidden": true
+    "Guard": 3
   },
   "Weapon_Spear_005": {
     "Name": "Spiked Boko Spear",
     "Durability": 15,
-    "Attack": 6,
-    "Hidden": true
+    "Attack": 6
   },
   "Weapon_Spear_001": {
     "Name": "Traveler's Spear",
     "Durability": 30,
-    "Attack": 3,
-    "Hidden": true
+    "Attack": 3
   },
   "Weapon_Sword_033": {
     "Name": "Flameblade",
     "Durability": 36,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Lsword_060": {
     "Name": "Fierce Deity Sword",
     "Durability": 35,
-    "Attack": 60,
-    "Hidden": true
+    "Attack": 60
   },
   "Weapon_Shield_035": {
     "Name": "Traveler's Shield",
     "Durability": 12,
-    "Guard": 4,
-    "Hidden": true
+    "Guard": 4
   },
   "Weapon_Sword_081": {
     "Name": "Master Sword",
@@ -399,753 +336,629 @@
   "Weapon_Spear_009": {
     "Name": "Forked Lizal Spear",
     "Durability": 28,
-    "Attack": 18,
-    "Hidden": true
+    "Attack": 18
   },
   "Weapon_Bow_013": {
     "Name": "Forest Dweller's Bow",
     "Durability": 35,
     "Attack": 15,
-    "ShotCount": 3,
-    "Hidden": true
+    "ShotCount": 3
   },
   "Weapon_Lsword_035": {
     "Name": "Great Thunderblade",
     "Durability": 50,
-    "Attack": 32,
-    "Hidden": true
+    "Attack": 32
   },
   "Weapon_Lsword_031": {
     "Name": "Iron Sledgehammer",
     "Durability": 40,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Bow_017": {
     "Name": "Falcon Bow",
     "Durability": 50,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Spear_050": {
     "Name": "Lightscale Trident",
     "Durability": 70,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Sword_062": {
     "Name": "Lightning Rod",
     "Durability": 14,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Lsword_019": {
     "Name": "Moblin Arm",
     "Durability": 5,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Sword_017": {
     "Name": "Mighty Lynel Sword",
     "Durability": 32,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Spear_025": {
     "Name": "Forest Dweller's Spear",
     "Durability": 35,
-    "Attack": 11,
-    "Hidden": true
+    "Attack": 11
   },
   "Weapon_Shield_015": {
     "Name": "Guardian Shield++",
     "Durability": 20,
-    "Guard": 42,
-    "Hidden": true
+    "Guard": 42
   },
   "Weapon_Spear_021": {
     "Name": "Rusty Halberd",
     "Durability": 15,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Sword_013": {
     "Name": "Guardian Sword",
     "Durability": 17,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Spear_029": {
     "Name": "Gerudo Spear",
     "Durability": 35,
-    "Attack": 16,
-    "Hidden": true
+    "Attack": 16
   },
   "Weapon_Bow_033": {
     "Name": "Royal Guard's Bow",
     "Durability": 20,
-    "Attack": 50,
-    "Hidden": true
+    "Attack": 50
   },
   "Weapon_Shield_040": {
     "Name": "Pot Lid",
     "Durability": 10,
-    "Guard": 1,
-    "Hidden": true
+    "Guard": 1
   },
   "Weapon_Lsword_015": {
     "Name": "Ancient Battle Axe++",
     "Durability": 25,
-    "Attack": 60,
-    "Hidden": true
+    "Attack": 60
   },
   "Weapon_Lsword_011": {
     "Name": "Spiked Moblin Club",
     "Durability": 18,
-    "Attack": 27,
-    "Hidden": true
+    "Attack": 27
   },
   "Weapon_Lsword_005": {
     "Name": "Spiked Boko Bat",
     "Durability": 12,
-    "Attack": 18,
-    "Hidden": true
+    "Attack": 18
   },
   "Weapon_Bow_023": {
     "Name": "Ancient Bow",
     "Durability": 120,
-    "Attack": 44,
-    "Hidden": true
+    "Attack": 44
   },
   "Weapon_Sword_052": {
     "Name": "Scimitar of the Seven",
     "Durability": 60,
-    "Attack": 32,
-    "Hidden": true
+    "Attack": 32
   },
   "Weapon_Shield_009": {
     "Name": "Steel Lizal Shield",
     "Durability": 15,
-    "Guard": 35,
-    "Hidden": true
+    "Guard": 35
   },
   "Weapon_Bow_027": {
     "Name": "Dragon Bone Boko Bow",
     "Durability": 30,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Lsword_001": {
     "Name": "Traveler's Claymore",
     "Durability": 20,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Sword_503": {
     "Name": "Weapon_Sword_503",
     "Durability": 40,
-    "Attack": 1,
-    "Hidden": true
+    "Attack": 1
   },
   "Weapon_Spear_035": {
     "Name": "Thunderspear",
     "Durability": 50,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Sword_007": {
     "Name": "Lizal Boomerang",
     "Durability": 17,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Lsword_054": {
     "Name": "Boulder Breaker",
     "Durability": 60,
-    "Attack": 60,
-    "Hidden": true
+    "Attack": 60
   },
   "Weapon_Bow_072": {
     "Name": "Twilight Bow",
     "Durability": 100,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Shield_001": {
     "Name": "Wooden Shield",
     "Durability": 12,
-    "Guard": 2,
-    "Hidden": true
+    "Guard": 2
   },
   "Weapon_Shield_005": {
     "Name": "Spiked Boko Shield",
     "Durability": 7,
-    "Guard": 10,
-    "Hidden": true
+    "Guard": 10
   },
   "Weapon_Sword_003": {
     "Name": "Knight's Broadsword",
     "Durability": 27,
-    "Attack": 26,
-    "Hidden": true
+    "Attack": 26
   },
   "Weapon_Spear_031": {
     "Name": "Drillshaft",
     "Durability": 50,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Lsword_013": {
     "Name": "Ancient Battle Axe",
     "Durability": 15,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Bow_035": {
     "Name": "Knight's Bow",
     "Durability": 48,
-    "Attack": 26,
-    "Hidden": true
+    "Attack": 26
   },
   "Weapon_Sword_040": {
     "Name": "Spring-Loaded Hammer",
     "Durability": 80,
-    "Attack": 1,
-    "Hidden": true
+    "Attack": 1
   },
   "Weapon_Sword_044": {
     "Name": "Tree Branch",
     "Durability": 4,
-    "Attack": 2,
-    "Hidden": true
+    "Attack": 2
   },
   "Weapon_Shield_042": {
     "Name": "Kite Shield",
     "Durability": 16,
-    "Guard": 14,
-    "Hidden": true
+    "Guard": 14
   },
   "Weapon_Lsword_017": {
     "Name": "Mighty Lynel Crusher",
     "Durability": 25,
-    "Attack": 54,
-    "Hidden": true
+    "Attack": 54
   },
   "Weapon_Sword_019": {
     "Name": "Bokoblin Arm",
     "Durability": 5,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Spear_023": {
     "Name": "Ancient Spear",
     "Durability": 50,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Shield_017": {
     "Name": "Mighty Lynel Shield",
     "Durability": 15,
     "Attack": 13,
-    "Guard": 44,
-    "Hidden": true
+    "Guard": 44
   },
   "Weapon_Shield_013": {
     "Name": "Guardian Shield",
     "Durability": 10,
-    "Guard": 18,
-    "Hidden": true
+    "Guard": 18
   },
   "Weapon_Sword_048": {
     "Name": "Meteor Rod",
     "Durability": 32,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Sword_015": {
     "Name": "Guardian Sword++",
     "Durability": 32,
-    "Attack": 40,
-    "Hidden": true
+    "Attack": 40
   },
   "Weapon_Spear_027": {
     "Name": "Zora Spear",
     "Durability": 40,
-    "Attack": 9,
-    "Hidden": true
+    "Attack": 9
   },
   "Weapon_Sword_001": {
     "Name": "Traveler's Sword",
     "Durability": 20,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Bow_029": {
     "Name": "Phrenic Bow",
     "Durability": 45,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Spear_033": {
     "Name": "Flamespear",
     "Durability": 50,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Shield_007": {
     "Name": "Lizal Shield",
     "Durability": 8,
-    "Guard": 15,
-    "Hidden": true
+    "Guard": 15
   },
   "Weapon_Sword_058": {
     "Name": "Sword",
     "Durability": 27,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Lsword_056": {
     "Name": "Korok Leaf",
     "Durability": 25,
-    "Attack": 1,
-    "Hidden": true
+    "Attack": 1
   },
   "Weapon_Shield_003": {
     "Name": "Knight's Shield",
     "Durability": 23,
-    "Guard": 40,
-    "Hidden": true
+    "Guard": 40
   },
   "Weapon_Spear_037": {
     "Name": "Serpentine Spear",
     "Durability": 35,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Sword_005": {
     "Name": "Spiked Boko Club",
     "Durability": 14,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Lsword_003": {
     "Name": "Knight's Claymore",
     "Durability": 30,
-    "Attack": 38,
-    "Hidden": true
+    "Attack": 38
   },
   "Weapon_Sword_050": {
     "Name": "Thunderstorm Rod",
     "Durability": 32,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Sword_009": {
     "Name": "Lizal Tri-Boomerang",
     "Durability": 27,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Sword_021": {
     "Name": "Rusty Broadsword",
     "Durability": 8,
-    "Attack": 6,
-    "Hidden": true
+    "Attack": 6
   },
   "Weapon_Bow_009": {
     "Name": "Lynel Bow",
     "Durability": 30,
     "Attack": 10,
-    "ShotCount": 3,
-    "Hidden": true
+    "ShotCount": 3
   },
   "Weapon_Spear_013": {
     "Name": "Guardian Spear",
     "Durability": 20,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Spear_017": {
     "Name": "Mighty Lynel Spear",
     "Durability": 35,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Sword_025": {
     "Name": "Forest Dweller's Sword",
     "Durability": 27,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Shield_023": {
     "Name": "Forest Dweller's Shield",
     "Durability": 18,
-    "Guard": 30,
-    "Hidden": true
+    "Guard": 30
   },
   "Weapon_Sword_070": {
     "Name": "Master Sword",
     "Durability": 40,
     "Attack": 30,
-    "TrueFormAttack": 60,
-    "Hidden": true
+    "TrueFormAttack": 60
   },
   "Weapon_Lsword_023": {
     "Name": "Ancient Bladesaw",
     "Durability": 50,
-    "Attack": 55,
-    "Hidden": true
+    "Attack": 55
   },
   "Weapon_Lsword_027": {
     "Name": "Silver Longsword",
     "Durability": 30,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Sword_029": {
     "Name": "Gerudo Scimitar",
     "Durability": 23,
-    "Attack": 16,
-    "Hidden": true
+    "Attack": 16
   },
   "Weapon_Bow_001": {
     "Name": "Traveler's Bow",
     "Durability": 22,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Sword_060": {
     "Name": "Fire Rod",
     "Durability": 14,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Lsword_033": {
     "Name": "Great Flameblade",
     "Durability": 50,
-    "Attack": 34,
-    "Hidden": true
+    "Attack": 34
   },
   "Weapon_Bow_015": {
     "Name": "Golden Bow",
     "Durability": 60,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Bow_011": {
     "Name": "Strengthened Lizal Bow",
     "Durability": 35,
-    "Attack": 25,
-    "Hidden": true
+    "Attack": 25
   },
   "Weapon_Lsword_037": {
     "Name": "Stone Smasher",
     "Durability": 40,
-    "Attack": 42,
-    "Hidden": true
+    "Attack": 42
   },
   "Weapon_Shield_037": {
     "Name": "Daybreaker",
     "Durability": 60,
-    "Guard": 48,
-    "Hidden": true
+    "Guard": 48
   },
   "Weapon_Spear_003": {
     "Name": "Knight's Halberd",
     "Durability": 40,
-    "Attack": 13,
-    "Hidden": true
+    "Attack": 13
   },
   "Weapon_Sword_031": {
     "Name": "Feathered Edge",
     "Durability": 27,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Sword_035": {
     "Name": "Thunderblade",
     "Durability": 36,
-    "Attack": 22,
-    "Hidden": true
+    "Attack": 22
   },
   "Weapon_Spear_007": {
     "Name": "Lizal Spear",
     "Durability": 18,
-    "Attack": 7,
-    "Hidden": true
+    "Attack": 7
   },
   "Weapon_Bow_040": {
     "Name": "Duplex Bow",
     "Durability": 18,
     "Attack": 14,
-    "ShotCount": 2,
-    "Hidden": true
+    "ShotCount": 2
   },
   "Weapon_Shield_033": {
     "Name": "Royal Guard's Shield",
     "Durability": 14,
-    "Guard": 70,
-    "Hidden": true
+    "Guard": 70
   },
   "Weapon_Lsword_036": {
     "Name": "Cobble Crusher",
     "Durability": 30,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Bow_014": {
     "Name": "Silver Bow",
     "Durability": 40,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Lsword_032": {
     "Name": "Woodcutter's Axe",
     "Durability": 47,
-    "Attack": 3,
-    "Hidden": true
+    "Attack": 3
   },
   "Weapon_Sword_061": {
     "Name": "Ice Rod",
     "Durability": 14,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Shield_032": {
     "Name": "Fisherman's Shield",
     "Durability": 10,
-    "Guard": 3,
-    "Hidden": true
+    "Guard": 3
   },
   "Weapon_Spear_006": {
     "Name": "Dragonbone Boko Spear",
     "Durability": 20,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Sword_034": {
     "Name": "Frostblade",
     "Durability": 30,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Sword_030": {
     "Name": "Moonlight Scimitar",
     "Durability": 32,
-    "Attack": 25,
-    "Hidden": true
+    "Attack": 25
   },
   "Weapon_Spear_002": {
     "Name": "Soldier's Spear",
     "Durability": 35,
-    "Attack": 7,
-    "Hidden": true
+    "Attack": 7
   },
   "Weapon_Shield_036": {
     "Name": "Radiant Shield",
     "Durability": 26,
-    "Guard": 35,
-    "Hidden": true
+    "Guard": 35
   },
   "Weapon_Shield_022": {
     "Name": "Royal Shield",
     "Durability": 29,
-    "Guard": 55,
-    "Hidden": true
+    "Guard": 55
   },
   "Weapon_Sword_024": {
     "Name": "Royal Broadsword",
     "Durability": 36,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Spear_016": {
     "Name": "Lynel Spear",
     "Durability": 25,
-    "Attack": 14,
-    "Hidden": true
+    "Attack": 14
   },
   "Weapon_Spear_012": {
     "Name": "Dragonbone Moblin Spear",
     "Durability": 25,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Sword_020": {
     "Name": "Lizalfos Arm",
     "Durability": 8,
-    "Attack": 12,
-    "Hidden": true
+    "Attack": 12
   },
   "Weapon_Shield_026": {
     "Name": "Gerudo Shield",
     "Durability": 20,
-    "Guard": 20,
-    "Hidden": true
+    "Guard": 20
   },
   "Weapon_Spear_047": {
     "Name": "Royal Guard's Spear",
     "Durability": 15,
-    "Attack": 32,
-    "Hidden": true
+    "Attack": 32
   },
   "Weapon_Bow_004": {
     "Name": "Boko Bow",
     "Durability": 16,
-    "Attack": 4,
-    "Hidden": true
+    "Attack": 4
   },
   "Weapon_Sword_004": {
     "Name": "Boko Club",
     "Durability": 12,
-    "Attack": 4,
-    "Hidden": true
+    "Attack": 4
   },
   "Weapon_Spear_036": {
     "Name": "Wooden Mop",
     "Durability": 8,
-    "Attack": 5,
-    "Hidden": true
+    "Attack": 5
   },
   "Weapon_Bow_071": {
     "Name": "Bow of Light",
     "Durability": 100,
-    "Attack": 100,
-    "Hidden": true
+    "Attack": 100
   },
   "Weapon_Shield_002": {
     "Name": "Soldier's Shield",
     "Durability": 16,
-    "Guard": 16,
-    "Hidden": true
+    "Guard": 16
   },
   "Weapon_Sword_059": {
     "Name": "Sea-Breeze Boomerang",
     "Durability": 20,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Lsword_057": {
     "Name": "Sword of the Six Sages",
     "Durability": 50,
-    "Attack": 48,
-    "Hidden": true
+    "Attack": 48
   },
   "Weapon_Shield_006": {
     "Name": "Dragonbone Boko Shield",
     "Durability": 8,
-    "Guard": 25,
-    "Hidden": true
+    "Guard": 25
   },
   "Weapon_Bow_028": {
     "Name": "Great Eagle Bow",
     "Durability": 60,
     "Attack": 28,
-    "ShotCount": 3,
-    "Hidden": true
+    "ShotCount": 3
   },
   "Weapon_Spear_032": {
     "Name": "Feathered Spear",
     "Durability": 35,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Lsword_006": {
     "Name": "Dragonbone Boko Bat",
     "Durability": 16,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Sword_008": {
     "Name": "Lizal Forked Boomerang",
     "Durability": 23,
-    "Attack": 24,
-    "Hidden": true
+    "Attack": 24
   },
   "Weapon_Sword_051": {
     "Name": "Boomerang",
     "Durability": 18,
-    "Attack": 8,
-    "Hidden": true
+    "Attack": 8
   },
   "Weapon_Lsword_002": {
     "Name": "Soldier's Claymore",
     "Durability": 25,
-    "Attack": 20,
-    "Hidden": true
+    "Attack": 20
   },
   "Weapon_Shield_057": {
     "Name": "Hero's Shield",
     "Durability": 90,
-    "Guard": 65,
-    "Hidden": true
+    "Guard": 65
   },
   "Weapon_Lsword_016": {
     "Name": "Lynel Crusher",
     "Durability": 20,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Sword_018": {
     "Name": "Savage Lynel Sword",
     "Durability": 41,
-    "Attack": 58,
-    "Hidden": true
+    "Attack": 58
   },
   "Weapon_Bow_030": {
     "Name": "Steel Lizal Bow",
     "Durability": 50,
-    "Attack": 36,
-    "Hidden": true
+    "Attack": 36
   },
   "Weapon_Sword_041": {
     "Name": "Eightfold Blade",
     "Durability": 26,
-    "Attack": 15,
-    "Hidden": true
+    "Attack": 15
   },
   "Weapon_Lsword_012": {
     "Name": "Dragonbone Moblin Club",
     "Durability": 24,
-    "Attack": 45,
-    "Hidden": true
+    "Attack": 45
   },
   "Weapon_Sword_014": {
     "Name": "Guardian Sword+",
     "Durability": 26,
-    "Attack": 30,
-    "Hidden": true
+    "Attack": 30
   },
   "Weapon_Sword_049": {
     "Name": "Blizzard Rod",
     "Durability": 32,
-    "Attack": 10,
-    "Hidden": true
+    "Attack": 10
   },
   "Weapon_Lsword_047": {
     "Name": "Royal Guard's Claymore",
     "Durability": 15,
-    "Attack": 72,
-    "Hidden": true
+    "Attack": 72
   },
   "Weapon_Shield_016": {
     "Name": "Lynel Shield",
     "Durability": 12,
     "Attack": 7,
-    "Guard": 30,
-    "Hidden": true
+    "Guard": 30
   },
   "Weapon_Bow_038": {
     "Name": "Wooden Bow",
     "Durability": 20,
-    "Attack": 4,
-    "Hidden": true
+    "Attack": 4
   },
   "Weapon_Spear_022": {
     "Name": "Farmer's Pitchfork",
     "Durability": 12,
-    "Attack": 7,
-    "Hidden": true
+    "Attack": 7
   },
   "Armor_066_Lower": {
     "Name": "Desert Voe Trousers",

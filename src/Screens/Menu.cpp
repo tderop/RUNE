@@ -167,6 +167,9 @@ void MenuScreen::showSaveSelect(){
                 Logger::Write("[MENU] - Showing editor screen...");
                 auto loadingMsg = this->app->showLoading("Loading editor...", true);
 
+                // stub exit
+                // loadingMsg->onButtonPress(Aether::Button::B, [](){});
+
                 // GET screen
                 EditorScreen* editor = static_cast<EditorScreen*>
                     (this->app->getScreen("Editor")); // Yes, I still still hate this

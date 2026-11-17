@@ -552,6 +552,23 @@ namespace Rune {
                         }
                     }
                     ovlSecondaryFlagDropdown->setMap(buffMap);
+                    ovlSecondaryFlagDropdown->onPress([ovlSecondaryFlagDropdown=
+                        this->ovlSecondaryFlagDropdown](bool isOpen){
+
+                        if (!isOpen){ return; }
+                        Audio::playSound("open_menu");
+
+                        Aether::List* list = ovlSecondaryFlagDropdown->list();
+                        if (list != nullptr){
+                            list->onCursorMove([](){
+                                Audio::playSound("cursor");
+                            });
+                        }
+                    });
+                    // ovlSecondaryFlagDropdown->onValueChange([](){
+                    //     Audio::playSound("select");
+                    // });
+
                     visiblePropertyEditors.push_back(ovlSecondaryFlagDropdown);
                     cursorY += ovlSecondaryFlagDropdown->h()+PROPERTY_Y_SPACING;
 
@@ -869,9 +886,12 @@ namespace Rune {
             Logger::Writef("[TILE] - Category: %d", static_cast<int>(inventoryItem.category));
 
             // Get a list of available actor names
-            std::vector<std::string> otherActorNames 
-                = CategoryActors.find(inventoryItem.category)->second;
+            auto catIt = CategoryActors.find(inventoryItem.category);
+            if (catIt == CategoryActors.end()){
+                Logger::Importantf("Undefined behaviour incoming :)");
+            }
 
+            std::vector<std::string> otherActorNames = catIt->second;
             Logger::Writef("[TILE] - Found other actor names");
 
             // Make a main containter

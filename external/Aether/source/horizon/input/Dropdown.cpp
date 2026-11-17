@@ -113,6 +113,12 @@ namespace Aether {
             w, BUTTON_HEIGHT,
             BORDER_WIDTH, "", TEXT_SIZE,
             [this](){
+                // Run user-set method first
+                if (this->onPressFunc_){
+                    this->onPressFunc_(!this->dropdownVisible_);
+                }
+
+                // invert dropdown state
                 if (this->dropdownVisible_){
                     this->hideDropdown();
                 } else {
@@ -157,6 +163,15 @@ namespace Aether {
     void Dropdown::onValueChange(std::function<void()> f){
         this->onValueChangeFunc_ = f;
     }
+
+    void Dropdown::onPress(std::function<void(bool)> f){
+        this->onPressFunc_ = f;
+    }
+
+    List* Dropdown::list(){
+        return this->list_;
+    }
+
 } // namespace Aether
 
 #pragma GCC diagnostic pop

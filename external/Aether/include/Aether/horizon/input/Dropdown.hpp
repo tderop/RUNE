@@ -31,6 +31,8 @@ namespace Aether {
             
             /** @brief The function to run when the value is changed */
             std::function<void()> onValueChangeFunc_;
+            /** @brief The function to run when the dropdown button is pressed */
+            std::function<void(bool)> onPressFunc_;
 
             /** @brief The height of the dropdown menu */
             int dropdownH_;
@@ -66,6 +68,19 @@ namespace Aether {
              * @param f The function to run when value is changed
              */
             void onValueChange(std::function<void()> f);
+
+            /**
+             * @brief Set the function to run when the dropdown button is pressed
+             * @param f The function to run
+             */
+            void onPress(std::function<void(bool isOpen)> f);
+
+            /**
+             * @brief Return the list in the dropdown
+             * @note This goes stale every time the dropdown is closed
+             */
+            List* list();
+
 
             /**
              * @brief Set the dropdown data
