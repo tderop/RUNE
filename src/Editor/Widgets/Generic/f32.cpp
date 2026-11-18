@@ -40,15 +40,15 @@ void Rune::WidgetBuilder::Float(EditorWidget* widget){
         editBtn->setLineColour(SEPARATOR_COLOUR);
         editBtn->setValueColour(TOP_R);
 
+        float minValue = std::get<float>(widget->getMetaEntry()->minValue);
+        float maxValue = std::get<float>(widget->getMetaEntry()->maxValue);
         editBtn->onPress(
-            [widget, editBtn](){
+            [editBtn, minValue, maxValue](){
                 float outFloat;
                 Result rc = Rune::Keyboard::getNumberInput(
-                    &outFloat, "Enter a decimal value...", 
-                    std::get<float>(widget->getMetaEntry()->minValue),
-                    std::get<float>(widget->getMetaEntry()->maxValue),
-                    true
-                );
+                    &outFloat, "Enter a decimal value... ("+std::to_string(minValue)+" → "+std::to_string(maxValue)+")", 
+                    minValue, maxValue,
+                    true);
 
                 if (R_SUCCEEDED(rc)){
                     editBtn->setValue(std::to_string(outFloat));

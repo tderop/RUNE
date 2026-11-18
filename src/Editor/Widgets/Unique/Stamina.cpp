@@ -180,11 +180,11 @@ void Rune::WidgetBuilder::Stamina(EditorWidget* widget){
         editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
 
         numSpinner->onPress(
-            [widget, numSpinner](){
+            [numSpinner, maxUpgrades](){
                 float outFloat;
                 Result rc = Rune::Keyboard::getNumberInput(
-                    &outFloat, "Enter a number value...", 
-                    std::get<float>(widget->getMetaEntry()->minValue),
+                    &outFloat, "Enter a number value... (0 → "+std::to_string(maxUpgrades)+")", 
+                    numSpinner->min(),
                     numSpinner->max()
                 );
 

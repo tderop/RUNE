@@ -59,7 +59,7 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                         +Rune::Save::ValueToString(metaEntry->minValue)+"' | maxValue: '"
                         +Rune::Save::ValueToString(metaEntry->maxValue)+"' | initValue: '"
                         +Rune::Save::ValueToString(metaEntry->initValue)+"'");
-
+                    
                     const auto* minValues = std::get_if<std::vector<float>>(&metaEntry->minValue);
                     const auto* maxValues = std::get_if<std::vector<float>>(&metaEntry->maxValue);
 
@@ -74,7 +74,7 @@ void Rune::WidgetBuilder::Vector(EditorWidget* widget){
                     float maxValue = maxValues->at(i);
 
                     Logger::Write("[Rune::WidgetBuilder::Vector] - Got bounds, showing keyboard...");
-                    Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", minValue, maxValue, true);
+                    Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number... ("+std::to_string(minValue)+" → "+std::to_string(maxValue)+")", minValue, maxValue, true);
 
                     if (R_SUCCEEDED(rc)){
                         Logger::Write("[Rune::WidgetBuilder::Vector] - Success, setting value");

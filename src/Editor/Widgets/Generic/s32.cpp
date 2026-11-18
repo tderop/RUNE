@@ -36,17 +36,22 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
             editOverlay->panel()->y() + editOverlay->panel()->h()/2 - numSpinner->h()/2 - 12
         );
 
-        numSpinner->setMax(std::get<int>(metaEntry->maxValue));
-        numSpinner->setMin(std::get<int>(metaEntry->minValue));
+        int max = std::get<int>(metaEntry->maxValue);
+        int min = std::get<int>(metaEntry->minValue);
+        
+        numSpinner->setMax(max);
+        numSpinner->setMin(min);
         numSpinner->setValue(std::get<int>(saveEntry->value));
         numSpinner->setWrapAround(true);
 
         numSpinner->setLabel(Rune::Save::GetReadableKeyName(saveEntry->dataName));
-        numSpinner->onPress([numSpinner, metaEntry](){
+        numSpinner->onPress([numSpinner, min, max](){
             // get num input
             float outFloat;
-            Result rc = Rune::Keyboard::getNumberInput(&outFloat, "Enter a number...", 
-                std::get<int>(metaEntry->minValue), std::get<int>(metaEntry->maxValue));
+
+            Result rc = Rune::Keyboard::getNumberInput(&outFloat,
+                "Enter a number... ("+Rune::Save::ValueToString(min)+" → "+Rune::Save::ValueToString(max)+")", 
+                min, max);
 
             if (R_SUCCEEDED(rc)){
                 // update value

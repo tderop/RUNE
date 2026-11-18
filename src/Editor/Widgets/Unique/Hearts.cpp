@@ -173,11 +173,11 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
 
         // When the number spinner is pressed, show a keyboard and ask for a number input
         numSpinner->onPress(
-            [widget, numSpinner](){
+            [numSpinner](){
                 float outFloat;
                 Result rc = Rune::Keyboard::getNumberInput(
-                    &outFloat, "Enter a number value...", 
-                    std::get<int32_t>(widget->getMetaEntry()->minValue),
+                    &outFloat, "Enter a number value... (0 → "+std::to_string(MAX_HEARTS)+")", 
+                    numSpinner->min(),
                     numSpinner->max()
                 );
 
