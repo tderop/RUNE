@@ -15,6 +15,7 @@
 #include <functional>
 #include <algorithm>
 #include <chrono>
+#include <cstdio>
 
 Result getUserID(AccountUid* out){
     // get the uid of the preselected user
@@ -88,17 +89,61 @@ std::string getDeviceNickname(){
 }
 
 std::string formatUnixTimestamp(int32_t unixTimestamp){
-    time_t timeVal = static_cast<time_t>(unixTimestamp);
-    tm* timeInfo = localtime(&timeVal);
+    TimeCalendarTime calendarTime;
+    TimeCalendarAdditionalInfo info;
 
-    if (timeInfo == nullptr){
-        return "Invalid Date";
+    if (R_FAILED(timeToCalendarTimeWithMyRule(unixTimestamp, &calendarTime, &info))){
+        return "???";
     }
 
-    std::stringstream ss;
-    ss << std::put_time(timeInfo, "%d/%m/%Y %H:%M");
+    u64 langCode = 0;
+    SetLanguage language = SetLanguage_ENGB;
 
-    return ss.str();
+    if (R_SUCCEEDED(setInitialize())){
+        if (R_SUCCEEDED(setGetSystemLanguage(&langCode))){
+            setMakeLanguage(langCode, &language);
+        }
+
+        setExit();
+    }
+
+    char buf[22];
+    switch (language){
+        case SetLanguage_JA:
+        case SetLanguage_KO:
+        case SetLanguage_ZHCN:
+        case SetLanguage_ZHTW:
+        case SetLanguage_ZHHANS:
+        case SetLanguage_ZHHANT: {
+            std::snprintf(buf, sizeof(buf), "%04u/%02u/%02u %02u:%02u", calendarTime.year, calendarTime.month, calendarTime.day, calendarTime.hour, calendarTime.minute);
+            break;
+        }
+
+        case SetLanguage_ENUS:
+        case SetLanguage_FRCA:
+        case SetLanguage_ES419: {
+            std::snprintf(buf, sizeof(buf), "%02u/%02u/%04u %02u:%02u", calendarTime.month, calendarTime.day, calendarTime.year, calendarTime.hour, calendarTime.minute);
+            break;
+        }
+
+        case SetLanguage_ENGB:
+        case SetLanguage_FR:
+        case SetLanguage_DE:
+        case SetLanguage_IT:
+        case SetLanguage_ES:
+        case SetLanguage_NL:
+        case SetLanguage_PT:
+        case SetLanguage_PTBR:
+        case SetLanguage_RU: {
+            std::snprintf(buf, sizeof(buf), "%02u/%02u/%04u %02u:%02u", calendarTime.day, calendarTime.month, calendarTime.year, calendarTime.hour, calendarTime.minute);
+            break;
+        }
+
+        default:
+            break;
+    }
+
+    return std::string(buf);
 }
 
 void clearLine(){
