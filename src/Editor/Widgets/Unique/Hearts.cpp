@@ -81,6 +81,7 @@ void Rune::WidgetBuilder::Hearts(EditorWidget* widget){
             editOverlay->panel()->y() + editOverlay->panel()->h()/2 - 24,
             180
         );
+        numSpinner->setWrapAround(true);
         numSpinner->onValueChange([](){
             Rune::Audio::playSound("cursor");
         });

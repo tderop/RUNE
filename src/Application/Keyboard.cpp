@@ -71,12 +71,12 @@ Result Rune::Keyboard::getNumberInput(float* outFloat, const std::string& hint, 
         return LibnxError_BadInput;
     }
 
+    *outFloat = inputFloat; // Still allow reading the result
     if (inputFloat < minValue || inputFloat > maxValue){
         Logger::Write("[Rune::Keyboard::getNumberInput] - Error: Input value is OOB ("+std::to_string(minValue)
             +", "+std::to_string(maxValue)+")");
         return LibnxError_BadInput;
     }
 
-    *outFloat = inputFloat;
     return 0;
 }

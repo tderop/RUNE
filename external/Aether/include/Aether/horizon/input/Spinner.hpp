@@ -64,18 +64,25 @@ namespace Aether {
             Colour textC;
             /** @brief Function that runs when value is changed */
             std::function<void()> onValueChangeFunc;
+            /** @brief Determines which step the spinner should use */
+            bool fast=false;
+
+            /**
+             * @brief Get the big increment
+             */
+            int bigIncrement();
 
             /**
              * @brief Increase value once by step size specified until max is reached.
              * Wraps overflowed increased value if wrap is set true.
              */
-            void incrementVal();
+            void incrementVal(bool isSuper=false);
 
             /**
              * @brief Decrease value once by step size specified until min is reached.
              * Wraps underflowed decreased value if wrap is set true.
              */
-            void decrementVal();
+            void decrementVal(bool isSuper=false);
 
         public:
             /**

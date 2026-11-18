@@ -72,13 +72,24 @@ namespace Aether {
         return this->valueContainer_;
     }
 
-    void Spinner::incrementVal() {
+    int Spinner::bigIncrement(){
+        int range = this->max_-this->min_;
+        if (range < 1) return 0;
+        
+        int increment = static_cast<int>(std::pow(10, static_cast<int>(std::log10(range))));
+        if (std::log10(increment) > 3){
+            increment /= static_cast<int>(std::pow(10, 2));
+        }
+        return increment;
+    }
+
+    void Spinner::incrementVal(bool isSuper) {
         // Wrap around if enabled
         if (this->wrap && (this->value_ == this->max_)) {
             this->value_ = this->min_;
         } else {
             // Increase by set amount
-            this->value_ += this->amount;
+            this->value_ += (this->fast) ? bigIncrement() : this->amount;
             if (this->value_ > this->max_) {
                 this->value_ = this->max_;
             }
@@ -88,13 +99,13 @@ namespace Aether {
         this->setValue(this->value_);
     }
 
-    void Spinner::decrementVal() {
+    void Spinner::decrementVal(bool isSuper) {
         // Wrap around if enabled
         if (this->wrap && (this->value_ == this->min_)) {
             this->value_ = this->max_;
         } else {
             // Decrease by set amount
-            this->value_ -= this->amount;
+            this->value_ -= (this->fast) ? bigIncrement() : this->amount;
             if (this->value_ < this->min_) {
                 this->value_ = this->min_;
             }
@@ -111,12 +122,14 @@ namespace Aether {
         if (e->type() == EventType::ButtonPressed) {
             switch (e->button()) {
                 case Button::DPAD_UP:
-                    this->incrementVal();
+                case Button::RSTICK_UP:
+                    this->incrementVal(e->button() == Button::RSTICK_UP);
                     return true;
                     break;
 
                 case Button::DPAD_DOWN:
-                    this->decrementVal();
+                case Button::RSTICK_DOWN:
+                    this->decrementVal(e->button() == Button::RSTICK_DOWN);
                     return true;
                     break;
 
@@ -124,6 +137,9 @@ namespace Aether {
                     if (this->onPressFunc() != nullptr){
                         (this->onPressFunc())();
                     }
+
+                case Button::ZR:
+                    this->fast = true;
 
                 default:
                     break;
@@ -146,6 +162,10 @@ namespace Aether {
                     (this->onPressFunc())();
                 }
               }
+        } else if (e->type() == EventType::ButtonReleased){
+            if (e->button() == Button::ZR){
+                this->fast = false;
+            }
         }
 
         // Set this element focused if arrows touched (they're the only children that can handle events)

@@ -171,14 +171,3 @@ std::string Rune::Save::GetReadableKeyName(std::string &saveKey);
  * @brief Get a description for the save key. Used for filling list comments in the editor.
  */
 std::string Rune::Save::GetKeyDescription(std::string &saveKey);
-
-/**
- * @brief A table mapping save keys to their English identifiers. This should probably be a romfs .JSON file. >:D
- */
-const std::unordered_map<std::string, std::string> READABLE_SAVE_KEYS = {
-    {"CurrentRupee",
-     "Rupees"},
-    {"CurrentMamo",
-     "Mons"},
-    {"IsGet_Obj_Motorcycle",
-     "Motorcycle Unlocked"}};

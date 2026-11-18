@@ -23,7 +23,7 @@
         "Description": "The current rupee balance in your inventory."
     },
     "CurrentMamo": {
-        "Readable": "Mons",
+        "Readable": "Mon",
         "Description": "The current Mon balance for use at Koltin's shop."
     },
     "MaxHartValue": {

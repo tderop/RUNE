@@ -30,7 +30,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
         editOverlay->setDeveloperNote(Rune::Save::GetKeyDevNote(saveEntry->dataName));
         
         // build popup interaction option
-        Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 180);
+        Aether::Spinner* numSpinner = new Aether::Spinner(0, 0, 264);
         numSpinner->setXY(
             editOverlay->panel()->x() + editOverlay->panel()->w()/2 - numSpinner->w()/2,
             editOverlay->panel()->y() + editOverlay->panel()->h()/2 - numSpinner->h()/2 - 12
@@ -39,6 +39,7 @@ void Rune::WidgetBuilder::Int(EditorWidget* widget){
         numSpinner->setMax(std::get<int>(metaEntry->maxValue));
         numSpinner->setMin(std::get<int>(metaEntry->minValue));
         numSpinner->setValue(std::get<int>(saveEntry->value));
+        numSpinner->setWrapAround(true);
 
         numSpinner->setLabel(Rune::Save::GetReadableKeyName(saveEntry->dataName));
         numSpinner->onPress([numSpinner, metaEntry](){
