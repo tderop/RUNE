@@ -182,11 +182,10 @@ void MenuScreen::showSaveSelect(){
 
                 // DECODE save
                 editor->editSaveSlot(&saveSlot);
+                loadingMsg->close();
 
                 // SHOW editor
                 this->app->showScreen("Editor");
-
-                loadingMsg->close();
             }
         );
 

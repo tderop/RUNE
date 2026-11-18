@@ -55,9 +55,9 @@ const std::map<Rune::Inventory::Category, std::vector<Rune::Inventory::Modifier>
         {
             Rune::Inventory::Modifier::AttackUp, Rune::Inventory::Modifier::DurabilityUp,
             Rune::Inventory::Modifier::MultiShot, Rune::Inventory::Modifier::Zoom,
-            Rune::Inventory::Modifier::QuickShot, Rune::Inventory::Modifier::AttackUpPlus,
-            Rune::Inventory::Modifier::DurabilityUpPlus, Rune::Inventory::Modifier::MultiShotPlus,
-            Rune::Inventory::Modifier::None
+            Rune::Inventory::Modifier::QuickShot, Rune::Inventory::Modifier::QuickShotPlus,
+            Rune::Inventory::Modifier::AttackUpPlus, Rune::Inventory::Modifier::DurabilityUpPlus, 
+            Rune::Inventory::Modifier::MultiShotPlus, Rune::Inventory::Modifier::None
         }
     },
     {

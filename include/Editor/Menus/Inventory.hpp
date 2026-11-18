@@ -94,7 +94,8 @@ namespace Rune{
         /** @brief A vector of all the modifiers that need a value editor */
         inline const std::vector<Modifier> kValueModifiers = {
             Modifier::AttackUp, Modifier::DurabilityUp, 
-            Modifier::MultiShot, Modifier::GuardUp
+            Modifier::MultiShot, Modifier::GuardUp,
+            Modifier::QuickShot
         };
 
         /** @brief Determine whether a modifier needs a value editor */

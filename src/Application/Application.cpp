@@ -17,8 +17,8 @@
 
 #include <math.h>
 
-#define MENU_FADE_OUT_TIME 0.33f
-#define MENU_FADE_IN_TIME 0.33f
+#define MENU_FADE_OUT_TIME 0.5f
+#define MENU_FADE_IN_TIME  0.5f
 
 /**
  * The current issue is that compilation fails due to linker errors.
