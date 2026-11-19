@@ -166,4 +166,4 @@ False or fraudulent takedown requests will be disregarded.
 > [!IMPORTANT]
 > RUNE is provided 'as is' without any warranties. You use this software entirely at your own risk. Under no circumstances shall RUNE - or its contributors - be held liable for **any damages whatsoever** (including, but not limited to, damage to your data, device or system) arising from the use of, or the inability to use, this software.
 
-RUNE stores backups of edited `.sav` files in `sdmc:/switch/RUNE/backups` with the filename format `game_data.sav.BAK_DD.MM.YYYY_HH.MM`, the timestamp being that of when the save file was edited. Please refer to [the User Guide](Guide.md/#loading-backups) for help with restoring backups.
+RUNE stores backups of edited `.sav` files in `sdmc:/switch/RUNE/backups` with the filename format `game_data.sav.BAK_DD.MM.YYYY_HH.MM`, the timestamp being that of when the save file was edited. Please refer to [the User Guide](GUIDE.md/#loading-backups) for help with restoring backups.
