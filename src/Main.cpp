@@ -241,6 +241,20 @@ Result initApplet(){
     }
     else {
         Logger::Write("[INIT] - Mounted BotW save data");
+
+        // Check that there is at least one save (would be 0)  
+        bool hasData = false; 
+        for (const auto& entry : std::filesystem::directory_iterator("save:/")){
+            if (entry.path().filename() == "0"){
+                hasData = true;
+                break;
+            }
+        }
+
+        // Needs to have data to start RUNE
+        if (!hasData){
+            mountSuccess = false;
+        }
     }
 
     // The application initialised successfully

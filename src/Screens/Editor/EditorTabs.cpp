@@ -22,11 +22,11 @@ namespace Rune{
                                 // "dummy_float",
                                 "MaxHartValue",
                                 "StaminaMax",
-                                "MiniGame_BirdMan_HillTower_RecordDistance",
-                                //////////////////////////
-                                "<PAD>",
-                                //////////////////////////
-                                "ActorName_SeakSensor_Slot0"
+                                // "MiniGame_BirdMan_HillTower_RecordDistance",
+                                // //////////////////////////
+                                // // "<PAD>",
+                                // // //////////////////////////
+                                // // "ActorName_SeakSensor_Slot0"
                                 
                             },
                         },

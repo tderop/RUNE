@@ -4771,7 +4771,8 @@
   },
   "Obj_Motorcycle": {
     "Name": "Master Cycle Zero",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_C_01": {
     "Name": "Item_Cook_C_01",
@@ -4806,7 +4807,8 @@
   },
   "Obj_Photo_Other": {
     "Name": "Other Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_C_15": {
     "Name": "Item_Cook_C_15",
@@ -4940,7 +4942,8 @@
   },
   "Obj_StopTimerLv2": {
     "Name": "Stasis +",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_12": {
     "Name": "Roasted Hydromelon",
@@ -4956,7 +4959,8 @@
   },
   "Obj_RemoteBombCube": {
     "Name": "Remote Bomb",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Ore_G": {
     "Name": "Luminous Stone",
@@ -4993,7 +4997,8 @@
   },
   "Obj_SheikSensor": {
     "Name": "Sheikah Sensor",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_K_03": {
     "Name": "Pumpkin Stew",
@@ -5069,7 +5074,8 @@
   },
   "Obj_Photo_Enemy": {
     "Name": "Enemy Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_B_16": {
     "Name": "Copious Meat Skewers",
@@ -5077,7 +5083,8 @@
   },
   "Obj_Head_027": {
     "Name": "Topaz Earrings",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_B_12": {
     "Name": "Copious Simmered Fruit",
@@ -5186,7 +5193,8 @@
   },
   "Obj_Head_026": {
     "Name": "Sapphire Circlet",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_B_13": {
     "Name": "Copious Mushroom Skewers",
@@ -5264,7 +5272,8 @@
   },
   "Obj_AmiiboItem": {
     "Name": "amiibo",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Obj_DLC_HeroSoul_Zora": {
     "Name": "Mipha's Grace +",
@@ -5296,7 +5305,8 @@
   },
   "Obj_IceMaker": {
     "Name": "Cryonis",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_K_02": {
     "Name": "Prime Meat Stew",
@@ -5456,7 +5466,8 @@
   },
   "Obj_RemoteBombBall": {
     "Name": "Remote Bomb",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_N_02": {
     "Name": "Fruitcake",
@@ -5748,7 +5759,8 @@
   },
   "Obj_Photo_Animal": {
     "Name": "Fauna Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_N_04": {
     "Name": "Mushroom Omelet",
@@ -5756,7 +5768,8 @@
   },
   "Obj_Photo_Weapon": {
     "Name": "Weapon Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Animal_Insect_AA": {
     "Name": "Energetic Rhino Beetle",
@@ -5781,7 +5794,8 @@
   },
   "Obj_Photo_Material": {
     "Name": "Material Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_X": {
     "Name": "Stealthfin Trout",
@@ -5818,7 +5832,8 @@
   },
   "Obj_Magnetglove": {
     "Name": "Magnesis",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Enemy_38": {
     "Name": "Dinraal's Scale",
@@ -5856,7 +5871,8 @@
   },
   "Obj_Album": {
     "Name": "Album",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Obj_HeroSoul_Gerudo": {
     "Name": "Urbosa's Fury",
@@ -5936,11 +5952,13 @@
   },
   "Obj_Head_028": {
     "Name": "Opal Earrings",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Obj_PictureBook": {
     "Name": "Hyrule Compendium",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Enemy_45": {
     "Name": "Electric Keese Wing",
@@ -6002,7 +6020,8 @@
   },
   "Obj_Head_024": {
     "Name": "Diamond Circlet",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_09": {
     "Name": "Roasted Hearty Durian",
@@ -6034,7 +6053,8 @@
   },
   "Obj_SheikSensorLv2": {
     "Name": "Sheikah Sensor +",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Animal_Insect_C": {
     "Name": "Cold Darner",
@@ -6171,7 +6191,8 @@
   },
   "Obj_DRStone_A_01": {
     "Name": "Sheikah Slate",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Enemy_05": {
     "Name": "Lizalfos Tail",
@@ -6188,7 +6209,8 @@
   },
   "Obj_RemoteBombBall2": {
     "Name": "Remote Bomb +",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_45": {
     "Name": "Seared Gourmet Steak",
@@ -6308,7 +6330,8 @@
   },
   "Obj_Photo_BossEnemy": {
     "Name": "Elite Enemy Picture",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "GameRomHorseReins_01": {
     "Name": "Traveler's Bridle",
@@ -6328,7 +6351,8 @@
   },
   "Obj_Head_029": {
     "Name": "Amber Earrings",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "BombArrow_A": {
     "Name": "Bomb Arrow",
@@ -6336,7 +6360,8 @@
   },
   "Obj_StopTimer": {
     "Name": "Stasis",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_B_18": {
     "Name": "Prime Meat and Seafood Fry",
@@ -6406,7 +6431,8 @@
   },
   "Obj_Head_025": {
     "Name": "Ruby Circlet",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_H_01": {
     "Name": "Seafood Meunière",
@@ -6418,7 +6444,8 @@
   },
   "Obj_RemoteBomb": {
     "Name": "Remote Bomb",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Roast_51": {
     "Name": "Campfire Egg",
@@ -6491,7 +6518,8 @@
   },
   "Obj_HeartUtuwa_A_01": {
     "Name": "Heart Container",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_C_07": {
     "Name": "Item_Cook_C_07",
@@ -6509,7 +6537,8 @@
   },
   "Obj_Camera": {
     "Name": "Camera",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "PlayerStole2": {
     "Name": "Paraglider",
@@ -6589,7 +6618,8 @@
   },
   "Obj_StaminaUtuwa_A_01": {
     "Name": "Stamina Vessel",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Fruit_E": {
     "Name": "Fleet-Lotus Seeds",
@@ -6668,7 +6698,8 @@
   },
   "Obj_SheikPadLv2": {
     "Name": "Sheikah Slate",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Fruit_I": {
     "Name": "Spicy Pepper",
@@ -6704,7 +6735,8 @@
   },
   "Obj_RemoteBombCube2": {
     "Name": "Remote Bomb +",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_FishGet_M": {
     "Name": "Sneaky River Snail",
@@ -6717,7 +6749,8 @@
   },
   "Obj_RemoteBombLv2": {
     "Name": "Remote Bomb +",
-    "CanStack": false
+    "CanStack": false,
+    "Hidden": true
   },
   "Item_Cook_I_06": {
     "Name": "Pumpkin Pie",

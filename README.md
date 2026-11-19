@@ -9,26 +9,13 @@
 
 **RUNE** is an **unofficial**, free and source-available native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
 
-> [!IMPORTANT]
-> RUNE is currently in early access, meaning you are highly likely to encounter bugs. Please open issues when you find them.
+RUNE is currently in early access, meaning you are highly likely to encounter bugs. Please open issues when you find them.
 
 > [!CAUTION]
 > Since RUNE is early access, you use it at your own risk. Please make backups before editing valuable saves. [JKSV](https://github.com/J-D-K/JKSV) is an incredible native save manager for Atmosphére.
 
 ## Installation
-> [!NOTE]
-> Atmosphére custom firmware is required to run homebrew software like RUNE on your Nintendo Switch. For information on how to install Atmosphére, please visit [switch.hacks.guide](https://switch.hacks.guide/) and follow the guides.
-1. Download the latest standalone `.nro` release of RUNE
-2. Copy `RUNE.nro` to `sdmc:/switch/RUNE.nro` on your Nintendo Switch's SD card
-3. Boot into Atmosphére
-4. Click on a game to launch it, and hold R whilst you select a user
-5. Continue holding R until the **hbmenu** appears, then select RUNE
-
-You're now running RUNE on your Nintendo Switch!
-
-### Why don't I see icons in RUNE?
-Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB. You're responsible for keeping these on your own device! Redistributing these assets to anyone else is a violation of copyright law.
-<br>
+Please refer to <a href="GUIDE.md#installation">the User Guide</a> for information on how to set up RUNE for the first time.
 
 ## Screenshots
 > [!NOTE]
@@ -44,6 +31,16 @@ Because of copyright law, RUNE is not allowed to redistribute content owned by N
         <td><img src="screenshots/editor4.png" width=480></td>
     </tr>
 </table>
+
+## Known Issues and Feature Gaps
+### Food is Not Fully Supported
+Currently, RUNE does not support modifying the properties of meals such as health recovery or buff type/duration. This feature is planned for a later release. Elixirs default to the ice cream icon (as this is the base icon for Elixirs in the game files.)
+
+### Quick Shot Modifier is Confusing for Users
+Currently if you select the quick shot modifier from the modifier dropdown menu, it'll just show a modifier value editor with a seemingly random number. Usually it'll be ~1,200-1,300 for game-generated quick shot bows. From my own testing this seems to be a speed multiplier (e.g. 1,200 = 1.2x, or +20%, speed), and is limited at high values (around 4,000+) by the speed of the initial windup animation.
+
+### Array Values Cannot be Edited Through Dev Editor
+Array values (such as PorchItem, PorchItem_Value1, AlbumSaveDistrictName...) cannot be modified through the dev editor, as widgets for array-type values do not exist yet. These may be added in the future.
 
 ## Building from Source
 
@@ -121,6 +118,9 @@ The following BotW version(s)
 and the following platform(s)
 - Nintendo Switch
 - Ryujinx Emulator
+
+> [!NOTE]
+> As Ryujinx cannot launch games with title takeover mode, RUNE on Ryujinx cannot extract icons from your Breath of the Wild installation.
 
 > RUNE does not support "The Legend of Zelda: Breath of the Wild - Nintendo Switch 2 Edition" saves, as I have no plans to mod my console or trust current homebrew toolchains. However, you are welcome to create cross-compiled Nintendo Switch 2 forks within the terms of the <a href="LICENSE.md">LICENSE</a>.
 
