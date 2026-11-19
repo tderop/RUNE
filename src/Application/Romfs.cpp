@@ -8,7 +8,6 @@
 // C++
 #include <filesystem>
 #include <fstream>
-#include <algorithm>
 
 // C
 #include <cstring>

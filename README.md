@@ -7,9 +7,7 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/tderop/RUNE/total?color=6f42c1)](https://somsubhra.github.io/github-release-stats/?username=tderop&repository=RUNE&page=1&per_page=300)
 ![Issues](https://img.shields.io/github/issues/tderop/RUNE)
 
-**RUNE** is an **unofficial**, free and source-available native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
-
-RUNE is currently in early access, meaning you are highly likely to encounter bugs. Please open issues when you find them.
+**RUNE** is an **unofficial**, free and source-available native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch. RUNE is currently in early access, meaning you are highly likely to encounter bugs. Please open issues when you find them.
 
 > [!CAUTION]
 > Since RUNE is early access, you use it at your own risk. Please make backups before editing valuable saves. [JKSV](https://github.com/J-D-K/JKSV) is an incredible native save manager for Atmosphére.
