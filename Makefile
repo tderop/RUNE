@@ -27,8 +27,8 @@ include $(DEVKITPRO)/libnx/switch_rules
 # CONFIG_JSON is the filename of the NPDM config file (.json), relative to the project folder.
 #---------------------------------------------------------------------------------
 APP_TITLE   := RUNE
-# APP_TITLEID := 0001000000000016
-APP_VERSION := 0.0.0
+APP_TITLEID := 0000000000000000
+APP_VERSION := 0.1.0-alpha
 APP_AUTHOR  := tderop
 APP_ICON    := $(CURDIR)/RUNE.jpg
 
@@ -76,11 +76,13 @@ ROMFS_STAGING := $(TOPDIR)/$(BUILD)/romfs_staging
 ARCH       := -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS     := -g -Wall -O3 -ffunction-sections \
-              $(ARCH) $(DEFINES)
+                -ffile-prefix-map=$(TOPDIR)=. \
+                $(ARCH) $(DEFINES)
+
 CFLAGS     += $(INCLUDE) -D__SWITCH__
 
 CXXFLAGS   := $(CFLAGS) -fno-rtti -fno-exceptions -Wno-unused-function
-CXXFLAGS   += -std=gnu++17 -Wno-overloaded-virtual -Wno-unused-variable -Wno-unused-but-set-variable
+CXXFLAGS   += -std=gnu++17 -DAPP_VERSION=\"$(APP_VERSION)\" -Wno-overloaded-virtual -Wno-unused-variable -Wno-unused-but-set-variable 
 
 ASFLAGS    := -g $(ARCH)
 LDFLAGS    = -specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) $(LIBPATHS) -Wl,-Map,$(notdir $*.map)

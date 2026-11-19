@@ -1,9 +1,12 @@
-<div align="center">
-    <h1>RUNE - Native NX GUI Save Editor for BotW</h1>
-    <img src="RUNE.jpg">
-</div>
 
-## Overview
+<h1>RUNE - Native NX GUI Save Editor for BotW</h1>
+
+![Platform](https://img.shields.io/badge/platform-Nintendo%20Switch-red)
+![Language](https://img.shields.io/badge/language-C%2B%2B-blue)
+[![Latest Version](https://img.shields.io/github/v/release/tderop/RUNE?label=latest&color=yellow)](https://github.com/tderop/RUNE/releases/latest)
+[![GitHub Downloads](https://img.shields.io/github/downloads/tderop/RUNE/total?color=6f42c1)](https://somsubhra.github.io/github-release-stats/?username=tderop&repository=RUNE&page=1&per_page=300)
+![Issues](https://img.shields.io/github/issues/tderop/RUNE)
+
 **RUNE** is an **unofficial**, free and source-available native GUI save editor for The Legend of Zelda: Breath of the Wild on Nintendo Switch.
 
 > [!IMPORTANT]
@@ -27,6 +30,39 @@ You're now running RUNE on your Nintendo Switch!
 Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB. You're responsible for keeping these on your own device! Redistributing these assets to anyone else is a violation of copyright law.
 <br>
 
+## Building from Source
+
+### Prerequesites
+Ensure you have the following installed on your system:
+- devkitPro (with devkitA64 "Switch Development" installed)
+- Open MSys2 and Install required portlibs:
+```bash
+pacman -S \
+    switch-sdl2 switch-sdl2_ttf switch-sdl2_image switch-sdl2_gfx switch-sdl2_mixer \
+    switch-mesa switch-libdrm_nouveau \
+    switch-freetype switch-libpng switch-libjpeg-turbo switch-libwebp \
+    switch-harfbuzz switch-bzip2 switch-zlib \
+    switch-libvorbisidec switch-libmodplug switch-mpg123 switch-libogg 
+```
+
+### Build Steps
+- Clone the repository:
+```bash
+git clone https://github.com/tderop/RUNE && cd RUNE
+```
+
+- Compile to `.nro`:
+```bash
+make
+```
+
+Once compiled, the output `.nro` can be found in the `output` directory.
+
+- Clean build artifacts:
+```bash
+make clean
+```
+
 ## Screenshots
 > [!NOTE]
 > Game screenshots/icon assets have been omitted/pixelated in these screenshots. RUNE features support for full resolution save slot thumbnails and item icons.
@@ -44,6 +80,7 @@ Because of copyright law, RUNE is not allowed to redistribute content owned by N
 
 ## Credits
 Thanks to:
+- Random Penguin (@Random-Penguin) for participating in closed QA testing
 - ZeldaMods for save file information found at https://zeldamods.org/wiki/Save_Files
 - MrCheeze for `actor_names.json`, a part of the botw-tools repository https://github.com/MrCheeze/botw-tools/
 - Léo Lam (@leoetlino) at ZeldaMods for
@@ -64,8 +101,30 @@ Thanks to:
 
 for making RUNE possible!
 
-## Testing
-RUNE was tested frequently in the Ryujinx emulator (for rapid testing) and on a modified Nintendo Switch running Atmosphére CFW (21.0.0, 1.12.1 emuMMC). There may be issues on higher firmware versions that are not 
+## Version Information
+RUNE was tested and verified to work on the following firmware version(s)
+- 20.5.0
+- 21.0.0
+- 22.1.0
+
+The following Atmosphére version(s)
+- 1.12.0 | EmuMMC
+- 1.12.1 | EmuMMC
+- 1.12.2 | EmuMMC
+
+The following BotW version(s)
+- 1.1.0
+- 1.5.0
+- 1.6.0
+- 1.9.0
+
+and the following platform(s)
+- Nintendo Switch
+- Ryujinx Emulator (due to a bug, a nonzero title ID 
+
+> RUNE does not support "The Legend of Zelda: Breath of the Wild - Nintendo Switch 2 Edition" saves, as I have no plans to mod my console or trust current homebrew toolchains. However, you are welcome to create cross-compiled Nintendo Switch 2 forks within the terms of the <a href="LICENSE.md">LICENSE</a>.
+
+The versions listed above are confirmed to work with RUNE, however this list is not exhaustive. From my own knowledge of Breath of the Wild's save data format: **RUNE is likely to work on all Nintendo Switch 1 versions of the game**, as it has not experienced any severe changes to its save file format since release.
 
 ## Attribution
 - <a href="https://www.flaticon.com/free-icons/foursquare-check-in" title="foursquare check in icons">Foursquare check in icons created by reussy - Flaticon</a>
@@ -76,7 +135,7 @@ RUNE was tested frequently in the Ryujinx emulator (for rapid testing) and on a 
 
 ## Use of AI (Artificial Intelligence)
 **RUNE was generated entirely, 100%, by HI**. <br><sup>human intelligence :)</sup><br><br>
-Although **AI was used to assist RUNE's development process**, it was NOT involved in code generation or reverse engineering. AI was used for **debugging assistance** and **some Makefile changes**. RUNE is not vibe coded; it was developed by hand - the "old fashioned way" - by a CS student that wanted to do something with his spare time.<br><br> A quick look at the state of the codebase may also confirm this for those fluent in C/C++. <br>
+Although **AI was used to assist RUNE's development process**, it was NOT involved in code generation or reverse engineering. AI was used for **debugging assistance** (when things got desparate...) and **some Makefile changes**. RUNE is not vibe coded; it was developed by hand - the "old fashioned way" - by a CS student that wanted to do something with his spare time.<br><br> <sup>A quick look at the state of the codebase may also confirm this for some...</sup> <br>
 
 <div align="center"><b><h3>CONTRIBUTIONS SUSPECTED TO BE GENERATED BY AI WILL BE IGNORED</h3></b></div><br>
 
@@ -87,7 +146,7 @@ RUNE © 2026 tderop (https://github.com/tderop/RUNE)
 > See <a href="LICENSE.md">LICENSE</a> for more details.
 
 <br>
-RUNE is an unofficial source-available save editor for The Legend of Zelda: Breath of the Wild.
+RUNE is an <b>unofficial</b> source-available save editor for The Legend of Zelda: Breath of the Wild.
 The Legend of Zelda, its characters, trademarks, and game assets are the intellectual property of Nintendo Co., Ltd.
 RUNE is not affiliated with or endorsed by Nintendo.
 
@@ -104,4 +163,7 @@ I may also remove or disable access to material voluntarily where there is a rea
 False or fraudulent takedown requests will be disregarded.
 
 ## Disclaimer
-When you use RUNE, you are doing so at your own risk. RUNE and/or its contributors are **not responsible for lost or corrupted save data**. RUNE stores backups of edited `.sav` files in `sdmc:/switch/RUNE/backups` with the filename format `game_data.sav.BAK_DD.MM.YYYY_HH.MM`, the timestamp being that of when the save file was edited.
+> [!IMPORTANT]
+> RUNE is provided 'as is' without any warranties. You use this software entirely at your own risk. Under no circumstances shall RUNE - or its contributors - be held liable for **any damages whatsoever** (including, but not limited to, damage to your data, device or system) arising from the use of, or the inability to use, this software.
+
+RUNE stores backups of edited `.sav` files in `sdmc:/switch/RUNE/backups` with the filename format `game_data.sav.BAK_DD.MM.YYYY_HH.MM`, the timestamp being that of when the save file was edited.

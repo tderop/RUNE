@@ -438,8 +438,8 @@ void EditorScreen::buildScreen(){
             });
 
             // compile the save file
-            loadingMsg->setString("Storing backup...");
-            this->app->setLoadingProgress(0);
+            loadingMsg->setString("Storing backup (please wait...)");
+            this->app->setLoadingProgress(-.01f);
 
             const std::string& path = rawFile.path;
             Result rc = Rune::Save::CompileTo(&rawFile, rawFile.path, 
@@ -456,7 +456,7 @@ void EditorScreen::buildScreen(){
 
             if (R_SUCCEEDED(rc)){
                 Rune::Audio::playSound("confirm");
-                messageBox->setString("Saved! Backups are in the sdcard:/switch/RUNE directory.");
+                messageBox->setString("Saved!\n\nBackups are in the sdcard:/switch/RUNE directory.");
             } else {
                 Rune::Audio::playSound("fail");
                 messageBox->setString("An error ocurred when compiling edited save file. ("+intToHex(rc)+")");
