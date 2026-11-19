@@ -1,5 +1,5 @@
 # RUNE User Guide
-Thank you for using RUNE! Instructons on how to install and use it are all listed for you below.
+Thank you for using RUNE, instructons on how to install and use it are all listed for you below. Happy save editing!
 
 ## Installation
 > [!NOTE]
@@ -51,7 +51,9 @@ The editor looks something like this:
 
 In the stats tab, you can edit a few common values. Clicking on any of the options here will open an overlay that will let you edit the value. Some overlays will show a **question mark** (?) button in the top left. When clicked, these buttons will display extra information on screen to explain some details about the value you're modifying.
 
-You can use L and R to navigate between top menus (Stats, Coordinates and Completionism in this case)
+If you would like to request more values to be shown on these pages, please open an [enhancement issue](https://github.com/tderop/RUNE/issues/new). Simple values like these are easy to implement editors for. 
+
+You can use L and R to navigate between top menus (Stats, Coordinates and Completionism in this case.)
 
 The equipment and items tabs open menus that looks like this:
 
