@@ -23,7 +23,15 @@
 Result Rune::Romfs::ExtractAssets(std::function<void(size_t, size_t)> onProgress){
     // If extracted, ignore
     if (std::filesystem::exists(EXTRACTED_MARKER)){
-        return 69;
+        return LibnxError_AlreadyInitialized;
+    }
+
+    // If there is not enough space, ignore
+    std::error_code ec;
+    if (std::filesystem::space(".", ec).available 
+        < SPACE_REQUIREMENT){
+
+        return MAKERESULT(2, 39); // fs 39 out of space (SD card full)
     }
 
     // Attempt to mount BotW RomFS

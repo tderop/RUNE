@@ -38,6 +38,7 @@ const int MIN_SPLASH_SCREEN_TIME = 2000; // artificial delay for *polish*
 const int STARTUP_DELAY = 2; // seconds, wait for 2 seconds to check if the user has pressed L
 
 const u64 BOTW_TITLE_ID = 0x01007EF00011E000;
+const u64 SPACE_REQUIREMENT = 60ULL*1024*1024; // Expected to be 40MB, require at least 60MB just in case
 
 const std::unordered_map<std::string, std::string> ASSET_PATHS = {
     {"check",    "romfs:/img/check.png"},
