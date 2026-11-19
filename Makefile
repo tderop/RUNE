@@ -28,7 +28,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE   := RUNE
 APP_TITLEID := 0000000000000000
-APP_VERSION := 0.1.0-alpha
+APP_VERSION := 0.1.1-alpha
 APP_AUTHOR  := tderop
 APP_ICON    := $(CURDIR)/RUNE.jpg
 

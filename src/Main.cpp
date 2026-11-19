@@ -3,6 +3,7 @@
 
 // Source libs
 #include <Input/Input.hpp> // Provides my own InputService
+#include <Utils/Utils.hpp> // Provides isPathSaveSlot()
 #include <Utils/Logger.hpp> // Provides my own logging service
 #include <Save/Save.hpp> // Provides Rune::Save::Metadata functionality and other Rune::Save types for parsing metadata on load
 #include <Application/Application.hpp> // Provides Rune::Application for managing different screens
@@ -245,7 +246,7 @@ Result initApplet(){
         // Check that there is at least one save (would be 0)  
         bool hasData = false; 
         for (const auto& entry : std::filesystem::directory_iterator("save:/")){
-            if (entry.path().filename() == "0"){
+            if (isPathSaveSlot(entry.path())){
                 hasData = true;
                 break;
             }

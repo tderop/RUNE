@@ -195,3 +195,27 @@ void toLower(std::string& s){
         return std::tolower(c);
     });
 }
+
+bool isPathSaveSlot(const std::filesystem::path& path){
+    if (!path.has_filename()){ return false; }
+
+    std::error_code ec;
+    if (!std::filesystem::is_directory(path, ec)){ return false; }
+
+    // Ensure name is between 0 and 7
+    const std::string& filename = path.filename();
+    bool isValidName = (filename.length() <= 1) && (filename[0] >= '0' && filename[0] <= '7');
+
+    // Ensure folder contains game_data.sav
+    bool hasGameData = false;
+    for (const auto& entry : std::filesystem::directory_iterator(path)){
+        if (!entry.path().has_filename()) { continue; }
+        if (entry.path().filename() == "game_data.sav") { 
+            hasGameData = true;
+            break; 
+        }
+    }
+
+    // Must have valid name and game data to be a valid slot
+    return (isValidName && hasGameData);
+}

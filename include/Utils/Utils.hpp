@@ -1,7 +1,7 @@
 #pragma once
 
 #include <switch.h>
-#include <iostream>
+#include <filesystem>
 #include <functional>
 
 #include <Aether/Aether.hpp>
@@ -68,3 +68,10 @@ std::function<Aether::Colour(uint32_t)> highlightFunc();
  * @brief Convert a string to lowercase
  */
 void toLower(std::string& s);
+
+/**
+ * @brief Check if a path is a valid save slot
+ * @param path The path to check
+ * @return Whether the path is a valid save slot directory or not
+ */
+bool isPathSaveSlot(const std::filesystem::path& path);
