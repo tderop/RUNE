@@ -30,6 +30,21 @@ You're now running RUNE on your Nintendo Switch!
 Because of copyright law, RUNE is not allowed to redistribute content owned by Nintendo Co., Ltd., which includes the item icons you see in your inventory.<br><br>Fortunately, this doesn't mean you _can't_ have icons, it just means you need to **open RUNE in "title takeover" mode** with Breath of the WIld selected. **This takes time**, on average about 1 minute and 30 seconds. You only need to do this once.<br><br>By doing this, you give RUNE access to the files in your local Breath of the Wild installation - allowing it to extract the menu icons to your SD card. The icons are cached in `sdmc:/switch/RUNE/assets/thumb`; take a look - they're extracted from your own copy of the game! All of the icons combined should take up a total of no more than ~40MB. You're responsible for keeping these on your own device! Redistributing these assets to anyone else is a violation of copyright law.
 <br>
 
+## Screenshots
+> [!NOTE]
+> Game screenshots/icon assets have been omitted/pixelated in these screenshots. RUNE features support for full resolution save slot thumbnails and item icons.
+
+<table>
+    <tr>
+        <td><img src="screenshots/select.png" width=480></td>
+        <td><img src="screenshots/editor2.png" width=480></td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/editor3.png" width=480></td>
+        <td><img src="screenshots/editor4.png" width=480></td>
+    </tr>
+</table>
+
 ## Building from Source
 
 ### Prerequesites
@@ -56,27 +71,12 @@ git clone https://github.com/tderop/RUNE && cd RUNE
 make
 ```
 
-Once compiled, the output `.nro` can be found in the `output` directory.
+> Once compiled, the output `.nro` can be found in the `output` directory.
 
 - Clean build artifacts:
 ```bash
 make clean
 ```
-
-## Screenshots
-> [!NOTE]
-> Game screenshots/icon assets have been omitted/pixelated in these screenshots. RUNE features support for full resolution save slot thumbnails and item icons.
-
-<table>
-    <tr>
-        <td><img src="screenshots/select.png" width=480></td>
-        <td><img src="screenshots/editor2.png" width=480></td>
-    </tr>
-    <tr>
-        <td><img src="screenshots/editor3.png" width=480></td>
-        <td><img src="screenshots/editor4.png" width=480></td>
-    </tr>
-</table>
 
 ## Credits
 Thanks to:
@@ -120,7 +120,7 @@ The following BotW version(s)
 
 and the following platform(s)
 - Nintendo Switch
-- Ryujinx Emulator (due to a bug, a nonzero title ID 
+- Ryujinx Emulator
 
 > RUNE does not support "The Legend of Zelda: Breath of the Wild - Nintendo Switch 2 Edition" saves, as I have no plans to mod my console or trust current homebrew toolchains. However, you are welcome to create cross-compiled Nintendo Switch 2 forks within the terms of the <a href="LICENSE.md">LICENSE</a>.
 
